@@ -1,0 +1,387 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:rp="http://runplanner.com.br/facelets"
+	template="#{loginBean.templateVersion}">
+
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+
+	<ui:define name="content">
+		<p:messages id="messages" showDetail="false" />
+		<div class="pageTitleBox">#{msgs['graphActivity.maintitle']}</div>
+		<div class="subtitle">#{msgs['graphActivityStudent.subtitle']}</div>
+
+		<table width="100%">
+		 <tr>
+			<td valign="top" width="15%">
+					<h:form>
+						<p:menu>  
+					        <p:submenu label="#{msgs['template.menu.opcoes']}">  
+					            <p:menuitem value="#{msgs['graph.progress.title']}" action="#{graphMBean.goToProgress}" ajax="false" />
+					        </p:submenu>
+					    </p:menu>
+					</h:form>  
+				</td>
+			<td valign="top" align="left" style="padding-left: 10px;">
+				<h:form>
+				<p:panel id="filter"> 
+					
+					<div id="filterDetails" style="width100%; font-size: 12px" class="filtro">
+					<table>
+						<tr>
+							<td><h:outputLabel value="#{msgs['graph.activity.initialDate']}"  style="width: 65px;" /></td>
+							<td>
+								<p:inputMask value="#{graphMBean.initialDate}" mask="99/99/9999"						
+									size="10" validatorMessage="#{msgs['graph.progress.date.initial.invalid']}"
+									converterMessage="#{msgs['graph.progress.date.initial.invalid']}"
+									required="true" requiredMessage="#{msgs['graph.progress.date.initial.invalid']}">
+									<f:convertDateTime pattern="dd/MM/yyyy" />
+								</p:inputMask>
+							</td>
+							
+							<td><h:outputLabel value="#{msgs['graph.activity.finalDate']}" style="width: 65px;" /></td>
+							<td>
+								<p:inputMask value="#{graphMBean.finalDate}" mask="99/99/9999"						
+									size="10" validatorMessage="#{msgs['graph.progress.date.final.invalid']}"
+									converterMessage="#{msgs['graph.progress.date.final.invalid']}"
+									required="true" requiredMessage="#{msgs['graph.progress.date.final.invalid']}">
+									<f:convertDateTime pattern="dd/MM/yyyy" />
+								</p:inputMask>
+							</td>
+							<td><h:outputLabel value="#{msgs['graph.activity.type']}" style="width: 30px;" /></td>
+							<td>
+								<p:selectOneMenu value="#{graphMBean.type}" >
+									 <f:selectItem itemLabel="#{msgs['graph.activity.type.month']}" itemValue="1" />
+									 <f:selectItem itemLabel="#{msgs['graph.activity.type.week']}" itemValue="2" />				 
+							    </p:selectOneMenu>	
+							</td>
+							
+							<td colspan="2">
+								<p:commandButton action="#{graphMBean.filterActivity}" ajax="false"
+				           			title="#{msgs['template.button.find']}"
+				           			value="#{msgs['template.button.find']}"/>
+							</td>
+						</tr>
+					</table>
+					</div>
+				</p:panel>		
+	
+				<br/>
+		
+				<table width="100%" class="filtro">
+					<thead class="tabela">
+					<tr>
+						<th>					 							
+							<div class="menuItemV2Selected"><h:outputText value="#{msgs['activity.head.number']}"/></div>
+						</th>					 						
+						<th>
+							<div class="menuItemV2Selected"><h:outputText value="#{msgs['activity.head.distance']}"/></div>				 							
+						</th>	
+						<th>
+							<div class="menuItemV2Selected"><h:outputText value="#{msgs['activity.head.time']}"/></div>					 							
+						</th>					
+					</tr>
+					</thead>
+					
+		 			<tr>								 										 				
+		 				<td align="center">							 				
+		 					<div class="bigNumber"><h:outputText value="#{graphMBean.activityNumber}" /></div>
+		 				</td>
+		 				<td align="center">				 				
+		 					<div class="bigNumber"><h:outputText value="#{graphMBean.activityDistance}">							 					
+								<f:convertNumber pattern="#0.00"/>
+							</h:outputText></div>
+		 				</td>
+		 				<td align="center">							 				
+		 					<div class="bigNumber"><h:outputText value="#{graphMBean.activityTime}" /></div>
+		 				</td>
+		 			</tr>
+		 		</table>		
+				<br/>
+	
+				<p:panel rendered="#{graphMBean.activityNumberGraphSerie!=null}">
+					<div class="filtro" style="text-align: center;">
+						<div id="activityNumberGraph" style="height:300px; width: 100%"></div>	
+					</div>	
+				</p:panel>
+				<br/>
+				<p:panel rendered="#{graphMBean.activityDistanceGraphSerie!=null}">
+					<div class="filtro" style="text-align: center;">
+						<div id="activityDistanceGraph" style="height:300px; width: 100%"></div>	
+					</div>
+				</p:panel>
+				<br/>
+				<p:panel rendered="#{graphMBean.activityTimeGraphSerie!=null}">
+					<div class="filtro" style="text-align: center;">
+						<div id="activityTimeGraph" style="height:300px; width: 100%"></div>	
+					</div>
+				</p:panel>			
+				<br/>
+				<p:panel rendered="#{graphMBean.activityEnergyGraphSerie!=null}">
+					<div class="filtro" style="text-align: center;">
+						<div id="activityEnergyGraphSerie" style="height:300px; width: 100%"></div>	
+					</div>
+				</p:panel>			
+				<br/>
+				<p:panel rendered="#{graphMBean.activityPaceGraphSerie!=null}">
+					<div class="filtro" style="text-align: center;">
+						<div id="activityPaceGraph" style="height:300px; width: 100%"></div>	
+					</div>
+				</p:panel>
+							
+				<script type="text/javascript">
+					$(document).ready(function() {
+					   
+						var serie = #{graphMBean.activityNumberGraphSerie};
+					    var ticks = #{graphMBean.activityGraphTick};
+					     
+					    var plot1 = $.jqplot('activityNumberGraph', [serie], {
+					       
+					    	animate: true,
+					    	
+					    	legend: {
+					            show: true,  
+					            location: 'ne'
+					        },
+					        				    	
+					        seriesDefaults:{
+					            renderer:$.jqplot.BarRenderer,				            
+					    		pointLabels: { show: false }
+					        },
+					        
+					        title: "#{msgs['graph.activity.number.title']}",
+					       
+					        series:[
+					            {label:'Atividades'}
+					        ],				        
+					        
+					        highlighter: {
+					            show: true,
+					            sizeAdjust: 0,
+					            tooltipAxes: 'y',   
+					            tooltipLocation: 'nw',
+					            useAxesFormatters: false,
+					            tooltipFormatString: '<div class="highlighterDiv"><b><font color="#02425C">No. de Atividades: </font></b>%d</div>'
+					        },
+					        
+					        axes: {
+					            xaxis: {
+					                renderer: $.jqplot.CategoryAxisRenderer,
+					                ticks: ticks
+					            },
+					            yaxis: {
+					            	
+					            }
+					        }
+					        
+					    });
+					});	
+				</script>
+				
+				<script type="text/javascript">
+					$(document).ready(function(){
+					   
+						var distance = #{graphMBean.activityDistanceGraphSerie};
+					    var ticks = #{graphMBean.activityGraphTick};
+					     
+					    var plot1 = $.jqplot('activityDistanceGraph', [distance], {
+					       
+					    	animate: true,
+					    	
+					    	legend: {
+					            show: true,  
+					            location: 'ne'
+					        },
+					        				    	
+					        seriesDefaults:{
+					            renderer:$.jqplot.BarRenderer,				            
+					    		pointLabels: { show: false }
+					        },
+					        
+					        title: "#{msgs['graph.activity.activities.title']}",
+					       
+					        series:[
+					            {label:'Atividades'}
+					        ],
+					        
+					        
+					        highlighter: {
+					            show: true,
+					            sizeAdjust: 0,
+					            tooltipAxes: 'y',   
+					            tooltipLocation: 'nw',
+					            useAxesFormatters: false,
+					            tooltipFormatString: '<div class="highlighterDiv"><b><font color="#02425C">Distância do Mês: </font></b>%.2f Km</div>'
+					        },
+					        
+					        axes: {
+					            xaxis: {
+					                renderer: $.jqplot.CategoryAxisRenderer,
+					                ticks: ticks			                
+					            },
+					            yaxis: {
+					            }
+					        }
+					        
+					    });
+					});	
+				</script>	
+	
+				<script type="text/javascript">
+					$(document).ready(function(){
+					   
+						var time = #{graphMBean.activityTimeGraphSerie};
+					    var ticks = #{graphMBean.activityGraphTick};
+					     
+					    var plot1 = $.jqplot('activityTimeGraph', [time], {
+					       
+					    	animate: true,
+					    	
+					    	legend: {
+					            show: true,  
+					            location: 'ne'
+					        },
+					        
+					        seriesDefaults:{
+					            renderer:$.jqplot.BarRenderer,				            
+					    		pointLabels: { show: false }
+					        },
+					        				        
+					        title: "#{msgs['graph.activity.time.title']}",
+					       
+					        series:[
+					            {label:'Atividades'}
+					        ],
+					        
+					        highlighter: {
+					            show: true,
+					            sizeAdjust: 0,
+					            tooltipAxes: 'y',   
+					            tooltipLocation: 'nw',
+					            useAxesFormatters: false,
+					            tooltipFormatString: '<div class="highlighterDiv"><b><font color="#02425C">Horas no Mês: </font></b>%.2f Horas</div>'
+					        },
+					        
+					        axes: {
+					            xaxis: {
+					                renderer: $.jqplot.CategoryAxisRenderer,
+					                ticks: ticks
+					            }
+					        }
+					        
+					    });
+					});	
+				</script>	
+				
+				<script type="text/javascript">
+					$(document).ready(function(){
+					   
+						var distance = #{graphMBean.activityEnergyGraphSerie};
+					    var ticks = #{graphMBean.activityGraphTick};
+					     
+					    var plot1 = $.jqplot('activityEnergyGraphSerie', [distance], {
+					       
+					    	animate: true,
+					    	
+					    	legend: {
+					            show: true,  
+					            location: 'ne'
+					        },
+					        				    	
+					        seriesDefaults:{
+					            renderer:$.jqplot.BarRenderer,				            
+					    		pointLabels: { show: false }
+					        },
+					        
+					        title: "#{msgs['graph.activity.energy.title']}",
+					       
+					        series:[
+					            {label:'Atividades'}
+					        ],
+					        
+					        
+					        highlighter: {
+					            show: true,
+					            sizeAdjust: 0,
+					            tooltipAxes: 'y',   
+					            tooltipLocation: 'nw',
+					            useAxesFormatters: false,
+					            tooltipFormatString: '<div class="highlighterDiv"><b><font color="#02425C">Energia do Mês: </font></b>%s Calorias</div>'
+					        },
+					        
+					        axes: {
+					            xaxis: {
+					                renderer: $.jqplot.CategoryAxisRenderer,
+					                ticks: ticks			                
+					            },
+					            yaxis: {
+					            }
+					        }
+					        
+					    });
+					});	
+				</script>				
+				
+				<script type="text/javascript">
+					$(document).ready(function() {
+					   
+						var serie = #{graphMBean.activityPaceGraphSerie};										
+					    var ticks = #{graphMBean.activityGraphTick};
+					     
+					    var plot1 = $.jqplot('activityPaceGraph', [serie], {				       
+					    	animate: true,
+					        
+					        legend: {
+					            show: true,  
+					            location: 'ne'
+					        },
+					        
+					        title: "#{msgs['graph.activity.pace.title']}",	
+					        
+					        series: [
+					        	{
+					        		label: "#{msgs['graph.activity.pace.label']}"
+					        	}
+					        ],
+					        
+					        highlighter: {
+					            show: true,
+					            sizeAdjust: 5,
+					            tooltipAxes: 'y',   
+					            tooltipLocation: 'nw',
+					            useAxesFormatters: true,
+					            formatString: '<div class="highlighterDiv"><b><font color="#02425C">Ritmo: </font></b>%s Min/Km</div>'
+					        },
+					        
+					        axes: {
+					            xaxis: {
+					                renderer: $.jqplot.CategoryAxisRenderer,
+					                ticks: ticks
+					            },
+				            	yaxis: {
+					            	renderer: $.jqplot.DateAxisRenderer,
+					            	tickOptions:{formatString:'%H:%M'}
+					            }
+					        }
+					        
+					    });
+					});	
+				</script>	
+			</h:form>
+		  </td>
+		</tr>
+		</table>	
+		
+		
+		<script type="text/javascript" src="${facesContext.externalContext.requestContextPath}/js/jqplot/jquery.jqplot.min.js"></script>
+		<script type="text/javascript" src="${facesContext.externalContext.requestContextPath}/js/jqplot/jqplot.barRenderer.min.js"></script>
+		<script type="text/javascript" src="${facesContext.externalContext.requestContextPath}/js/jqplot/jqplot.categoryAxisRenderer.min.js"></script>
+		<script type="text/javascript" src="${facesContext.externalContext.requestContextPath}/js/jqplot/jqplot.highlighter.min.js"></script>
+		<script type="text/javascript" src="${facesContext.externalContext.requestContextPath}/js/jqplot/jqplot.dateAxisRenderer.min.js"></script>
+
+	</ui:define>
+	
+</ui:composition>

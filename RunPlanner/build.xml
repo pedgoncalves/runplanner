@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<project name="RunPlanner" default="make.prod" basedir=".">
+	
+	<buildnumber file="build.num" />
+	
+	<property name="war.name" value="runplanner.war" />
+	<property name="lib.dir" value="WebContent/WEB-INF/lib" />
+	<property name="web.dir" value="WebContent" />
+	<property name="src.dir" value="src" />
+	<property name="out.dir" value="build/classes" />
+	<property name="build.dir" value="build" />
+	<property name="web.xml.dir" value="WebContent/WEB-INF/web.xml" />
+	<property name="tomcat.lib.dir" value="C:/apache-tomcat-6.0.35/lib" />
+		
+	<!-- Funcoes -->
+	
+	<macrodef name="clear">
+		<attribute name="dir" />
+		<sequential>
+			<mkdir dir="@{dir}" />
+			<echo message="Apagando diretório: @{dir}" />
+			<delete includeemptydirs="yes">
+				<fileset dir="@{dir}" />
+			</delete>
+			<mkdir dir="@{dir}" />
+		</sequential>
+	</macrodef>		
+	
+	<macrodef name="compile">
+		<attribute name="src" />
+		<attribute name="out" />
+		<attribute name="classpathRef" />
+		<sequential>
+			<echo message="compilando fontes de @{src} para @{out}" />
+			<javac source="1.5" encoding="UTF-8" srcdir="@{src}" destdir="@{out}" debug="on" deprecation="true" classpathref="@{classpathRef}" failonerror="on">
+				<classpath>
+					<pathelement path="${java.class.path}" />
+				</classpath>
+			</javac>
+		</sequential>
+	</macrodef>	
+	
+	<!-- Build -->
+	
+    <path id="class.path.web">
+        <fileset dir="${lib.dir}">
+            <include name="*.jar" />
+        </fileset>
+    	<fileset dir="${tomcat.lib.dir}">
+            <include name="*.jar" />
+        </fileset>    	
+    </path>	
+	
+	<target name="make.dev" depends="compile.dev">
+		<sequential>
+            <war destfile="${build.dir}/${war.name}" webxml="${web.xml.dir}">            	
+                <classes dir="${out.dir}"/>
+                <fileset dir="${web.dir}">
+                    <include name="**/*" />
+                    <exclude name="**/WEB-INF/web.xml" />
+                	<exclude name="**/WEB-INF/classes/*" />
+                </fileset>            
+            </war>
+		</sequential>
+	</target>	
+	
+	<target name="make.prod" depends="compile.prod">
+		<sequential>
+            <war destfile="${build.dir}/${war.name}" webxml="${web.xml.dir}">
+            	
+                <classes dir="${out.dir}"/>
+                <fileset dir="${web.dir}">
+                    <include name="**/*" />
+                    <exclude name="**/WEB-INF/web.xml" />
+                	<exclude name="**/*.jar" />
+                </fileset>
+            </war>
+		</sequential>
+	</target>	
+	
+    <target name="compile.dev" depends="clear">
+    	<sequential>
+			<copy overwrite="no" todir="${out.dir}">
+				<fileset dir="${src.dir}">
+					<exclude name="**/*.java" />
+                	<exclude name="**/application_prod.properties" />
+                	<exclude name="**/applicationContext_prod.xml" />
+				</fileset>
+			</copy>
+		    <compile src="${src.dir}" out="${out.dir}" classpathRef="class.path.web" />
+		</sequential>
+    </target>	
+	
+    <target name="compile.prod" depends="clear">
+    	<sequential>
+			<copy overwrite="no" todir="${out.dir}">
+				<fileset dir="${src.dir}">
+					<exclude name="**/*.java" />
+                	<exclude name="**/application.properties" />
+                	<exclude name="**/applicationContext.xml" />
+				</fileset>
+			</copy>
+    		<rename src="${out.dir}/application_prod.properties" dest="${out.dir}/application.properties"/>
+    		<rename src="${out.dir}/applicationContext_prod.xml" dest="${out.dir}/applicationContext.xml"/>
+		    <compile src="${src.dir}" out="${out.dir}" classpathRef="class.path.web" />
+		</sequential>
+    </target>	
+	
+    <target name="clear">
+		<clear dir="${out.dir}"/>
+        <clear dir="${build.dir}"/>
+    </target>	
+	
+</project>

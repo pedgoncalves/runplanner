@@ -1,0 +1,491 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:fb="http://ogp.me/ns/fb#"
+	xmlns:og="http://opengraphprotocol.org/schema/"
+	template="#{loginBean.templateVersion}">
+		
+  <ui:define name="content">
+  
+	<style type="text/css">
+		.ui-state-active a, .ui-tabs-selected a
+		{
+			color: #000 !important;
+			background-color: #F9F9F9 !important;
+			border: 0px !important;
+		}
+	</style>  
+  
+	<h:form>
+
+		<br/><br/>
+		<p:panel id="filter" header="#{msgs['activity.page.view.title']}">
+		</p:panel>		
+								
+		<center>		
+		<table>
+			<tr align="center">
+				<td align="center" valign="top">
+					
+					<table width="600px">
+					<tr>
+					
+						<td align="left" class="blueLink">
+		
+							<!--  <img src="${facesContext.externalContext.requestContextPath}/images/msgNew.gif" title="#{msgs['message.new.send']}"/>
+							
+							<p:commandButton icon="msgNew" oncomplete="dlgMailBox.show()" update="dlgMailBox">           			
+   								<f:setPropertyActionListener target="#{mailboxMBean.selectedReceiver.id}" value="#{activityMBean.activity.student.id}" />
+       						</p:commandButton>
+	           				 -->		
+	           						
+			        		<h:commandLink  action="#{profileMBean.goToView}" >  
+			        			<h:outputText value=" #{activityMBean.activity.student.nome}"/> 
+	           					<f:setPropertyActionListener target="#{profileMBean.customer.id}" value="#{activityMBean.activity.student.id}" />
+							</h:commandLink>
+							
+						</td>
+						<td>
+							<div class="subtitle" align="right" >
+								<h:outputText value="#{activityMBean.activity.date}">						
+		                			<f:convertDateTime pattern="dd MMMM, yyyy" />							
+								</h:outputText>
+								<h:outputText value=" | " />
+								<h:outputText value="#{activityMBean.activity.totalDistance}">								 					
+									<f:convertNumber pattern="#0.00"/>	
+								</h:outputText>
+								<h:outputText value="#{msgs['activity.km']}" />
+								<h:outputText value=" | #{activityMBean.event.name}" rendered="#{activityMBean.event.name!=null}" />
+								
+							</div>
+						</td>
+					</tr>
+					</table>
+							
+					<div id="activityDetail" style="width: 600px; font-size: 12px" class="">
+				 		<table width="600px;">
+				 			<tr>
+				 				<td>
+				 					<div id="actDetails" style="width100%; font-size: 12px" class="tabela">
+				 						<div class="filtro">
+				 						<table width="100%">
+				 						<thead>
+				 						<tr>
+				 							<th>					 							
+												<h:outputText value="#{msgs['activity.distance']}"/>	
+				 							</th>					 						
+				 							<th>
+												<h:outputText value="#{msgs['activity.duration']}"/>					 							
+				 							</th>					 		
+				 							<th>
+												<h:outputText value="#{msgs['activity.pace']}"/>	
+				 							</th>
+				 							<th>
+												<h:outputText value="#{msgs['activity.calories']}"/>	
+				 							</th>					 											 		
+				 							<th>
+												<h:outputText value="#{msgs['activity.freq.cad']}"/>	
+				 							</th>
+				 						</tr>
+				 						</thead>
+				 						
+							 			<tr>								 										 				
+							 				<td align="center">							 				
+							 					<h:outputText value="#{activityMBean.activity.totalDistance}">								 					
+													<f:convertNumber pattern="#0.00"/>	
+							 					</h:outputText>
+							 				</td>
+							 				<td align="center">				 				
+							 					<h:outputText value="#{activityMBean.activity.totalTime}"/>
+							 				</td>	
+							 				<td align="center">							 				
+							 					<h:outputText value="#{activityMBean.activity.averagePace}"/>
+							 				</td>
+							 				<td align="center">		 				
+							 					<h:outputText value="#{activityMBean.activity.totalCalories}">
+													<f:convertNumber pattern="#0"/>
+												</h:outputText>	
+							 				</td>
+							 				<td align="center">		 				
+							 					<h:outputText value="#{activityMBean.activity.totalAverageHeartRateBpm}">
+													<f:convertNumber pattern="#0.00"/>
+												</h:outputText>	
+							 				</td>
+							 			</tr>
+							 			
+							 			<tr>								 										 				
+							 				<td align="center" class="subtitle">		
+							 					<h:outputText value="#{msgs['activity.km']}" />
+							 				</td>
+							 				<td align="center" class="subtitle">
+							 					<h:outputText value="#{msgs['activity.time.desc']}" />								 						
+							 				</td>	
+							 				<td align="center" class="subtitle">
+							 					<h:outputText value="#{msgs['activity.pace.desc']}" />
+							 				</td>
+							 				<td align="center" class="subtitle">
+							 					<h:outputText value="#{msgs['activity.calories.desc']}" />
+							 				</td>
+							 				<td align="center" class="subtitle">
+							 					<h:outputText value="#{msgs['activity.freq.desc']}" />
+							 				</td>
+							 			</tr>								 			
+							 			</table>
+							 			</div>
+				 					</div>
+				 				</td>
+				 			</tr>
+				 			<tr>
+				 				<td>
+				 					<p:accordionPanel styleClass="filtro">
+				 					  
+						    			<p:tab title="Mapa" titleStyle="font-size: 15px;">  
+						    				<div class="filtro">
+												<p:gmap center="#{activityMBean.initLat},#{activityMBean.initLon}" zoom="14" type="hybrid"
+													style="width:600PX;height:400px" model="#{activityMBean.polylineModel}"
+													rendered="#{activityMBean.polylineModel!=null}" >
+												</p:gmap>
+												
+												<p:panel rendered="#{activityMBean.polylineModel==null}">										
+													<img src="${facesContext.externalContext.requestContextPath}/images/nomap.jpg" width="100%" />
+												</p:panel>	
+											</div>
+											
+											<div class="subtitle">
+												<h:outputText value="Equipamentos: " rendered="#{activityMBean.equipmentText!=null}" style="font-weight: bold !important;"/>
+												<h:outputText value="#{activityMBean.equipmentText}" rendered="#{activityMBean.equipmentText!=null}"/>
+											</div>
+											
+											
+										</p:tab>
+									</p:accordionPanel>	
+												 				
+				 				</td>
+				 			</tr>
+				 			<tr>
+				 				<td nowrap="nowrap">
+									<ui:include src="/pages/socialFragment.xhtml"/> <br/>
+				 				</td>
+				 			</tr>
+				 			<tr>
+				 				<td>
+				 				
+				 					<p:accordionPanel styleClass="filtro" rendered="#{activityMBean.paceGraphSerie!=null or activityMBean.altitudeGraph!=null}">  
+						    			<p:tab title="Graficos"  titleStyle="font-size: 15px;">  
+						    				
+						    				<p:accordionPanel  multiple="true" activeIndex="0,1" >  
+												<p:tab title="Ritmo" rendered="#{activityMBean.paceGraphSerie!=null}" titleStyle="border:0px !important;">
+													<div id="paceGraph" style="width:600px;height:150px;text-align: center; overflow: hidden;"></div>
+													<hr width="90%" style="border: none; height:1px; background-color: gray;"/>
+												</p:tab>
+												
+						    					<p:tab title="Altitude"  rendered="#{activityMBean.altitudeGraph!=null}" titleStyle="border:0px !important;">
+							    					<p:lineChart value="#{activityMBean.altitudeGraph}" legendPosition="e" 
+														style="width:600px;height:150px;overflow: hidden;" fill="true" seriesColors="68BE59"
+														minY="0" minX="0" maxX="#{activityMBean.activity.totalDistance*1000}"/>
+												</p:tab>											
+											</p:accordionPanel>
+											
+										</p:tab>
+									</p:accordionPanel>
+									
+				 				</td>
+				 			</tr>
+				 		</table>
+				    </div>	
+				    			
+									    					    
+				    <!-- TABELA DE VOLTAS E COMENTARIO -->
+				    <p:panel rendered="#{activityMBean.activity.lapsSize==1}">
+				    	<div class="filtro">
+				    	<div id="actDetails" style="width100%; font-size: 12px" class="tabela">
+					    <table width="100%">
+					 		<thead>
+					 			<tr><th><h:outputText value="#{msgs['activity.observation']}" /></th></tr>
+					 		</thead>
+					 		<tr>
+					 			<td>	
+					    			<i><h:outputText value="#{activityMBean.activity.observation}" escape="false"/></i>
+					    		</td>
+					    	</tr>
+					    </table>
+					    </div>
+					    </div>
+					    
+							<br/>
+					    <!-- Comentarios -->
+					    <div class="filtro">
+				    	<div style="width100%; font-size: 12px" class="tabela">
+						    <table width="100%">
+						 		<tr>
+						 			<td colspan="2" valign="top">	
+						    			<p:dataTable value="#{activityMBean.commentList}" var="comments" emptyMessage=""
+						    				rows="5" paginatorPosition="bottom" paginatorAlwaysVisible="false" id="commentsList1"
+											paginatorTemplate="{PreviousPageLink} {NextPageLink}" paginator="true" >
+						    			
+							    			<p:column style="vertical-align: top !important;">
+												<f:facet name="header">
+													<h:outputText value="#{msgs['dashboard.comments']}" />
+												</f:facet>
+				        						
+												<table>
+													<tr>
+														<td width="35" style="vertical-align: top;">
+															<p:graphicImage id="photo" value="#{photoMBean.streamedUserThumb}" width="35" height="35"
+								        						redended="#{comments.pessoa.photo!=null}" style="padding-right: 5px;">
+								        						<f:param name="client_id" value="#{comments.pessoa.id}" />
+							        						</p:graphicImage>													
+														</td>
+												
+														<td>					
+							        						<h:commandLink  action="#{profileMBean.goToView}" >  
+											        			<b><h:outputText value="#{comments.pessoa.shortName}"/> </b> 
+									           					<f:setPropertyActionListener target="#{profileMBean.customer.id}" value="#{comments.pessoa.id}" />
+															</h:commandLink>   
+															<h:commandLink action="#{activityMBean.removeComment}" rendered="#{comments.pessoa.id==loginBean.userId}">  
+											        			<h:outputText value="(#{msgs['template.button.delete']})" styleClass="subtitle"/> 
+									           					<f:setPropertyActionListener target="#{activityMBean.comment.id}" value="#{comments.id}" />
+															</h:commandLink>
+															<br/>
+															
+															<h:outputText value="#{comments.date}" styleClass="subtitle">
+									           					<f:convertDateTime pattern="dd/MM/yyyy" />
+									           				</h:outputText> 
+									           				<h:outputText value=" - " styleClass="subtitle"/>
+															<h:outputText value="#{comments.comment}"  escape="false" />
+														</td>
+													</tr>
+												</table>															
+						    					
+											</p:column>
+						    			
+						    			</p:dataTable>
+						    		</td>
+						    	</tr>
+						    	<tr>
+						 			<td width="35">
+						 				<p:graphicImage value="#{loginBean.userPhoto}" width="35" height="35"/>
+						 			</td>
+						 			<td>
+						 				<p:inputTextarea value="#{activityMBean.comment.comment}" id="commentArea1"
+											 style="width:98%;" rows="2"  maxlength="140" autoResize="false"/>
+						 			</td>
+						 		</tr>
+						 		<tr>
+						 			<td colspan="2" align="right">
+						 				<p:commandButton value="#{msgs['template.button.save']}" ajax="true"
+											action="#{activityMBean.addComment}" update="commentsList1,commentArea1"/>
+						 			</td>
+						 		</tr>
+						    </table>
+					    </div>
+					    </div>					    
+					</p:panel>
+				    
+				    <p:panel rendered="#{activityMBean.activity.lapsSize>1}">
+					<table width="100%">
+						<tr>
+							<td width="55%" style="padding-right: 10px"  valign="top">									
+								
+								<p:accordionPanel styleClass="filtro">  
+						    		<p:tab title="Detalhes"  titleStyle="font-size: 15px; border:0px !important;">
+								
+										<div class="">
+										<div class="tabela">
+										<p:dataTable var="lap" value="#{activityMBean.activity.laps}" 
+							            	rowIndexVar="index" emptyMessage="#{msgs['template.msg.emptyMessage']}">
+											          
+											<p:column style="text-align: center;">
+												<f:facet name="header">
+													<h:outputText value="#{msgs['spreadsheet.lap.turn']}" />
+												</f:facet>
+												<h:outputText value="#{index+1}" />
+											</p:column>
+											
+											<p:column style="text-align: center;">
+												<f:facet name="header">
+													<h:outputText value="#{msgs['spreadsheet.lap.distance']}" />
+												</f:facet>
+												<h:outputText value="#{lap.distanceKm}">
+													<f:convertNumber pattern="#0.00"/>								
+												</h:outputText>
+											</p:column>
+											
+											<p:column style="text-align: center;">
+												<f:facet name="header">
+													<h:outputText value="#{msgs['spreadsheet.lap.time']}" />
+												</f:facet>
+												<h:outputText value="#{lap.totalTimeString}" />
+											</p:column>
+											
+											<p:column style="text-align: center;">
+												<f:facet name="header">
+													<h:outputText value="#{msgs['spreadsheet.lap.pace']}" />
+												</f:facet>
+												<h:outputText value="#{lap.pace}" /> 
+											</p:column>
+											
+											<p:column style="text-align: center;">
+												<f:facet name="header">
+													<h:outputText value="#{msgs['spreadsheet.lap.averageHeartRateBpm']}" />
+												</f:facet>
+												<h:outputText value="#{lap.averageHeartRateBpm}" />
+											</p:column>
+										</p:dataTable>
+										</div>
+										</div>
+									</p:tab>
+								</p:accordionPanel>
+							</td>
+							
+							<td valign="top">
+								<div class="filtro">
+						    	<div id="actDetails" style="width100%; font-size: 12px" class="tabela">
+								    <table width="100%">
+								 		<thead>
+								 			<tr><th><h:outputText value="#{msgs['activity.observation']}" /></th></tr>
+								 		</thead>
+								 		<tr>
+								 			<td>	
+								    			<i><h:outputText value="#{activityMBean.activity.observation}" escape="false"/></i>
+								    		</td>
+								    	</tr>
+								    </table>
+							    </div>
+							    </div>
+							    
+							    <br/>
+							    <!-- Comentarios -->
+							    <div class="filtro">
+						    	<div style="width100%; font-size: 12px" class="tabela">
+								    <table width="100%">
+								 		<tr>
+								 			<td colspan="2" valign="top">	
+								    			<p:dataTable value="#{activityMBean.commentList}" var="comments" emptyMessage=""
+								    				rows="5" paginatorPosition="bottom" paginatorAlwaysVisible="false" id="commentsList"
+													paginatorTemplate="{PreviousPageLink} {NextPageLink}" paginator="true" >
+								    			
+									    			<p:column style="vertical-align: top !important; max-width:200px;">
+														<f:facet name="header" style="text-align: center !important;">
+															<h:outputText value="#{msgs['dashboard.comments']}" />
+														</f:facet>
+						        						
+														<table>
+															<tr>
+																<td width="35" style="vertical-align: top;">
+																	<p:graphicImage id="photo" value="#{photoMBean.streamedUserThumb}" width="35" height="35"
+										        						redended="#{comments.pessoa.photo!=null}" style="padding-right: 5px;">
+										        						<f:param name="client_id" value="#{comments.pessoa.id}" />
+									        						</p:graphicImage>													
+																</td>
+														
+																<td style="text-align: justify;">					
+									        						<h:commandLink  action="#{profileMBean.goToView}" >  
+													        			<b><h:outputText value="#{comments.pessoa.shortName}"/> </b> 
+											           					<f:setPropertyActionListener target="#{profileMBean.customer.id}" value="#{comments.pessoa.id}" />
+																	</h:commandLink> <br/>
+																	<h:outputText value="#{comments.date}" styleClass="subtitle">
+											           					<f:convertDateTime pattern="dd/MM/yyyy" />
+											           				</h:outputText> 
+											           				<h:outputText value=" - " styleClass="subtitle"/>
+																	<h:outputText value="#{comments.comment}"  escape="false" />
+																</td>
+															</tr>
+														</table>															
+								    					
+													</p:column>
+								    			
+								    			</p:dataTable>
+								    		</td>
+								    	</tr>
+								    	<tr>
+								 			<td>
+								 				<p:graphicImage value="#{loginBean.userPhoto}" width="35" height="35"/>
+								 			</td>
+								 			<td>
+								 				<p:inputTextarea value="#{activityMBean.comment.comment}" id="commentArea"
+													rows="2"  maxlength="140" autoResize="false" style="width:93%;"/>
+								 			</td>
+								 		</tr>
+								 		<tr>
+								 			<td colspan="2" align="right">
+								 				<p:commandButton value="#{msgs['template.button.save']}" ajax="true"
+													action="#{activityMBean.addComment}" update="commentsList,commentArea"/>
+								 			</td>
+								 		</tr>
+								    </table>
+							    </div>
+							    </div>	
+							    
+							</td>							
+						</tr>
+					</table>			
+					</p:panel>			    
+				    
+				</td>
+			</tr>
+		</table>
+		</center>		
+
+	
+		<script type="text/javascript">
+			$(document).ready(function() {
+			   
+				var serie = #{activityMBean.paceGraphSerie};	
+			     
+			    var plot1 = $.jqplot('paceGraph', [serie], {				       
+			    	animate: true,
+			        
+			        legend: {
+			            show: true,  
+			            location: 'ne'
+			        },				        
+			        
+			        series: [
+			        	{
+			        		label: "Ritmo",
+			        		showMarker: false,
+			        		fill: true,
+			        		fillAlpha: 0.50
+			        	}
+			        ],
+			        
+			        highlighter: {
+			            show: true,
+			            sizeAdjust: 5,
+			            tooltipAxes: 'y',   
+			            tooltipLocation: 'nw',
+			            useAxesFormatters: true,
+			            formatString: '<div class="highlighterDiv" style="z-index: 999; overflow: auto;" ><b><font color="#02425C">Ritmo: </font></b>%s Min/Km</div>'
+			        },
+			        
+			        axes: {
+			            xaxis: {
+			            	min: 0,
+			            	max: #{activityMBean.activity.totalDistance*1000}
+			            },
+			            yaxis: {
+			            	tickOptions:{ formatString: '%.2f' },
+			            	min: 0 
+			            }
+			        }
+			        
+			    });
+			});	
+		</script>
+				
+	</h:form>	
+				
+	
+	<ui:include src="/pages/mailbox/newMailBoxFragment.xhtml"/>
+		
+	<script type="text/javascript" src="${facesContext.externalContext.requestContextPath}/js/jqplot/jquery.jqplot.min.js"></script>
+	<script type="text/javascript" src="${facesContext.externalContext.requestContextPath}/js/jqplot/jqplot.categoryAxisRenderer.min.js"></script>
+	<script type="text/javascript" src="${facesContext.externalContext.requestContextPath}/js/jqplot/jqplot.highlighter.min.js"></script>	  				
+				
+  </ui:define>
+  
+</ui:composition>

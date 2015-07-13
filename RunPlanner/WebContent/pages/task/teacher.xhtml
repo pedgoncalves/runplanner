@@ -1,0 +1,124 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="#{loginBean.templateVersion}">
+
+	<ui:define name="content">
+	
+		<h:form enctype="multipart/form-data">
+
+			<br/><br/>
+			<p:panel id="filter" header="#{msgs['alunos.title.personal.data']}"> 
+				<p:messages id="messages" showDetail="false" />
+			</p:panel>
+			
+			<h:panelGrid id="teacherDetails" columns="2">
+			<h:outputLabel value="#{msgs['alunos.photo']}" style="margin-left:8px" />
+				<p:fileUpload fileUploadListener="#{teacherMBean.handleFileUpload}"  
+					mode="advanced" 
+					id="fileUpload"
+					label="Escolher"
+					auto="true" 
+					update="teacherDetails,messages"
+					rendered="#{teacherMBean.teacher.photo==null}"
+					style="margin-left:-3px"
+					invalidSizeMessage="#{msgs['template.msg.sizeExceedMessage']}"
+					invalidFileMessage="#{msgs['template.msg.invalidFileMessage']}"/>					
+				<p:panel id="imageDetails" rendered="#{teacherMBean.teacher.photo!=null}">   					
+					<table>
+					<tr>
+						<td><p:graphicImage value="#{teacherMBean.photo}" id="image" width="150" /></td>
+   						<td style="vertical-align: bottom;">
+   							<p:commandButton action="#{teacherMBean.clearImage}" ajax="false" image="delete" 
+	   							title="#{msgs['template.button.delete.photo']}" immediate="true"/>
+	   					</td>
+	   				</tr>
+	   				</table> 
+   				</p:panel>
+				</h:panelGrid>
+			
+			 <p><h:outputLabel for="nome" value="#{msgs['alunos.nome']}"  style="padding-right:5px;"/>
+				<p:inputText id="nome" value="#{teacherMBean.teacher.nome}" size="100" required="true"
+					requiredMessage="#{msgs['template.name.mandatory']}"  maxlength="100"/></p>
+					
+				<p><h:outputLabel for="email" value="#{msgs['alunos.email']}"  style="padding-right:5px;"/>
+				<p:inputText id="email" value="#{teacherMBean.teacher.email}" required="true"
+					requiredMessage="#{msgs['template.email.mandatory']}" size="100" maxlength="100">
+					<f:validator validatorId="EmailValidator"/>
+				</p:inputText></p>
+
+				<p><h:outputLabel for="cpf" value="#{msgs['alunos.cpf']}"  style="padding-right:5px;"/>
+				<p:inputMask id="cpf" value="#{teacherMBean.teacher.cpf}" mask="999.999.999-99" size="14" />
+				
+				<h:outputLabel for="rg" value="#{msgs['alunos.rg']}"  style= "margin-left:20px; width:30px; text-align:right"/>
+				<p:inputText id="rg" value="#{teacherMBean.teacher.rg}" maxlength="15" size="15" style="margin-left:10px"/>
+				
+				<h:outputLabel for="nascimento"	value="#{msgs['alunos.nascimento']}"  style="width:100px; text-align:right" />
+				<p:inputMask id="nascimento" value="#{teacherMBean.teacher.dtNascimento}" style="margin-left:10px" size="10" mask="99/99/9999"
+						validatorMessage="#{msgs['teacher.invalid.date.nascimento']}"
+						converterMessage="#{msgs['teacher.invalid.date.nascimento']}">
+					<f:convertDateTime pattern="dd/MM/yyyy" />
+				</p:inputMask>
+				</p>
+
+				<p>
+				<h:outputLabel for="entrada" value="#{msgs['alunos.entrada']} " style="padding-right:5px;"/>
+				<p:inputMask id="entrada" value="#{teacherMBean.teacher.dtEntrada}" mask="99/99/9999"
+						size="10" validatorMessage="#{msgs['teacher.invalid.date.entrada']}"
+						converterMessage="#{msgs['teacher.invalid.date.entrada']}">
+					<f:convertDateTime pattern="dd/MM/yyyy" />
+				</p:inputMask>
+				<h:outputLabel for="saida"	value="#{msgs['alunos.saida']} " style="width:90px !important;"/>
+				<p:inputMask id="saida" value="#{teacherMBean.teacher.dtSaida}" mask="99/99/9999"
+						size="10" validatorMessage="#{msgs['teacher.invalid.date.saida']}"
+						converterMessage="#{msgs['teacher.invalid.date.saida']}">
+					<f:convertDateTime pattern="dd/MM/yyyy" />
+				</p:inputMask>
+				</p>
+
+
+				<p>
+				<h:outputLabel for="sexo" value="#{msgs['alunos.sexo']}"  style="margin-top:15px;"/>
+				<p:selectOneRadio id="sexo" value="#{teacherMBean.teacher.sexo}" >
+					<f:selectItems value="#{teacherMBean.listaSexo}" />
+				</p:selectOneRadio></p>				
+
+				<p><h:outputLabel for="street" value="#{msgs['adress.street']}"  style="padding-right:5px;"/>
+				<p:inputText id="street" value="#{teacherMBean.teacher.endereco.logradouro}" size="72"  maxlength="100"/>
+				
+				<h:outputLabel for="number" value="#{msgs['adress.number']}" style="width:60px; text-align:right;"  />
+				<p:inputText id="number" value="#{teacherMBean.teacher.endereco.numero}" size="5" maxlength="5" style="margin-left:5px"/></p>
+						
+				<p><h:outputLabel for="complement" value="#{msgs['adress.complement']}"  style="padding-right:5px;"/>
+				<p:inputText id="complement" value="#{teacherMBean.teacher.endereco.complemento}" size="59" maxlength="100"/>
+				
+				<h:outputLabel for="bairro" value="#{msgs['adress.bairro']}"  style="width:50px; text-align:right;"/>
+				<p:inputText id="bairro" value="#{teacherMBean.teacher.endereco.bairro}" maxlength="100" style="margin-left:7px"/></p>
+				
+				<p><h:outputLabel for="cep" value="#{msgs['adress.cep']}"  style="padding-right:5px;"/>
+				<p:inputMask id="cep" value="#{teacherMBean.teacher.endereco.cep}" mask="99.999-999" size="12"/>
+				<h:outputLabel for="home" value="#{msgs['adress.phone.home']}" style="width:150px; text-align:right;" />
+				<p:inputMask id="home" value="#{teacherMBean.teacher.endereco.foneResidencial}" mask="(99) 9999-9999" size="14" style="margin-left:10px"/></p>
+				
+				<p><h:outputLabel for="cel" value="#{msgs['adress.phone.cel']}"  style="padding-right:5px;"/>
+				<p:inputMask id="cel" value="#{teacherMBean.teacher.endereco.foneCelular}" mask="(99) 9999-9999" size="14"/>
+				<h:outputLabel for="work" value="#{msgs['adress.phone.work']}" style="width:150px; text-align:right;" />
+				<p:inputMask id="work" value="#{teacherMBean.teacher.endereco.foneComercial}" mask="(99) 9999-9999" size="14" style="margin-left:10px"/></p>
+			
+			<br />
+			
+			<div class="buttons" >
+				<p:commandButton value="#{msgs['template.button.save']}"
+					rendered="#{teacherMBean.teacher.id == null}" ajax="false"
+					action="#{teacherMBean.save}" style="align:right;" />
+				<p:commandButton value="#{msgs['template.button.alterar']}"
+					rendered="#{teacherMBean.teacher.id != null}" ajax="false"
+					action="#{teacherMBean.save}" style="align:right;" />
+				<p:commandButton value="#{msgs['template.button.cancelar']}" ajax="false"
+					action="#{teacherMBean.goToList}" style="align:right;" immediate="true" />
+			</div>
+		</h:form>
+	</ui:define>
+</ui:composition>

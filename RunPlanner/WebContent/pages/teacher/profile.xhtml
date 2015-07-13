@@ -1,0 +1,434 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+    xmlns:rp="http://runplanner.com.br/facelets"
+	template="#{loginBean.templateVersion}"
+	xmlns:sec="http://www.springframework.org/security/facelets/tags">
+
+	<ui:define name="content">
+		<style  type="text/css">
+			.ui-fileupload-content {
+			    display:none;   
+			}			
+			
+		</style>
+		
+		<div class="pageTitleBox">#{msgs['profile.maintitle']}</div>
+		<div class="subtitle">#{msgs['profile.adm.subtitle']}</div>
+
+		<table>
+			<tr>
+				<td valign="top" width="15%">
+					<rp:sideMenu menu="profileAdvice" selectedMenu="perfil"/>
+				</td>
+				<td valign="top" align="left" style="padding-left: 10px;">
+					<p:tabView activeIndex="#{profileMBean.activeIndex}" >
+						<p:ajax event="tabChange" listener="#{profileMBean.onChange}" />
+
+						<sec:ifAnyGranted roles="ROLE_ASSESSOR">
+							<p:tab title="Dados da Assessoria" id="tab3">
+								<h:form>
+									<p:messages id="messages" showDetail="false" />
+									<div class="">
+
+										<table width="100%">
+											<tr>
+												
+												<td align="right"> 
+													<!-- Dados Cadastrais -->
+													<table width="85%" style="border: 0px; padding: 10px;">
+														<tr>
+															<td><h:outputLabel for="nome"
+																	value="#{msgs['advice.name']} "
+																	style="text-align:right; width:100px;" /></td>
+															<td align="left" colspan="3"><p:inputText id="nome"
+																	value="#{profileMBean.advice.name}" size="50"
+																	required="true"
+																	requiredMessage="#{msgs['template.nome.mandatory']}"
+																	maxlength="50" style="text-align:left; " /></td>
+														</tr>
+
+														<tr>
+															<td width="1" nowrap="nowrap"><h:outputLabel
+																	for="customerPaymenValue"
+																	value="#{msgs['advice.customer.paymentValue']}"
+																	style="text-align:right; width:100px;" /></td>
+															<td width="1" nowrap="nowrap"><p:inputText
+																	id="customerPaymenValue"
+																	value="#{profileMBean.advice.customerPaymentValue}"
+																	size="10" maxlength="6">
+																	<f:converter converterId="doubleConverter" />
+																</p:inputText>
+															</td>
+															<td style="white-space: nowrap" colspan="2">
+																<h:outputLabel
+																	for="customerPaymentDay"
+																	value="#{msgs['aluno.payment.day']}"
+																	style="text-align:left; width:65px;" />
+																<p:selectOneMenu id="customerPaymentDay"
+																	value="#{profileMBean.advice.customerPaymentDay}"
+																	style="text-align:left;">
+																	<f:selectItem itemLabel="1" itemValue="1" />
+																	<f:selectItem itemLabel="5" itemValue="5" />
+																	<f:selectItem itemLabel="10" itemValue="10" />
+																	<f:selectItem itemLabel="15" itemValue="15" />
+																	<f:selectItem itemLabel="20" itemValue="20" />
+																	<f:selectItem itemLabel="25" itemValue="25" />
+																</p:selectOneMenu>
+															</td>
+														</tr>
+
+														<tr>
+															<td style="text-align: right;"><p:selectBooleanCheckbox
+																	value="#{profileMBean.advice.paymentNotificationDialog}" />
+															</td>
+															<td colspan="3" style="white-space: nowrap"><h:outputLabel
+																	value="#{msgs['advice.payment.dialog']}"
+																	style="width:270px;" /></td>
+														</tr>
+
+														<tr>
+															<td style="text-align: right;"><p:selectBooleanCheckbox
+																	value="#{profileMBean.advice.paymentNotificationMail}" />
+															</td>
+															<td colspan="3" style="white-space: nowrap"><h:outputLabel
+																	value="#{msgs['advice.payment.mail']}"
+																	style="width:270px;" /></td>
+														</tr>
+														
+														<tr>
+															<td style="text-align: right;">
+															<h:outputLabel for="defaultSwitcher" value="Tema da assessoria"
+																style="width:100px; padding-right:2px;" />
+															</td>
+															<td colspan="3">
+																<p:themeSwitcher value="#{themeSwitcherBean.theme}" style="width:300px" id="defaultSwitcher">  
+														            <f:selectItem itemLabel="Escolha um tema" itemValue="" />  
+														            <f:selectItems value="#{themeSwitcherBean.themes}" />  
+														            <p:ajax listener="#{themeSwitcherBean.setTheme}" />
+														        </p:themeSwitcher> 
+													        </td>
+														</tr>
+
+														<tr>
+															<td><h:outputLabel for="cnpj"
+																	value="#{msgs['advice.cnpj']} "
+																	style="text-align:right; width:100px;" /></td>
+															<td align="left" colspan="3"><p:inputText id="cnpj"
+																	value="#{profileMBean.advice.cnpj}" size="20"
+																	maxlength="100" style="" readonly="true"
+																	styleClass="readonly" /></td>
+														</tr>
+														<tr>
+															<td style="text-align: right;">
+																<h:outputLabel for="street"
+																	value="#{msgs['adress.street']}"
+																	style="width:100px; padding-right:2px;" />
+															</td>
+															<td colspan="3">
+																<p:inputText id="street"
+																	value="#{profileMBean.enderecoAdvice.logradouro}"
+																	size="50" maxlength="100" readonly="true"
+																	styleClass="readonly" />
+															</td>
+														</tr>														
+													
+														<tr>
+															<td style="text-align: right;">
+																<h:outputLabel for="number" value="#{msgs['adress.number']}" 
+																style="width:100px; padding-right:2px;"/>
+															</td>
+															<td style="text-align: left;">
+																<p:inputText id="number"
+																	value="#{profileMBean.enderecoAdvice.numero}" size="5"
+																	maxlength="5" style="margin-left:0px" readonly="true"
+																	styleClass="readonly" />
+															</td>
+															<td style="text-align: right;">
+																<h:outputLabel for="complement"
+																	value="#{msgs['adress.complement']}"
+																	style="padding-right:2px;" />
+															</td>
+															<td>
+																<p:inputText id="complement"
+																	value="#{profileMBean.enderecoAdvice.complemento}"
+																	size="20" maxlength="100" readonly="true"
+																	styleClass="readonly" />
+															</td>
+														</tr>
+														<tr>
+															<td style="text-align: right; padding-right:2px;">																
+																<h:outputLabel for="bairro"
+																	value="#{msgs['adress.bairro']}" />
+															</td>
+															<td colspan="3">
+																<p:inputText id="bairro" value="#{profileMBean.enderecoAdvice.bairro}"
+																	maxlength="100" size="50" readonly="true"
+																	styleClass="readonly" />
+															</td>
+														</tr>
+														<tr>
+															<td style="text-align: right; padding-right:2px;">																								
+																<h:outputLabel for="cep" value="#{msgs['adress.cep']}"/>
+															</td>
+															<td>
+																<p:inputMask id="cep"
+																	value="#{profileMBean.enderecoAdvice.cep}"
+																	mask="99.999-999" size="12" readonly="true"
+																	styleClass="readonly" />
+															</td>
+															<td width="1">
+																<h:outputLabel for="home"
+																	value="#{msgs['adress.phone.home']}"
+																	style="text-align:left; white-space: nowrap" />
+															</td>
+															<td>
+																<p:inputMask id="home"
+																	value="#{profileMBean.enderecoAdvice.foneResidencial}"
+																	mask="(99) 9999-9999" size="14" style="margin-left:10px"
+																	readonly="true" styleClass="readonly" />
+															</td>
+														</tr>
+														<tr>
+															<td>
+																<h:outputLabel for="cel"
+																	value="#{msgs['adress.phone.cel']}"
+																	style="text-align:right; white-space: nowrap" />
+															</td>
+															<td>															
+																<p:inputMask id="cel"
+																	value="#{profileMBean.enderecoAdvice.foneCelular}"
+																	mask="(99) 9999-9999" size="14" readonly="true"
+																	styleClass="readonly" />
+															</td>
+															<td width="1">
+																<h:outputLabel for="work"
+																	value="#{msgs['adress.phone.work']}"
+																	style="width:105px; text-align:right; white-space: nowrap" />
+															</td>
+															<td>														
+																<p:inputMask id="work"
+																	value="#{profileMBean.enderecoAdvice.foneComercial}"
+																	mask="(99) 9999-9999" size="14" style="margin-left:10px"
+																	readonly="true" styleClass="readonly" />
+															</td>
+														</tr>
+													</table>
+													<br />
+													
+													<div class="buttons">
+														<p:commandButton value="#{msgs['template.button.save']}"
+															ajax="false" action="#{profileMBean.saveAdvice}"
+															style="align:right;" />
+													</div>
+												</td>
+											</tr>
+										</table>
+									</div>
+								</h:form>
+							</p:tab>
+							
+							<p:tab title="Banner da Assessoria" id="tab5">
+								<h:form enctype="multipart/form-data" id="banner" acceptcharset="UTF-8">
+									<p:messages id="messagesBanner" showDetail="false" />
+									<p:panel id="adviceBannerPanel" widgetVar="adviceBannerPanel">
+										
+										<p:fileUpload fileUploadListener="#{profileMBean.handleFileUploadAdviceBanner}"  
+											mode="advanced" 
+											id="fileUpload"
+											label="#{msgs['template.button.change.photo']}"
+											auto="true" 
+											update="adviceBannerPanel, messagesBanner"
+											invalidSizeMessage="#{msgs['template.msg.sizeExceedMessage']}"
+											invalidFileMessage="#{msgs['template.msg.invalidFileMessage']}"/>
+											
+										<p:graphicImage value="#{photoMBean.streamedAdviceBannerByPath}" width="100%" cache="false">
+											<f:param name="photo_path" value="#{profileMBean.advice.adviceBanner}" />
+										</p:graphicImage>								
+
+									</p:panel>
+									
+									<div class="buttons">
+										<p:commandButton value="#{msgs['template.button.save']}"
+											ajax="false" action="#{profileMBean.saveAdvice}" style="align:right;" />
+									</div>
+								</h:form>
+							</p:tab>
+
+						</sec:ifAnyGranted>
+
+
+						<sec:ifAnyGranted roles="ROLE_ADM">
+							<p:tab title="Pagamentos" id="tab4">
+								<h:form>
+
+									<p>
+										<h:outputLabel value="#{msgs['advice.contract.init']}"
+											style="width:110px;" />
+										<h:outputLabel value="#{profileMBean.advice.contractInit}">
+											<f:convertDateTime pattern="dd/MM/yyyy" />
+										</h:outputLabel>
+
+										<h:outputLabel value="#{msgs['advice.value']}"
+											style="width:110px;" />
+										<h:outputLabel value="#{profileMBean.advice.value}" />
+									</p>
+									<br />
+
+									<div id="painel" class="tabela">
+										<p:dataTable var="payment" value="#{profileMBean.paymentList}"
+											emptyMessage="#{msgs['template.msg.emptyMessage']}">
+											<p:column style="text-align:center;">
+												<f:facet name="header">
+													<h:outputText value="#{msgs['template.year']}" />
+												</f:facet>
+												<b><h:outputText value="#{payment.year}" /></b>
+											</p:column>
+
+											<p:column style="text-align:center;">
+												<f:facet name="header">
+													<h:outputText value="#{msgs['template.month.short.jan']}" />
+												</f:facet>
+												<p:selectBooleanCheckbox value="#{payment.jan}"
+													disabled="true" />
+											</p:column>
+
+											<p:column>
+												<f:facet name="header">
+													<h:outputText value="#{msgs['template.month.short.fev']}" />
+												</f:facet>
+												<p:selectBooleanCheckbox value="#{payment.feb}"
+													disabled="true" />
+											</p:column>
+
+											<p:column>
+												<f:facet name="header">
+													<h:outputText value="#{msgs['template.month.short.mar']}" />
+												</f:facet>
+												<p:selectBooleanCheckbox value="#{payment.mar}"
+													disabled="true" />
+											</p:column>
+
+											<p:column>
+												<f:facet name="header">
+													<h:outputText value="#{msgs['template.month.short.abr']}" />
+												</f:facet>
+												<p:selectBooleanCheckbox value="#{payment.apr}"
+													disabled="true" />
+											</p:column>
+
+											<p:column>
+												<f:facet name="header">
+													<h:outputText value="#{msgs['template.month.short.mai']}" />
+												</f:facet>
+												<p:selectBooleanCheckbox value="#{payment.may}"
+													disabled="true" />
+											</p:column>
+
+											<p:column>
+												<f:facet name="header">
+													<h:outputText value="#{msgs['template.month.short.jun']}" />
+												</f:facet>
+												<p:selectBooleanCheckbox value="#{payment.jun}"
+													disabled="true" />
+											</p:column>
+
+											<p:column>
+												<f:facet name="header">
+													<h:outputText value="#{msgs['template.month.short.jul']}" />
+												</f:facet>
+												<p:selectBooleanCheckbox value="#{payment.jul}"
+													disabled="true" />
+											</p:column>
+
+											<p:column>
+												<f:facet name="header">
+													<h:outputText value="#{msgs['template.month.short.ago']}" />
+												</f:facet>
+												<p:selectBooleanCheckbox value="#{payment.aug}"
+													disabled="true" />
+											</p:column>
+
+											<p:column>
+												<f:facet name="header">
+													<h:outputText value="#{msgs['template.month.short.set']}" />
+												</f:facet>
+												<p:selectBooleanCheckbox value="#{payment.sep}"
+													disabled="true" />
+											</p:column>
+
+											<p:column>
+												<f:facet name="header">
+													<h:outputText value="#{msgs['template.month.short.out']}" />
+												</f:facet>
+												<p:selectBooleanCheckbox value="#{payment.oct}"
+													disabled="true" />
+											</p:column>
+
+											<p:column>
+												<f:facet name="header">
+													<h:outputText value="#{msgs['template.month.short.nov']}" />
+												</f:facet>
+												<p:selectBooleanCheckbox value="#{payment.nov}"
+													disabled="true" />
+											</p:column>
+
+											<p:column>
+												<f:facet name="header">
+													<h:outputText value="#{msgs['template.month.short.dez']}" />
+												</f:facet>
+												<p:selectBooleanCheckbox value="#{payment.dez}"
+													disabled="true" />
+											</p:column>
+
+										</p:dataTable>
+									</div>
+									<br />
+
+									<div class="" style="text-align: left !important;">
+										<h3 style="text-align: left !important;">Novo Pagamento</h3>
+
+										<table>
+											<tr>
+												<td width="1"><h:outputLabel
+														value="#{msgs['template.month']}" style="width:30px;" /></td>
+												<td><p:selectOneMenu
+														value="#{profileMBean.selectedMonth}" style="width:200px">
+														<f:selectItems value="#{profileMBean.monthList}" />
+													</p:selectOneMenu></td>
+												<td width="1"><h:outputLabel
+														value="#{msgs['template.year']}" style="width:30px;" /></td>
+												<td><p:selectOneMenu
+														value="#{profileMBean.selectedYear}" style="width:100px">
+														<f:selectItems value="#{profileMBean.yearList}" />
+													</p:selectOneMenu></td>
+												<td colspan="2"><p:commandButton value="Gerar"
+														ajax="false" action="#{profileMBean.payment}"
+														style="align:right;" /></td>
+											</tr>
+										</table>
+
+										<p:panel rendered="#{profileMBean.paymentLink!=null}">
+				    		Link para pagamento: 
+				    		<h:outputLink value="#{profileMBean.paymentLink}">
+								PagSeguro
+							</h:outputLink>
+										</p:panel>
+
+									</div>
+								</h:form>
+							</p:tab>
+							<br />
+						</sec:ifAnyGranted>
+
+					</p:tabView>
+				</td>
+			</tr>
+		</table>
+
+	</ui:define>
+</ui:composition>

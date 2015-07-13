@@ -1,0 +1,300 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="planilhaTurmaMesListagem" language="groovy" pageWidth="595" pageHeight="842" columnWidth="547" leftMargin="28" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="2.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="TURMA_ID" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="MES" class="java.lang.String"/>
+	<parameter name="ANO" class="java.lang.String">
+		<defaultValueExpression><![CDATA[2011]]></defaultValueExpression>
+	</parameter>
+	<parameter name="TIMBRADO" class="java.lang.String"/>
+	<parameter name="LOGO" class="java.io.InputStream"/>
+	<queryString>
+		<![CDATA[SELECT  ss.id, ss.month, schel.warmUp, schel.description, schel.coolDown, schel.date, schel.observations, p.nome, ss.easyPace, ss.normalPace,
+        ss.moderatePace, ss.mediumPace, ss.strongPace, ss.shootingPace, a.name, t.description, rhyth.classification
+FROM Spreadsheet ss join Spreadsheet_Schedule sche on (ss.id = spreadsheet_id)
+join Schedule schel on (schedules_id = schel.id) join Pessoa p on (p.id = ss.student_id)
+join Advice a on (p.advice_id = a.id) join Team t on (p.team_id = t.id)
+join RhythmTable rhyth on (p.classification_id = rhyth.id)
+where t.id = $P{TURMA_ID}
+and   ss.month = $P{MES}
+and   ss.year  = $P{ANO}
+order by p.nome,ss.id, schel.date]]>
+	</queryString>
+	<field name="id" class="java.lang.Long"/>
+	<field name="month" class="java.lang.Integer"/>
+	<field name="warmUp" class="java.lang.String"/>
+	<field name="description" class="java.lang.String"/>
+	<field name="coolDown" class="java.lang.String"/>
+	<field name="date" class="java.sql.Date"/>
+	<field name="observations" class="java.lang.String"/>
+	<field name="nome" class="java.lang.String"/>
+	<field name="easyPace" class="java.lang.String"/>
+	<field name="normalPace" class="java.lang.String"/>
+	<field name="moderatePace" class="java.lang.String"/>
+	<field name="mediumPace" class="java.lang.String"/>
+	<field name="strongPace" class="java.lang.String"/>
+	<field name="shootingPace" class="java.lang.String"/>
+	<field name="name" class="java.lang.String"/>
+	<field name="classification" class="java.lang.String"/>
+	<group name="Aluno" isStartNewPage="true">
+		<groupExpression><![CDATA[$F{nome}]]></groupExpression>
+		<groupHeader>
+			<band/>
+		</groupHeader>
+	</group>
+	<group name="planilha" isStartNewPage="true">
+		<groupExpression><![CDATA[$F{id}]]></groupExpression>
+		<groupHeader>
+			<band height="67">
+				<rectangle>
+					<reportElement mode="Transparent" x="312" y="16" width="204" height="45"/>
+				</rectangle>
+				<textField>
+					<reportElement mode="Transparent" x="98" y="49" width="100" height="15"/>
+					<textElement>
+						<font fontName="Arial" size="10"/>
+					</textElement>
+					<textFieldExpression><![CDATA[(new DateFormatSymbols(new Locale("pt", "BR")).getMonths()[$F{month}])+" / "+$P{ANO}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement mode="Transparent" x="7" y="49" width="92" height="15"/>
+					<textElement>
+						<font fontName="Arial" size="10"/>
+					</textElement>
+					<text><![CDATA[Mês de Referência: ]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Transparent" x="7" y="7" width="242" height="26"/>
+					<textElement>
+						<font fontName="Arial" size="18" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Planilha de Treino]]></text>
+				</staticText>
+				<textField>
+					<reportElement mode="Transparent" x="8" y="33" width="287" height="15"/>
+					<textElement>
+						<font fontName="Arial" size="10" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{nome}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement mode="Transparent" x="351" y="26" width="26" height="15"/>
+					<textElement>
+						<font fontName="Arial" size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{easyPace}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement mode="Transparent" x="380" y="43" width="47" height="15"/>
+					<textElement>
+						<font fontName="Arial" size="8"/>
+					</textElement>
+					<text><![CDATA[Médio]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Transparent" x="456" y="43" width="29" height="15"/>
+					<textElement>
+						<font fontName="Arial" size="8"/>
+					</textElement>
+					<text><![CDATA[Tiro]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Transparent" x="316" y="26" width="35" height="15"/>
+					<textElement>
+						<font fontName="Arial" size="8"/>
+					</textElement>
+					<text><![CDATA[Suave]]></text>
+				</staticText>
+				<textField isBlankWhenNull="true">
+					<reportElement mode="Transparent" x="427" y="26" width="26" height="15"/>
+					<textElement>
+						<font fontName="Arial" size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{moderatePace}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement mode="Transparent" x="427" y="43" width="26" height="15"/>
+					<textElement>
+						<font fontName="Arial" size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{mediumPace}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement mode="Transparent" x="316" y="43" width="35" height="15"/>
+					<textElement>
+						<font fontName="Arial" size="8"/>
+					</textElement>
+					<text><![CDATA[Normal]]></text>
+				</staticText>
+				<textField isBlankWhenNull="true">
+					<reportElement mode="Transparent" x="485" y="43" width="26" height="15"/>
+					<textElement>
+						<font fontName="Arial" size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{shootingPace}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement mode="Transparent" x="380" y="26" width="47" height="15"/>
+					<textElement>
+						<font fontName="Arial" size="8"/>
+					</textElement>
+					<text><![CDATA[Moderado]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Transparent" x="456" y="26" width="29" height="15"/>
+					<textElement>
+						<font fontName="Arial" size="8"/>
+					</textElement>
+					<text><![CDATA[Forte]]></text>
+				</staticText>
+				<textField isBlankWhenNull="true">
+					<reportElement mode="Transparent" x="485" y="26" width="26" height="15"/>
+					<textElement>
+						<font fontName="Arial" size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{strongPace}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement mode="Transparent" x="351" y="43" width="26" height="15"/>
+					<textElement>
+						<font fontName="Arial" size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{normalPace}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement mode="Opaque" x="377" y="8" width="70" height="15"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$F{classification}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+	</group>
+	<background>
+		<band height="802" splitType="Stretch">
+			<image scaleImage="FillFrame">
+				<reportElement x="-13" y="-15" width="574" height="817"/>
+				<imageExpression><![CDATA[$P{TIMBRADO}]]></imageExpression>
+			</image>
+			<textField>
+				<reportElement x="-24" y="201" width="35" height="400"/>
+				<textElement textAlignment="Center" rotation="Left">
+					<font fontName="Arial" size="20" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{name}]]></textFieldExpression>
+			</textField>
+		</band>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="37" splitType="Stretch">
+			<textField>
+				<reportElement mode="Transparent" x="75" y="4" width="53" height="15"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{warmUp}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="RelativeToTallestObject" mode="Transparent" x="129" y="3" width="409" height="31" isPrintWhenDetailOverflows="true"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Treino: "+(($F{description}!=null)?$F{description}:"")
++"\n"+
+"Obs: "+ (($F{observations}!=null)?$F{observations}:"")]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Transparent" x="75" y="19" width="53" height="15"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{coolDown}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Transparent" x="47" y="4" width="28" height="10" forecolor="#000000"/>
+				<textElement>
+					<font fontName="Arial" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Aquec:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Transparent" x="47" y="19" width="28" height="10" forecolor="#000000"/>
+				<textElement>
+					<font fontName="Arial" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Desaq:]]></text>
+			</staticText>
+			<textField pattern="dd">
+				<reportElement stretchType="RelativeToBandHeight" x="7" y="3" width="19" height="31" forecolor="#666666"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="Left">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{date}]]></textFieldExpression>
+			</textField>
+			<textField pattern="EEE">
+				<reportElement stretchType="RelativeToBandHeight" x="26" y="3" width="19" height="31" forecolor="#666666"/>
+				<textElement textAlignment="Center" verticalAlignment="Top" rotation="Left">
+					<font fontName="Arial" size="7" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{date}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement positionType="Float" x="5" y="35" width="534" height="1"/>
+				<graphicElement>
+					<pen lineStyle="Solid"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement positionType="Float" x="5" y="2" width="534" height="1"/>
+				<graphicElement>
+					<pen lineStyle="Solid"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement stretchType="RelativeToBandHeight" x="45" y="3" width="1" height="32"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement stretchType="RelativeToBandHeight" x="128" y="3" width="1" height="32"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement stretchType="RelativeToBandHeight" x="538" y="3" width="1" height="32"/>
+				<graphicElement>
+					<pen lineWidth="1.0"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement stretchType="RelativeToBandHeight" x="5" y="3" width="1" height="32"/>
+				<graphicElement>
+					<pen lineWidth="1.0"/>
+				</graphicElement>
+			</line>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="35" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

@@ -1,0 +1,108 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="#{loginBean.templateVersion}">
+
+	<ui:define name="content">
+		<h:form>
+			<p:messages id="messages" showDetail="false" />
+			<div class="pageTitleBox">#{msgs['event.maintitle']}</div>
+			<div class="subtitle">#{msgs['event.subtitle']}</div> 
+			<table>				
+				<tr>
+				<td>
+	    		<p:selectOneMenu value="#{eventMBean.findActive}" style="width:200px;">
+	    			<f:selectItem itemLabel="#{msgs['event.active.true']}" itemValue="true" />
+	    			<f:selectItem itemLabel="#{msgs['event.active.false']}" itemValue="false" />                        	 
+	    		</p:selectOneMenu>
+	    		</td>
+	    		<td>
+		   		<p:commandButton action="#{eventMBean.find}" update="eventListTable" title="#{msgs['template.button.find']}"
+		     		value="#{msgs['template.button.find']}"/>
+		     	</td>
+		     	</tr>
+		     </table>
+   		<br />
+		<div id="painel">
+			<p:dataTable var="event" value="#{eventMBean.eventList}"
+				id="eventListTable" emptyMessage="#{msgs['template.msg.emptyMessage']}"
+					paginator="true" rows="10" paginatorPosition="bottom" paginatorAlwaysVisible="false"
+					paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}">
+
+				<p:column style="max-width:200px;">
+					<f:facet name="header">
+						<h:outputText value="#{msgs['event.name']}" />
+					</f:facet>
+					
+					<h:commandLink action="#{eventMBean.goToModify}">          				
+           				<h:outputText value="#{event.name}" />
+           				<f:setPropertyActionListener target="#{eventMBean.event.id}" value="#{event.id}" />
+           			</h:commandLink> 
+					
+				</p:column>
+				
+				<p:column style="max-width:200px;">
+					<f:facet name="header">
+						<h:outputText value="#{msgs['event.distance']}" />
+					</f:facet>
+					<h:outputText value="#{event.distance}" />
+				</p:column>	
+				
+				<p:column style="max-width:200px;">
+					<f:facet name="header">
+						<h:outputText value="#{msgs['event.location']}" />
+					</f:facet>
+					<h:outputText value="#{event.location}" />
+				</p:column>
+				
+				<p:column style="text-align:center;">
+					<f:facet name="header">
+						<h:outputText value="#{msgs['event.date']}" />
+					</f:facet>
+					<h:outputText value="#{event.date}">										
+	                	<f:convertDateTime pattern="dd/MM/yyyy" />
+					</h:outputText>
+					<h:outputText value=" #{event.time}" />
+				</p:column>
+				
+							
+				
+				<p:column style="text-align:center;  white-space: nowrap;" >  
+	                <f:facet name="header">  
+	                    <h:outputText value="" />  
+	                </f:facet>           			
+           				 			
+           			<p:commandButton icon="pdf" title="#{msgs['template.button.report.event']}" action="#{eventMBean.goToReport}" ajax="false">           			
+     					<f:setPropertyActionListener target="#{eventMBean.event.id}" value="#{event.id}" />
+           			</p:commandButton>
+           			             			
+           			<p:commandButton icon="addevent" action="#{eventMBean.goToCustomerEvent}" ajax="false" title="#{msgs['event.add.studant']}">           			
+     					<f:setPropertyActionListener target="#{eventMBean.event.id}" value="#{event.id}" />
+           			</p:commandButton>  
+           				 			
+           			<p:commandButton icon="delete" oncomplete="PF('deleteConfirmation').show()" title="#{msgs['template.button.delete']}">           			
+     					<f:setPropertyActionListener target="#{eventMBean.event.id}" value="#{event.id}" />
+           			</p:commandButton>               			
+           			
+	            </p:column>  
+			</p:dataTable>
+		</div>
+		
+     	<p:confirmDialog message="#{msgs['template.msg.delete.confirmation']}"  
+           	severity="alert" widgetVar="deleteConfirmation">
+   			<p:commandButton value="#{msgs['template.button.yes']}" oncomplete="deleteConfirmation.hide()" 
+   				action="#{eventMBean.delete}" ajax="false" />
+   			<p:commandButton value="#{msgs['template.button.no']}" onclick="deleteConfirmation.hide()" />
+		</p:confirmDialog> 		
+				
+		
+		<div class="buttons"> 
+			<p:commandButton value="#{msgs['template.button.incluir']}"
+				action="#{eventMBean.goToCreate}" ajax="false"  />
+		</div>
+		
+		</h:form>
+	</ui:define>
+</ui:composition>

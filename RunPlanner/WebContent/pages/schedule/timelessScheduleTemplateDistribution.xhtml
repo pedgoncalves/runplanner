@@ -1,0 +1,97 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="#{loginBean.templateVersion}">
+	
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+			
+ 	<ui:define name="content">
+	 <script type="text/javascript">
+			PrimeFaces.locales['pt'] = {
+	               closeText: 'Fechar',
+	               prevText: 'Anterior',
+	               nextText: 'Próximo',
+	               currentText: 'Começo',
+	               monthNames: ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'],
+	               monthNamesShort: ['Jan','Fev','Mar','Abr','Mai','Jun', 'Jul','Ago','Set','Out','Nov','Des'],
+	               dayNames: ['Domingo','Segunda','Terça','Quarta','Quinta','Sexta','Sábado'],
+	               dayNamesShort: ['Dom','Seg','Ter','Qua','Qui','Sex','Sáb'],
+	               dayNamesMin: ['D','S','T','Q','Q','S','S'],
+	               weekHeader: 'Semana',
+	               firstDay: 0,
+	               isRTL: false,
+	               showMonthAfterYear: false,
+	               yearSuffix: '',
+	               timeOnlyTitle: 'Só Horas',
+	               timeText: 'Tempo',
+	               hourText: 'Hora',
+	               minuteText: 'Minuto',
+	               secondText: 'Segundo',
+	               currentText: 'Data Atual',
+	               ampm: false,
+	               month: 'Mês',
+	               week: 'Semana',
+	               day: 'Dia',
+	               allDayText : 'Todo Dia'
+	            };
+		</script>	
+		<style>
+			.ui-datepicker {
+				border: 1px solid #DDDDDD !important; 
+				background: #F9F9F9 !important;
+			}
+		</style>
+			
+		<h:form  prependId="false">
+
+			<p:messages id="messages" showDetail="false" /> 
+			<div class="pageTitleBox">#{msgs['scheduleTemplate.maintitle']}</div>
+			<div class="subtitle">#{msgs['scheduleTemplate.subtitle']}</div>
+
+				Associar à um <b>Aluno</b> individualmente ou a <b>Todos</b>:<br/>
+				<p:selectOneMenu style="width:250px; overflow:hidden;" value="#{timelessScheduleTemplateMBean.customerDist.id}" id="selectAluno">  
+					<f:selectItem itemLabel="" itemValue="-1" />
+					<f:selectItem itemLabel="TODOS" itemValue="0" /> 
+		    		<f:selectItems value="#{timelessScheduleTemplateMBean.customerList}"  />
+		    		
+		    		<p:ajax update="selectRhythm,selectTeam" listener="#{timelessScheduleTemplateMBean.handleSelectChangeCustomer}" />  
+		    	</p:selectOneMenu><br/><br/>
+				
+				<b>OU</b> associar à uma <b>Classificação</b>:<br/>
+				<p:selectOneMenu style="width:250px; overflow:hidden;" value="#{timelessScheduleTemplateMBean.rhythmDist.id}"  id="selectRhythm">  
+					<f:selectItem itemLabel="" itemValue="-1" />
+		    		<f:selectItems value="#{timelessScheduleTemplateMBean.rhythmList}"  />
+		    		
+		    		<p:ajax update="selectAluno,selectTeam" listener="#{timelessScheduleTemplateMBean.handleSelectChangeRhythm}" />
+		    	</p:selectOneMenu><br/><br/>
+				
+				
+				<b>OU</b> associar à uma <b>Turma</b>:<br/>
+				<p:selectOneMenu style="width:250px; overflow:hidden;" value="#{timelessScheduleTemplateMBean.teamDist.id}" id="selectTeam" >  
+					<f:selectItem itemLabel="" itemValue="-1" />
+		    		<f:selectItems value="#{timelessScheduleTemplateMBean.teamList}"  />
+		    		
+		    		<p:ajax update="selectRhythm,selectAluno" listener="#{timelessScheduleTemplateMBean.handleSelectChangeTeam}" />
+		    	</p:selectOneMenu><br/><br/>
+		    	
+		    	#{msgs['schedule.template.apply.text']}<br/>
+		    	<p:calendar value="#{timelessScheduleTemplateMBean.initialDate}" id="popupCal" required="true" locale="pt" pattern="dd/MM/yyyy"
+		    	requiredMessage="#{msgs['spreadsheet.date.mandatory']}" style="background: red !important;"/><br/><br/>
+		    	
+				<p:selectBooleanCheckbox value="#{timelessScheduleTemplateMBean.sendEmail}" itemLabel="#{msgs['schedule.template.distribution.send']}"/><br/><br/>
+		    	
+		    	<div class="buttons">
+					<p:commandButton value="#{msgs['schedule.template.distribution']}" update="messages" ajax="false"              
+				        action="#{timelessScheduleTemplateMBean.distribution}" />      	 
+				    
+				    <p:commandButton value="#{msgs['template.button.cancelar']}" ajax="false"
+						action="#{timelessScheduleTemplateMBean.goToList}" immediate="true" />
+				</div>
+				
+		</h:form>
+		
+  </ui:define>
+  
+</ui:composition>

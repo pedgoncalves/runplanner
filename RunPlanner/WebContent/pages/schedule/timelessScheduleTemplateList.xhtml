@@ -1,0 +1,67 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="#{loginBean.templateVersion}">
+		
+  <ui:define name="content">
+		<h:form>
+			<br/>		
+			<p:panel id="filter" header="Planilhas"> 
+				<p:messages id="messages" showDetail="false" /> 
+			</p:panel>
+			<br/>
+		    <div id="painel" class="tabela">   
+		    
+		        <p:dataTable id="templateList" value="#{timelessScheduleTemplateMBean.timelessScheduleTemplateList}" var="template"
+					emptyMessage="#{msgs['template.msg.emptyMessage']}"
+					paginator="true" rows="10" paginatorPosition="bottom" paginatorAlwaysVisible="false"
+					paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}">
+		        
+		            <p:column style="max-width:200px;">  
+		                <f:facet name="header">  
+		                    <h:outputText value="#{msgs['schedule.template.title']}" />  
+		                </f:facet>  
+		                
+		                <h:commandLink action="#{timelessScheduleTemplateMBean.goToModify}">          				
+           					<h:outputText value="#{template.title}" />
+           					<f:setPropertyActionListener target="#{timelessScheduleTemplateMBean.timelessScheduleTemplate.id}" value="#{template.id}" />
+           				</h:commandLink>		                
+		            </p:column>  
+		  
+		            <p:column style="text-align:center;">  
+		                <f:facet name="header">  
+		                    <h:outputText value="" />  
+		                </f:facet>           
+	           			           			  				           				
+						<p:commandButton icon="ui-icon-pencil" action="#{timelessScheduleTemplateMBean.goToModify}" ajax="false" title="#{msgs['template.button.lista.um.template']}">           			
+	     					<f:setPropertyActionListener target="#{timelessScheduleTemplateMBean.timelessScheduleTemplate.id}" value="#{template.id}" />
+	           			</p:commandButton>
+	           			  				           				
+						<p:commandButton icon="ui-icon-transferthick-e-w" action="#{timelessScheduleTemplateMBean.goToDistribution}" ajax="false" title="#{msgs['schedule.template.distribution.wizard']}">           			
+	     					<f:setPropertyActionListener target="#{timelessScheduleTemplateMBean.timelessScheduleTemplate.id}" value="#{template.id}" />
+	           			</p:commandButton>  				           				
+            			
+	           			<p:commandButton icon="delete" oncomplete="deleteConfirmation.show()" title="#{msgs['template.button.delete']}">           			
+	     					<f:setPropertyActionListener target="#{timelessScheduleTemplateMBean.timelessScheduleTemplate.id}" value="#{template.id}" />
+	           			</p:commandButton>
+		            </p:column>  
+		        </p:dataTable>  
+		        
+		   </div>
+		   
+	     	<p:confirmDialog message="#{msgs['template.msg.delete.confirmation']}"  
+	           	severity="alert" widgetVar="deleteConfirmation" position="50%,50">
+	   			<p:commandButton value="#{msgs['template.button.yes']}" oncomplete="deleteConfirmation.hide()" 
+	   				action="#{timelessScheduleTemplateMBean.delete}" ajax="false" />
+	   			<p:commandButton value="#{msgs['template.button.no']}" onclick="deleteConfirmation.hide()" />
+			</p:confirmDialog> 			   
+		    
+		    <div class="buttons">
+			    <p:commandButton value="#{msgs['template.button.incluir']}" ajax="false" 
+			    	action="#{timelessScheduleTemplateMBean.goToCreate}"/>			   	
+		    </div>
+		</h:form>
+  </ui:define>
+</ui:composition>

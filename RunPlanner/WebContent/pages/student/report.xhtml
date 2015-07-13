@@ -1,0 +1,35 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	template="#{loginBean.templateVersion}">
+
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+	
+	<ui:define name="content">
+	
+		<br/><br/>
+		<p:panel id="filter" header="#{msgs['graph.progress.title']}"> 
+			<p:messages id="messages" showDetail="false" /> 
+		</p:panel>			
+	
+		<p:tabView id="tabView" dynamic="false" cache="true" >    			
+    	  	<p:tab title="#{msgs['graph.progress.title']}" id="progressGraphTab">
+    			<f:subview id="progressGraph"> 
+					<ui:include src="progressReport.xhtml" />
+				</f:subview>    		
+    		</p:tab>
+    		
+    		<p:tab title="#{msgs['graph.activity.title']}" id="activityGraphTab">
+    			<f:subview id="activityGraph">
+					<ui:include src="activityReport.xhtml" />
+				</f:subview>
+    		</p:tab>
+		</p:tabView>
+	
+	</ui:define>
+	
+</ui:composition>
+		

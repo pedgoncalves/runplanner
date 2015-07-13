@@ -1,0 +1,282 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="/pages/template/template.xhtml"
+	xmlns:sec="http://www.springframework.org/security/facelets/tags">
+
+	<ui:define name="content">
+	
+	<style type="text/css">
+		.ui-button-text{
+    		color: #02425C !important;
+		}		
+	</style>	
+	
+		<h:form>
+			<p:panel id="content">
+
+			<br/><br/>
+			<p:panel id="filter" header="#{msgs['template.dashboard.title']}"> 
+			</p:panel>
+			
+			#{dashboardMBean.data}	
+			
+			<table width="100%">
+				<tr style="padding-bottom: 10px;">
+					<td colspan="2">						
+						<div class="filtro">
+	 						<table width="100%">
+	 						<tr>
+	 							<td colspan="3">
+	 								<div class="blueHeader"><h:outputText value="#{dashboardMBean.adviceName}" /></div>
+	 							</td>
+	 						</tr>
+	 						<tr>
+	 							<td>					 							
+									<div class="blueHeader"><h:outputText value="#{msgs['dashboard.title.resume.customer']}"/></div>
+	 							</td>					 						
+	 							<td>
+									<div class="blueHeader"><h:outputText value="#{msgs['dashboard.title.resume.teacher']}"/></div>				 							
+	 							</td>					 		
+	 							<td>
+									<div class="blueHeader"><h:outputText value="#{msgs['dashboard.title.resume.event']}"/></div>	
+	 							</td>
+	 						</tr>
+	 						
+				 			<tr>								 										 				
+				 				<td align="center">							 				
+				 					<div class="bigNumber"><h:outputText value="#{dashboardMBean.activeCustomerNumber}"/></div>
+				 				</td>
+				 				<td align="center">				 				
+				 					<div class="bigNumber"><h:outputText value="#{dashboardMBean.activeTeacherNumber}"/></div>
+				 				</td>	
+				 				<td align="center">							 				
+				 					<div class="bigNumber"><h:outputText value="#{dashboardMBean.eventNumber}"/></div>
+				 				</td>
+				 			</tr>							 			
+				 			</table>
+				 		</div>						
+					</td>
+				</tr>
+			
+				<tr>
+				<td align="center"  width="65%" style="padding-right: 10px;" valign="top">
+				
+					<!-- FEED de NOTICIAS -->				
+					<!--  div id="painel" class="filtro" -->
+					<div style="float:left;width:545px;min-height:600px;margin-top:10px;padding-right: 10px;">
+					
+						<!-- Nova mensagem -->
+						<p:panel rendered="#{dashboardMBean.newMessageNumber>0}">
+							<table width="100%">
+								<tr>
+									<td class="newMessageBox">
+										<h:commandLink action="#{mailboxMBean.goToList}" >
+											<h:outputText value="#{msgs['template.msg.new1']} " />
+											<b>#{dashboardMBean.newMessageNumber}</b>
+											<h:outputText value=" #{msgs['template.msg.new2']}" />
+										</h:commandLink>		
+									</td>
+								</tr>
+							</table>
+						</p:panel>
+					
+						<h2>#{msgs['dashboard.title.feed']}</h2>
+					
+						<p:dataList value="#{dashboardMBean.notifications}" var="notification" itemType="none" id="notification">					        
+					        <p:column rendered="#{notification.type.id==0}">				        	
+					        	<div id="painel" class="tabela">
+						        <table>
+						        	<tr>
+						        		<td align="center" width="45">
+						        			<img src="${facesContext.externalContext.requestContextPath}/images/event.png" width="16" style="padding-right: 5px;" />
+						        		</td>
+						        		<td style="text-align:left;">
+							        		<b><h:outputText value="#{msgs['feed.msg.new.event']}" /></b><br/>	
+							        		<h:outputText value="#{msgs['feed.msg.new.event2']}" />	
+							        		<b>	
+								        	<h:commandLink  action="#{eventMBean.goToModify}" >          				
+					           					<h:outputText value="#{notification.title}" />
+					           					<f:setPropertyActionListener target="#{eventMBean.event.id}" value="#{notification.objectId}" />
+					           				</h:commandLink>
+					           				</b>
+					           				<br/>
+					           				<h:outputText value="#{notification.date}"  styleClass="subtitle">
+					           					<f:convertDateTime pattern="dd/MM/yyyy" />
+					           				</h:outputText>
+						        		</td>
+						        	</tr>
+						        </table>
+						        </div>
+						        <br/>
+					        </p:column>
+					        
+					        <p:column rendered="#{notification.type.id==1}">
+					        	<div id="painel" class="tabela">
+						        <table>
+						        	<tr>
+						        		<td align="center" width="45">					        		
+						        			<p:graphicImage id="photo" value="#{photoMBean.streamedUserThumb}" width="45" height="45"
+						        				redended="#{notification.customer.photo!=null}" style="padding-right: 5px;">
+						        				<f:param name="client_id" value="#{notification.customer.id}" />
+						        			</p:graphicImage>
+						        		</td>
+						        		<td style="text-align:left;">
+						        		
+						        			<h:commandLink  action="#{profileMBean.goToView}" >  
+							        			<b><h:outputText value="#{notification.customer.shortName}"/> </b> 
+					           					<f:setPropertyActionListener target="#{profileMBean.customer.id}" value="#{notification.customer.id}" />
+											</h:commandLink>	
+											
+							        		<h:outputText value="#{msgs['feed.msg.confirm.event']}" />
+							        			 
+								        	<b><h:commandLink  action="#{eventMBean.goToModify}" >          				
+					           					<h:outputText value="#{notification.title}" />
+					           					<f:setPropertyActionListener target="#{eventMBean.event.id}" value="#{notification.objectId}" />
+					           				</h:commandLink></b>
+					           				<br/>
+					           				<h:outputText value="#{notification.date}"  styleClass="subtitle">
+					           					<f:convertDateTime pattern="dd/MM/yyyy" />
+					           				</h:outputText>
+						        		</td>
+						        	</tr>
+						        </table>
+						        </div>
+						        <br/>
+					        </p:column>	 
+					        
+							<p:column rendered="#{notification.type.id==2}">
+					        	<div id="painel" class="tabela">
+						        <table>
+						        	<tr>
+						        		<td align="center" width="45">					        		
+						        			<p:graphicImage id="photoAct" value="#{photoMBean.streamedUserThumb}" width="45" height="45"
+						        				redended="#{notification.customer.photo!=null}" style="padding-right: 5px;">
+						        				<f:param name="client_id" value="#{notification.customer.id}" />
+						        			</p:graphicImage>
+						        		</td>
+						        		<td style="text-align:left;"> 
+						        			<h:commandLink  action="#{profileMBean.goToView}" >  
+							        			<b><h:outputText value="#{notification.customer.shortName}"/> </b> 
+					           					<f:setPropertyActionListener target="#{profileMBean.customer.id}" value="#{notification.customer.id}" />
+											</h:commandLink>
+											
+								        	<h:commandLink  action="#{activityMBean.goToView}" >
+							        			<h:outputText value="#{msgs['feed.msg.new.activity']}" />
+							        			<b><h:outputText value="#{notification.activity.totalDistance}" >
+							        				<f:convertNumber pattern="#0.00"/>	
+												</h:outputText></b> Km.
+												
+												<h:outputText value=" (#{notification.event.name})" rendered="#{notification.event!=null}"/>
+							        			
+							        			<f:setPropertyActionListener target="#{activityMBean.activity.id}" value="#{notification.objectId}" />
+					           				</h:commandLink>
+					           				<br/>
+					           				<h:outputText value="#{notification.date}"  styleClass="subtitle">
+					           					<f:convertDateTime pattern="dd/MM/yyyy" />
+					           				</h:outputText>
+					           				<h:outputText value=" | #{notification.commentNumber} #{msgs['dashboard.comments.number']}"  styleClass="subtitle" />
+
+					           				
+						        		</td>
+						        	</tr>
+						        </table>
+						        </div>
+						        <br/>
+					        </p:column>					             
+					    </p:dataList>
+				    </div> 	
+				    
+				    <p:commandButton value="#{msgs['template.button.load.more']}" update="notification" action="#{dashboardMBean.loadMore}" styleClass="loadMoreButton"/>		    
+				</td>
+				
+				<td valign="top" >
+				
+					<!-- ANIVERSARIANTES-->
+							
+					<div class="filtro">
+						<div class="blueHeader">#{msgs['dashboard.birthday']}</div>
+						<div class="tabela">
+						<p:dataTable var="customer" value="#{dashboardMBean.birthdayList}" 
+							paginator="true" rows="5" paginatorPosition="bottom"
+							paginatorAlwaysVisible="false" 
+							paginatorTemplate="{FirstPageLink} {PreviousPageLink} {NextPageLink} {LastPageLink}"
+							emptyMessage="#{msgs['dashboard.birthday.empty']}">
+													
+							<p:column style="max-width:100px;">
+								<f:facet name="header">
+									<h:outputText value="#{msgs['template.aluno']}" />
+								</f:facet>
+								<table>
+									<tr>
+										<td>
+											<p:graphicImage value="#{photoMBean.streamedUserThumb}" width="45" height="45"
+									        	redended="#{customer.photo!=null}">
+									        	<f:param name="client_id" value="#{customer.id}" />
+									        </p:graphicImage>		
+										</td>
+										<td valign="middle" align="left" style="text-align: left !important;">
+											<h:commandLink  action="#{profileMBean.goToView}" >  
+												<h:outputText value="#{customer.shortName}" />
+					           					<f:setPropertyActionListener target="#{profileMBean.customer.id}" value="#{customer.id}" />
+											</h:commandLink>	
+										</td>
+									</tr>
+								</table>				
+							</p:column>
+							
+							<p:column  style="text-align: center;">
+								<f:facet name="header">
+									<h:outputText value="Data" />
+								</f:facet>
+								<h:outputText value="#{customer.dtNascimento}">							
+				                	<f:convertDateTime pattern="dd/MM" />
+				                </h:outputText>
+							</p:column>	
+						</p:dataTable>
+						</div>
+					</div><br/>
+						
+					<!-- PAGAMENTO -->
+					<sec:ifAnyGranted roles="ROLE_ASSESSOR">
+					<div class="filtro">
+						<div class="tabela">
+						<p:dataTable var="customer" value="#{dashboardMBean.paymentList}" 
+							paginator="true" rows="5" paginatorPosition="bottom"
+							paginatorAlwaysVisible="false" 
+							paginatorTemplate="{FirstPageLink} {PreviousPageLink} {NextPageLink} {LastPageLink}"
+							emptyMessage="#{msgs['dashboard.payday.empty']}">
+											
+							<p:column style="max-width:150px;">
+								<f:facet name="header">
+									<h:outputText value="#{msgs['dashboard.payday']}" />
+								</f:facet>
+								<h:commandLink  action="#{profileMBean.goToView}" >  
+									<h:outputText value="#{customer.shortName}" />
+		           					<f:setPropertyActionListener target="#{profileMBean.customer.id}" value="#{customer.id}" />
+								</h:commandLink>	
+							</p:column>	
+						</p:dataTable>
+						</div>
+					</div><br/>
+					</sec:ifAnyGranted>
+									
+				</td>
+				</tr>
+			</table>
+			</p:panel>									
+		</h:form>
+		
+		<p:panel rendered="#{dashboardMBean.wizard}">
+			<ui:include src="../wizard/wizard.xhtml"/>
+		</p:panel>
+		
+		<p:panel rendered="#{dashboardMBean.paymentNotification}">
+			<ui:include src="../notification/advicePaymentNotification.xhtml"/>
+		</p:panel>
+
+	</ui:define>
+
+</ui:composition>

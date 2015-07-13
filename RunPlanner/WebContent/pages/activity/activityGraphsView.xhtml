@@ -1,0 +1,74 @@
+<ui:fragment xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+			 		
+			 		
+			<p:accordionPanel styleClass="filtro" rendered="#{activityMBean.paceGraphSerie!=null or activityMBean.altitudeGraph!=null}">  
+    			<p:tab title="Graficos"  titleStyle="font-size: 15px; border: 0px !important;">  
+    				
+    				<p:accordionPanel  multiple="true" activeIndex="0,1" >  
+						<p:tab title="Ritmo" rendered="#{activityMBean.paceGraphSerie!=null}" titleStyle="border:0px !important;">
+							<div id="paceGraph" style="width:100%;height:150px;text-align: center; overflow: hidden;"></div>
+							<hr width="90%" style="border: none; height:1px; background-color: gray;"/>
+						</p:tab>
+						
+    					<p:tab title="Altitude"  rendered="#{activityMBean.altitudeGraph!=null}" titleStyle="border:0px !important;">
+	    					<p:lineChart value="#{activityMBean.altitudeGraph}" legendPosition="e" 
+								style="width:100%;height:150px;overflow: hidden;" fill="true" seriesColors="68BE59"
+								minY="0" minX="0" maxX="#{activityMBean.activity.totalDistance*1000}"/>
+						</p:tab>											
+					</p:accordionPanel>
+					
+				</p:tab>
+			</p:accordionPanel>			 				
+
+			<script type="text/javascript">
+				$(document).ready(function() {
+				   
+					var serie = #{activityMBean.paceGraphSerie};	
+				     
+				    var plot1 = $.jqplot('paceGraph', [serie], {				       
+				    	animate: true,
+				        
+				        legend: {
+				            show: true,  
+				            location: 'ne'
+				        },				        
+				        
+				        series: [
+				        	{
+				        		label: "Ritmo",
+				        		showMarker: false,
+				        		fill: true,
+				        		fillAlpha: 0.50
+				        	}
+				        ],
+				        
+				        highlighter: {
+				            show: true,
+				            sizeAdjust: 5,
+				            tooltipAxes: 'y',   
+				            tooltipLocation: 'nw',
+				            useAxesFormatters: true,
+				            formatString: '<div class="highlighterDiv"><b><font color="#02425C">Ritmo: </font></b>%s Min/Km</div>'
+				        },
+				        
+				        axes: {
+				            xaxis: {
+				            	min: 0,
+				            	max: #{activityMBean.activity.totalDistance*1000}
+				            },
+				            yaxis: {
+				            	tickOptions:{ formatString: '%.2f' },
+				            	min: 0 
+				            }
+				        }
+				        
+				    });
+				});	
+			</script>
+
+</ui:fragment>

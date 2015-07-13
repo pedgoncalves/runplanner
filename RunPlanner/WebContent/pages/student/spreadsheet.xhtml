@@ -1,0 +1,196 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	template="#{loginBean.templateVersion}">
+
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+			
+	<ui:define name="content">
+	
+		<script type="text/javascript">		
+			PrimeFaces.widget.Schedule.prototype._oldInit = PrimeFaces.widget.Schedule.prototype.init;
+			PrimeFaces.widget.Schedule.prototype.init = function (cfg){
+			        cfg.columnFormat = {
+			             month: 'ddd',
+			             week: 'ddd d/M',
+			             day: 'dddd d/M'
+			        };
+	
+			    this._oldInit.apply(this, arguments);
+			};		
+		</script>
+			
+		<script type="text/javascript">
+			PrimeFaces.locales['pt'] = {
+                closeText: 'Fechar',
+                prevText: 'Anterior',
+                nextText: 'Próximo',
+                currentText: 'Começo',
+                monthNames: ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'],
+                monthNamesShort: ['Jan','Fev','Mar','Abr','Mai','Jun', 'Jul','Ago','Set','Out','Nov','Des'],
+                dayNames: ['Domingo','Segunda','Terça','Quarta','Quinta','Sexta','Sábado'],
+                dayNamesShort: ['Dom','Seg','Ter','Qua','Qui','Sex','Sáb'],
+                dayNamesMin: ['D','S','T','Q','Q','S','S'],
+                weekHeader: 'Semana',
+                firstDay: 0,
+                isRTL: false,
+                showMonthAfterYear: false,
+                yearSuffix: '',
+                timeOnlyTitle: 'Só Horas',
+                timeText: 'Tempo',
+                hourText: 'Hora',
+                minuteText: 'Minuto',
+                secondText: 'Segundo',
+                currentText: 'Data Atual',
+                ampm: false,
+                month: 'Mês',
+                week: 'Semana',
+                day: 'Dia',
+                allDayText : 'Todo Dia'
+	            };
+		</script>	
+	
+		<h:form>
+			<p:messages id="messages" showDetail="false" /> 
+			<div class="pageTitleBox">#{msgs['spreadsheet.pagetitle.aluno']}</div>
+			<div class="subtitle">#{msgs['spreadsheet.subtitle.aluno']}</div>
+			<br/>
+			
+			<p:panel id="filter"> 
+				
+				<div id="filterDetails" style="padding:5px; width100%; font-size: 12px; vertical-align: middle;" class="filtro">
+					<table>
+						<tr>
+							<td>											
+								<h:outputLabel value="#{msgs['spreadsheet.student.select']}"  style="padding:0px !important; width:60px !important;"/>
+							</td>
+							<td>									              
+								<p:selectOneMenu value="#{studentSpreadsheetMBean.spreadsheet.id}" style="width:200px; overflow:hidden;">   
+								    <f:selectItems value="#{studentSpreadsheetMBean.spreadsheetListSelect}"  />  
+								</p:selectOneMenu>	
+							</td>
+							<td>	
+								<p:commandButton action="#{studentSpreadsheetMBean.updateSpreadsheet}" 
+				            		title="#{msgs['template.button.find']}" ajax="false"
+				            		value="#{msgs['template.button.find']}" />
+				            </td>
+				        </tr>
+				    </table>
+				</div>		
+			</p:panel>
+						
+			<br/>
+				
+			<p:outputPanel id="panel" >
+							
+
+				<h3><h:outputText value="Tabela de Ritmos"/></h3>
+			    <h:panelGrid columns="6" cellpadding="10" width="100%">  
+			        <h:outputLabel value="#{msgs['spreadsheet.rhythm.easyPace']}" />  
+           			<h:outputText value="#{studentSpreadsheetMBean.spreadsheet.easyPace}" mask="99:99"/>
+           			
+           			<h:outputLabel value="#{msgs['spreadsheet.rhythm.normalPace']}" />  
+           			<h:outputText value="#{studentSpreadsheetMBean.spreadsheet.normalPace}" mask="99:99"/>
+           			
+           			<h:outputLabel value="#{msgs['spreadsheet.rhythm.moderatePace']}" />  
+           			<h:outputText value="#{studentSpreadsheetMBean.spreadsheet.moderatePace}" mask="99:99"/>
+           			
+           			<h:outputLabel value="#{msgs['spreadsheet.rhythm.mediumPace']}" />  
+           			<h:outputText value="#{studentSpreadsheetMBean.spreadsheet.mediumPace}" mask="99:99"/>
+           			
+           			<h:outputLabel value="#{msgs['spreadsheet.rhythm.strongPace']}" />  
+           			<h:outputText value="#{studentSpreadsheetMBean.spreadsheet.strongPace}" mask="99:99"/>
+           			
+           			<h:outputLabel value="#{msgs['spreadsheet.rhythm.shootingPace']}" />  
+           			<h:outputText value="#{studentSpreadsheetMBean.spreadsheet.shootingPace}" mask="99:99"/>
+			    </h:panelGrid>  
+
+				  				
+				<h3><h:outputText value="#{msgs['graph.progress.spread']}" rendered="#{studentSpreadsheetMBean.spreadsheet.id!=null}"/></h3>
+				<br/><br/>
+					
+				<p:schedule value="#{studentSpreadsheetMBean.eventModel}" 
+					editable="true"  
+					resizable="false"
+					draggable="false" 
+					initialDate="#{studentSpreadsheetMBean.initialDate}"
+					widgetVar="myschedule" 
+					rightHeaderTemplate="" 
+					leftHeaderTemplate="#{studentSpreadsheetMBean.leftHeaderTemplate}" 
+					locale="pt" 
+					rendered="#{studentSpreadsheetMBean.spreadsheet.id!=null}"
+					view="#{studentSpreadsheetMBean.type}"
+					aspectRatio="#{studentSpreadsheetMBean.type=='basicWeek'?5:1.2}">					  
+        			<p:ajax event="eventSelect" listener="#{studentSpreadsheetMBean.onEventSelect}" update="eventDialog" oncomplete="PF('eventDialog').show()" />        			    
+				</p:schedule>	
+				
+				<div class="buttons">  
+			    	<p:commandButton value="#{msgs['template.button.imprimir']}" ajax="false" 
+			    		action="#{studentSpreadsheetMBean.goToReport}">
+			    	</p:commandButton>
+			    </div>         			
+				
+				<p:dialog widgetVar="eventDialog" header="#{msgs['spreadsheet.event.detail']}" modal="true" width="#{studentSpreadsheetMBean.dialogSize}" height="515" 
+			 		id="eventDialog" position="center"  >  
+			 		
+			 		<div id="eventDetails" style="padding: 10px; width: 480px; position: absolute; padding-right: 0px;">
+			        	<p>  
+				        	<h:outputLabel for="from" value="#{msgs['schedule.event.date']}"  style="width: 105px;"/>  
+				        	<p:inputMask id="from" value="#{studentSpreadsheetMBean.schedule.date}" mask="99/99/9999" disabled="true">  
+				                <f:convertDateTime pattern="dd/MM/yyyy" />  
+				            </p:inputMask> 
+				        </p>
+				        
+				        <p>
+				        	<h:outputLabel for="warmup" value="#{msgs['schedule.event.warmup']}"  style="width: 105px;"/>			              
+			            	<p:inputText id="warmup" value="#{studentSpreadsheetMBean.schedule.warmUp}" readonly="true"/>  
+			          	</p>
+			          	
+			          	<p>
+			            	<h:outputLabel for="title" value="#{msgs['schedule.event.title']}"  style="width: 150px;"/>	<br/><br/>	              
+			            	<p:inputTextarea id="title" value="#{studentSpreadsheetMBean.schedule.description}"
+			            	style="width:450px;height:120px;" autoResize="false"  readonly="true"/>
+			            </p>
+			            
+			            <p>	
+			            	<h:outputLabel for="cooldown" value="#{msgs['schedule.event.cooldown']}"  style="width: 105px;"/>			              
+			            	<p:inputText id="cooldown" value="#{studentSpreadsheetMBean.schedule.coolDown}" readonly="true" />  
+			  			</p>
+			  			
+			  			<p>
+			            	<h:outputLabel for="obs" value="#{msgs['schedule.event.observations']}" />	<br/><br/>		              
+			            	<p:inputTextarea id="obs" value="#{studentSpreadsheetMBean.schedule.observations}"
+			            	style="width:450px;height:100px;" autoResize="false" readonly="true"/>
+			            </p>
+			        </div>
+			        
+			        <p:panel rendered="${studentSpreadsheetMBean.mapModel!=null}" style="width: 50px;" >
+			        	
+			        	<div id="eventRoute" style="width: 400px; left: 490px; position: absolute; padding-top: 15px;">
+			        		<b><h:outputText value="#{msgs['schedule.event.route']}"/> </b>
+			        		<h:outputText value="#{studentSpreadsheetMBean.schedule.route.name}" />  <br/>
+				        
+				        	<div style="width: 400px; padding-top: 5px; padding-bottom: 5px;" class="filtro">       	
+					        	<p:gmap id="gmap" widgetVar="gmap" center="#{studentSpreadsheetMBean.initLat},#{studentSpreadsheetMBean.initLon}" zoom="15" 
+										 	model="#{studentSpreadsheetMBean.mapModel}" type="ROADMAP" style="width:100%; height:400px">
+						  		</p:gmap>
+					  		</div>
+				        </div>
+			        </p:panel>
+			        
+			            				            				  			        
+			  		<div style="text-align: center !important; position: absolute; top: 465px; left: #{(studentSpreadsheetMBean.dialogSize/2)-20}px; ">              
+						<p:commandButton value="#{msgs['template.button.close']}" oncomplete="PF('eventDialog').hide();"/>
+				    </div>
+			    </p:dialog>
+			    				 		
+			</p:outputPanel>
+
+		</h:form>
+		
+  </ui:define>
+  
+</ui:composition>

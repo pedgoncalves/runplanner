@@ -1,0 +1,158 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="#{loginBean.templateVersion}">
+		
+  <ui:define name="content">
+		<h:form>
+			<br/>
+			<p:panel id="filter" header="#{msgs['advice.title.list']}">					
+				<p:messages id="messages" showDetail="false" /> 
+				<div id="filterDetails" style="width100%; font-size: 12px" class="filtro">
+		    		<table>
+		    			<tr>
+		    			<td>
+							<p:selectOneMenu value="#{adviceMBean.activeAdvice}">
+					    		<f:selectItem itemLabel="#{msgs['template.active.true']}" itemValue="true" />
+					    		<f:selectItem itemLabel="#{msgs['template.active.false']}" itemValue="false" />                        	 
+					    	</p:selectOneMenu>
+					    </td>
+					    <td>
+					    	<h:outputLabel for="name" value="#{msgs['template.name.email']}"  style="width:110px;"/>
+					    </td>
+					    <td>
+							<p:inputText id="name" value="#{adviceMBean.findAdviceName}" size="50" maxlength="100"/>
+					    </td>
+	    				<td style="padding-left:5px">
+		    				<p:commandButton action="#{adviceMBean.findManagementInformation}" update="adviceList"
+			           			title="#{msgs['template.button.find']}"
+			           			value="#{msgs['template.button.find']}"/>
+		           		</td>
+		           		</tr>
+			       	</table>
+			       </div>   		
+			</p:panel>
+			
+		    <div id="painel" class="tabela">
+		        <p:dataTable id="adviceList" value="#{adviceMBean.adviceList}" var="advice"
+					emptyMessage="#{msgs['template.msg.emptyMessage']}"
+					paginator="true" rows="10" paginatorPosition="bottom" paginatorAlwaysVisible="false"
+					paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}">
+		        		        
+		            <p:column>  
+		                <f:facet name="header">  
+		                    <h:outputText value="#{msgs['advice.name']}" />  
+		                </f:facet>
+		                
+		                <h:commandLink action="#{adviceMBean.goToModify}">          				
+           					<h:outputText value="#{advice.name}" />
+           					<f:setPropertyActionListener target="#{adviceMBean.advice.id}" value="#{advice.id}" />
+           				</h:commandLink>   
+		                  
+		            </p:column>  
+		  		            
+		            <p:column style="text-align: center;">  
+		                <f:facet name="header">  
+		                    <h:outputText value="#{msgs['advice.contract.init']}" />  
+		                </f:facet>  
+		                <h:outputText value="#{advice.contractInit}">
+		                	<f:convertDateTime pattern="dd/MM/yyyy" />
+		                </h:outputText>    
+		            </p:column>  	
+		            
+		            <p:column style="text-align: center;">  
+		                <f:facet name="header">  
+		                    <h:outputText value="#{msgs['advice.contract.final']}" />  
+		                </f:facet>  
+		                <h:outputText value="#{advice.contractFinal}">
+		                	<f:convertDateTime pattern="dd/MM/yyyy" />
+		                </h:outputText>  
+		            </p:column> 	
+		            
+		           	<p:column style="text-align: center;">  
+		                <f:facet name="header">  
+		                    <h:outputText value="#{msgs['advice.student.number.ative']}" />  
+		                </f:facet>  
+		                <h:outputText value="#{advice.activeUserNumber}" />  
+		            </p:column> 			            
+		            
+		           	<p:column style="text-align: center;">  
+		                <f:facet name="header">  
+		                    <h:outputText value="#{msgs['advice.student.number']}" />  
+		                </f:facet>  
+		                <h:outputText value="#{advice.studendNumber}" />  
+		            </p:column> 	
+		            
+		            <p:column style="text-align: center;">  
+		                <f:facet name="header">  
+		                    <h:outputText value="#{msgs['advice.value']}" />  
+		                </f:facet>  
+		                <h:outputText value="#{advice.value}" />  
+		            </p:column> 	            	            
+		  
+		            <p:column style="text-align:center;" rendered="#{adviceMBean.activeAdvice}">  
+		                <f:facet name="header">  
+		                    <h:outputText value="#{msgs['advice.deactivate']}" />  
+		                </f:facet>  
+		 			
+	           			<p:commandButton icon="ativar" oncomplete="deactivateConfirmation.show()" title="#{msgs['template.button.deactivate']}" >           			
+	     					<f:setPropertyActionListener target="#{adviceMBean.advice.id}" value="#{advice.id}" />
+	           			</p:commandButton>
+	           				           			
+		            </p:column>
+		            
+		            <p:column style="text-align:center;" rendered="#{!adviceMBean.activeAdvice}">
+		                <f:facet name="header">  
+		                    <h:outputText value="#{msgs['advice.activate']}" />  
+		                </f:facet>  
+		            
+			            <p:commandButton icon="desativar" oncomplete="activateConfirmation.show()" title="#{msgs['template.button.activate']}" >           			
+	     					<f:setPropertyActionListener target="#{adviceMBean.advice.id}" value="#{advice.id}"/>
+	           			</p:commandButton>
+			            
+		            </p:column>
+		            
+		            <p:column style="text-align:center;">  
+		                <f:facet name="header">  
+		                    <h:outputText value="#{msgs['advice.delete']}"/>  
+		                </f:facet>  
+		 			
+	           			<p:commandButton icon="delete" oncomplete="deleteConfirmation.show()" title="#{msgs['template.button.delete']}">           			
+	     					<f:setPropertyActionListener target="#{adviceMBean.advice.id}" value="#{advice.id}" />
+	           			</p:commandButton>
+	           			
+		            </p:column>
+		        </p:dataTable>  
+		        
+		    </div>
+		    
+	     	<p:confirmDialog message="#{msgs['advice.activate.question']}"  
+	           	severity="alert" widgetVar="activateConfirmation">
+	   			<p:commandButton value="#{msgs['template.button.yes']}" oncomplete="activateConfirmation.hide()" 
+	   				action="#{adviceMBean.activate}" ajax="false" />
+	   			<p:commandButton value="#{msgs['template.button.no']}" onclick="activateConfirmation.hide()" />
+			</p:confirmDialog>
+	     	
+	     	<p:confirmDialog message="#{msgs['advice.deactivate.question']}"  
+	           	severity="alert" widgetVar="deactivateConfirmation">
+	   			<p:commandButton value="#{msgs['template.button.yes']}" oncomplete="deactivateConfirmation.hide()" 
+	   				action="#{adviceMBean.deactivate}" ajax="false" />
+	   			<p:commandButton value="#{msgs['template.button.no']}" onclick="deactivateConfirmation.hide()" />
+			</p:confirmDialog>
+			
+			<p:confirmDialog message="#{msgs['advice.delete.question']}"  
+	           	severity="alert" widgetVar="deleteConfirmation">
+	   			<p:commandButton value="#{msgs['template.button.yes']}" oncomplete="deleteConfirmation.hide()" 
+	   				action="#{adviceMBean.delete}" ajax="false" />
+	   			<p:commandButton value="#{msgs['template.button.no']}" onclick="deleteConfirmation.hide()" />
+			</p:confirmDialog>
+			 
+		    
+		   	<div class="buttons"> 
+			    <p:commandButton value="#{msgs['template.button.incluir']}" ajax="false" action="#{adviceMBean.goToCreate}"/>
+		    </div>
+		</h:form>
+  </ui:define>
+</ui:composition>

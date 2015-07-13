@@ -1,0 +1,311 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="#{loginBean.templateVersion}">
+
+	<ui:define name="content">
+		<style>
+			#templateList th {
+				width: 128px;
+				border: 1px solid #ddd !important;
+				text-align: center;
+				padding-bottom: 0px;
+				font-weight: bolder;
+				background: #F8F8F8 !important;
+				color: black !important;
+			}
+			
+			#templateList td {
+				width: 100px;
+				border: 1px solid #ddd !important;
+				color: black !important;
+			}
+			
+			#templateList th .ui-dt-c {
+				color: black !important;
+			}
+		</style>
+		
+		<p:messages id="messages" showDetail="false" /> 
+		<div class="pageTitleBox">#{msgs['scheduleTemplate.maintitle']}</div>
+		<div class="subtitle">#{msgs['scheduleTemplate.subtitle']}</div>
+
+		<h:form prependId="false" >
+
+				<p:panel header="#{msgs['header.schedule.indentificadores']}"> 
+				<p>
+					<h:outputLabel  value="#{msgs['schedule.template.title']}:" style="width: 105px;" />
+					<p:inputText value="#{timelessScheduleTemplateMBean.timelessScheduleTemplate.title}" size="90"
+			        	required="true" requiredMessage="#{msgs['schedule.template.err.title']}" maxlength="100"/>				
+				</p>
+				<p>
+					<h:outputLabel value="#{msgs['schedule.event.observations']}"  style="width: 105px;"/>
+			        <p:inputText id="templateObs" value="#{timelessScheduleTemplateMBean.timelessScheduleTemplate.observations}" size="90"  maxlength="100" />
+				</p>
+				<br/>
+				</p:panel>
+			    <br/>
+			
+			<h:outputText value="#{msgs['timelessSpread.week.subtitle']}" styleClass="subtitle"/>
+			<p:panel id="panelWeek"  styleClass="center" header="Cadastro de Treinos">
+
+				<table style="width: 100%; padding: 0px !important; border-collapse: collapse;" cellspacing="0" cellpading="0">
+						<tr>
+							<td class="headerBancoTemplate" style="border: 1px solid #DDDDDD !important; background-color: #F8F8F8 !important;"><h:outputText value="#{timelessScheduleTemplateMBean.firstNumber}" /><h:outputText value="#{msgs['weekdays.number.text']}" /></td>
+							<td class="headerBancoTemplate" style="border: 1px solid #DDDDDD !important; background-color: #F8F8F8 !important;"><h:outputText value="#{timelessScheduleTemplateMBean.secondNumber}" /><h:outputText value="#{msgs['weekdays.number.text']}"/></td>
+							<td class="headerBancoTemplate" style="border: 1px solid #DDDDDD !important; background-color: #F8F8F8 !important;"><h:outputText value="#{timelessScheduleTemplateMBean.thirdNumber}" /><h:outputText value="#{msgs['weekdays.number.text']}" /></td>
+							<td class="headerBancoTemplate" style="border: 1px solid #DDDDDD !important; background-color: #F8F8F8 !important;"><h:outputText value="#{timelessScheduleTemplateMBean.fourthNumber}" /><h:outputText value="#{msgs['weekdays.number.text']}" /></td>
+							<td class="headerBancoTemplate" style="border: 1px solid #DDDDDD !important; background-color: #F8F8F8 !important;"><h:outputText value="#{timelessScheduleTemplateMBean.fifthNumber}" /><h:outputText value="#{msgs['weekdays.number.text']}" /></td>
+							<td class="headerBancoTemplate" style="border: 1px solid #DDDDDD !important; background-color: #F8F8F8 !important;"><h:outputText value="#{timelessScheduleTemplateMBean.sixthNumber}" /><h:outputText value="#{msgs['weekdays.number.text']}" /></td>
+							<td class="headerBancoTemplate" style="border: 1px solid #DDDDDD !important; background-color: #F8F8F8 !important;"><h:outputText value="#{timelessScheduleTemplateMBean.seventhNumber}" /><h:outputText value="#{msgs['weekdays.number.text']}" /></td>
+						</tr>
+						<tr>
+						
+							<td style="border: 1px solid #DDDDDD !important; min-height: 127px; height: 127px;" valign="top" onclick="PF('eventDialogFirstDay').show();">
+															
+								<p:panel rendered="#{not empty timelessScheduleTemplateMBean.timelessScheduleWeek.firstDay.warmUp}" style="border:0px; background-color: white; padding: 0px; margin: 0px;">
+									<div style="position: relative;" class="textoCalendario"><h:outputText value="#{timelessScheduleTemplateMBean.timelessScheduleWeek.firstDay.warmUp}"/></div>
+								</p:panel>
+								
+								<p:panel rendered="#{not empty timelessScheduleTemplateMBean.timelessScheduleWeek.firstDay.description}" style="border:0px; background-color: white; padding: 0px; margin: 0px;">
+									<div style="position: relative;" class="textoCalendario"><h:outputText value="#{timelessScheduleTemplateMBean.timelessScheduleWeek.firstDay.description}"/></div>
+								</p:panel>
+								
+								<p:panel rendered="#{not empty timelessScheduleTemplateMBean.timelessScheduleWeek.firstDay.coolDown}" style="border:0px; background-color: white; padding: 0px; margin: 0px;">
+									<div style="position: relative;" class="textoCalendario"><h:outputText value="#{timelessScheduleTemplateMBean.timelessScheduleWeek.firstDay.coolDown}"/></div>
+								</p:panel>
+																		
+							</td>
+							
+							<td style="border: 1px solid #DDDDDD !important;" valign="top" onclick="PF('eventDialogSecondDay').show();">
+															
+								<p:panel rendered="#{not empty timelessScheduleTemplateMBean.timelessScheduleWeek.secondDay.warmUp}" style="border:0px; background-color: white; padding: 0px; margin: 0px;">
+									<div style="position: relative;" class="textoCalendario"><h:outputText value="#{timelessScheduleTemplateMBean.timelessScheduleWeek.secondDay.warmUp}"/></div>
+								</p:panel>
+								
+								<p:panel rendered="#{not empty timelessScheduleTemplateMBean.timelessScheduleWeek.secondDay.description}" style="border:0px; background-color: white; padding: 0px; margin: 0px;">
+									<div style="position: relative;" class="textoCalendario"><h:outputText value="#{timelessScheduleTemplateMBean.timelessScheduleWeek.secondDay.description}"/></div>
+								</p:panel>
+								
+								<p:panel rendered="#{not empty timelessScheduleTemplateMBean.timelessScheduleWeek.secondDay.coolDown}" style="border:0px; background-color: white; padding: 0px; margin: 0px;">
+									<div style="position: relative;" class="textoCalendario"><h:outputText value="#{timelessScheduleTemplateMBean.timelessScheduleWeek.secondDay.coolDown}"/></div>
+								</p:panel>
+																		
+							</td>
+							
+							<td style="border: 1px solid #DDDDDD !important;" valign="top" onclick="PF('eventDialogThirdDay').show();">
+															
+								<p:panel rendered="#{not empty timelessScheduleTemplateMBean.timelessScheduleWeek.thirdDay.warmUp}" style="border:0px; background-color: white; padding: 0px; margin: 0px;">
+									<div style="position: relative;" class="textoCalendario"><h:outputText value="#{timelessScheduleTemplateMBean.timelessScheduleWeek.thirdDay.warmUp}"/></div>
+								</p:panel>
+								
+								<p:panel rendered="#{not empty timelessScheduleTemplateMBean.timelessScheduleWeek.thirdDay.description}" style="border:0px; background-color: white; padding: 0px; margin: 0px;">
+									<div style="position: relative;" class="textoCalendario"><h:outputText value="#{timelessScheduleTemplateMBean.timelessScheduleWeek.thirdDay.description}"/></div>
+								</p:panel>
+								
+								<p:panel rendered="#{not empty timelessScheduleTemplateMBean.timelessScheduleWeek.thirdDay.coolDown}" style="border:0px; background-color: white; padding: 0px; margin: 0px;">
+									<div style="position: relative;" class="textoCalendario"><h:outputText value="#{timelessScheduleTemplateMBean.timelessScheduleWeek.thirdDay.coolDown}"/></div>
+								</p:panel>
+																		
+							</td>
+							
+							<td style="border: 1px solid #DDDDDD !important;" valign="top" onclick="PF('eventDialogFourthDay').show();">
+															
+								<p:panel rendered="#{not empty timelessScheduleTemplateMBean.timelessScheduleWeek.fourthDay.warmUp}" style="border:0px; background-color: white; padding: 0px; margin: 0px;">
+									<div style="position: relative;" class="textoCalendario"><h:outputText value="#{timelessScheduleTemplateMBean.timelessScheduleWeek.fourthDay.warmUp}"/></div>
+								</p:panel>
+								
+								<p:panel rendered="#{not empty timelessScheduleTemplateMBean.timelessScheduleWeek.fourthDay.description}" style="border:0px; background-color: white; padding: 0px; margin: 0px;">
+									<div style="position: relative;" class="textoCalendario"><h:outputText value="#{timelessScheduleTemplateMBean.timelessScheduleWeek.fourthDay.description}"/></div>
+								</p:panel>
+								
+								<p:panel rendered="#{not empty timelessScheduleTemplateMBean.timelessScheduleWeek.fourthDay.coolDown}" style="border:0px; background-color: white; padding: 0px; margin: 0px;">
+									<div style="position: relative;" class="textoCalendario"><h:outputText value="#{timelessScheduleTemplateMBean.timelessScheduleWeek.fourthDay.coolDown}"/></div>
+								</p:panel>
+																		
+							</td>
+							
+							<td style="border: 1px solid #DDDDDD !important;" valign="top" onclick="PF('eventDialogFifthDay').show();">
+															
+								<p:panel rendered="#{not empty timelessScheduleTemplateMBean.timelessScheduleWeek.fifthDay.warmUp}" style="border:0px; background-color: white; padding: 0px; margin: 0px;">
+									<div style="position: relative;" class="textoCalendario"><h:outputText value="#{timelessScheduleTemplateMBean.timelessScheduleWeek.fifthDay.warmUp}"/></div>
+								</p:panel>
+								
+								<p:panel rendered="#{not empty timelessScheduleTemplateMBean.timelessScheduleWeek.fifthDay.description}" style="border:0px; background-color: white; padding: 0px; margin: 0px;">
+									<div style="position: relative;" class="textoCalendario"><h:outputText value="#{timelessScheduleTemplateMBean.timelessScheduleWeek.fifthDay.description}"/></div>
+								</p:panel>
+								
+								<p:panel rendered="#{not empty timelessScheduleTemplateMBean.timelessScheduleWeek.fifthDay.coolDown}" style="border:0px; background-color: white; padding: 0px; margin: 0px;">
+									<div style="position: relative;" class="textoCalendario"><h:outputText value="#{timelessScheduleTemplateMBean.timelessScheduleWeek.fifthDay.coolDown}"/></div>
+								</p:panel>
+																		
+							</td>
+							
+							<td valign="top" onclick="PF('eventDialogSixthDay').show();" style="border: 1px solid #DDDDDD !important;">
+															
+								<p:panel rendered="#{not empty timelessScheduleTemplateMBean.timelessScheduleWeek.sixthDay.warmUp}" style="border:0px; background-color: white; padding: 0px; margin: 0px;">
+									<div style="position: relative;" class="textoCalendario"><h:outputText value="#{timelessScheduleTemplateMBean.timelessScheduleWeek.sixthDay.warmUp}"/></div>
+								</p:panel>
+								
+								<p:panel rendered="#{not empty timelessScheduleTemplateMBean.timelessScheduleWeek.sixthDay.description}" style="border:0px; background-color: white; padding: 0px; margin: 0px;">
+									<div style="position: relative;" class="textoCalendario"><h:outputText value="#{timelessScheduleTemplateMBean.timelessScheduleWeek.sixthDay.description}"/></div>
+								</p:panel>
+								
+								<p:panel rendered="#{not empty timelessScheduleTemplateMBean.timelessScheduleWeek.sixthDay.coolDown}" style="border:0px; background-color: white; padding: 0px; margin: 0px;">
+									<div style="position: relative;" class="textoCalendario"><h:outputText value="#{timelessScheduleTemplateMBean.timelessScheduleWeek.sixthDay.coolDown}" style="border:0px; padding: 0px; margin: 0px;"/></div>
+								</p:panel>
+																		
+							</td>
+							
+							<td style="border: 1px solid #DDDDDD !important;"  valign="top"  onclick="PF('eventDialogSeventhDay').show();">
+															
+								<p:panel rendered="#{not empty timelessScheduleTemplateMBean.timelessScheduleWeek.seventhDay.warmUp}" style="border:0px; background-color: white; padding: 0px; margin: 0px;">
+									<div style="position: relative;" class="textoCalendario"><h:outputText value="#{timelessScheduleTemplateMBean.timelessScheduleWeek.seventhDay.warmUp}"/></div>
+								</p:panel>
+								
+								<p:panel rendered="#{not empty timelessScheduleTemplateMBean.timelessScheduleWeek.seventhDay.description}" style="border:0px; background-color: white; background-color: white; padding: 0px; margin: 0px;">
+									<div style="position: relative;" class="textoCalendario"><h:outputText value="#{timelessScheduleTemplateMBean.timelessScheduleWeek.seventhDay.description}"/></div>
+								</p:panel>
+								
+								<p:panel rendered="#{not empty timelessScheduleTemplateMBean.timelessScheduleWeek.seventhDay.coolDown}" style="border:0px; background-color: white; padding: 0px; margin: 0px;">
+									<div style="position: relative;" class="textoCalendario"><h:outputText value="#{timelessScheduleTemplateMBean.timelessScheduleWeek.seventhDay.coolDown}"/></div>
+								</p:panel>
+																		
+							</td>
+						</tr>
+				</table>
+			</p:panel>
+			
+				<div class="buttons">
+					<p:commandButton value="#{msgs['template.button.adicionar']}" rendered="#{timelessScheduleTemplateMBean.operacao eq 'INCLUIR'}"
+						ajax="false" action="#{timelessScheduleTemplateMBean.goToInclude}" update="painelLista,panelWeek" immediate="true"/>	
+									
+					<p:commandButton value="#{msgs['template.button.alterar']}" rendered="#{timelessScheduleTemplateMBean.operacao eq 'EDITAR'}"
+						ajax="false" action="#{timelessScheduleTemplateMBean.goToEdit}" update="painelLista,panelWeek" immediate="true"/>				
+					
+					<p:commandButton value="#{msgs['template.button.cancelar']}" rendered="#{timelessScheduleTemplateMBean.operacao eq 'EDITAR'}"
+						ajax="false" action="#{timelessScheduleTemplateMBean.goToCancel}" update="painelLista,panelWeek" immediate="true"/>				
+				</div>
+			<br/>
+			
+						
+			
+			<ui:fragment id="painelLista" rendered="#{not empty timelessScheduleTemplateMBean.timelessScheduleTemplate.weeks}" legend="#{msgs['timelessSpread.final.title']}" >
+				<h:outputText value="#{msgs['timelessSpread.final.subtitle']}" styleClass="subtitle"/><br/>
+			
+				<p:dataTable id="templateList"
+					value="#{timelessScheduleTemplateMBean.timelessScheduleTemplate.weeks}"
+					var="template" >
+
+
+					<f:facet name="header">  
+			            Planilha Modelo (<h:outputText value="#{timelessScheduleTemplateMBean.firstNumber-1}" /> dias)  
+			        </f:facet>  
+			        
+					<p:columnGroup type="header"> 
+						<p:column colspan="8" headerText="" />
+					</p:columnGroup>
+
+					<p:column style="">
+						<h:outputText value="Aquec.: #{template.firstDay.warmUp}" rendered="#{not empty template.firstDay.warmUp}" /><br/>
+						<h:outputText value="Treino: #{template.firstDay.description}" rendered="#{not empty template.firstDay.description}" /><br/>
+						<h:outputText value="Desaq.: #{template.firstDay.coolDown}" rendered="#{not empty template.firstDay.coolDown}" />
+					</p:column>
+
+					<p:column style="">
+						<h:outputText value="Aquec.: #{template.secondDay.warmUp}" rendered="#{not empty template.secondDay.warmUp}" /><br/>
+						<h:outputText value="Treino: #{template.secondDay.description}" rendered="#{not empty template.secondDay.description}" /><br/>
+						<h:outputText value="Desaq.: #{template.secondDay.coolDown}" rendered="#{not empty template.secondDay.coolDown}" />
+					</p:column>
+
+					<p:column style="">
+						<h:outputText value="Aquec.: #{template.thirdDay.warmUp}" rendered="#{not empty template.thirdDay.warmUp}" /><br/>
+						<h:outputText value="Treino: #{template.thirdDay.description}" rendered="#{not empty template.thirdDay.description}" /><br/>
+						<h:outputText value="Desaq.: #{template.thirdDay.coolDown}" rendered="#{not empty template.thirdDay.coolDown}" />
+					</p:column>
+
+					<p:column style="">
+						<h:outputText value="Aquec.: #{template.fourthDay.warmUp}" rendered="#{not empty template.fourthDay.warmUp}" /><br/>
+						<h:outputText value="Treino: #{template.fourthDay.description}" rendered="#{not empty template.fourthDay.description}" /><br/>
+						<h:outputText value="Desaq.: #{template.fourthDay.coolDown}" rendered="#{not empty template.fourthDay.coolDown}" />
+					</p:column>
+
+					<p:column style="">
+						<h:outputText value="Aquec.: #{template.fifthDay.warmUp}" rendered="#{not empty template.fifthDay.warmUp}" /><br/>
+						<h:outputText value="Treino: #{template.fifthDay.description}" rendered="#{not empty template.fifthDay.description}" /><br/>
+						<h:outputText value="Desaq.: #{template.fifthDay.coolDown}" rendered="#{not empty template.fifthDay.coolDown}" />
+					</p:column>
+
+					<p:column style="">
+						<h:outputText value="Aquec.: #{template.sixthDay.warmUp}" rendered="#{not empty template.sixthDay.warmUp}" /><br/>
+						<h:outputText value="Treino: #{template.sixthDay.description}" rendered="#{not empty template.sixthDay.description}" /><br/>
+						<h:outputText value="Desaq.: #{template.sixthDay.coolDown}" rendered="#{not empty template.sixthDay.coolDown}" />
+					</p:column>
+
+					<p:column style="">
+						<h:outputText value="Aquec.: #{template.seventhDay.warmUp}" rendered="#{not empty template.seventhDay.warmUp}" /><br/>
+						<h:outputText value="Treino: #{template.seventhDay.description}" rendered="#{not empty template.seventhDay.description}" /><br/>
+						<h:outputText value="Desaq.: #{template.seventhDay.coolDown}" rendered="#{not empty template.seventhDay.coolDown}" />
+					</p:column>
+					
+					
+					<p:column style="text-align:center; white-space: nowrap; max-widht: 5px; widht: 5px;">
+						<f:facet name="header">
+							<h:outputText value="" />
+						</f:facet>
+
+						<p:commandButton icon="edit"
+							update="templateList,panelWeek"
+							ajax="false"
+							action="#{timelessScheduleTemplateMBean.modifyWeek}" >
+							
+							<f:setPropertyActionListener
+								target="#{timelessScheduleTemplateMBean.selectedRow}"
+								value="#{template}" />
+						</p:commandButton>
+						
+						<p:commandButton icon="delete"
+							ajax="true"
+							oncomplete="PF('deleteConfirmation').show()">
+							
+							<f:setPropertyActionListener
+								target="#{timelessScheduleTemplateMBean.selectedRow}"
+								value="#{template}" />
+						</p:commandButton>
+						
+					</p:column>
+				</p:dataTable>
+
+			</ui:fragment>
+			
+			<div class="buttons">
+				<p:commandButton value="#{msgs['template.button.next']}"
+					ajax="false" action="#{timelessScheduleTemplateMBean.save}" />
+					
+				<p:commandButton value="#{msgs['template.button.cancelar']}" ajax="false"
+					action="#{timelessScheduleTemplateMBean.goToList}" style="align:right;" immediate="true" />
+			</div>
+			
+			<ui:include src="timelessScheduleDialogs.xhtml"/>
+
+			<p:dialog
+				header="#{msgs['template.msg.delete.confirmation']}" modal="true"
+				widgetVar="deleteConfirmation" position="top"  width="300">
+				<center>
+					<br/>
+					<p:commandButton value="#{msgs['template.button.yes']}"
+						update="templateList,panelWeek"
+						oncomplete="deleteConfirmation.hide()"
+						action="#{timelessScheduleTemplateMBean.deleteWeek}" ajax="false" />
+					<p:commandButton value="#{msgs['template.button.no']}"
+						onclick="PF('deleteConfirmation').hide()" />
+					<br/><br/>
+				</center>
+			</p:dialog>
+			
+		</h:form>
+
+	</ui:define>
+</ui:composition>

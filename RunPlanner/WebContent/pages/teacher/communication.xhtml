@@ -1,0 +1,71 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:rp="http://runplanner.com.br/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="#{loginBean.templateVersion}">
+
+	<ui:define name="content">
+
+		<h:form>
+			<p:messages id="messages" showDetail="false" />
+			<div class="pageTitleBox">#{msgs['contact.advice.title']}</div>
+			<div class="subtitle">#{msgs['contact.subtitle']}</div>
+
+			<table>
+				<tr>
+					<td valign="top" width="15%"><rp:sideMenu
+							menu="studentsAdvice" selectedMenu="studentCommunication" /></td>
+					<td valign="top" align="left" style="padding-left: 10px;">
+						<center>
+							
+							<p:panel header="#{msgs['header.communication.title']}">
+							<table width="90%">
+								<tr>
+									<td align="left" width="1px;"><h:outputLabel
+											value="#{msgs['contact.team']}" /></td>
+									<td align="left"><p:selectOneMenu id="turma"
+											value="#{communicationMBean.team.id}"
+											style="overflow:hidden;">
+											<f:selectItem
+												itemLabel="#{msgs['template.selecionar.all.customer']}"
+												itemValue="-1" />
+											<f:selectItems value="#{communicationMBean.teamList}" />
+										</p:selectOneMenu></td>
+								</tr>
+								<tr>
+									<td align="left"><h:outputLabel
+											value="#{msgs['contact.subject']}" /></td>
+									<td align="left"><p:inputText
+											value="#{communicationMBean.subject}" style="width:100%;"
+											maxlength="100" required="false"
+											requiredMessage="#{msgs['contact.subject.mandatory']}" /></td>
+								</tr>
+								<tr>
+									<td colspan="2" align="left"><h:outputLabel
+											value="#{msgs['contact.message']}" /></td>
+								</tr>
+								<tr>
+									<td colspan="2"><p:inputTextarea
+											value="#{communicationMBean.message}" style="width:100%;"
+											rows="5" maxlength="300" autoResize="false" required="false"
+											requiredMessage="#{msgs['contact.message.mandatory']}" /></td>
+								</tr>
+							</table>
+							</p:panel>
+						</center>
+							<center>
+							<br />
+								<p:commandButton value="#{msgs['template.button.send']}"
+									ajax="false" action="#{communicationMBean.send}" />
+								</center>
+					</td>
+				</tr>
+			</table>
+		
+		</h:form>
+
+	</ui:define>
+
+</ui:composition>

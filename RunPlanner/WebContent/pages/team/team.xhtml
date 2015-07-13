@@ -1,0 +1,83 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="#{loginBean.templateVersion}">
+
+	<ui:define name="content">
+	<style type="text/css">
+		.ui-picklist-source ,
+		.ui-picklist-target {	
+    		width: 353px !important;
+    		height: 200px !important;
+		}
+	</style>	
+
+		<p:messages id="messages" showDetail="false" />
+		<div class="pageTitleBox">#{msgs['team.maintitle']}</div>
+		<div class="subtitle">#{msgs['team.subtitle']}</div>
+		<h:form>
+		<p:panel header="#{msgs['team.panel.title']}" styleClass="center">	
+					<p><h:outputLabel for="place" value="#{msgs['team.place']}" />
+					<p:inputText id="place" value="#{teamMBean.team.place}" required="true" 
+						requiredMessage="#{msgs['team.place.mandatory']}" size="85" maxlength="100"/>
+						
+					<h:outputLabel for="init" value="#{msgs['team.initialHour']}" style="width:52px; text-align:right"/>
+					<p:inputMask id="init" value="#{teamMBean.team.initialHour}" mask="99:99" size="4" required="true"
+						requiredMessage="#{msgs['team.time.mandatory']}" style="margin-left:10px"
+						converterMessage="#{msgs['team.time.convert.error']}">
+						<f:convertDateTime pattern="HH:mm" />
+					</p:inputMask></p>
+	
+					<p><h:outputLabel for="description" value="#{msgs['team.description']}" />
+					<p:inputText id="description" value="#{teamMBean.team.description}" size="103" required="true" 
+						requiredMessage="#{msgs['team.description.mandatory']}" maxlength="102"/></p>
+	
+					<br/>
+	
+					<h:outputLabel for="init" value="#{msgs['team.teachers']}" />
+					<p:pickList value="#{teamMBean.teachers}" var="teacher" 
+						iconOnly="true" itemLabel="#{teacher}" itemValue="#{teacher}" 
+						showSourceControls="false" showTargetControls="false"
+						addLabel="#{msgs['team.picklist.addLabel']}"
+						addAllLabel="#{msgs['team.picklist.addAllLabel']}"
+						removeLabel="#{msgs['team.picklist.removeLabel']}"
+						removeAllLabel="#{msgs['team.picklist.removeAllLabel']}" >
+					</p:pickList>
+	
+					<br/>
+					
+						<div id="weekDetails" >
+							<h:outputLabel for="init" value="#{msgs['team.weekdays']}" />
+							<table>
+								<tr>
+								<td><b><h:outputText value="#{msgs['weekdays.sunday']}: "/></b></td><td><p:selectBooleanCheckbox value="#{teamMBean.team.days.sunday}" style="padding-top: 2px;"/></td>
+								<td><b><h:outputText value="#{msgs['weekdays.monday']}: "/></b></td><td><p:selectBooleanCheckbox value="#{teamMBean.team.days.monday}" /></td>
+								<td><b><h:outputText value="#{msgs['weekdays.tuesday']}: "/></b></td><td><p:selectBooleanCheckbox value="#{teamMBean.team.days.tuesday}" /></td>
+								<td><b><h:outputText value="#{msgs['weekdays.wednesday']}: "/></b></td><td><p:selectBooleanCheckbox value="#{teamMBean.team.days.wednesday}" /></td>
+								<td><b><h:outputText value="#{msgs['weekdays.thursday']}: "/></b></td><td><p:selectBooleanCheckbox value="#{teamMBean.team.days.thursday}" /></td>
+								<td><b><h:outputText value="#{msgs['weekdays.friday']}: "/></b></td><td><p:selectBooleanCheckbox value="#{teamMBean.team.days.friday}" /></td>
+								<td><b><h:outputText value="#{msgs['weekdays.saturday']}: "/></b></td><td><p:selectBooleanCheckbox value="#{teamMBean.team.days.saturday}" /></td>
+								</tr>
+							</table>
+						</div>  
+					
+					<br />
+				</p:panel>	
+					<div class="buttons">
+						<p:commandButton value="#{msgs['template.button.save']}"
+							update="messages" action="#{teamMBean.save}" ajax="false"
+							rendered="#{teamMBean.team.id == null}"/>
+							
+						<p:commandButton value="#{msgs['template.button.alterar']}"
+							update="messages" action="#{teamMBean.save}" ajax="false"
+							rendered="#{teamMBean.team.id != null}"/>
+							
+						<p:commandButton value="#{msgs['template.button.cancelar']}" ajax="false"
+							action="#{teamMBean.goToList}" immediate="true" />
+					</div>				
+
+		</h:form>
+	</ui:define>
+</ui:composition>

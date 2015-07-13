@@ -1,0 +1,105 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="/pages/template/templateOut.xhtml">
+		
+  <ui:define name="content">
+		
+		<style type="text/css">
+			.button {
+				behavior: url(ie-css3.htc);
+			    
+			    border: 0px !important;
+			    color:#333 !important;
+			    font-weight:bold !important;
+			    padding:3px 8px !important;
+			       
+			    -moz-box-shadow: none !important;
+			    -webkit-box-shadow:  none !important;
+			    box-shadow:  none !important;	
+			    
+			    background: #02425C !important;	
+			}
+			
+			.button:hover {
+				behavior: url(ie-css3.htc);
+				
+			    border: 0px !important;
+			    color:#333 !important;
+			    font-weight:bold !important;
+			    padding:3px 8px !important;
+			       
+			    -moz-box-shadow: none !important;
+			    -webkit-box-shadow:  none !important;
+			    box-shadow:  none !important;	
+			    
+			    background: #02425C !important;	
+			}
+		
+		</style>
+
+
+		<div class="">
+			<div class="content" align="center" style="padding-top: 50px;">
+		
+		
+				<div class="filtro" style="width:50%; text-align: left; padding: 10px;">
+					<h3>#{msgs['contactus.title']}</h3>	
+					<h:form>
+					<center>
+						<br/>
+						<table>
+							<tr>
+								<td><h:outputLabel value="#{msgs['contact.name']}" /></td>
+								<td>
+									<p:inputText value="#{contactMBean.name}" size="72"  maxlength="100"
+										required="true" requiredMessage="#{msgs['contactus.name.mandatory']}" styleClass="inputIEOut"/>
+								</td>
+							</tr>
+							<tr>
+								<td><h:outputLabel value="#{msgs['contact.email']}" /></td>
+								<td>
+									<p:inputText value="#{contactMBean.email}" size="72"  maxlength="100"
+										required="true" requiredMessage="#{msgs['contactus.email.mandatory']}" styleClass="inputIEOut">
+										<f:validator validatorId="EmailValidator"/>
+									</p:inputText>
+								</td>
+							</tr>				
+							<tr>
+								<td><h:outputLabel value="#{msgs['contact.subject']}" /></td>
+								<td>
+									<p:inputText value="#{contactMBean.subject}" size="72"  maxlength="100"
+										required="true" requiredMessage="#{msgs['contactus.subject.mandatory']}" styleClass="inputIEOut"/>
+								</td>
+							</tr>
+							<tr>
+								<td colspan="2"><h:outputLabel value="#{msgs['contact.message']}" /></td>				
+							</tr>
+							<tr>				
+								<td colspan="2">
+									<p:inputTextarea value="#{contactMBean.message}"
+										cols="110" rows="5"  maxlength="300" autoResize="false"
+										required="true" requiredMessage="#{msgs['contactus.message.mandatory']}" styleClass="inputIEOut"/>	
+								</td>
+							</tr>	
+							<tr>				
+								<td colspan="2" align="center"> 
+									<div class="buttons">	
+										<p:commandButton value="#{msgs['template.button.send']}" 
+											ajax="false" action="#{contactMBean.send}" styleClass="button"/>
+									</div>
+								</td>
+							</tr>								
+						</table>
+					</center>	
+					</h:form>
+				</div>
+				
+			</div>		
+		</div><br/><br/>
+		
+  </ui:define>
+  
+</ui:composition>

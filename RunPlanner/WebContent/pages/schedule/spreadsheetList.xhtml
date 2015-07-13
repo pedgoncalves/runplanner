@@ -1,0 +1,247 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:rp="http://runplanner.com.br/facelets"
+	template="#{loginBean.templateVersion}">
+		
+		
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+	
+	  <ui:define name="content">
+  		<script type="text/javascript">
+			PrimeFaces.locales['pt'] = {
+	               closeText: 'Fechar',
+	               prevText: 'Anterior',
+	               nextText: 'Próximo',
+	               currentText: 'Começo',
+	               monthNames: ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'],
+	               monthNamesShort: ['Jan','Fev','Mar','Abr','Mai','Jun', 'Jul','Ago','Set','Out','Nov','Des'],
+	               dayNames: ['Domingo','Segunda','Terça','Quarta','Quinta','Sexta','Sábado'],
+	               dayNamesShort: ['Dom','Seg','Ter','Qua','Qui','Sex','Sáb'],
+	               dayNamesMin: ['D','S','T','Q','Q','S','S'],
+	               weekHeader: 'Semana',
+	               firstDay: 0,
+	               isRTL: false,
+	               showMonthAfterYear: false,
+	               yearSuffix: '',
+	               timeOnlyTitle: 'Só Horas',
+	               timeText: 'Tempo',
+	               hourText: 'Hora',
+	               minuteText: 'Minuto',
+	               secondText: 'Segundo',
+	               currentText: 'Data Atual',
+	               ampm: false,
+	               month: 'Mês',
+	               week: 'Semana',
+	               day: 'Dia',
+	               allDayText : 'Todo Dia'
+	            };
+		</script>	
+		<style>
+			.ui-datepicker {
+				border: 1px solid #DDDDDD !important; 
+				background: #F9F9F9 !important;
+			}
+		</style>
+
+		<p:messages id="messages" showDetail="false" /> 
+		<div class="pageTitleBox">#{msgs['spreadsheet.maintitle']}</div>
+		<div class="subtitle">#{msgs['spreadsheet.subtitle']}</div>
+
+		<table width="100%">
+			<tr>
+				<td valign="top" width="15%">
+					<rp:sideMenu menu="spreadsheetAdvice" selectedMenu="spreadsheet"/>  
+				</td>
+				<td valign="top" align="left" style="padding-left: 10px;">
+					<h:form>		
+						<h:panelGrid id="filterDetails" columns="5" >
+				    		<h:outputLabel value="#{msgs['spreadsheet.date']}" style="width:90px;"/>
+				    		
+				    		<p:selectOneMenu value="#{spreadsheetBean.selectedMonth}" style="width:200px">
+				    			<f:selectItems value="#{spreadsheetBean.monthList}"/>                         	 
+				    		</p:selectOneMenu>
+				    		
+				    		<p:selectOneMenu value="#{spreadsheetBean.selectedYear}" style="width:100px">
+				    			<f:selectItems value="#{spreadsheetBean.yearList}"/>                         	 
+				    		</p:selectOneMenu>
+				    		
+				            <p:selectOneMenu id="turmasFind" value="#{spreadsheetBean.selectedTeamFind.id}" style="width:200px; overflow:hidden;">
+				            	<f:selectItem itemLabel="#{msgs['template.selecionar.todas.turma']}" itemValue="0" /> 
+						   		<f:selectItems value="#{spreadsheetBean.teams}"  />  
+							</p:selectOneMenu> 
+				    		
+				    		<p:commandButton action="#{spreadsheetBean.find}" 
+			           			title="#{msgs['template.button.find']}" ajax="false"
+			           			value="#{msgs['template.button.find']}" style="margin-top: -2px !important;"/>		    		
+				    	</h:panelGrid>	
+					    <br/>
+				        <p:dataTable id="spreadsheetList" value="#{spreadsheetBean.spreadSheetDataModel}" var="spreadsheet"
+							emptyMessage="#{msgs['template.msg.emptyMessage']}" selection="#{spreadsheetBean.selectedSpreadsheetList}" 
+							paginator="true" rows="20" paginatorPosition="bottom" paginatorAlwaysVisible="false"
+							paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}">
+							
+							<p:column selectionMode="multiple" style="width:30px; text-align: center;"/>  
+				        
+				            <p:column style="max-width:200px;">  
+				                <f:facet name="header">  
+				                    <h:outputText value="#{msgs['spreadsheet.student']}" />  
+				                </f:facet>  
+			
+				                <h:commandLink action="#{spreadsheetBean.goToModify}">          				
+		          					<h:outputText value="#{spreadsheet.student.nome}" />
+		          					<f:setPropertyActionListener target="#{spreadsheetBean.spreadsheet.id}" value="#{spreadsheet.id}" />
+		          				</h:commandLink>
+				            </p:column>  
+							
+				            <p:column style="max-width:200px;">  
+				                <f:facet name="header">  
+				                    <h:outputText value="#{msgs['schedule.template.type']}" />  
+				                </f:facet>  
+				                <h:outputText value="#{spreadsheet.type.label}" />  
+				            </p:column>  
+				  		            
+				            <p:column style="text-align: center;">  
+				                <f:facet name="header">  
+				                    <h:outputText value="#{msgs['spreadsheet.date']}" />  
+				                </f:facet>  
+				                <h:outputText value="#{spreadsheet.textMonth}" />
+				                <h:outputText value="/" />
+				                <h:outputText value="#{spreadsheet.year}" />  
+				            </p:column>
+				            
+							<p:column style="text-align: center;">
+								<f:facet name="header">
+									<h:outputText value="#{msgs['spreadsheet.email.sent']}" />
+								</f:facet>	 				
+								
+								<h:panelGroup rendered="#{spreadsheet.sent}">
+									<h:outputText value="#{msgs['template.button.yes']}" style="color: green;"/>
+								</h:panelGroup>
+								
+								<h:panelGroup rendered="#{!spreadsheet.sent}">
+									<h:outputText value="#{msgs['template.button.no']}" style="color: red;"/>
+								</h:panelGroup>
+								
+							</p:column>			              		            
+				  
+				            <p:column style="text-align:center">  
+				                <f:facet name="header">  
+				                    <h:outputText value="" />  
+				                </f:facet>  
+				                
+				                <p:commandButton icon="edit" action="#{spreadsheetBean.goToModify}" ajax="false" title="#{msgs['template.button.edit']}">
+			           				<f:setPropertyActionListener target="#{spreadsheetBean.spreadsheet.id}" value="#{spreadsheet.id}" />
+			           			</p:commandButton> 
+			           				
+			           			<p:commandButton action="#{spreadsheetBean.sendByEmail}" ajax="false"
+			           				icon="email" title="#{msgs['template.button.email']}">          				
+			           				<f:setPropertyActionListener target="#{spreadsheetBean.spreadsheet.id}" value="#{spreadsheet.id}" />	
+			           			</p:commandButton>   
+			           			
+			           			<p:commandButton action="#{spreadsheetBean.goToReportList}" ajax="false"
+			           				icon="pdf" title="Imprimir em PDF">          				
+			           				<f:setPropertyActionListener target="#{spreadsheetBean.spreadsheet.id}" value="#{spreadsheet.id}" />	
+			           			</p:commandButton>   
+			           				
+			           			<p:commandButton icon="delete" oncomplete="PF('deleteConfirmation').show()" title="#{msgs['template.button.delete']}">           			
+			     					<f:setPropertyActionListener target="#{spreadsheetBean.spreadsheet.id}" value="#{spreadsheet.id}" />
+			           			</p:commandButton>          				
+			           				
+				            </p:column>  
+				        </p:dataTable>  
+					    <div class="buttons">  
+					    	<p:commandButton value="#{msgs['spreadsheet.button.email']}" ajax="false" 
+						    	action="#{spreadsheetBean.sendEmails}"/>
+						    
+						    <p:commandButton value="#{msgs['template.button.incluir']}" ajax="false" 
+						    	action="#{spreadsheetBean.goToCreate}"/>
+						    	
+							<p:commandButton value="#{msgs['template.button.template.turma']}"				
+								oncomplete="PF('printDialog').show();" ajax="true" update="@widgetVar(printDialog)" />
+					    </div><br/><br/>
+					    
+				     	<p:confirmDialog message="#{msgs['template.msg.delete.confirmation']}"  
+				           	severity="alert" widgetVar="deleteConfirmation" >
+				   			<p:commandButton value="#{msgs['template.button.yes']}" oncomplete="deleteConfirmation.hide()" 
+				   				action="#{spreadsheetBean.delete}" ajax="false" />
+				   			<p:commandButton value="#{msgs['template.button.no']}" onclick="PF('deleteConfirmation').hide()" />
+						</p:confirmDialog> 			    
+					    
+						<p:dialog widgetVar="printDialog" id="printDialog" header="#{msgs['template.button.template.turma']}" modal="true">  
+					 		
+						        <h:outputLabel for="turmas" value="#{msgs['template.selecionar.turma']}" style="width:150px;padding-left:10px"/>
+					            <p:selectOneMenu id="turmas" value="#{spreadsheetBean.selectedTeam.id}" style="width:200px; overflow:hidden;">
+							   		<f:selectItems value="#{spreadsheetBean.teams}"  />  
+								</p:selectOneMenu><br/>
+					            				            				  			        
+						  	    <div class="buttons" style="padding-bottom:10px">    
+						            <p:commandButton value="#{msgs['template.button.imprimir']}"			               
+						            	action="#{spreadsheetBean.goToPrintReportTurmaList}"
+						            	oncomplete="printDialog.hide();" ajax="false"/>
+						            	
+									<p:commandButton value="#{msgs['template.button.cancelar']}"			               
+							           	onclick="PF('printDialog').hide();" ajax="true"/>
+							    </div>
+							
+						</p:dialog>		
+			    	</h:form>
+		
+					<h:form>
+					    <h3><h:outputText value="#{msgs['dashboard.spreadless']}"/></h3>
+					    <br/>
+					    <div class="tabela">
+							<p:dataTable var="customer" value="#{spreadsheetBean.customerDataModel}" 
+								paginator="true" rows="10" paginatorPosition="bottom"
+								paginatorAlwaysVisible="false" 
+								paginatorTemplate="{FirstPageLink} {PreviousPageLink} {NextPageLink} {LastPageLink}"
+								emptyMessage="#{msgs['dashboard.spreadless.empty']}" selection="#{spreadsheetBean.selectedSpreadsheetListLess}">
+								
+								<p:column selectionMode="multiple" style="text-align: center; width:30px;"/>  
+								<p:column>
+									<f:facet name="header">
+										<h:outputText value="#{msgs['spreadsheet.student']}" />
+									</f:facet>
+									<h:outputText value="#{customer.nome}" />
+								</p:column>						
+							</p:dataTable>		
+						</div>    
+						
+						<div class="buttons">  
+						    <p:commandButton value="#{msgs['template.button.atribuir.template']}" ajax="true" 
+						    	update="templatesDialog" oncomplete="PF('templatesDialog').show();" />
+						</div><br/>
+						
+						<p:dialog widgetVar="templatesDialog" id="templatesDialog" header="#{msgs['spreadsheet.template.apply']}" 
+							modal="true">  
+					 		
+						        <h:outputLabel value="#{msgs['spreadsheet.template']}:" style="width:120px; padding-left:15px"	/>		              
+								<p:selectOneMenu id="template" value="#{spreadsheetBean.template.id}" style="width:300px">
+							    	<f:selectItems value="#{spreadsheetBean.templateList}"  />  
+							    </p:selectOneMenu> 
+							    
+							    <br /><br />
+							    <h:outputLabel value="#{msgs['schedule.template.apply.short']}" style="width:120px; padding-left:15px"	/>
+						    	<p:calendar value="#{spreadsheetBean.applyDate}" id="popupCal" locale="pt" pattern="dd/MM/yyyy" /> <i>*Atemporal apenas</i>
+						    	
+						    	<br/><br/>  
+					            				            				  			        
+						  	    <div class="buttons" style="padding-bottom:10px">    
+						            <p:commandButton value="#{msgs['template.button.save']}"			               
+						            	action="#{spreadsheetBean.goToAtribuirTemplate}"
+						            	oncomplete="templatesDialog.hide();" ajax="false"/>
+						            	
+									<p:commandButton value="#{msgs['template.button.cancelar']}"			               
+							           	onclick="PF('templatesDialog').hide();" ajax="true"/>
+							    </div>
+							
+						</p:dialog>	
+					</h:form>
+				</td>
+			</tr>
+		</table>
+
+  </ui:define>
+</ui:composition>

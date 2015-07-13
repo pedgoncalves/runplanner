@@ -1,0 +1,76 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="#{loginBean.templateVersion}">
+
+	<ui:define name="content">
+		<h:form>
+		
+			<p:messages id="messages" showDetail="false" /> 
+			<div class="pageTitleBox">#{msgs['rhythm.maintitle']}</div>
+			<div class="subtitle">#{msgs['rhythm.subtitle']}</div>		
+
+			<p:panel header="#{msgs['header.rhythm.title']}" styleClass="center">
+					
+			<h:panelGrid columns="2" cellpadding="10" style="margin: 0 auto;">  
+		        <h:outputLabel value="#{msgs['rhythm.classification']}" />
+		        <p:inputText id="nome" value="#{rhythmMBean.rhythm.classification}" size="95" required="true"
+					requiredMessage="#{msgs['rhythm.classification.mandatory']}" maxlength="50"/>
+	 		</h:panelGrid>
+
+		    <h:panelGrid columns="6" cellpadding="15" style="margin: 0 auto;">  
+		        <h:outputLabel value="#{msgs['spreadsheet.rhythm.easyPace']}" />  
+          			<p:inputMask value="#{rhythmMBean.rhythm.easyPace}" mask="99:99" size="5"/>
+          			
+          			<h:outputLabel value="#{msgs['spreadsheet.rhythm.normalPace']}" />  
+          			<p:inputMask value="#{rhythmMBean.rhythm.normalPace}" mask="99:99" size="5"/>
+          			
+          			<h:outputLabel value="#{msgs['spreadsheet.rhythm.moderatePace']}" />  
+          			<p:inputMask value="#{rhythmMBean.rhythm.moderatePace}" mask="99:99" size="5"/>
+          			
+          			<h:outputLabel value="#{msgs['spreadsheet.rhythm.mediumPace']}" />  
+          			<p:inputMask value="#{rhythmMBean.rhythm.mediumPace}" mask="99:99" size="5"/>
+          			
+          			<h:outputLabel value="#{msgs['spreadsheet.rhythm.strongPace']}" />  
+          			<p:inputMask value="#{rhythmMBean.rhythm.strongPace}" mask="99:99" size="5"/>
+          			
+          			<h:outputLabel value="#{msgs['spreadsheet.rhythm.shootingPace']}" />  
+          			<p:inputMask value="#{rhythmMBean.rhythm.shootingPace}" mask="99:99" size="5"/>
+		    </h:panelGrid>  
+			</p:panel>	
+			<br />
+			
+			<div class="buttons"> 
+				<p:commandButton value="#{msgs['template.button.save']}"
+					update="messages" action="#{rhythmMBean.save}" ajax="false"
+					rendered="#{rhythmMBean.rhythm.id == null}"/>
+					
+				<p:commandButton value="#{msgs['template.button.alterar']}"
+					update="messages" action="#{rhythmMBean.save}" ajax="false"
+					rendered="#{rhythmMBean.rhythm.id != null}"/>
+					
+				<p:commandButton value="#{msgs['template.button.cancelar']}" ajax="false"
+					action="#{rhythmMBean.goToList}" immediate="true" />
+			</div>				
+			
+			<p:fieldset rendered="#{rhythmMBean.rhythm.id!=null}" legend="#{msgs['rhythm.customers.title']}">
+				<div class="tabela">
+					<p:dataTable var="customer" value="#{rhythmMBean.customerList}"
+						emptyMessage="#{msgs['template.msg.emptyMessage']}">
+		
+						<p:column>
+							<f:facet name="header">
+								<h:outputText value="#{msgs['alunos.nome']}" />
+							</f:facet>
+							<h:outputText value="#{customer.nome}" />	           			 
+						</p:column>
+							
+					</p:dataTable>
+				</div>
+			</p:fieldset>			
+
+		</h:form>
+	</ui:define>
+</ui:composition>

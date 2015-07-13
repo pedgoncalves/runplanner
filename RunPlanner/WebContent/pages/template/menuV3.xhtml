@@ -1,0 +1,77 @@
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:fb="http://ogp.me/ns/fb#"
+	xmlns:og="http://ogp.me/ns#"
+	xmlns:sec="http://www.springframework.org/security/facelets/tags">
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+	
+	
+		<f:view contentType="text/html">
+		
+		<h:head>
+			<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+		</h:head>
+	
+		<!-- Menu -->
+		<h:form>
+			<table width="100%">
+				<tr>
+					
+					<td align="center">
+						<h:commandLink action="#{teacherMBean.goToList}">
+							<img src="${facesContext.externalContext.requestContextPath}/images/v3/teacherOut.png" 
+							onMouseOver="this.src='${facesContext.externalContext.requestContextPath}/images/v3/teacher.png'"
+							onMouseOut="this.src='${facesContext.externalContext.requestContextPath}/images/v3/teacherOut.png'"
+							style="min-width: 35px; max-width: 35px; width: 35px;" />
+							<figcaption><font color="#5B5B58"><b>PROFESSORES</b></font></figcaption>
+						</h:commandLink>
+					</td>
+					
+					<td align="center">
+						<img src="${facesContext.externalContext.requestContextPath}/images/v3/customer.png" style="min-width: 35px; max-width: 35px; width: 35px;" />
+						<figcaption><font color="#5B5B58"><b>ALUNOS</b></font></figcaption>
+					</td>
+					
+					<td align="center">
+						<img src="${facesContext.externalContext.requestContextPath}/images/v3/payment.png" style="min-width: 35px; max-width: 35px; width: 35px;" />
+						<figcaption><font color="#5B5B58"><b>PAGAMENTO</b></font></figcaption>
+					</td>
+					
+					<td align="center">
+						<img src="${facesContext.externalContext.requestContextPath}/images/v3/presence.png" style="min-width: 35px; max-width: 35px; width: 35px;" />
+						<figcaption><font color="#5B5B58"><b>PRESENÇA</b></font></figcaption>
+					</td>
+					
+					<td align="center">
+						<img src="${facesContext.externalContext.requestContextPath}/images/v3/message.png" style="min-width: 35px; max-width: 35px; width: 35px;" />
+						<figcaption><font color="#5B5B58"><b>COMUNICAÇÃO</b></font></figcaption>
+					</td>
+					
+					<td align="center">
+						<img src="${facesContext.externalContext.requestContextPath}/images/v3/event.png" style="min-width: 35px; max-width: 35px; width: 35px;" />
+						<figcaption><font color="#5B5B58"><b>EVENTOS</b></font></figcaption>
+					</td>
+					
+					<td align="center">
+						<img src="${facesContext.externalContext.requestContextPath}/images/v3/classif.png" style="min-width: 35px; max-width: 35px; width: 35px;" />
+						<figcaption><font color="#5B5B58"><b>PLANILHAS</b></font></figcaption>
+					</td>
+					
+					<td align="center">
+						<img src="${facesContext.externalContext.requestContextPath}/images/v3/classif.png" style="min-width: 35px; max-width: 35px; width: 35px;" />
+						<figcaption><font color="#5B5B58"><b>ATIVIDADES</b></font></figcaption>
+					</td>
+					
+					<td align="center">
+						<img src="${facesContext.externalContext.requestContextPath}/images/v3/classif.png" style="min-width: 35px; max-width: 35px; width: 35px;" />
+						<figcaption><font color="#5B5B58"><b>GRÁFICOS</b></font></figcaption>
+					</td>
+				</tr>
+			</table>
+		</h:form>
+	</f:view>
+</html>

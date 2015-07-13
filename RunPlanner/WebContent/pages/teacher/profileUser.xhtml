@@ -1,0 +1,409 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+    xmlns:rp="http://runplanner.com.br/facelets"
+	template="#{loginBean.templateVersion}"
+	xmlns:sec="http://www.springframework.org/security/facelets/tags">
+
+	<ui:define name="content">
+	
+		<style  type="text/css">
+			.ui-fileupload-content {
+			    display:none;   
+			}			
+			
+			.ui-widget-header {
+				background: white !important;
+				border: 0px;
+			}
+		</style>
+
+		<div class="pageTitleBox">#{msgs['profile.maintitle']}</div>
+		<div class="subtitle">#{msgs['profile.subtitle']}</div>
+		
+		<table width="100%">
+			<tr>
+				<td valign="top" align="left" style="padding-left: 10px;">
+					<p:tabView activeIndex="#{profileMBean.activeIndex}" >
+						<p:ajax event="tabChange" listener="#{profileMBean.onChange}" />
+
+						<p:tab title="Dados Pessoais" id="tab0">
+							<h:form enctype="multipart/form-data" id="cadastro" acceptcharset="UTF-8">
+
+								<p:messages id="messages" showDetail="false" />
+
+								<table width="100%" id="dadosPessoais" class="">
+									<tr>
+										<td align="center" style="padding-left: 10px; vertical-align: top;">
+											<!-- Foto --> 
+											<p:panel id="customerPhoto" widgetVar="customerPhoto">
+												<p:panel rendered="#{profileMBean.customer.photo==null}" style="text-align:center; border: 0px;">
+													<img src="${facesContext.externalContext.requestContextPath}/images/nophoto.gif" width="150" />
+												</p:panel>
+
+												<p:panel rendered="#{profileMBean.customer.userPhoto != null}" style="border: 0px;">
+													<p:graphicImage value="#{photoMBean.streamedPhotoByPath}" width="150" cache="false">
+														<f:param name="photo_path" value="#{profileMBean.customer.userPhoto}" />
+													</p:graphicImage>								
+								   				</p:panel> 
+								   				
+								   				<p:panel rendered="#{profileMBean.customer.photo!=null and profileMBean.customer.userPhoto==null}" style="border: 0px;">
+													<p:graphicImage value="#{profileMBean.photo}" id="image" width="150" />
+								   				</p:panel>
+												
+												<p:fileUpload fileUploadListener="#{profileMBean.handleFileUpload}"  
+													mode="advanced" 
+													id="fileUpload"
+													label="#{msgs['template.button.change.photo']}"
+													auto="true" 
+													update="customerPhoto, messages"
+													invalidSizeMessage="#{msgs['template.msg.sizeExceedMessage']}"
+													invalidFileMessage="#{msgs['template.msg.invalidFileMessage']}"/>
+
+											</p:panel>
+
+										</td>
+										<td>
+										<p:panel header="#{msgs['profileUser.dados.pessoais']}">
+											<!-- Dados Cadastrais -->
+											<p>
+												<h:outputLabel for="nome" value="#{msgs['alunos.nome']}"
+													style="text-align:right" />
+												<p:inputText id="nome" value="#{profileMBean.customer.nome}"
+													size="50" required="true"
+													requiredMessage="#{msgs['template.nome.mandatory']}"
+													maxlength="100" style="margin-left:10px" />
+											</p>
+
+											<p>
+												<h:outputLabel for="email" value="#{msgs['alunos.email']} "
+													style="text-align:right" />
+												<p:inputText id="email"
+													value="#{profileMBean.customer.email}" required="true"
+													requiredMessage="#{msgs['template.email.mandatory']}"
+													size="50" maxlength="100" style="margin-left:10px">
+													<f:validator validatorId="EmailValidator" />
+												</p:inputText>
+											</p>
+
+											<p>
+												<h:outputLabel for="cpf" value="#{msgs['alunos.cpf']} "
+													style="text-align:right" />
+												<p:inputMask id="cpf" value="#{profileMBean.customer.cpf}"
+													mask="999.999.999-99" size="14" readonly="true"
+													style="margin-left:10px" styleClass="readonly" />
+
+												<h:outputLabel for="rg" value="#{msgs['alunos.rg']} "
+													style="width:30px; text-align:right" />
+												<p:inputText id="rg" value="#{profileMBean.customer.rg}"
+													size="14" maxlength="15" readonly="true"
+													style="margin-left:10px" styleClass="readonly" />
+											</p>
+											<p>
+												<h:outputLabel for="nascimento"
+													value="#{msgs['alunos.nascimento']} "
+													style="width:90px; text-align:right" />
+												<p:inputMask id="nascimento"
+													value="#{profileMBean.customer.dtNascimento}"
+													mask="99/99/9999" style="margin-left:10px" size="10"
+													validatorMessage="#{msgs['template.date.invalid']}"
+													converterMessage="#{msgs['template.date.invalid']}">
+													<f:convertDateTime pattern="dd/MM/yyyy" />
+												</p:inputMask>
+											</p>
+
+											<p>
+												<h:outputLabel for="sexo" value="#{msgs['alunos.sexo']}"
+													style="margin-top: 6px; text-align:right" />
+												<p:selectOneRadio id="sexo"
+													value="#{profileMBean.customer.sexo}"
+													style="padding-left:10px">
+													<f:selectItems value="#{profileMBean.listaSexo}" />
+												</p:selectOneRadio>
+											</p>
+											</p:panel>
+											<div class="buttons">
+												<p:commandButton value="#{msgs['template.button.save']}"
+													ajax="false" action="#{profileMBean.save}"
+													style="align:right;" />
+											</div>
+										</td>
+									</tr>
+								</table>
+							</h:form>
+
+						</p:tab>
+
+						<p:tab title="#{msgs['advice.title.adress']}" id="tab1" >
+							<h:form>
+								<div class="" style="text-align: right;">
+									<p>
+										<h:outputLabel for="street" value="#{msgs['adress.street']}"
+											style="width:100px; padding-right:2px; padding-left:100px;	"  />
+										<p:inputText id="street"
+											value="#{profileMBean.endereco.logradouro}" size="50"
+											readonly="true" maxlength="100" styleClass="readonly" />
+
+										<h:outputLabel for="number" value="#{msgs['adress.number']}"
+											style="width:60px; text-align:right;" />
+										<p:inputText id="number"
+											value="#{profileMBean.endereco.numero}" size="5"
+											maxlength="5" readonly="true" style="margin-left:10px"
+											styleClass="readonly" />
+									</p>
+									<p>
+										<h:outputLabel for="complement"
+											value="#{msgs['adress.complement']}"
+											style="width:100px; padding-right:2px; padding-left:100px;" />
+										<p:inputText id="complement"
+											value="#{profileMBean.endereco.complemento}" size="37"
+											readonly="true" maxlength="100" styleClass="readonly" />
+
+										<h:outputLabel for="bairro" value="#{msgs['adress.bairro']}"
+											style="width:50px; text-align:right; padding-left:98px" />
+										<p:inputText id="bairro"  
+											value="#{profileMBean.endereco.bairro}" maxlength="100"
+											readonly="true" style="margin-left:10px"
+											styleClass="readonly" />
+									</p>
+									<p>
+										<h:outputLabel for="cep" value="#{msgs['adress.cep']}"
+											style="width:100px; padding-right:2px; padding-left:100px;" />
+										<p:inputMask id="cep" value="#{profileMBean.endereco.cep}"
+											mask="99.999-999" readonly="true" size="12"
+											styleClass="readonly" />
+
+										<h:outputLabel for="home" value="#{msgs['adress.phone.home']}"
+											style="width:150px; text-align:right; padding-left:167px" />
+										<p:inputMask id="home"
+											value="#{profileMBean.endereco.foneResidencial}"
+											mask="(99) 9999-9999" readonly="true" styleClass="readonly"
+											size="14" style="margin-left:10px" />
+									</p>
+									<p>
+										<h:outputLabel for="cel" value="#{msgs['adress.phone.cel']}"
+											style="width:100px; padding-right:2px; padding-left:100px;" />
+										<p:inputMask id="cel"
+											value="#{profileMBean.endereco.foneCelular}"
+											mask="(99) 9999-9999" readonly="true" size="14"
+											styleClass="readonly" />
+
+										<h:outputLabel for="work" value="#{msgs['adress.phone.work']}"
+											style="width:150px; text-align:right ; padding-left:155px" />
+										<p:inputMask id="work"
+											value="#{profileMBean.endereco.foneComercial}"
+											mask="(99) 9999-9999" readonly="true" size="14"
+											styleClass="readonly" style="margin-left:10px" />
+									</p>
+									<br /> <br />
+								</div>
+							</h:form>
+						</p:tab>
+
+						<p:tab title="#{msgs['template.changepass.title']}" id="tab2">
+							<h:form>
+								<center>
+								<div class="" style="width: 50%;">
+									<h:panelGrid id="customerDetails" columns="2">
+
+										<h:outputLabel value="Senha Atual:" />
+										<p:password value="#{userMBean.oldPass}" feedback="false"
+											required="true"
+											requiredMessage="#{msgs['user.pass.old.mandatory']}" />
+
+										<h:outputLabel value="Nova Senha:" />
+										<p:password value="#{userMBean.newPass}" feedback="false"
+											required="true"
+											requiredMessage="#{msgs['user.pass.new.mandatory']}" />
+
+										<h:outputLabel value="Confirme a nova Senha:"
+											style="width: 150px;" />
+										<p:password value="#{userMBean.retypePass}" feedback="false"
+											required="true"
+											requiredMessage="#{msgs['user.pass.retype.mandatory']}" />
+
+									</h:panelGrid>
+
+									<br />
+									<p:commandButton value="#{msgs['template.button.save']}"
+										update="@widgetVar(messages)"
+										action="#{userMBean.changePassword}" ajax="false" />
+								</div>
+								</center>
+							</h:form>
+						</p:tab>
+
+						<sec:ifAnyGranted roles="ROLE_ADM">
+							<p:tab title="Pagamentos" id="tab4">
+								<h:form>
+
+									<p>
+										<h:outputLabel value="#{msgs['advice.contract.init']}"
+											style="width:110px;" />
+										<h:outputLabel value="#{profileMBean.advice.contractInit}">
+											<f:convertDateTime pattern="dd/MM/yyyy" />
+										</h:outputLabel>
+
+										<h:outputLabel value="#{msgs['advice.value']}"
+											style="width:110px;" />
+										<h:outputLabel value="#{profileMBean.advice.value}" />
+									</p>
+									<br />
+
+									<div id="painel" class="tabela">
+										<p:dataTable var="payment" value="#{profileMBean.paymentList}"
+											emptyMessage="#{msgs['template.msg.emptyMessage']}">
+											<p:column style="text-align:center;">
+												<f:facet name="header">
+													<h:outputText value="#{msgs['template.year']}" />
+												</f:facet>
+												<b><h:outputText value="#{payment.year}" /></b>
+											</p:column>
+
+											<p:column style="text-align:center;">
+												<f:facet name="header">
+													<h:outputText value="#{msgs['template.month.short.jan']}" />
+												</f:facet>
+												<p:selectBooleanCheckbox value="#{payment.jan}"
+													disabled="true" />
+											</p:column>
+
+											<p:column>
+												<f:facet name="header">
+													<h:outputText value="#{msgs['template.month.short.fev']}" />
+												</f:facet>
+												<p:selectBooleanCheckbox value="#{payment.feb}"
+													disabled="true" />
+											</p:column>
+
+											<p:column>
+												<f:facet name="header">
+													<h:outputText value="#{msgs['template.month.short.mar']}" />
+												</f:facet>
+												<p:selectBooleanCheckbox value="#{payment.mar}"
+													disabled="true" />
+											</p:column>
+
+											<p:column>
+												<f:facet name="header">
+													<h:outputText value="#{msgs['template.month.short.abr']}" />
+												</f:facet>
+												<p:selectBooleanCheckbox value="#{payment.apr}"
+													disabled="true" />
+											</p:column>
+
+											<p:column>
+												<f:facet name="header">
+													<h:outputText value="#{msgs['template.month.short.mai']}" />
+												</f:facet>
+												<p:selectBooleanCheckbox value="#{payment.may}"
+													disabled="true" />
+											</p:column>
+
+											<p:column>
+												<f:facet name="header">
+													<h:outputText value="#{msgs['template.month.short.jun']}" />
+												</f:facet>
+												<p:selectBooleanCheckbox value="#{payment.jun}"
+													disabled="true" />
+											</p:column>
+
+											<p:column>
+												<f:facet name="header">
+													<h:outputText value="#{msgs['template.month.short.jul']}" />
+												</f:facet>
+												<p:selectBooleanCheckbox value="#{payment.jul}"
+													disabled="true" />
+											</p:column>
+
+											<p:column>
+												<f:facet name="header">
+													<h:outputText value="#{msgs['template.month.short.ago']}" />
+												</f:facet>
+												<p:selectBooleanCheckbox value="#{payment.aug}"
+													disabled="true" />
+											</p:column>
+
+											<p:column>
+												<f:facet name="header">
+													<h:outputText value="#{msgs['template.month.short.set']}" />
+												</f:facet>
+												<p:selectBooleanCheckbox value="#{payment.sep}"
+													disabled="true" />
+											</p:column>
+
+											<p:column>
+												<f:facet name="header">
+													<h:outputText value="#{msgs['template.month.short.out']}" />
+												</f:facet>
+												<p:selectBooleanCheckbox value="#{payment.oct}"
+													disabled="true" />
+											</p:column>
+
+											<p:column>
+												<f:facet name="header">
+													<h:outputText value="#{msgs['template.month.short.nov']}" />
+												</f:facet>
+												<p:selectBooleanCheckbox value="#{payment.nov}"
+													disabled="true" />
+											</p:column>
+
+											<p:column>
+												<f:facet name="header">
+													<h:outputText value="#{msgs['template.month.short.dez']}" />
+												</f:facet>
+												<p:selectBooleanCheckbox value="#{payment.dez}"
+													disabled="true" />
+											</p:column>
+
+										</p:dataTable>
+									</div>
+									<br />
+
+									<div class="" style="text-align: left !important;">
+										<h3 style="text-align: left !important;">Novo Pagamento</h3>
+
+										<table>
+											<tr>
+												<td width="1"><h:outputLabel
+														value="#{msgs['template.month']}" style="width:30px;" /></td>
+												<td><p:selectOneMenu
+														value="#{profileMBean.selectedMonth}" style="width:200px">
+														<f:selectItems value="#{profileMBean.monthList}" />
+													</p:selectOneMenu></td>
+												<td width="1"><h:outputLabel
+														value="#{msgs['template.year']}" style="width:30px;" /></td>
+												<td><p:selectOneMenu
+														value="#{profileMBean.selectedYear}" style="width:100px">
+														<f:selectItems value="#{profileMBean.yearList}" />
+													</p:selectOneMenu></td>
+												<td colspan="2"><p:commandButton value="Gerar"
+														ajax="false" action="#{profileMBean.payment}"
+														style="align:right;" /></td>
+											</tr>
+										</table>
+
+										<p:panel rendered="#{profileMBean.paymentLink!=null}">
+				    		Link para pagamento: 
+				    		<h:outputLink value="#{profileMBean.paymentLink}">
+								PagSeguro
+							</h:outputLink>
+										</p:panel>
+
+									</div>
+								</h:form>
+							</p:tab>
+							<br />
+						</sec:ifAnyGranted>
+
+					</p:tabView>
+				</td>
+			</tr>
+		</table>
+
+	</ui:define>
+</ui:composition>

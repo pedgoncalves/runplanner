@@ -1,0 +1,115 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="#{loginBean.templateVersion}">
+
+	<ui:define name="content">
+		<h:form>
+
+			<p:messages id="messages" showDetail="false" /> 
+			
+			<p:panel id="filter" header="#{msgs['alunos.title.personal.data']}"> 
+				<h:panelGrid id="imageDetails" columns="2" >
+					<p:graphicImage value="#{customerMBean.photo}" id="image" width="150" rendered="#{customerMBean.customer.photo!=null}"/>
+					
+					<h:panelGrid id="details" columns="2">					
+						<h:outputLabel for="nome" value="#{msgs['alunos.nome']} " />
+						<p:inputText id="nome" value="#{customerMBean.customer.nome}" size="70" readonly="true"/>
+		
+						<h:outputLabel for="email" value="#{msgs['alunos.email']} " />
+						<p:inputText id="email" value="#{customerMBean.customer.email}" size="70" readonly="true"/>
+		
+						<h:outputLabel for="nascimento" value="#{msgs['alunos.nascimento']}" />
+						<p:inputMask id="nascimento" value="#{customerMBean.customer.dtNascimento}" mask="99/99/9999" readonly="true" size="10">
+							<f:convertDateTime pattern="dd/MM/yyyy" />
+						</p:inputMask>
+					</h:panelGrid>
+				</h:panelGrid>
+			</p:panel>	
+
+
+			<h3><h:outputText value="#{msgs['alunos.title.measurements']}"/></h3>
+			<br/>
+			<div id="painel" class="tabela">
+				<p:dataTable
+					var="bodyMeasurements"
+					value="#{customerMBean.bodyMeasurementsList}" paginator="true"
+					rows="10" paginatorPosition="bottom" paginatorAlwaysVisible="false"
+					paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+					emptyMessage="#{msgs['template.msg.emptyMessage']}">
+
+					<p:column style="text-align:center;">
+						<f:facet name="header">
+							<h:outputText value="#{msgs['template.generic.data']}" />
+						</f:facet>
+						<h:commandLink action="#{customerMBean.goToModifyBodyMeasurements}">    
+							<h:outputText value="#{bodyMeasurements.dtData}">											
+	                			<f:convertDateTime pattern="dd/MM/yyyy" />
+							</h:outputText>
+							<f:setPropertyActionListener
+								target="#{customerMBean.bodyMeasurements.id}"
+								value="#{bodyMeasurements.id}" />
+						</h:commandLink>
+					</p:column>
+
+					<p:column style="text-align:center;">
+						<f:facet name="header">
+							<h:outputText value="#{msgs['alunos.weight']}" />
+						</f:facet>
+						<h:outputText value="#{bodyMeasurements.weight}" />
+					</p:column>
+
+					<p:column style="text-align:center;">
+						<f:facet name="header">
+							<h:outputText value="#{msgs['alunos.vo2Max']}" />
+						</f:facet>
+						<h:outputText value="#{bodyMeasurements.vo2Max}" />
+					</p:column>
+					
+					<p:column style="text-align:center;">
+						<f:facet name="header">
+							<h:outputText value="#{msgs['alunos.threshold2']}" />
+						</f:facet>
+						<h:outputText value="#{bodyMeasurements.threshold2}" />
+					</p:column>					
+
+					<p:column style="text-align:center;">
+						<f:facet name="header">
+							<h:outputText value="#{msgs['alunos.heartRateMax']}" />
+						</f:facet>
+						<h:outputText value="#{bodyMeasurements.heartRateMax}" />
+					</p:column>
+
+					<p:column style="text-align:center;">
+							
+	           			<p:commandButton icon="delete" oncomplete="deleteConfirmation.show()" title="#{msgs['template.button.delete']}">           			
+	     					<f:setPropertyActionListener target="#{customerMBean.bodyMeasurements.id}" value="#{bodyMeasurements.id}" />
+	           			</p:commandButton>   						
+					</p:column>
+				</p:dataTable> 
+			</div>
+			
+	     	<p:confirmDialog message="#{msgs['template.msg.delete.confirmation']}"  
+	           	severity="alert" widgetVar="deleteConfirmation">
+	           	<center>
+	   			<p:commandButton value="#{msgs['template.button.yes']}" oncomplete="deleteConfirmation.hide()" 
+	   				action="#{customerMBean.deleteBodyMeasurements}" ajax="false" />
+	   			<p:commandButton value="#{msgs['template.button.no']}" onclick="deleteConfirmation.hide()" />
+	   			</center>
+			</p:confirmDialog> 					
+			
+			<br />
+			
+			<div class="buttons"> 
+				<p:commandButton value="#{msgs['template.button.incluir']}" ajax="false"
+					action="#{customerMBean.goToCreateBodyMeasurements}" />
+				<p:commandButton value="#{msgs['template.button.cancelar']}" ajax="false"
+					action="#{customerMBean.goToList}" immediate="true" />
+			</div>
+
+
+		</h:form>
+	</ui:define>
+</ui:composition>

@@ -1,0 +1,175 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:fb="http://ogp.me/ns/fb#"
+	xmlns:og="http://ogp.me/ns#"
+	xmlns:sec="http://www.springframework.org/security/facelets/tags">
+	
+	<f:view contentType="text/html">
+	
+	<h:head>
+		<link rel="stylesheet" type="text/css" href="${facesContext.externalContext.requestContextPath}/js/jqplot/jquery.jqplot.min.css" />
+	
+	
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+		<meta http-equiv="Content-Style-Type" content="text/css" />
+		
+		<meta name="description" content="Sistema WEB voltado para treinadores e assessorias esportivas, que visa a organizacao da empresa, a elaboracao dos treinos e o acompanhamento do desempenho dos seus atletas"/>
+		<meta name="keywords" content="Planejamento de corridas, acompanhamento esportivo, analise de desempenho,  acompanhamento de atletas, analise esportiva, atividade esportiva, controle de turmas, assessoria esportiva, assessoria corrida, corridas, maratonas, meia-maratona, fitness, aplicativo, corrida online, planilhas, upload fitness data, exercicios, saide, emagrecer, caminhada, ritmo, pace, garmin, tcx, gpx, condicionamento, educacao fisica, saude"/>		
+	
+
+		<meta property="fb:app_id" content="163439590451695"/>
+		<meta property="fb:admins" content="163439590451695"/>
+		<meta property="og:image" content="http://www.runplanner.com.br/runplanner/images/rpicon.png" />
+		<meta property="og:site_name" content="RunPlanner" />
+        
+		<link href="images/icone.ico" rel="shortcut icon" type="image/x-icon" />
+		<link rel="stylesheet" href="${facesContext.externalContext.requestContextPath}/css/estilo.css" type="text/css" charset="utf-8" />		
+				
+		<title>RunPlanner - Keep Running!</title>
+		
+		<script> 
+			$("input").corner("3px");
+		</script>
+		
+		<ui:insert name="head"></ui:insert>
+		
+		<script src="http://maps.google.com/maps/api/js?sensor=false" type="text/javascript"></script>
+			
+		<script type="text/javascript" src="js/jquery-1.4.2.js"></script>
+		<script type="text/javascript" src="js/jquery.corner.js"></script>	
+
+		<script type="text/javascript">
+		
+		  var _gaq = _gaq || [];
+		  _gaq.push(['_setAccount', 'UA-27218523-1']);
+		  _gaq.push(['_setDomainName', 'runplanner.com.br']);
+		  _gaq.push(['_trackPageview']);
+
+		  (function() {
+		    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+		    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+		    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		  })();
+		
+		</script>
+		
+
+	</h:head>	
+	
+		<h:body style="background-color: #EDEDED" >
+		
+			<center>
+			
+				<table border="0" cellspacing="0" cellpadding="0" class="tableHeaderV3" style="width:100%;">
+					<tr>
+						<td align="center">
+							
+							<table border="0" cellspacing="0" cellpadding="0" class="tableHeaderV3" style="width:1024px;">
+								<tr>
+									<!-- Icone do sistema -->
+									<td  align="left"  valign="middle" style="max-width: 50px; min-width: 50px; width: 50px;"> 
+										<img src="${facesContext.externalContext.requestContextPath}/images/rpNew.jpg" width="50px" height="50px"/>
+									</td>
+									
+									<td  align="left" valign="middle" style="padding-left: 30px; max-width: 50px; min-width: 50px; width: 50px;"> 
+										<img src="${facesContext.externalContext.requestContextPath}/images/rss.png" />
+									</td>
+									
+									<td  align="left" valign="middle" style="padding-left: 10px;"> 
+										<img src="${facesContext.externalContext.requestContextPath}/images/aluno.png" />
+									</td>
+									
+									<td  align="center" valign="middle" style="background-color: #4E7999; max-width: 50px; min-width: 50px; width: 50px; cursor: pointer;" id="config"> 
+										<img src="${facesContext.externalContext.requestContextPath}/images/config.png" width="20px" height="20px" />
+										
+										<div style="background-color: #4E7999; display:none; width: 200px; float: right; position: absolute; top:50px; left: 992px;" id="panelConfig" >
+											Menu de Configuracoes <br/>
+											Teste<br/>
+											Teste<br/>
+											Teste<br/>
+											Teste<br/>
+											Teste
+										</div>
+									</td>
+								</tr>
+							</table>
+							
+						</td>
+					</tr>
+				</table>
+				
+				
+				<script>
+					$("#config").click(function () {
+						$("#panelConfig").slideToggle("slow");
+					});
+				</script>
+				
+				
+				
+				
+				<table style="width:1024px; background-color: white; border: 1px solid #C8C8C8; text-align: left; margin-top: 20px;" cellspacing="0" cellpadding="0" >
+			
+					<tr>
+						<td style="border-bottom: 1px solid #DBDBDB; background-color: #F7F7F7;">
+							<!-- Menu -->
+							<h:form>
+							<table  width="100%" cellspacing="0" cellpadding="0" border="0">
+								<tr>
+									<td style="min-width: 100px; max-width: 100px; width: 100px;">
+										<p:graphicImage value="#{loginBean.adviceLogo}"  width="100px"/>					
+									</td>
+									<td valign="middle" style="min-width: 150px; max-width: 150px; width: 150px; padding-left: 10px">
+										<font size="3" color="#5B5B58"><b>#{loginBean.adviceName}</b></font>
+									</td>
+									<td style="border-left: 1px solid #DBDBDB;" align="right">
+										<!-- Menu -->
+										<ui:include src="menuV3.xhtml"/>
+									</td>
+								</tr>
+							</table>
+							</h:form>
+						</td>
+					</tr>
+				
+					<tr>
+						<td width="100%" style="padding: 10px;">
+							<ui:insert name="content">
+							</ui:insert>			
+						</td>
+					</tr>
+			
+				</table>
+								
+				<br/><br/>
+				<h:form> 
+					<div class="rodapeV3" >
+						<span>®2011 RunPlanner</span>
+						<span style="color: #DFF76B !important;">|</span>
+						<span>Sobre</span>
+						<span style="color: #DFF76B !important;">|</span>
+						<span>
+						<h:outputLink value="${facesContext.externalContext.requestContextPath}/pages/contactus.jsf">
+							Contato
+						</h:outputLink>				
+							
+						</span>
+					</div>
+				</h:form>
+				
+				<div class="subrodapeV3">
+					<span><a href="http://blog.runplanner.com.br" target="_blank"><img src="${facesContext.externalContext.requestContextPath}/images/blogger.png" /></a></span>
+					
+					<span><a href="http://twitter.com/#!/runplanner" target="_blank"><img src="${facesContext.externalContext.requestContextPath}/images/twitter.png" /></a></span>
+					
+					<span><a href="https://www.facebook.com/pages/RunPlanner/263729277005927" target="_blank"><img src="${facesContext.externalContext.requestContextPath}/images/facebook.png" /></a></span> 
+				</div>
+	
+			</center>
+		</h:body>
+	
+	</f:view>
+</html>

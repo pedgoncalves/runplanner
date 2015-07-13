@@ -1,0 +1,372 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:sec="http://www.springframework.org/security/facelets/tags">
+	
+	<f:view contentType="text/html">	
+	<h:head>
+		<title>RunPlanner - Keep Running</title>
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+		<meta http-equiv="Content-Style-Type" content="text/css" />
+		
+		<meta name="description" content="Sistema WEB voltado para treinadores e assessorias esportivas, que visa a organizacao da empresa, a elaboracao dos treinos e o acompanhamento do desempenho dos seus atletas"/>
+		<meta name="keywords" content="Planejamento de corridas, acompanhamento esportivo, analise de desempenho,  acompanhamento de atletas, analise esportiva, atividade esportiva, controle de turmas, assessoria esportiva, assessoria corrida, corridas, maratonas, meia-maratona, fitness, aplicativo, corrida online, planilhas, upload fitness data, exercicios, saide, emagrecer, caminhada, ritmo, pace, garmin, tcx, gpx, condicionamento, educacao fisica, saude"/>		
+	
+
+		<meta property="fb:app_id" content="163439590451695"/>
+		<meta property="fb:admins" content="163439590451695"/>
+		<meta property="og:image" content="http://www.runplanner.com.br/runplanner/images/rpicon.png" />
+		<meta property="og:site_name" content="RunPlanner" />
+		<meta property="og:type" content="article" />
+		<meta property="og:title" content="Nova atividade cadastrada no RunPlanner!" />    
+        <meta property="og:description" content="#{publicMBean.description}"  />		
+		
+		
+		<!--[if lte IE 8]><script src="css/ie/html5shiv.js"></script><![endif]-->
+		<script src="js/jquery.min.js"></script>
+		<script src="js/jquery.scrolly.min.js"></script>
+		<script src="js/skel.min.js"></script>
+		<script src="js/init.js"></script>
+		
+		<link href="images/icone.ico" rel="shortcut icon" type="image/x-icon" />
+		
+		<noscript>
+			<link rel="stylesheet" href="css/skel.css" />
+			<link rel="stylesheet" href="css/style.css" />
+			<link rel="stylesheet" href="css/style-desktop.css" />
+		</noscript>
+		
+		<!--[if lte IE 8]><link rel="stylesheet" href="css/ie/v8.css" /><![endif]-->
+		<!--[if lte IE 9]><link rel="stylesheet" href="css/ie/v9.css" /><![endif]-->
+		<script type="text/javascript">
+		
+		  var _gaq = _gaq || [];
+		  _gaq.push(['_setAccount', 'UA-27218523-1']);
+		  _gaq.push(['_setDomainName', 'runplanner.com.br']);
+		  _gaq.push(['_trackPageview']);
+
+		  (function() {
+		    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+		    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+		    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		  })();
+		
+		</script>		
+	</h:head>
+	<h:body>
+			
+		<p:messages id="messages" showDetail="false" /> 
+
+		<!-- Nav -->
+		<nav id="nav">
+			<table style="margin-top: 5px; margin-bottom: 5px;">
+				<tr>
+					<td style="text-align: left !important; width: 90% !important;  vertical-align: top;">
+						<img src="images/logo.png" style="margin-left: 10px;" height="100%"/> 
+					</td>
+					<td style="text-align: right !important; width: 10% !important; nowrap: nowrap; vertical-align: middle;">
+						<h:form prependId="false" >
+						 	<p:focus />  
+							<table style="padding: 0px; margin: 0px; border: 0px;">							 		
+								<tr nowrap="nowrap">						
+									<td nowrap="nowrap">E-mail:</td>
+									<td><input type="text" size="17" style="margin-right: 5px; margin-left: 5px;" name="j_username" id="j_username"/></td>
+									<td nowrap="nowrap">Senha:</td>
+									<td><input type="password" size="17" style="margin-right: 5px; margin-left: 5px;" name="j_password" id="j_password"/></td>
+									<td><h:commandButton action="#{loginBean.doLogin}" value="Entrar" id="btEntrar" style="padding: 0.05em 1.35em !important; margin-right: 5px; margin-left: 5px;"/></td>
+								</tr>
+								<tr>							
+									<td align="right" nowrap="nowrap" colspan="5" >
+										<a style="margin: 0px !important; padding: 0px; padding-right: 5px;">Esqueceu sua senha?</a>
+									</td>
+								</tr>							 		
+							</table>								
+						</h:form>				
+					</td>
+				</tr>
+			</table>				
+		</nav>
+
+		<!-- Home -->
+			<div class="wrapper style1 first">
+				<article class="container" id="top">
+					<div class="row">
+						<div class="4u">
+							<span class="image fit"><img src="images/rpNew.jpg" alt="" /></span>
+						</div>
+						<div class="8u">
+							<header>
+								<h1><strong>RunPlanner</strong></h1>
+							</header>							
+							<p>Um sistema voltado para treinadores e assessorias esportivas, que visa a elaboração dos treinos e o acompanhamento do desempenho dos seus atletas.</p>							
+							<footer>
+								<a href="#work" class="button big scrolly">Saiba mais!</a>
+								<a href="#contact" class="button big scrolly">Cadastre-se!</a>
+							</footer>
+						</div>
+					</div>
+				</article>
+			</div>
+
+		<!-- Work -->
+			<div class="wrapper style2">
+				<article id="work">
+					<header>
+						<h2>Algumas coisas que o RunPlanner pode fazer por você</h2>
+						<p>Teste gratuitamente nosso sistema</p>
+					</header>
+					<div class="container">
+						<div class="row">
+							<div class="4u">
+								<section class="box style1">
+									<span class="icon featured fa-trophy"></span>
+									<h3>Monitore o Desempenho </h3>
+									<p>Acompanhe de perto os treinos dos seus alunos e tenha todos os dados disponíveis quando quiser.</p>
+								</section>
+							</div>
+							<div class="4u">
+								<section class="box style1">
+									<span class="icon featured fa-file-excel-o"></span>
+									<h3>Planilhas Digitais</h3>
+									<p>Planejar, elaborar, personalizar e controlar. Tudo isso com planilhas intuitívas, práticas e reutilizáveis.</p>
+								</section>
+							</div>
+							<div class="4u">
+								<section class="box style1">
+									<span class="icon featured fa-thumbs-o-up"></span>
+									<h3>Redes Sociais</h3>
+									<p>Design inovador, trazendo a usabilidade e funcionalidades presentes nas conhecidas redes sociais da Internet.</p>
+								</section>
+							</div>
+						</div>
+						<div class="row">
+							<div class="4u">
+								<section class="box style1">
+									<span class="icon featured fa-area-chart"></span>
+									<h3>Acompanhamento</h3>
+									<p>Exibição em gráficos do progresso e do resultado do trabalho efetuado entre a assessoria e seu aluno.</p>
+								</section>
+							</div>
+							<div class="4u">
+								<section class="box style1">
+									<span class="icon featured fa-clock-o"></span>
+									<h3>Controle das Atividades</h3>
+									<p>Importa as atividades realizadas diretamente do Garmin, de Celulares, ou realizando o cadastro manual.</p>
+								</section>
+							</div>
+							<div class="4u">
+								<section class="box style1">
+									<span class="icon featured fa-bolt"></span>
+									<h3>Produtividade</h3>
+									<p>Planilhas Modelo atribuídas a um aluno, a uma classificação, a uma turma, ou até mesmo para todos.</p>
+								</section>
+							</div>
+						</div>
+					</div>					
+					<footer>
+						<p>O <strong>RunPlanner</strong> pode oferecer ainda muito mais!</p>
+						<a href="#portfolio" class="button big scrolly">Alguns dos nossos clientes</a>
+					</footer>
+				</article>
+			</div>
+
+		<!-- Portfolio -->
+			<div class="wrapper style3">
+				<article id="portfolio">
+					<header>
+						<h2>Conheça alguns dos nossos clientes.</h2>
+						<p>Será um prazer te-lo conosco!</p>
+					</header>
+					<div class="container">
+						<div class="row">
+							<div class="4u">
+								<article class="box style2">
+									<a href="#" class="image featured"><img src="images/km.jpg" alt="" width="326" height="326"/></a>
+									<h3>KM Assessoria Esportiva</h3>
+									<p><a href="http://www.kmassessoriaesportiva.com">www.kmassessoriaesportiva.com</a></p>
+								</article>
+							</div>
+							<div class="4u">
+								<article class="box style2">
+									<a href="#" class="image featured"><img src="images/limiar.jpg" alt="" width="326" height="326"/></a>
+									<h3>Limiar Assessoria</h3>
+									<p><a href="http://www.limiar.com">www.limiar.com</a></p>
+								</article>
+							</div>
+							<div class="4u">
+								<article class="box style2">
+									<a href="#" class="image featured"><img src="images/health.jpg" alt="" width="326" height="326" /></a>
+									<h3>Health Team</h3>
+									<p><a href="www.healthteam.com.br">www.healthteam.com.br</a></p>
+								</article>
+							</div>
+						</div>
+						<div class="row">
+							<div class="4u">
+								<article class="box style2">
+									<a href="#" class="image featured"><img src="images/pic04.jpg" alt="" /></a>
+									<h3><a href="#">Tempus dolore</a></h3>
+									<p>Ornare nulla proin odio consequat.</p>
+								</article>
+							</div>
+							<div class="4u">
+								<article class="box style2">
+									<a href="#" class="image featured"><img src="images/pic05.jpg" alt="" /></a>
+									<h3><a href="#">Feugiat aliquam</a></h3>
+									<p>Ornare nulla proin odio consequat.</p>
+								</article>
+							</div>
+							<div class="4u">
+								<article class="box style2">
+									<a href="#" class="image featured"><img src="images/pic06.jpg" alt="" /></a>
+									<h3><a href="#">Sed amet ornare</a></h3>
+									<p>Ornare nulla proin odio consequat.</p>
+								</article>
+							</div>
+						</div>
+					</div>
+					<footer>
+						<p>Não perca tempo, venha para o <strong>RunPlanner</strong> você também!</p>
+						<a href="#contact" class="button big scrolly">Cadastre-se agora mesmo</a>
+					</footer>
+				</article>
+			</div>
+
+		<!-- Contact -->
+			<div class="wrapper style4">
+				<article id="contact" class="container small">
+					<header>
+						<h2>Cadastre-se no RunPlanner</h2>
+						<p>Totalmente gratuíto para até 10 alunos.</p>
+					</header>
+					<div>
+						<div class="row">
+							<div class="12u">
+								<h:form styleClass="formContato">
+									<div>
+										<div class="row">
+											<div class="6u">
+												<p:inputText value="#{contactMBean.name}" name="name" id="name"  required="true" 
+													maxlength="100" requiredMessage="#{msgs['contact.name.mandatory']}"  placeholder="Seu Nome"/>												
+											</div>
+											<div class="6u">
+												<p:inputText id="email" placeholder="Seu Email"
+					        						value="#{contactMBean.email}" maxlength="100" 
+					        						required="true" requiredMessage="#{msgs['contactus.email.mandatory']}"/>
+											</div>
+										</div>										
+										<div class="row">
+											<div class="6u">
+												<p:inputText id="telefone" placeholder="Telefone para contato"
+				        							value="#{contactMBean.phone}" maxlength="20" 
+				        							required="true" requiredMessage="#{msgs['contactus.phone.mandatory']}"/>												
+											</div>										
+											<div class="6u">
+												<p:inputText id="empresa"  placeholder="Nome da Assessoria"
+													value="#{contactMBean.company}" maxlength="100"
+	    	    									required="true" requiredMessage="#{msgs['contactus.company.mandatory']}" />												
+											</div>
+										</div>
+										<div class="row">
+											<div class="12u">
+												<p:inputTextarea value="#{contactMBean.message}"
+													maxlength="300" autoResize="false" placeholder="Alguma mensagem pra gente?"
+													required="true" requiredMessage="#{msgs['contact.message.mandatory']}"/>
+											</div>
+										</div>
+										<div class="row double">
+											<div class="12u">
+												<ul class="actions">
+													<li><h:commandButton value="#{msgs['template.button.send']}" ajax="false" action="#{contactMBean.send}" styleClass="alt"/></li>													
+													<li><input type="reset" value="Limpar" class="alt" /></li>
+												</ul>
+											</div>
+										</div>
+									</div>
+								</h:form>
+							</div>
+						</div>
+						<div class="row">
+							<div class="12u">
+								<hr />
+								<h3>Mais RunPlanner...</h3>
+								<ul class="social">
+									<li><a href="http://twitter.com/#!/runplanner" class="icon fa-twitter" target="_blank"><span class="label">Twitter</span></a></li>
+									<li><a href="https://www.facebook.com/pages/RunPlanner/263729277005927" class="icon fa-facebook" target="_blank"><span class="label">Facebook</span></a></li>
+									<li><a href="pages/contactus.jsf" class="icon fa-envelope"><span class="label">E-mail</span></a></li>
+								</ul>
+								<hr />
+							</div>
+						</div>
+					</div>
+					<footer>
+						<ul id="copyright">
+							<li>&copy; RunPlanner. Todos os direitos reservados.</li>
+							<li><a href="#openModal">${msgs['template.terms']}</a></li>
+							<li><a href="#openModal2">${msgs['template.policy']}</a></li>
+						</ul>
+					</footer>
+				</article>
+			</div>
+			
+
+			<div id="openModal" class="modalDialog">
+				<div>
+					<a href="#close" title="Close" class="close">X</a>
+					<h2>${msgs['template.terms']}</h2>
+				    O RunPlanner é um sistema WEB disponibilizado na internet e destinado aos proprietários de assessoria esportiva voltadas à corridas. 
+				    <br/><br/>
+				    O sistema disponibiliza um cadastro automático, permitindo um período de teste gratuito para qualquer usuário. É importante estar ciente de que o sistema poderá, eventualmente, apresentar erros ou  falhas. A cada erro, solicitamos o reporte através do contato fornecido no site, para que a equipe ao ser notificada possa providenciar as devidas correções. 
+				    <br/><br/>
+				    O site utiliza ferramentas para que sua planilha de treino seja copiada para o seu computador no formato do PDF. 
+				    <br/><br/>
+				    Você não pode usar o sistema RunPlanner caso seja menor de 18 anos, salvo casos em que há autorização formal dos seus pais para que você o faça. Portanto, ao aceitar estes termos, você declara possuir tal autorização. 
+				    <br/><br/>
+				    Um e-mail válido será necessário para registrar-se no sistema. Recomendamos que você leia a Política de Privacidade e entenda um pouco sobre o que pensamos para garantir sua segurança no uso deste espaço.
+				    <br/><br/><br/>  
+				</div>
+			</div>		
+			
+			<div id="openModal2" class="modalDialog">
+				<div>
+					<a href="#close" title="Close" class="close">X</a>
+					<h2>${msgs['template.policy']}</h2>
+				    1. Cabe ao sistema RunPlanner proteger as informações pessoais aqui registradas contra desconhecidos e anônimos, permitindo sua visualização apenas pelos responsáveis da assessoria. Entende-se por informações pessoais aquelas fornecidas ao solicitar seu cadastro no sistema. Portanto, usuários cadastrados poderão apenas visualizar dados numéricos de treino (como número de atividades, KM percorridos, tempo e dados específicos de cada atividade realizada), impedindo-o de visualizar informações de documentos fornecidos, pagamentos, informações metabólicas, entre outros. 
+				    <br/><br/>
+				    2. Todas as atividades realizadas cadastradas ou importadas para o sistema, serão automaticamente configuradas como protegidas, tornando-se visíveis somente aos usuários cadastrados pela assessoria. É de responsabilidade do usuário indicar se a atividade deverá ser publicada em redes sociais ao qual o usuário forneça. Esta opção é dada no momento da inclusão da atividade realizada no sistema. As informações de acesso das redes sociais, solicitadas para publicação da atividades realizadas pelo usuário serão mantidas em sigilo, não sendo visualizadas por nenhum outro usuário do sistema. 
+				    <br/><br/>
+				    3. Este sistema não comercializará, sob quaisquer circunstâncias, os dados pessoais registrados pelos usuários do site, através dos quais possam ser identificados quem eles são. Exclui-se, portanto, a possibilidade da venda de dados de treinos incluindo nomes, documentos ou e-mails dos atletas. 
+				    <br/><br/>
+				    4. O site não se responsabiliza pelo roubo de informações através de “hackers” ou funcionários alheios ao controle da empresa. 
+				    <br/><br/>
+				    5. Em caso de esquecimento da sua senha, uma nova senha será gerada pelo nosso sistema e enviada via e-mail para você. A senha atual é irrecuperável, devido ao método de criptografia utilizado.
+				</div>
+			</div>
+			<a href="#" class="back-to-top">Back to Top</a>
+			<script>            
+				jQuery(document).ready(function() {
+					var offset = 220;
+					var duration = 500;
+					jQuery(window).scroll(function() {
+						if (jQuery(this).scrollTop() > offset) {
+							jQuery('.back-to-top').fadeIn(duration);
+						} else {
+							jQuery('.back-to-top').fadeOut(duration);
+						}
+					});
+					
+					jQuery('.back-to-top').click(function(event) {
+						event.preventDefault();
+						jQuery('html, body').animate({scrollTop: 0}, duration);
+						return false;
+					})
+				});
+			</script>				
+	</h:body>
+	</f:view>
+	
+</ui:composition>

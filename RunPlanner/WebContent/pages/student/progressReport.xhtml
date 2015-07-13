@@ -1,0 +1,238 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:rp="http://runplanner.com.br/facelets"
+	template="#{loginBean.templateVersion}">
+
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+
+	<ui:define name="content">
+		<p:messages id="messages" showDetail="false" />
+		<div class="pageTitleBox">#{msgs['graphProgress.maintitle']}</div>
+		<div class="subtitle">#{msgs['graphProgressStudent.subtitle']}</div>
+		
+	<table width="100%">
+		<tr>
+			<td valign="top" width="15%">
+				<rp:sideMenu menu="reportStudent" selectedMenu="progressReportStudent"/>
+			</td>
+			<td valign="top" align="left" style="padding-left: 10px;">
+			<h:form>
+				<br/>	
+				<p:panel id="filter" >
+	
+					<div id="filterDetails" style="width100%; font-size: 12px" class="filtro">
+					<table>
+						<tr>
+							<td><h:outputLabel value="#{msgs['graph.activity.initialDate']}"  style="width: 65px;" /></td>
+							<td>
+								<p:inputMask value="#{graphMBean.initialDate}" mask="99/99/9999"						
+									size="10" validatorMessage="#{msgs['graph.progress.date.initial.invalid']}"
+									converterMessage="#{msgs['graph.progress.date.initial.invalid']}"
+									required="true" requiredMessage="#{msgs['graph.progress.date.initial.invalid']}">
+									<f:convertDateTime pattern="dd/MM/yyyy" />
+								</p:inputMask>
+							</td>
+							
+							<td><h:outputLabel value="#{msgs['graph.activity.finalDate']}" style="width: 65px;" /></td>
+							<td>
+								<p:inputMask value="#{graphMBean.finalDate}" mask="99/99/9999"						
+									size="10" validatorMessage="#{msgs['graph.progress.date.final.invalid']}"
+									converterMessage="#{msgs['graph.progress.date.final.invalid']}"
+									required="true" requiredMessage="#{msgs['graph.progress.date.final.invalid']}">
+									<f:convertDateTime pattern="dd/MM/yyyy" />
+								</p:inputMask>
+							</td>
+							
+							<td colspan="2">
+								<p:commandButton action="#{graphMBean.filterProgress}" ajax="false"
+				           			title="#{msgs['template.button.find']}"
+				           			value="#{msgs['template.button.find']}"/>
+							</td>
+						</tr>
+					</table>
+					</div>				
+					
+				</p:panel>	<br/>								
+	
+				<p:panel rendered="#{graphMBean.rhythmGraphSerie!=null}" >
+					<div class="filtro" style="text-align: center;">
+						<div id="rhythmGraph" style="height:300px; width: 100%"></div>	
+					</div>
+				</p:panel><br/>
+				
+				<p:panel rendered="#{graphMBean.weightGraphSerie!=null}" >
+					<div class="filtro" style="text-align: center;">
+						<div id="weightGraph" style="height:300px; width: 100%"></div>	
+					</div>
+				</p:panel><br/>
+				
+				<p:panel rendered="#{graphMBean.medicalGraphSerie!=null}" >
+					<div class="filtro" style="text-align: center;">
+						<div id="medicalGraph" style="height:300px; width: 100%"></div>	
+					</div>
+				</p:panel><br/>
+				
+				<script type="text/javascript">
+					$(document).ready(function() {
+					   
+						var serie = #{graphMBean.rhythmGraphSerie};										
+					    var ticks = #{graphMBean.rhythmGraphTick};
+					     
+					    var plot1 = $.jqplot('rhythmGraph', serie, {				       
+					    	animate: true,
+					        
+					        legend: {
+					            show: true,  
+					            location: 'e'
+					        },
+					        
+					        title: "#{msgs['graph.progress.rhythmGraph.title']}",	
+					        
+					        series: [
+					        	{
+					        		label: "#{msgs['rhythm.easyPace']}"
+					        	},
+					        	{
+					        		label: "#{msgs['rhythm.normalPace']}"
+					        	},
+					        	{
+					        		label: "#{msgs['rhythm.moderatePace']}"
+					        	},
+					        	{
+					        		label: "#{msgs['rhythm.mediumPace']}"
+					        	},
+					        	{
+					        		label: "#{msgs['rhythm.strongPace']}"
+					        	},
+					        	{
+					        		label: "#{msgs['rhythm.shootingPace']}"
+					        	},
+					        ],
+					        
+					        highlighter: {
+					            show: true,
+					            sizeAdjust: 0,
+					            tooltipAxes: 'y',   
+					            tooltipLocation: 'nw',
+					            useAxesFormatters: false,
+					            tooltipFormatString: '<div class="highlighterDiv"><b><font color="#02425C">Ritmo: </font></b>%.2f Min/Km</div>'
+					        },
+					        
+					        axes: {
+					            xaxis: {
+					                renderer: $.jqplot.CategoryAxisRenderer,
+					                ticks: ticks
+					            }
+					        }
+					        
+					    });
+					});	
+				</script>
+				
+				<script type="text/javascript">
+					$(document).ready(function() {
+					   
+						var serie = #{graphMBean.weightGraphSerie};										
+					    var ticks = #{graphMBean.weightGraphTick};
+					     
+					    var plot1 = $.jqplot('weightGraph', [serie], {				       
+					    	animate: true,
+					        
+					        legend: {
+					            show: true,  
+					            location: 'e'
+					        },
+					        
+					        title: "#{msgs['graph.progress.weightGraph.title']}",	
+					        
+					        series: [
+					        	{
+					        		label: "#{msgs['alunos.weight']}"
+					        	}
+					        ],
+					        
+					        highlighter: {
+					            show: true,
+					            sizeAdjust: 0,
+					            tooltipAxes: 'y',   
+					            tooltipLocation: 'nw',
+					            useAxesFormatters: false,
+					            tooltipFormatString: '<div class="highlighterDiv"><b><font color="#02425C">Peso: </font></b>%.2f Kg</div>'
+					        },
+					        
+					        axes: {
+					            xaxis: {
+					                renderer: $.jqplot.CategoryAxisRenderer,
+					                ticks: ticks
+					            }
+					        }
+					        
+					    });
+					});	
+				</script>	
+				
+				<script type="text/javascript">
+					$(document).ready(function() {
+					   
+						var serie = #{graphMBean.medicalGraphSerie};										
+					    var ticks = #{graphMBean.medicalGraphTick};
+					     
+					    var plot1 = $.jqplot('medicalGraph', serie, {				       
+					    	animate: true,
+					        
+					        legend: {
+					            show: true,  
+					            location: 'e'
+					        },
+					        
+					        title: "#{msgs['graph.progress.medicalGraph.title']}",	
+					        
+					        series: [
+					        	{
+					        		label: "#{msgs['alunos.vo2Max']}"
+					        	},
+					        	{
+					        		label: "#{msgs['alunos.heartRateRest']}"
+					        	},
+					        	{
+					        		label: "#{msgs['alunos.heartRateMax']}",				        		
+					        	}
+					        ],
+					        
+					        highlighter: {
+					            show: true,
+					            sizeAdjust: 0,
+					            tooltipAxes: 'y',   
+					            tooltipLocation: 'nw',
+					            useAxesFormatters: false,
+					            tooltipFormatString: '<div class="highlighterDiv"><b><font color="#02425C">Valor: </font></b>%.2f</div>'
+					        },				        
+					        
+					        axes: {
+					            xaxis: {
+					                renderer: $.jqplot.CategoryAxisRenderer,
+					                ticks: ticks
+					            }
+					        }
+					        
+					    });
+					});	
+				</script>					
+	
+			</h:form>
+		 </td>
+		</tr>
+		</table>	
+		
+		<script type="text/javascript" src="${facesContext.externalContext.requestContextPath}/js/jqplot/jquery.jqplot.min.js"></script>
+		<script type="text/javascript" src="${facesContext.externalContext.requestContextPath}/js/jqplot/jqplot.barRenderer.min.js"></script>
+		<script type="text/javascript" src="${facesContext.externalContext.requestContextPath}/js/jqplot/jqplot.categoryAxisRenderer.min.js"></script>
+		<script type="text/javascript" src="${facesContext.externalContext.requestContextPath}/js/jqplot/jqplot.highlighter.min.js"></script>	
+
+	</ui:define>
+
+</ui:composition>

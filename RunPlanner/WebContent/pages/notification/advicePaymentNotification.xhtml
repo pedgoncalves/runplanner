@@ -1,0 +1,64 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:sec="http://www.springframework.org/security/facelets/tags">
+
+	<style type="text/css">
+		.ui-button-text{
+    		color: white !important;
+		}
+		
+	</style>
+
+	<h:form>	
+		<p:dialog widgetVar="paymentDialog" 
+				id="paymentDialog" 
+				modal="true" 
+				width="800" 
+				height="500"
+				draggable="false"
+				closable="false" 
+	            resizable="false"
+	            visible="true"
+	            showHeader="false">
+            
+
+			<div class="wizHeader">
+				<SPAN class="wizHeaderText"><h:outputText value="RunPlanner"/></SPAN>
+			</div>
+					
+			<div class="divWizard">			
+				 		
+				
+				<p:panel id="contentPanel" style="border: 0px; background-color: transparent; background-image: none;">
+					<div style="padding: 10px">
+					
+						<p:panel style="border: 0px; background-color: transparent; background-image: none;">
+							<div style="padding-left: 150px; padding-top: 80px;">
+								
+								<h:outputText value="#{msgs['advice.open.payment']}" style="color: #00829C; font-weight: 900; font-size: 16px;" escape="false"/>
+								
+							</div>
+						</p:panel>
+											
+					</div>
+				</p:panel>
+				
+			</div>
+			
+			<div class="divWizardButton">
+				<p:panel id="buttons" style="border: 0px; background-color: transparent; background-image: none;">
+						
+					<p:commandButton  
+						value="Fechar" 
+						styleClass="wizardButton" 				
+						oncomplete="PF('paymentDialog').hide();"/>
+												
+				</p:panel>
+			</div>
+		</p:dialog>
+	</h:form>
+
+</ui:composition>

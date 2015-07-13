@@ -1,0 +1,318 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"> 
+<ui:fragment xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:fb="http://ogp.me/ns/fb#"
+	xmlns:og="http://ogp.me/ns#"
+	xmlns:sec="http://www.springframework.org/security/facelets/tags">
+	
+	<h:form>	
+	
+		<h:commandLink action="#{dashboardMBean.goToIndex}">	
+			<div style="height: 45; width: 65; text-align: center; float: left; display: table-cell; vertical-align: middle;" class="menuItemActiveV2">
+				<span></span>	
+				<img src="${facesContext.externalContext.requestContextPath}/images/v2/homeIco.png" style="padding-top: 5px; "/>
+				
+			</div>
+		</h:commandLink>
+	
+		<!-- Menu Assessoria -->
+		<sec:ifAnyGranted roles="ROLE_ASSESSOR">
+		
+			<h:commandLink action="#{profileMBean.goToListTeacher}">	
+				<div style="width: 80; text-align: center; float: left; margin-left: 1px;" >
+					<div class="#{dashboardMBean.selectedMenu == 'profile'?'menuItemV2Selected':'menuItemV2'}" style="line-height: 40px;">
+						PERFIL
+					</div>
+					
+					<div style="height: 5px;" class="menuItemActiveV2">
+					<!-- -->
+					</div>
+				</div>
+			</h:commandLink>
+			
+			<h:commandLink action="#{profileMBean.goToListAdvice}">	
+				<div style="width: 120; text-align: center; float: left; margin-left: 1px;" >
+					<div class="#{dashboardMBean.selectedMenu == 'advice'?'menuItemV2Selected':'menuItemV2'}" style="line-height: 40px;">
+						ASSESSORIA
+					</div>
+					
+					<div style="height: 5px;" class="menuItemActiveV2">
+					<!-- -->
+					</div>
+				</div>
+			</h:commandLink>			
+			
+			<h:commandLink  action="#{customerMBean.goToList}">	
+				<div style="width: 110; text-align: center; float: left; margin-left: 1px;" >
+					<div class="#{dashboardMBean.selectedMenu == 'customer'?'menuItemV2Selected':'menuItemV2'}" style="line-height: 40px;">
+						ALUNOS
+					</div>
+					
+					<div style="height: 5px;" class="menuItemActiveV2">
+					<!-- -->
+					</div>
+				</div>
+			</h:commandLink>
+			
+			<h:commandLink action="#{spreadsheetBean.goToInit}">	
+				<div style="width: 109; text-align: center; float: left; margin-left: 1px" >
+					<div class="#{dashboardMBean.selectedMenu == 'spread'?'menuItemV2Selected':'menuItemV2'}" style="line-height: 40px;">
+						PLANILHAS
+					</div>
+					
+					<div style="height: 5px;" class="menuItemActiveV2">
+					<!-- -->
+					</div>
+				</div>
+			</h:commandLink>
+			
+			<h:commandLink action="#{classPresenceMBean.goToList}">	
+				<div style="width: 110; text-align: center; float: left; margin-left: 1px;" >
+					<div class="#{dashboardMBean.selectedMenu == 'presence'?'menuItemV2Selected':'menuItemV2'}" style="line-height: 40px;">
+						PRESENÇA
+					</div>
+					
+					<div style="height: 5px;" class="menuItemActiveV2">
+					<!-- -->
+					</div>
+				</div>
+			</h:commandLink>
+		
+			<h:commandLink action="#{eventMBean.goToList}">	
+				<div style="width: 110; text-align: center; float: left; margin-left: 1px;" >
+					<div class="#{dashboardMBean.selectedMenu == 'event'?'menuItemV2Selected':'menuItemV2'}" style="line-height: 40px;">
+						EVENTOS
+					</div>
+					
+					<div style="height: 5px;" class="menuItemActiveV2">
+					<!-- -->
+					</div>
+				</div>
+			</h:commandLink>
+			
+			<h:commandLink action="#{activityMBean.goToListTeacher}">	
+				<div style="width: 121; text-align: center; float: left; margin-left: 1px;" >
+					<div class="#{dashboardMBean.selectedMenu == 'activity'?'menuItemV2Selected':'menuItemV2'}" style="line-height: 40px;">
+						ATIVIDADES
+					</div>
+					
+					<div style="height: 5px;" class="menuItemActiveV2">
+					<!-- -->
+					</div>
+				</div>
+			</h:commandLink>
+			
+			<h:commandLink action="#{graphMBean.goToActivityTeacher}">	
+				<div style="width: 121; text-align: center; float: left; margin-left: 1px;" >
+					<div class="#{dashboardMBean.selectedMenu == 'graphActivity'?'menuItemV2Selected':'menuItemV2'}" style="line-height: 40px;">
+						DESEMPENHO
+					</div>
+					
+					<div style="height: 5px;" class="menuItemActiveV2">
+					<!-- -->
+					</div>
+				</div>
+			</h:commandLink>
+			
+			<h:outputLink value="${facesContext.externalContext.requestContextPath}/logout" >
+				<div style="width: 69; text-align: center; float: left; margin-left: 1px;" >
+					<div class="menuItemV2" style="line-height: 40px;">
+						SAIR
+					</div>
+					
+					<div style="height: 5px;" class="menuItemActiveV2">
+					<!-- -->
+					</div>
+				</div>
+			</h:outputLink>
+		
+		</sec:ifAnyGranted>
+		<!-- Fim Menu Assessoria -->
+		
+		<!-- Menu Professor -->
+		<sec:ifAnyGranted roles="ROLE_TEACHER">
+		
+			<h:commandLink action="#{profileMBean.goToListTeacher}">	
+				<div style="width: 140; text-align: center; float: left; margin-left: 1px;" >
+					<div class="#{dashboardMBean.selectedMenu == 'profile'?'menuItemV2Selected':'menuItemV2'}" style="line-height: 40px;">
+						PERFIL
+					</div>
+					
+					<div style="height: 5px;" class="menuItemActiveV2">
+					<!-- -->
+					</div>
+				</div>
+			</h:commandLink>		
+			
+			<h:commandLink action="#{spreadsheetBean.goToInit}">	
+				<div style="width: 150; text-align: center; float: left; margin-left: 1px" >
+					<div class="#{dashboardMBean.selectedMenu == 'spread'?'menuItemV2Selected':'menuItemV2'}" style="line-height: 40px;">
+						PLANILHAS
+					</div>
+					
+					<div style="height: 5px;" class="menuItemActiveV2">
+					<!-- -->
+					</div>
+				</div>
+			</h:commandLink>
+			
+			<h:commandLink action="#{classPresenceMBean.goToList}">	
+				<div style="width: 140; text-align: center; float: left; margin-left: 1px;" >
+					<div class="#{dashboardMBean.selectedMenu == 'presence'?'menuItemV2Selected':'menuItemV2'}" style="line-height: 40px;">
+						PRESENÇA
+					</div>
+					
+					<div style="height: 5px;" class="menuItemActiveV2">
+					<!-- -->
+					</div>
+				</div>
+			</h:commandLink>
+		
+			<h:commandLink action="#{eventMBean.goToList}">	
+				<div style="width: 140; text-align: center; float: left; margin-left: 1px;" >
+					<div class="#{dashboardMBean.selectedMenu == 'event'?'menuItemV2Selected':'menuItemV2'}" style="line-height: 40px;">
+						EVENTOS
+					</div>
+					
+					<div style="height: 5px;" class="menuItemActiveV2">
+					<!-- -->
+					</div>
+				</div>
+			</h:commandLink>
+			
+			<h:commandLink action="#{activityMBean.goToListTeacher}">	
+				<div style="width: 150; text-align: center; float: left; margin-left: 1px;" >
+					<div class="#{dashboardMBean.selectedMenu == 'activity'?'menuItemV2Selected':'menuItemV2'}" style="line-height: 40px;">
+						ATIVIDADES
+					</div>
+					
+					<div style="height: 5px;" class="menuItemActiveV2">
+					<!-- -->
+					</div>
+				</div>
+			</h:commandLink>
+			
+			<h:commandLink action="#{graphMBean.goToActivityTeacher}">	
+				<div style="width: 150; text-align: center; float: left; margin-left: 1px;" >
+					<div class="#{dashboardMBean.selectedMenu == 'graphActivity'?'menuItemV2Selected':'menuItemV2'}" style="line-height: 40px;">
+						DESEMPENHO
+					</div>
+					
+					<div style="height: 5px;" class="menuItemActiveV2">
+					<!-- -->
+					</div>
+				</div>
+			</h:commandLink>
+			
+			<h:outputLink value="${facesContext.externalContext.requestContextPath}/logout" >
+				<div style="width: 82; text-align: center; float: left; margin-left: 1px;" >
+					<div class="menuItemV2" style="line-height: 40px;">
+						SAIR
+					</div>
+					
+					<div style="height: 5px;" class="menuItemActiveV2">
+					<!-- -->
+					</div>
+				</div>
+			</h:outputLink>
+		
+		</sec:ifAnyGranted>
+		<!-- Fim Menu Professor -->		
+		
+		<!-- Menu Aluno -->
+		<sec:ifAnyGranted roles="ROLE_USER">
+		
+			<h:commandLink action="#{profileMBean.goToList}">	
+				<div style="width: 130; text-align: center; float: left; margin-left: 1px;" >
+					<div class="#{dashboardMBean.selectedMenu == 'customer'?'menuItemV2Selected':'menuItemV2'}" style="line-height: 40px;">
+						PERFIL
+					</div>
+					
+					<div style="height: 5px;" class="menuItemActiveV2">
+					<!-- -->
+					</div>
+				</div>
+			</h:commandLink>
+			
+			<h:commandLink action="#{studentSpreadsheetMBean.goToList}">	
+				<div style="width: 150; text-align: center; float: left; margin-left: 1px" >
+					<div class="#{dashboardMBean.selectedMenu == 'spread'?'menuItemV2Selected':'menuItemV2'}" style="line-height: 40px;">
+						PLANILHAS
+					</div>
+					
+					<div style="height: 5px;" class="menuItemActiveV2">
+					<!-- -->
+					</div>
+				</div>
+			</h:commandLink>
+	
+			<h:commandLink action="#{eventMBean.goToStudentList}">	
+				<div style="width: 130; text-align: center; float: left; margin-left: 1px;" >
+					<div class="#{dashboardMBean.selectedMenu == 'event'?'menuItemV2Selected':'menuItemV2'}" style="line-height: 40px;">
+						EVENTOS
+					</div>
+					
+					<div style="height: 5px;" class="menuItemActiveV2">
+					<!-- -->
+					</div>
+				</div>
+			</h:commandLink>
+		
+			<h:commandLink action="#{equipmentMBean.goToList}">
+				<div style="width: 150; text-align: center; float: left; margin-left: 1px" >
+					<!-- -->
+					<div class="#{dashboardMBean.selectedMenu == 'equipment'?'menuItemV2Selected':'menuItemV2'}" style="line-height: 40px;">
+						EQUIPAMENTOS
+					</div>
+					
+					<div style="height: 5px;" class="menuItemActiveV2">
+					<!-- -->
+					</div>
+				</div>
+			</h:commandLink>
+			
+			<h:commandLink action="#{activityMBean.goToInit}">	
+				<div style="width: 160; text-align: center; float: left; margin-left: 1px" >
+					<!-- -->
+					<div class="#{dashboardMBean.selectedMenu == 'activity'?'menuItemV2Selected':'menuItemV2'}" style="line-height: 40px;">
+						ATIVIDADES
+					</div>
+					
+					<div style="height: 5px;" class="menuItemActiveV2">
+					<!-- -->
+					</div>
+				</div>
+			</h:commandLink>
+			
+			<h:commandLink action="#{graphMBean.goToActivity}">	
+				<div style="width: 150; text-align: center; float: left; margin-left: 1px" >
+					<!-- -->
+					<div class="#{dashboardMBean.selectedMenu == 'graphActivity'?'menuItemV2Selected':'menuItemV2'}" style="line-height: 40px;" >
+						DESEMPENHO
+					</div>
+					
+					<div style="max-height: 5px; height: 5px;" class="menuItemActiveV2">
+					<!-- -->
+					</div>
+				</div>
+			</h:commandLink>
+			
+			<h:outputLink value="${facesContext.externalContext.requestContextPath}/logout" >
+				<div style="width: 82; text-align: center; float: left; margin-left: 1px;" >
+					<div class="menuItemV2" style="line-height: 40px;">
+						SAIR
+					</div>
+					
+					<div style="height: 5px;" class="menuItemActiveV2">
+					<!-- -->
+					</div>
+				</div>
+			</h:outputLink>			
+					
+		</sec:ifAnyGranted>
+		
+	</h:form>
+</ui:fragment>

@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="#{loginBean.templateVersion}">
+
+	<ui:define name="content">
+		
+		<h:form> 
+ 
+			<br/><br/>
+			<p:panel id="filter" header="#{msgs['pagetitle.payment']}"> 
+				<p:messages id="messages" showDetail="false" /> 
+		
+				<div id="filterDetails" style="width100%; font-size: 12px" class="filtro">
+				
+					<table>
+						<tr>
+				    		<td style="padding-left:5px">
+								<h:outputText value="#{msgs['advice.owner.advice']}" />	
+							</td>
+					    	<td>    		
+					    		<p:selectOneMenu value="#{paymentAdviceMBean.advice.id}">	    			
+					    			<f:selectItems value="#{paymentAdviceMBean.adviceListSI}"/>                       	 
+					    		</p:selectOneMenu>	   		
+				    		</td>		
+							<td>		
+								<h:outputLabel value="#{msgs['template.year']}" style="padding:0px !important; width:30px !important;"/>
+							</td>
+							<td>
+								<p:selectOneMenu value="#{paymentAdviceMBean.year}" style="width:100px; overflow:hidden;">
+			    					<f:selectItems value="#{paymentAdviceMBean.yearList}"/>                         	 
+			    				</p:selectOneMenu>
+			    			</td>
+					    	<td>
+				    			<p:commandButton action="#{paymentAdviceMBean.find}" 
+									title="#{msgs['template.button.find']}" ajax="false" update="paymentTable"
+									value="#{msgs['template.button.find']}" style="margin-top: -2px !important;"/>
+	            			</td>
+            			</tr>
+            		</table>
+				</div>
+			</p:panel>
+			<br/>
+
+			<div id="painel" class="tabela">			
+
+	            <p:dataTable var="payment" value="#{paymentAdviceMBean.paymentList}" 
+	            	emptyMessage="#{msgs['template.msg.emptyMessage']}"
+	            	id="paymentTable" paginator="true" rows="10" paginatorPosition="bottom" paginatorAlwaysVisible="false"
+					paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}">
+					
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="#{msgs['template.year']}" />
+						</f:facet>
+						<h:outputText value="#{payment.year}" />
+					</p:column>
+					
+					<p:column style="text-align:center;">
+						<f:facet name="header">
+							<h:outputText value="#{msgs['template.month.short.jan']}" />
+						</f:facet>
+						<p:selectBooleanCheckbox value="#{payment.jan}" /> 
+					</p:column>
+					
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="#{msgs['template.month.short.fev']}" />
+						</f:facet>
+						<p:selectBooleanCheckbox value="#{payment.feb}" /> 
+					</p:column>
+					
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="#{msgs['template.month.short.mar']}" />
+						</f:facet>
+						<p:selectBooleanCheckbox value="#{payment.mar}" /> 
+					</p:column>
+					
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="#{msgs['template.month.short.abr']}" />
+						</f:facet>
+						<p:selectBooleanCheckbox value="#{payment.apr}" /> 
+					</p:column>
+					
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="#{msgs['template.month.short.mai']}" />
+						</f:facet>
+						<p:selectBooleanCheckbox value="#{payment.may}" /> 
+					</p:column>
+					
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="#{msgs['template.month.short.jun']}" />
+						</f:facet>
+						<p:selectBooleanCheckbox value="#{payment.jun}" /> 
+					</p:column>
+					
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="#{msgs['template.month.short.jul']}" />
+						</f:facet>
+						<p:selectBooleanCheckbox value="#{payment.jul}" /> 
+					</p:column>
+					
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="#{msgs['template.month.short.ago']}" />
+						</f:facet>
+						<p:selectBooleanCheckbox value="#{payment.aug}" /> 
+					</p:column>
+					
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="#{msgs['template.month.short.set']}" />
+						</f:facet>
+						<p:selectBooleanCheckbox value="#{payment.sep}" /> 
+					</p:column>
+					
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="#{msgs['template.month.short.out']}" />
+						</f:facet>
+						<p:selectBooleanCheckbox value="#{payment.oct}" /> 
+					</p:column>
+					
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="#{msgs['template.month.short.nov']}" />
+						</f:facet>
+						<p:selectBooleanCheckbox value="#{payment.nov}" /> 
+					</p:column>
+					
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="#{msgs['template.month.short.dez']}" />
+						</f:facet>
+						<p:selectBooleanCheckbox value="#{payment.dez}" /> 
+					</p:column>
+					
+				</p:dataTable>
+
+			</div>
+			
+			<div class="buttons"> 
+				<p:commandButton value="#{msgs['template.button.save']}" oncomplete="confirmation.show()" />
+			</div>
+			
+	        <p:confirmDialog message="#{msgs['template.msg.payment.confirmation']}" severity="alert" widgetVar="confirmation" id="confirmation">        	
+	        	<p:commandButton value="#{msgs['template.button.yes']}" oncomplete="confirmation.hide()"  
+	        		action="#{paymentAdviceMBean.save}" ajax="false" title="#{msgs['template.button.yes']}"/>        	
+	        	<p:commandButton value="#{msgs['template.button.no']}" onclick="confirmation.hide()" />
+	        </p:confirmDialog>				
+		</h:form>
+		
+	</ui:define>
+</ui:composition>

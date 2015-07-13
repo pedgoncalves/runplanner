@@ -1,0 +1,113 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	template="#{loginBean.templateVersion}">
+	
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+		
+	<ui:define name="content">
+	 <script type="text/javascript">
+        function findMe() {
+            navigator.geolocation.getCurrentPosition(
+                function(position) {
+                    var map = gmap.getMap(),
+                    latlng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+
+                    map.setCenter(latlng);
+                    map.setZoom(15);
+
+                },
+                function(error) {
+                    //alert(error.message);
+                },
+                {
+                   enableHighAccuracy: true
+                });
+        }
+
+    </script>
+		
+		<p:messages id="messages" showDetail="false" /> 
+		<div class="pageTitleBox">#{msgs['route.maintitle']}</div>
+		<div class="subtitle">#{msgs['route.subtitle']}</div>
+			
+		<h:form>
+			
+			<table width="100%">
+				<tr>
+					<td width="500px" align="right">
+						<div class="">
+							<div class="blueLink">
+								<p:commandLink onclick="findMe();" oncomplete="findMe();" value="#{msgs['route.my.location']}" />
+								|
+								<p:commandLink value="#{msgs['route.clean']}" actionListener="#{routeMBean.clearPath}" update="gmap, distanceMap" immediate="true"/>
+							</div>
+							
+							<p:gmap id="gmap" widgetVar="gmap" center="#{routeMBean.initLat},#{routeMBean.initLon}" zoom="#{routeMBean.mapZoom}" 
+							 	model="#{routeMBean.mapModel}" type="ROADMAP" style="width:500px;height:400px" mapTypeControl="false">  
+						      	<p:ajax event="pointSelect" listener="#{routeMBean.onPointSelect}" update="gmap,distanceMap" />
+						      	<p:ajax event="overlaySelect" listener="#{routeMBean.onMarkerSelect}" update="gmap,distanceMap" />
+						      	<p:ajax event="markerDrag" listener="#{routeMBean.onMarkerDrag}" update="gmap,distanceMap" />    				
+						      	<p:ajax event="stateChange" listener="#{routeMBean.onStateChange}" update="gmap" />  	
+						  	</p:gmap>
+					  	</div>
+					</td>
+					<td>
+						<div class="filtro" style="height: 415px;">
+							<table width="100%" height="100%" border="0">
+								<tr>
+									<td valign="top" align="center"  height="1px">
+										<div class="blueHeader"><h:outputText value="Detalhes da Rota"/></div><br/>
+										
+										<div class="buttonNumber" style="width: 80% !important; height: 50px !important; padding-top: 15px;">
+											<h:outputText value="#{routeMBean.mapDistance/1000}" id="distanceMap">
+												<f:convertNumber pattern="#0.00"/>	
+											</h:outputText><br/> 
+											<h:outputText value="Km" styleClass="subtitle"/>
+										</div>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<div  style="padding-left: 10px;">
+											<h:outputLabel value="#{msgs['route.name']}"/><br/>
+											<p:inputText value="#{routeMBean.route.name}"  maxlength="200" style="width: 85%" 
+												required="true"	requiredMessage="#{msgs['route.name.mandatory']}"  /> <br/><br/><br/>
+											
+											<h:outputLabel value="#{msgs['route.description']}"/><br/>
+											<p:inputTextarea id="objective" value="#{routeMBean.route.description}"
+												rows="6"  maxlength="200" autoResize="false" style="width: 85%"/>
+											 <br/><br/><br/>
+										</div>
+									</td>
+								</tr>
+								<tr>
+									<td align="center">
+										
+										<p:commandButton value="#{msgs['template.button.save']}"
+											rendered="#{routeMBean.route.id == null}" ajax="false"
+											action="#{routeMBean.save}"  />
+											
+										<p:commandButton value="#{msgs['template.button.alterar']}"
+											rendered="#{routeMBean.route.id != null}" ajax="false"
+											action="#{routeMBean.save}" />
+											
+										<p:commandButton value="#{msgs['template.button.cancelar']}" ajax="false"
+											action="#{routeMBean.goToList}" immediate="true" />
+
+									</td>
+								</tr>
+							</table>
+						</div>
+					</td>
+				</tr>
+			</table>
+				
+		</h:form>
+	
+  </ui:define>
+  
+</ui:composition>

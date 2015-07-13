@@ -1,0 +1,61 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="#{loginBean.templateVersion}">
+	
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+		
+ 	<ui:define name="content">
+ 
+		<h:form  prependId="false">
+
+			<p:messages id="messages" showDetail="false" /> 
+			<div class="pageTitleBox">#{msgs['scheduleTemplate.maintitle']}</div>
+			<div class="subtitle">#{msgs['scheduleTemplate.subtitle']}</div>
+
+			<p:panel  header="#{msgs['header.scheduleTemplate.distribuicao.title']}" styleClass="center">	
+				<br/>
+				Associar à um <b>Aluno</b> individualmente ou a <b>Todos</b>:<br/>
+				<p:selectOneMenu style="width:500px; overflow:hidden;" value="#{scheduleTemplateBean.customerDist.id}" id="selectAluno">  
+					<f:selectItem itemLabel="" itemValue="-1" />
+					<f:selectItem itemLabel="TODOS" itemValue="0" /> 
+		    		<f:selectItems value="#{scheduleTemplateBean.customerList}"  />
+		    		
+		    		<p:ajax update="selectRhythm,selectTeam" listener="#{scheduleTemplateBean.handleSelectChangeCustomer}" />  
+		    	</p:selectOneMenu><br/><br/>
+				
+				<b>OU</b> associar à uma <b>Classificação</b>:<br/>
+				<p:selectOneMenu style="width:500px; overflow:hidden;" value="#{scheduleTemplateBean.rhythmDist.id}"  id="selectRhythm">  
+					<f:selectItem itemLabel="" itemValue="-1" />
+		    		<f:selectItems value="#{scheduleTemplateBean.rhythmList}"  />
+		    		
+		    		<p:ajax update="selectAluno,selectTeam" listener="#{scheduleTemplateBean.handleSelectChangeRhythm}" />
+		    	</p:selectOneMenu><br/><br/>
+				
+				
+				<b>OU</b> associar à uma <b>Turma</b>:<br/>
+				<p:selectOneMenu style="width:500px; overflow:hidden;" value="#{scheduleTemplateBean.teamDist.id}" id="selectTeam" >  
+					<f:selectItem itemLabel="" itemValue="-1" />
+		    		<f:selectItems value="#{scheduleTemplateBean.teamList}"  />
+		    		
+		    		<p:ajax update="selectRhythm,selectAluno" listener="#{scheduleTemplateBean.handleSelectChangeTeam}" />
+		    	</p:selectOneMenu><br/><br/>
+		    	
+				<p:selectBooleanCheckbox value="#{scheduleTemplateBean.sendEmail}" itemLabel="#{msgs['schedule.template.distribution.send']}"/><br/><br/>
+		    	</p:panel>
+		    	
+		    	<div class="buttons">
+					<p:commandButton value="#{msgs['template.button.finalize']}" update="messages" ajax="false"              
+				        action="#{scheduleTemplateBean.distribution}" />      	 
+				    
+				    <p:commandButton value="#{msgs['template.button.cancelar']}" ajax="false"
+						action="#{scheduleTemplateBean.goToList}" immediate="true" />
+				</div>
+			
+		</h:form>
+		
+  </ui:define>
+  
+</ui:composition>

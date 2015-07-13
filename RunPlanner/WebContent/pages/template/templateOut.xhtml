@@ -1,0 +1,188 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:fb="http://ogp.me/ns/fb#"
+	xmlns:og="http://ogp.me/ns#"
+	xmlns:sec="http://www.springframework.org/security/facelets/tags">
+	
+	<f:view contentType="text/html">
+	
+	<h:head>
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+		<meta http-equiv="Content-Style-Type" content="text/css" />
+		
+		<meta name="description" content="Sistema WEB voltado para treinadores e assessorias esportivas, que visa a organizacao da empresa, a elaboracao dos treinos e o acompanhamento do desempenho dos seus atletas"/>
+		<meta name="keywords" content="Planejamento de corridas, acompanhamento esportivo, analise de desempenho,  acompanhamento de atletas, analise esportiva, atividade esportiva, controle de turmas, assessoria esportiva, assessoria corrida, corridas, maratonas, meia-maratona, fitness, aplicativo, corrida online, planilhas, upload fitness data, exercicios, saide, emagrecer, caminhada, ritmo, pace, garmin, tcx, gpx, condicionamento, educacao fisica, saude"/>		
+	
+
+		<meta property="fb:app_id" content="163439590451695"/>
+		<meta property="fb:admins" content="163439590451695"/>
+		<meta property="og:image" content="http://www.runplanner.com.br/runplanner/images/rpicon.png" />
+		<meta property="og:site_name" content="RunPlanner" />
+		<meta property="og:type" content="article" />
+		<meta property="og:title" content="Nova atividade cadastrada no RunPlanner!" />    
+        <meta property="og:description" content="#{publicMBean.description}"  />	
+        
+        
+		
+		<link href="images/icone.ico" rel="shortcut icon" type="image/x-icon" />
+		<link rel="stylesheet" href="${facesContext.externalContext.requestContextPath}/css/estilo.css" type="text/css" charset="utf-8" />		
+				
+		<title>RunPlanner - Keep Running!</title>
+		
+		<script> 
+			$("input").corner("3px");
+		</script>
+		
+		<ui:insert name="head"></ui:insert>
+
+		<script type="text/javascript">
+		
+		  var _gaq = _gaq || [];
+		  _gaq.push(['_setAccount', 'UA-27218523-1']);
+		  _gaq.push(['_setDomainName', 'runplanner.com.br']);
+		  _gaq.push(['_trackPageview']);
+
+		  (function() {
+		    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+		    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+		    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		  })();
+		
+		</script>
+		
+		<script type="text/javascript">
+			function mouseOver() {
+				document.getElementById("btEntrar").src = "${facesContext.externalContext.requestContextPath}/images/btEntrar.png";
+			}
+			
+			function mouseOut() {
+				document.getElementById("btEntrar").src = "${facesContext.externalContext.requestContextPath}/images/btEntrar2.png";
+			}
+		</script>
+
+	</h:head>	
+	
+		<h:body>
+
+			<p:messages id="messages" showDetail="false" /> 
+			
+			<div id="headerOut">
+			
+				<table style="width:100%; margin: 0px; padding: 0px;">
+					<tr>
+						<td width="100%" align="left" style="padding-left: 50px;" valign="middle"> 
+						
+							<div id="link" style="width: 180px; height: 50px; cursor:pointer;cursor:hand" onclick="window.location='/runplanner'"></div>
+							
+						</td> 
+						
+						
+						<td align="right" nowrap="nowrap" style="border-left: 1px dashed #fff; padding-left: 10px; padding-right: 30px;" >
+							<h:form prependId="false" >
+							 	<p:focus /> 
+							 	<table style="padding:0px !important;">							 		
+							 		<tr nowrap="nowrap">
+							 			<td style="color: #fff !important; font-size: 11px;" nowrap="nowrap"><b>E-mail:</b></td>
+							 			<td><h:inputText name="j_username" id="j_username" style="float:none !important;" size="17"/></td>
+							 			<td style="color: #fff !important; font-size: 11px;"><b>Senha:</b></td>
+							 			<td><h:inputSecret name="j_password" id="j_password" style="float:none"  size="12"/></td>
+							 			<td>
+							 				<h:commandButton action="#{loginBean.doLogin}" image="images/btEntrar2.png"  
+							 					title="Entrar" styleClass="runButton" id="btEntrar" 
+							 					onmouseover="mouseOver()" onmouseout="mouseOut()" />							 				
+							 			</td>
+							 		</tr>
+							 		<tr>
+							 			<td></td>
+							 			<td></td>
+							 			<td></td>
+							 			<td align="left" style="padding-left: 3px;" nowrap="nowrap" >
+							 				<h:outputLink value="${facesContext.externalContext.requestContextPath}/pages/recover.jsf" style="color: #DFF76B !important; font-size: 10px; font-weight: bold;">
+												<h:outputText value="#{msgs['template.txt.recove']}"/>
+											</h:outputLink>
+										</td>
+							 			<td></td>
+							 		</tr>							 		
+							 	</table>								
+							</h:form>
+						</td>						
+					</tr>				
+				</table>
+			
+				
+			</div>			
+			
+
+			<ui:insert name="content">
+			</ui:insert>	
+
+			
+			
+			<h:form> 
+			<div class="rodape">
+				<span>®2011 RunPlanner</span>
+				<span style="color: #DFF76B !important;">|</span>
+				<h:outputLink value="${facesContext.externalContext.requestContextPath}/pages/contactus.jsf">
+					Contato
+				</h:outputLink>	
+				<span style="color: #DFF76B !important;">|</span>
+				<span>
+					<p:commandLink value="${msgs['template.terms']}" onclick="termos.show();"/>									
+				</span>					
+				<span style="color: #DFF76B !important;">|</span>
+				<span>
+					<p:commandLink value="${msgs['template.policy']}" onclick="politica.show();"/>									
+				</span>
+			</div>
+			</h:form>
+			
+			<div class="subrodape">
+				<span><a href="http://blog.runplanner.com.br" target="_blank"><img src="${facesContext.externalContext.requestContextPath}/images/blogger.png" /></a></span>
+				
+				<span><a href="http://twitter.com/#!/runplanner" target="_blank"><img src="${facesContext.externalContext.requestContextPath}/images/twitter.png" /></a></span>
+				
+				<span><a href="https://www.facebook.com/pages/RunPlanner/263729277005927" target="_blank"><img src="${facesContext.externalContext.requestContextPath}/images/facebook.png" /></a></span> 
+			</div>
+						
+			<script>
+				document.getElementById("btEntrar").src = "${facesContext.externalContext.requestContextPath}/images/btEntrar2.png";
+			</script>
+			
+			<p:dialog id="termos" header="${msgs['template.terms']}" widgetVar="termos" modal="true" width="600" position="top">
+				<div style="padding-left: 10px; padding-right: 10px;" >
+				<br/><br/>
+			    O RunPlanner é um sistema WEB disponibilizado na internet e destinado aos proprietários de assessoria esportiva voltadas à corridas. 
+			    <br/><br/>
+			    O sistema disponibiliza um cadastro automático, permitindo um período de teste gratuito para qualquer usuário. É importante estar ciente de que o sistema poderá, eventualmente, apresentar erros ou  falhas. A cada erro, solicitamos o reporte através do contato fornecido no site, para que a equipe ao ser notificada possa providenciar as devidas correções. 
+			    <br/><br/>
+			    O site utiliza ferramentas para que sua planilha de treino seja copiada para o seu computador no formato do PDF. 
+			    <br/><br/>
+			    Você não pode usar o sistema RunPlanner caso seja menor de 18 anos, salvo casos em que há autorização formal dos seus pais para que você o faça. Portanto, ao aceitar estes termos, você declara possuir tal autorização. 
+			    <br/><br/>
+			    Um e-mail válido será necessário para registrar-se no sistema. Recomendamos que você leia a Política de Privacidade e entenda um pouco sobre o que pensamos para garantir sua segurança no uso deste espaço.
+			    <br/><br/><br/>  
+			    </div>
+			</p:dialog> 
+			
+			<p:dialog id="politica" header="${msgs['template.policy']}" widgetVar="politica" modal="true" width="600" position="top">
+				<div style="padding-left: 10px; padding-right: 10px;" >
+				<br/><br/>
+			    1. Cabe ao sistema RunPlanner proteger as informações pessoais aqui registradas contra desconhecidos e anônimos, permitindo sua visualização apenas pelos responsáveis da assessoria. Entende-se por informações pessoais aquelas fornecidas ao solicitar seu cadastro no sistema. Portanto, usuários cadastrados poderão apenas visualizar dados numéricos de treino (como número de atividades, KM percorridos, tempo e dados específicos de cada atividade realizada), impedindo-o de visualizar informações de documentos fornecidos, pagamentos, informações metabólicas, entre outros. 
+			    <br/><br/>
+			    2. Todas as atividades realizadas cadastradas ou importadas para o sistema, serão automaticamente configuradas como protegidas, tornando-se visíveis somente aos usuários cadastrados pela assessoria. É de responsabilidade do usuário indicar se a atividade deverá ser publicada em redes sociais ao qual o usuário forneça. Esta opção é dada no momento da inclusão da atividade realizada no sistema. As informações de acesso das redes sociais, solicitadas para publicação da atividades realizadas pelo usuário serão mantidas em sigilo, não sendo visualizadas por nenhum outro usuário do sistema. 
+			    <br/><br/>
+			    3. Este sistema não comercializará, sob quaisquer circunstâncias, os dados pessoais registrados pelos usuários do site, através dos quais possam ser identificados quem eles são. Exclui-se, portanto, a possibilidade da venda de dados de treinos incluindo nomes, documentos ou e-mails dos atletas. 
+			    <br/><br/>
+			    4. O site não se responsabiliza pelo roubo de informações através de “hackers” ou funcionários alheios ao controle da empresa. 
+			    <br/><br/>
+			    5. Em caso de esquecimento da sua senha, uma nova senha será gerada pelo nosso sistema e enviada via e-mail para você. A senha atual é irrecuperável, devido ao método de criptografia utilizado.
+			    <br/><br/><br/>
+			    </div>  
+			</p:dialog>
+		</h:body>
+	
+	</f:view>
+</html>

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:h="http://java.sun.com/jsf/html"
+	  xmlns:f="http://java.sun.com/jsf/core"
+	  xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+      
+
+	      
+    <h:body>
+           <ui:composition>
+           
+           <ui:fragment rendered="#{menu == 'profileAdvice'}">
+				<h:form>
+					<p:menu>  
+				        <p:submenu label="#{msgs['template.menu.opcoes']}">
+				        	<p:menuitem value="#{msgs['template.menu.aluno.profile']}" action="#{profileMBean.goToListAdvice}" ajax="false" styleClass="#{selectedMenu!='perfil'?'menuUnselected':'menuSelected'}"/>
+				            <p:menuitem value="#{msgs['aluno.filter.team']}" action="#{teamMBean.goToList}" ajax="false" styleClass="#{selectedMenu != 'turma'?'menuUnselected':'menuSelected'}"/>
+	  				        <p:menuitem value="#{msgs['template.menu.cadastro.teacher']}" action="#{teacherMBean.goToList}" ajax="false" styleClass="#{selectedMenu != 'professor'?'menuUnselected':'menuSelected'}"/>  
+				            <p:menuitem value="#{msgs['template.menu.rhythm']}" action="#{rhythmMBean.goToList}" ajax="false" styleClass="#{selectedMenu != 'classificacao'?'menuUnselected':'menuSelected'}"/>
+				            <p:menuitem value="#{msgs['template.menu.partner']}" action="#{partnerMBean.goToList}" ajax="false" styleClass="#{selectedMenu != 'parceiro'?'menuUnselected':'menuSelected'}"/>
+				        </p:submenu>
+				    </p:menu>
+				</h:form> 
+			</ui:fragment>
+			
+			<ui:fragment rendered="#{menu == 'studentsAdvice'}">
+				<p:menu>
+					<p:submenu label="#{msgs['template.menu.opcoes']}">
+						<p:menuitem value="#{msgs['breadcrumb.customer.create']}" action="#{customerMBean.goToList}" ajax="false" styleClass="#{selectedMenu != 'studentRegister'?'menuUnselected':'menuSelected'}"/>
+						<p:menuitem value="#{msgs['pagetitle.payment']}" action="#{paymentMBean.goToList}" ajax="false" styleClass="#{selectedMenu != 'studentPayment'?'menuUnselected':'menuSelected'}"/>
+						<p:menuitem value="#{msgs['contact.advice.title']}" action="#{communicationMBean.goToList}" ajax="false" styleClass="#{selectedMenu != 'studentCommunication'?'menuUnselected':'menuSelected'}"/>
+					</p:submenu>
+				</p:menu>
+			</ui:fragment>
+			
+			<ui:fragment rendered="#{menu == 'spreadsheetAdvice'}">
+				<h:form>
+					<p:menu>  
+						<p:submenu label="#{msgs['template.menu.opcoes']}">
+					       	<p:menuitem value="#{msgs['breadcrumb.spreadsheet']}" action="#{spreadsheetBean.goToInit}" ajax="false" styleClass="#{selectedMenu != 'spreadsheet'?'menuUnselected':'menuSelected'}"/>  
+	   				        <p:menuitem value="#{msgs['breadcrumb.scheduleTemplate']}" action="#{scheduleTemplateBean.goToInit}" ajax="false" styleClass="#{selectedMenu != 'scheduleTemplate'?'menuUnselected':'menuSelected'}"/>  
+					        <p:menuitem value="#{msgs['route.page.title']}" action="#{routeMBean.goToList}" ajax="false" styleClass="#{selectedMenu != 'route'?'menuUnselected':'menuSelected'}"/>
+					    </p:submenu>
+					</p:menu>
+				</h:form>
+			</ui:fragment>
+			
+			<ui:fragment rendered="#{menu == 'reportAdvice'}">
+				<h:form>
+					<p:menu>  
+						<p:submenu label="#{msgs['template.menu.opcoes']}">
+							<p:menuitem value="#{msgs['graph.activity.title']}"	action="#{graphMBean.goToActivityTeacher}" ajax="false" styleClass="#{selectedMenu != 'activityReportAdvice'?'menuUnselected':'menuSelected'}"/>
+							<p:menuitem value="#{msgs['graph.progress.title']}" action="#{graphMBean.goToProgressTeacher}" ajax="false" styleClass="#{selectedMenu != 'progressReportAdvice'?'menuUnselected':'menuSelected'}"/>							
+					    </p:submenu>
+					</p:menu>
+				</h:form>
+			</ui:fragment>
+			
+			<ui:fragment rendered="#{menu == 'reportStudent'}">
+				<h:form>
+					<p:menu>  
+						<p:submenu label="#{msgs['template.menu.opcoes']}">
+							<p:menuitem value="#{msgs['graph.progress.title']}" action="#{graphMBean.goToProgress}" ajax="false" styleClass="#{selectedMenu != 'progressReportStudent'?'menuUnselected':'menuSelected'}"/>
+							<p:menuitem value="#{msgs['graph.activity.title']}"	action="#{graphMBean.goToActivity}" ajax="false" styleClass="#{selectedMenu != 'activityReportStudent'?'menuUnselected':'menuSelected'}"/>
+					    </p:submenu>
+					</p:menu>
+				</h:form>
+			</ui:fragment>
+			
+		</ui:composition>
+    </h:body>
+</html>

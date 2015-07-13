@@ -1,0 +1,23 @@
+<ui:fragment xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+	
+	<div class="filtro" style="width: 100%;">
+		<p:gmap center="#{activityMBean.initLat},#{activityMBean.initLon}" zoom="14" type="map"
+			style="width:100%;height:400px" model="#{activityMBean.polylineModel}"
+			rendered="#{activityMBean.polylineModel!=null}">
+		</p:gmap>
+	
+		<p:panel rendered="#{activityMBean.polylineModel==null}" style="border: 0px; padding: 0px;">										
+			<img src="${facesContext.externalContext.requestContextPath}/images/nomap.jpg"  />
+		</p:panel>
+		
+		<div class="subtitle">
+			<h:outputText value="Equipamentos: " rendered="#{activityMBean.equipmentText!=null}" style="font-weight: bold !important;"/>
+			<h:outputText value="#{activityMBean.equipmentText}" rendered="#{activityMBean.equipmentText!=null}"/>
+		</div>	
+	</div>	
+</ui:fragment>

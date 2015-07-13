@@ -1,0 +1,116 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:rp="http://runplanner.com.br/facelets"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="#{loginBean.templateVersion}">
+		
+  <ui:define name="content">
+			
+		<p:messages id="messages" showDetail="false" /> 
+		<div class="pageTitleBox">#{msgs['rhythm.maintitle']}</div>
+		<div class="subtitle">#{msgs['rhythm.subtitle']}</div>
+
+		<table width="100%">
+			<tr>
+				<td valign="top" width="15%">
+					<rp:sideMenu menu="profileAdvice" selectedMenu="classificacao"/>
+				</td>
+				<td valign="top" align="left" style="padding-left: 10px;">
+	    		    <h:form>	    		    
+				        <p:dataTable id="rhythmList" value="#{rhythmMBean.rhythmList}" var="rhythm"
+							emptyMessage="#{msgs['template.msg.emptyMessage']}"
+							paginator="true" rows="10" paginatorPosition="bottom" paginatorAlwaysVisible="false"
+							paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}">
+				        		        
+				         	<p:column style="width:200px;">  
+				                <f:facet name="header">  
+				                    <h:outputText value="#{msgs['rhythm.classification']}" />  
+				                </f:facet>  
+				                
+				                <h:commandLink action="#{rhythmMBean.goToModify}">          				
+		           					<h:outputText value="#{rhythm.classification}"/>
+		           					<f:setPropertyActionListener target="#{rhythmMBean.rhythm.id}" value="#{rhythm.id}" />
+		           				</h:commandLink>
+				                
+				            </p:column>  
+				  		            
+				  		    <p:column style="text-align: center;">  
+				                <f:facet name="header">  
+				                    <h:outputText value="#{msgs['rhythm.easyPace']}" />  
+				                </f:facet>  
+				                <h:outputText value="#{rhythm.easyPace}"/>
+				            </p:column>          
+		
+				  		    <p:column style="text-align: center;">  
+				                <f:facet name="header">  
+				                    <h:outputText value="#{msgs['rhythm.normalPace']}" />  
+				                </f:facet>  
+				                <h:outputText value="#{rhythm.normalPace}"/>
+				            </p:column>  
+				            
+				  		    <p:column style="text-align: center;">  
+				                <f:facet name="header">  
+				                    <h:outputText value="#{msgs['rhythm.moderatePace']}" />  
+				                </f:facet>  
+				                <h:outputText value="#{rhythm.moderatePace}"/>
+				            </p:column>
+				  		            	
+				  		    <p:column style="text-align: center;">  
+				                <f:facet name="header">  
+				                    <h:outputText value="#{msgs['rhythm.mediumPace']}" />  
+				                </f:facet>  
+				                <h:outputText value="#{rhythm.mediumPace}"/>
+				            </p:column>
+				            
+				  		    <p:column style="text-align: center;">  
+				                <f:facet name="header">  
+				                    <h:outputText value="#{msgs['rhythm.strongPace']}" />  
+				                </f:facet>  
+				                <h:outputText value="#{rhythm.strongPace}"/>
+				            </p:column>  
+				            
+				  		    <p:column style="text-align: center;">  
+				                <f:facet name="header">  
+				                    <h:outputText value="#{msgs['rhythm.shootingPace']}" />  
+				                </f:facet>  
+				                <h:outputText value="#{rhythm.shootingPace}"/>
+				            </p:column>  		            		              	            	            
+				  
+				            <p:column style="text-align:center;">  
+				                <f:facet name="header">  
+				                    <h:outputText value="" />  
+				                </f:facet>  
+				                
+				                <p:commandButton icon="edit" action="#{rhythmMBean.goToModify}" ajax="false" title="#{msgs['template.button.edit']}">
+			     					<f:setPropertyActionListener target="#{rhythmMBean.rhythm.id}" value="#{rhythm.id}" />
+			           			</p:commandButton> 
+		            			          
+			           			<p:commandButton icon="delete" oncomplete="PF('deleteConfirmation').show()" title="#{msgs['template.button.delete']}">           			
+			     					<f:setPropertyActionListener target="#{rhythmMBean.rhythm.id}" value="#{rhythm.id}" />
+			           			</p:commandButton>
+		            			
+				            </p:column>  
+				        </p:dataTable>
+				        
+			        	<p:confirmDialog message="#{msgs['template.msg.delete.confirmation']}"  
+				           	severity="alert" widgetVar="deleteConfirmation">
+				   			<p:commandButton value="#{msgs['template.button.yes']}" oncomplete="deleteConfirmation.hide()" 
+				   				action="#{rhythmMBean.delete}" ajax="false" />
+				   			<p:commandButton value="#{msgs['template.button.no']}" onclick="PF('deleteConfirmation').hide()" />
+						</p:confirmDialog> 			    
+					    
+					    <div class="buttons">  
+						    <p:commandButton value="#{msgs['template.button.incluir']}" ajax="false" 
+						    	action="#{rhythmMBean.goToCreate}"/>
+						    <p:commandButton value="#{msgs['template.button.lista.ritmo']}" ajax="false" 
+						    	action="#{rhythmMBean.goToReport}"/>
+					    </div>
+					</h:form>  
+		    	</td>
+	    	</tr>
+	    </table>
+		    
+  </ui:define>
+</ui:composition>

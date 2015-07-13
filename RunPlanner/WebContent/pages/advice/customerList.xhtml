@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">  
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="#{loginBean.templateVersion}">
+
+	<ui:define name="content">
+		<h:form> 			
+	
+		<br/><br/>
+		<p:panel id="filter" header="#{msgs['pagetitle.customer']}"> 
+			<p:messages id="messages" showDetail="false" /> 
+			    	
+	    	<div id="filterDetails" style="width100%; font-size: 12px" class="filtro">
+	    	<table>
+	    		<tr>
+		    		<td style="padding-left:5px">
+						<h:outputText value="#{msgs['advice.owner.advice']}" />	
+					</td>
+			    	<td>    		
+			    		<p:selectOneMenu value="#{adviceMBean.advice.id}">	    			
+			    			<f:selectItems value="#{adviceMBean.adviceListSI}"/>                       	 
+			    		</p:selectOneMenu>	   		
+		    		</td>
+		    		<td style="padding-left:5px">
+			    		<p:commandButton actionListerner="#{adviceMBean.find}" update="customerListTable"
+		           			title="#{msgs['template.button.find']}"
+		           			value="#{msgs['template.button.find']}" ajax="false"/>
+	           		</td>
+	    		</tr>
+	    		</table>
+	    	</div>		    	
+	    </p:panel>
+	    <br/>
+	    	
+		<!-- Resumo da Assessoria -->
+		<div class="filtro">
+			<table width="100%">
+				<tr>
+					<td>					 							
+						<div class="blueHeader"><h:outputText value="Qtde. Pessoas"/></div>
+					</td>					 						
+					<td>
+						<div class="blueHeader"><h:outputText value="Qtde. Planilhas"/></div>				 							
+					</td>	
+					<td>
+						<div class="blueHeader"><h:outputText value="Qtde. Atividade"/></div>					 							
+					</td>					
+				</tr>
+	 			<tr>								 										 				
+	 				<td align="center">							 				
+	 					<div class="bigNumber"><h:outputText value="#{adviceMBean.pessoasCount}" /></div>
+	 				</td>
+	 				<td align="center">				 				
+	 					<div class="bigNumber"><h:outputText value="#{adviceMBean.spreadCount}"/></div>
+	 				</td>
+	 				<td align="center">							 				
+	 					<div class="bigNumber"><h:outputText value="#{adviceMBean.activityCount}" /></div>
+	 				</td>
+	 			</tr>
+	 		</table>
+	 	</div>
+	 	<br/>
+    
+		
+		<div id="painel" class="tabela">
+			<p:dataTable var="customer" value="#{adviceMBean.customerList}"  id="customerListTable"
+				paginator="true" rows="20" paginatorPosition="bottom"
+				paginatorAlwaysVisible="false"
+				paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+				emptyMessage="#{msgs['template.msg.emptyMessage']}">
+				
+				<p:column>
+					<f:facet name="header">
+						<h:outputText value="#{msgs['alunos.nome']}" />
+					</f:facet>
+					
+					   				
+           			<h:outputText value="#{customer.nome}" />
+				</p:column>
+				
+				<p:column>
+					<f:facet name="header">
+						<h:outputText value="#{msgs['alunos.email']}" />
+					</f:facet>
+					<h:outputText value="#{customer.email}" />
+				</p:column>				
+				
+				<p:column  style="text-align: center; width: 50px;">
+					<f:facet name="header">
+						<h:outputText value="#{msgs['alunos.idade']}" />
+					</f:facet>
+					<h:outputText value="#{customer.idade}"/>							
+				</p:column>			
+				
+				<p:column  style="text-align: center;">
+					<f:facet name="header">
+						<h:outputText value="Ativo"/>
+					</f:facet>
+					<h:outputText value="Sim"  rendered="#{customer.active}"/>
+					<h:outputText value="Não"  rendered="#{!customer.active}"/>							
+				</p:column>				
+							
+				<p:column style="text-align:center; white-space: nowrap;">  
+	                <f:facet name="header">  
+	                    <h:outputText value="" />  
+	                </f:facet>  
+           			
+           			<p:commandButton icon="email" oncomplete="PF('emailDialog').show()" update="@widgetVar(emailDialog)" title="#{msgs['template.button.email']}">          				
+           				<f:setPropertyActionListener target="#{customerMBean.customer.id}" value="#{customer.id}" />	
+           			</p:commandButton>           
+           			
+           			<p:commandButton icon="restart" oncomplete="PF('confirmationRestart').show()" 
+           				title="#{msgs['template.button.restart']}" rendered="#{customer.active}">
+           				<f:setPropertyActionListener target="#{customerMBean.customer.id}" value="#{customer.id}" />
+           			</p:commandButton>
+           	
+           			<p:commandButton icon="delete" oncomplete="PF('deleteConfirmation').show()" title="#{msgs['template.button.delete']}">           			
+     					<f:setPropertyActionListener target="#{customerMBean.customer.id}" value="#{customer.id}" />
+           			</p:commandButton>   
+           
+	            </p:column>  
+			</p:dataTable>
+		</div>
+
+     	<p:confirmDialog message="#{msgs['template.msg.delete.confirmation']}"  
+           	severity="alert" widgetVar="deleteConfirmation" id="deleteConfirmation">
+   			<p:commandButton value="#{msgs['template.button.yes']}" oncomplete="deleteConfirmation.hide()" 
+   				action="#{customerMBean.delete}" ajax="false" />
+   			<p:commandButton value="#{msgs['template.button.no']}" onclick="deleteConfirmation.hide()" />
+		</p:confirmDialog> 		
+		
+        
+        <p:confirmDialog message="#{msgs['template.msg.aluno.restart.confirmation']}"  
+        	severity="alert" widgetVar="confirmationRestart" id="confirmationRestart">        	
+        	<p:commandButton value="#{msgs['template.button.yes']}" oncomplete="confirmationRestart.hide()"  
+        		action="#{customerMBean.restartPassword}" ajax="false" 
+        		title="#{msgs['template.button.activate']}"/>        	
+        	<p:commandButton value="#{msgs['template.button.no']}" onclick="confirmationRestart.hide()" />
+        </p:confirmDialog>		
+		
+		</h:form>
+		
+		
+		<p:dialog widgetVar="emailDialog" header="#{msgs['aluno.email.title']}" id="emailDialog" modal="true" width="500">
+			<h:form> 
+			<div style="padding: 10px">  
+		        <p>
+		        	<h:outputLabel value="#{msgs['contact.subject']}"  style="width: 80px;"/>			              
+	            	<p:inputText value="#{customerMBean.subject}" size="70" required="true" requiredMessage="#{msgs['contact.subject.mandatory']}" />  
+	          	</p>
+	          	
+	          	<p>
+	            	<h:outputLabel value="#{msgs['contact.message']}"  style="width: 150px;"/>			              
+					<p:inputTextarea value="#{customerMBean.message}"
+						cols="70" rows="5"  maxlength="300" autoResize="false"
+						required="true" requiredMessage="#{msgs['contact.message.mandatory']}"/>
+	            </p>
+	            				            				  			        
+		  		<p style="text-align: center !important;">            
+		            <p:commandButton value="#{msgs['template.button.send']}"			               
+		            	action="#{customerMBean.sendEmail}" ajax="false"
+		            	oncomplete="emailDialog.hide();" />  
+					<p:commandButton value="#{msgs['template.button.cancelar']}"						
+			           	oncomplete="emailDialog.hide();"/>
+			    </p>
+	        </div>	
+	        </h:form>	
+		</p:dialog>		
+		
+	</ui:define>
+</ui:composition>

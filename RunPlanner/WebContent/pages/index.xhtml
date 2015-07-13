@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">  
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:sec="http://www.springframework.org/security/facelets/tags">
+	
+	<f:view contentType="text/html">
+	
+		<h:head>
+			<sec:ifAnyGranted roles="ROLE_ADM">
+				<meta http-equiv="refresh" content="0;URL=advice/index.jsf"/>
+			</sec:ifAnyGranted>
+			
+			<sec:ifAnyGranted roles="ROLE_ASSESSOR, ROLE_TEACHER">
+				<meta http-equiv="refresh" content="0;URL=teacher/indexV2.jsf"/>
+			</sec:ifAnyGranted>
+			
+			<sec:ifAnyGranted roles="ROLE_USER">
+				<meta http-equiv="refresh" content="0;URL=student/indexV2.jsf"/>	
+			</sec:ifAnyGranted>
+		</h:head>	
+		
+	</f:view>
+</html>

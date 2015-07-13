@@ -1,0 +1,264 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:fb="http://ogp.me/ns/fb#"
+	xmlns:og="http://opengraphprotocol.org/schema/"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	template="/pages/template/templateOut.xhtml">		
+		
+		
+  <ui:define name="content">
+  
+	<style type="text/css">
+
+	</style>
+	  
+	<script src="http://maps.google.com/maps/api/js?sensor=false" type="text/javascript"></script>
+
+	<div style="width: 100%; height: 610;" class="publicPageBackground" id="publicPageBackground">
+	
+		
+		<h:form>
+			<table width="100%">		
+				<tr>
+					<td align="center">
+						<div class="publicPage"> 
+							
+							<div id="mapArea" style="width: 552px; height: 543px; position: absolute; top: 27; left: 23;">
+							 	<div id="map" style="width: 100%; height: 443px; position: absolute; top: 0; left: 0;">
+							 		
+							 		<p:gmap center="#{publicMBean.initLat},#{publicMBean.initLon}" zoom="14" type="hybrid"
+										style="width:552px;height:463px" model="#{publicMBean.polylineModel}"
+										rendered="#{publicMBean.polylineModel!=null and publicMBean.paceGraphSerie!=null}">
+									</p:gmap>
+									
+									<p:gmap center="#{publicMBean.initLat},#{publicMBean.initLon}" zoom="14" type="hybrid"
+										style="width:552px;height:543px" model="#{publicMBean.polylineModel}"
+										rendered="#{publicMBean.polylineModel!=null and publicMBean.paceGraphSerie==null}">
+									</p:gmap>
+									
+									<p:panel rendered="#{publicMBean.polylineModel==null}">										
+										<img src="${facesContext.externalContext.requestContextPath}/images/publicNoMap.jpg" width="100%" />
+									</p:panel>
+									
+							 	</div>
+							 	
+							 	<p:panel rendered="#{publicMBean.paceGraphSerie!=null}">
+								 	<div id="graph" style="width: 100%; height: 100px; position: absolute; top: 465; left:0;">
+										<div id="paceGraph" style="width:100%; height:80px; position: absolute; top: 0; left: 0;"></div>
+								 	</div> 
+							 	</p:panel>
+							</div>
+							 
+							<div id="logoArea" class="publicAdviceLogo"> 
+								<p:graphicImage value="#{publicMBean.adviceLogo}"  width="75px" height="75px" style="-webkit-border-radius: 5px; -moz-border-radius: 5px; border-radius: 5px;"/>	
+							</div>
+							
+							<div id="dataArea" style="width: 400px; height: 455px; position: absolute; top: 105; left: 605; overflow: auto; text-align: left; ">
+							
+								<table width="100%">
+									<tr>
+										<td width="35">
+											<p:graphicImage id="photoAct" value="#{photoMBean.streamedUserThumb}" width="35" height="35"/>
+										</td>
+										<td valign="top">
+											<font color="#517C92" size="3"><b><h:outputText value="#{publicMBean.activity.student.nome}" /></b></font><br/>
+											<b><h:outputText value="#{publicMBean.activity.student.advice.name}" styleClass="subtitle"/></b>
+										</td>
+									</tr>
+									<tr>
+									
+										<td colspan="2" align="center">
+											
+												<br/>											
+												<div class="publicTableData">	
+													
+													<div class="publicTableDataHeader">
+														Resumo
+													</div> 	
+											    
+											    	<table  width="100%">
+											    		<tr>
+											    			<td class="textPublic"><h:outputText value="#{msgs['activity.date']}"/>:</td>
+											    			<td align="right" class="textPublic">
+												    			<h:outputText value="#{publicMBean.activity.date}">						
+										                			<f:convertDateTime pattern="dd MMMM, yyyy" />							
+																</h:outputText>
+											    			</td>
+											    		</tr> 
+											    		<tr>
+											    			<td class="textPublic"><h:outputText value="#{msgs['activity.distance']}"/>:</td>
+											    			<td align="right" class="textPublic">
+												    			<h:outputText value="#{publicMBean.activity.totalDistance}">								 					
+																	<f:convertNumber pattern="#0.00"/>	
+											 					</h:outputText> 
+											 					<h:outputText value="#{msgs['activity.km']}" />
+											    			</td>
+											    		</tr> 
+											    		<tr>
+											    			<td class="textPublic"><h:outputText value="#{msgs['activity.duration']}"/>:</td>
+											    			<td align="right" class="textPublic">
+											    				<h:outputText value="#{publicMBean.activity.totalTime}"/>
+											    			</td>
+											    		</tr>
+											    		<tr>
+											    			<td class="textPublic"><h:outputText value="#{msgs['activity.pace']}"/>:</td>
+											    			<td align="right" class="textPublic">
+											    				<h:outputText value="#{publicMBean.activity.averagePace}"/> 
+								 								<h:outputText value="#{msgs['activity.pace.desc']}" />
+											    			</td>
+											    		</tr>
+											    		<tr>
+											    			<td class="textPublic"><h:outputText value="#{msgs['activity.calories']}"/>:</td>
+											    			<td align="right" class="textPublic">
+											    				<h:outputText value="#{publicMBean.activity.totalCalories}">
+																	<f:convertNumber pattern="#0"/>
+																</h:outputText>	 
+								 								<h:outputText value="#{msgs['activity.calories.desc']}" />
+											    			</td>
+											    		</tr>
+											    		<tr>
+											    			<td class="textPublic"><h:outputText value="#{msgs['activity.freq.cad']}"/>:</td>
+											    			<td align="right" class="textPublic">			
+											 					<h:outputText value="#{publicMBean.activity.totalAverageHeartRateBpm}">
+																	<f:convertNumber pattern="#0.00"/>
+																</h:outputText> 
+								 								<h:outputText value="#{msgs['activity.freq.desc']}" />
+															</td>
+											    		</tr>											    	
+											    	</table>
+											 </div>
+										
+										</td>
+									
+									</tr>
+									
+									<tr>
+									
+										<td colspan="2" align="center">
+											
+											<br/>	
+											<p:panel rendered="#{publicMBean.activity.lapsSize>1}">
+											
+												<div class="publicTableData">	
+													
+													<div class="publicTableDataHeader">
+														Voltas
+													</div> 	
+											    
+													<h:dataTable var="lap" value="#{publicMBean.activity.laps}" 
+														styleClass="lapTable"
+										            	emptyMessage="#{msgs['template.msg.emptyMessage']}"
+										            	headerClass="lapTable-odd"
+										            	rowClasses="lapTable-even,lapTable-odd">
+														     
+														
+										                <h:column>
+										                	<f:facet name="header">
+																<b><h:outputText value="#{msgs['spreadsheet.lap.turn']}" /></b>
+															</f:facet>
+									                        <h:outputText value="#{rowCounter.row}" />
+										                </h:column>     
+														          														
+														<h:column style="text-align: center;" styleClass="publicTableLapData">
+															<f:facet name="header">
+																<b><h:outputText value="#{msgs['spreadsheet.lap.distance.short']}" /></b>
+															</f:facet>
+															<h:outputText value="#{lap.distanceKm}">
+																<f:convertNumber pattern="#0.00"/>								
+															</h:outputText>
+														</h:column>
+														
+														<h:column style="text-align: center;" styleClass="publicTableLapData">
+															<f:facet name="header">
+																<b><h:outputText value="#{msgs['spreadsheet.lap.time.short']}" /></b>
+															</f:facet>
+															<h:outputText value="#{lap.totalTimeString}" />
+														</h:column>
+														
+														<h:column style="text-align: center;" styleClass="publicTableLapData">
+															<f:facet name="header">
+																<b><h:outputText value="#{msgs['spreadsheet.lap.pace']}" /></b>
+															</f:facet>
+															<h:outputText value="#{lap.pace}" /> 
+														</h:column>
+														
+													</h:dataTable>											    
+											    	
+											 	</div>
+											
+											</p:panel>
+											
+										</td>
+									
+									</tr>
+									
+								</table>
+							
+							</div>							
+							
+						</div>
+					</td>
+				</tr>		
+			</table>
+	 	
+			<script type="text/javascript">
+				$(document).ready(function() {
+				   
+					var serie = #{publicMBean.paceGraphSerie};	
+				     
+				    var plot1 = $.jqplot('paceGraph', [serie], {				       
+				    	animate: true,
+				        
+				        legend: {
+				            show: true,  
+				            location: 'ne'
+				        },				        
+				        
+				        series: [
+				        	{
+				        		label: "Ritmo",
+				        		showMarker: false,
+				        		fill: true,
+				        		fillAlpha: 0.50
+				        	}
+				        ],
+				        
+				        highlighter: {
+				            show: true,
+				            sizeAdjust: 5,
+				            tooltipAxes: 'y',   
+				            tooltipLocation: 'nw',
+				            useAxesFormatters: true,
+				            formatString: '<div class="highlighterDiv"><b><font color="#02425C">Ritmo: </font></b>%s Min/Km</div>'
+				        },
+				        
+				        axes: {
+				            xaxis: {
+				            	min: 0,
+				            	max: #{publicMBean.activity.totalDistance*1000}
+				            },
+				            yaxis: {
+				            	tickOptions:{ formatString: '%.2f' } 
+				            }
+				        }
+				        
+				    });
+				});	
+			</script>
+					
+		</h:form>	
+				
+
+		
+		<script type="text/javascript" src="${facesContext.externalContext.requestContextPath}/js/jqplot/jquery.jqplot.min.js"></script>
+		<script type="text/javascript" src="${facesContext.externalContext.requestContextPath}/js/jqplot/jqplot.categoryAxisRenderer.min.js"></script>
+		<script type="text/javascript" src="${facesContext.externalContext.requestContextPath}/js/jqplot/jqplot.highlighter.min.js"></script>	
+		<!--[if lt IE 9]><script language="javascript" type="text/javascript" src="${facesContext.externalContext.requestContextPath}/js/jqplot/excanvas.js"></script><![endif]-->		  				
+	</div>	
+					
+  </ui:define>
+  
+</ui:composition>

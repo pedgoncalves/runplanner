@@ -1,0 +1,42 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="#{loginBean.templateVersion}">
+		
+	<ui:define name="content">
+
+		<br/><br/>
+		<p:panel id="filter" header="#{msgs['pagetitle.mailbox']}"> 
+			<p:messages id="messages" showDetail="false" /> 
+		</p:panel>
+		
+		<center>
+			<div class="filtro" style="width:80%; text-align: left;" >
+			
+				<h:panelGrid columns="2">
+		  			<h:outputLabel value="#{msgs['mailbox.sender']}" style="width: 50px !important;"/> 	
+					<h:outputText value="#{mailboxMBean.mailbox.message.sender.nome}"/>  
+				  
+		            <h:outputLabel value="#{msgs['mailbox.subject']}"  style="width: 50px !important;"/>  
+		            <h:outputText value="#{mailboxMBean.mailbox.message.subject}" />
+		        </h:panelGrid>
+		        
+		        <h:panelGrid columns="1" style="margin-bottom:10px">
+			        <h:outputLabel for="message" value="#{msgs['mailbox.message']}"  style="width: 50px !important;"/>
+				 	<h:outputText value="#{mailboxMBean.mailbox.message.bodyMessage}"  escape="false" id="message"/>
+			 	</h:panelGrid>
+			 	
+			</div>
+		</center>		
+		
+	 	<div class="buttons"> 
+	 		<h:form>
+	    		<p:commandButton value="#{msgs['template.button.back']}" action="#{mailboxMBean.goToList}" ajax="false"/>
+	    	</h:form>
+   		</div>
+
+	</ui:define>
+	
+</ui:composition>

@@ -1,0 +1,12 @@
+Manifest-Version: 1.0
+Archiver-Version: Plexus Archiver
+Created-By: Apache Maven
+Built-By: tomcat6
+Build-Jdk: 1.6.0_13
+Extension-Name: prime-moviecollector
+Implementation-Title: prime-moviecollector
+Implementation-Version: 1.0.0-SNAPSHOT
+Hudson-Build-Number: 234
+Hudson-Project: Examples - Moviecollector
+Hudson-Version: 1.336
+

@@ -1,0 +1,958 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="planilhaPagamentoTurmaDetalhe" language="groovy" printOrder="Horizontal" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="1.2100000000000002"/>
+	<property name="ireport.x" value="111"/>
+	<property name="ireport.y" value="27"/>
+	<parameter name="YEAR" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="TIMBRADO" class="java.lang.String" isForPrompting="false">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+	</parameter>
+	<parameter name="LOGO" class="java.io.InputStream" isForPrompting="false"/>
+	<parameter name="ASSESSORIA" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="customer" class="java.lang.String"/>
+	<field name="team" class="java.lang.String"/>
+	<field name="advice" class="java.lang.String"/>
+	<field name="jan" class="java.lang.Double"/>
+	<field name="feb" class="java.lang.Double"/>
+	<field name="mar" class="java.lang.Double"/>
+	<field name="apr" class="java.lang.Double"/>
+	<field name="may" class="java.lang.Double"/>
+	<field name="jun" class="java.lang.Double"/>
+	<field name="jul" class="java.lang.Double"/>
+	<field name="aug" class="java.lang.Double"/>
+	<field name="sep" class="java.lang.Double"/>
+	<field name="oct" class="java.lang.Double"/>
+	<field name="nov" class="java.lang.Double"/>
+	<field name="dez" class="java.lang.Double"/>
+	<field name="dtJan" class="java.util.Date"/>
+	<field name="dtFeb" class="java.util.Date"/>
+	<field name="dtMar" class="java.util.Date"/>
+	<field name="dtApr" class="java.util.Date"/>
+	<field name="dtMay" class="java.util.Date"/>
+	<field name="dtJun" class="java.util.Date"/>
+	<field name="dtJul" class="java.util.Date"/>
+	<field name="dtAug" class="java.util.Date"/>
+	<field name="dtSep" class="java.util.Date"/>
+	<field name="dtOct" class="java.util.Date"/>
+	<field name="dtNov" class="java.util.Date"/>
+	<field name="dtDez" class="java.util.Date"/>
+	<field name="tpJan" class="java.lang.String"/>
+	<field name="tpFeb" class="java.lang.String"/>
+	<field name="tpMar" class="java.lang.String"/>
+	<field name="tpApr" class="java.lang.String"/>
+	<field name="tpMay" class="java.lang.String"/>
+	<field name="tpJun" class="java.lang.String"/>
+	<field name="tpJul" class="java.lang.String"/>
+	<field name="tpAug" class="java.lang.String"/>
+	<field name="tpSep" class="java.lang.String"/>
+	<field name="tpOct" class="java.lang.String"/>
+	<field name="tpNov" class="java.lang.String"/>
+	<field name="tpDez" class="java.lang.String"/>
+	<variable name="sunJan" class="java.lang.Double" resetType="Group" resetGroup="turma" calculation="Sum">
+		<variableExpression><![CDATA[$F{jan}]]></variableExpression>
+		<initialValueExpression><![CDATA[0]]></initialValueExpression>
+	</variable>
+	<variable name="sunFev" class="java.lang.Double" resetType="Group" resetGroup="turma" calculation="Sum">
+		<variableExpression><![CDATA[$F{feb}]]></variableExpression>
+		<initialValueExpression><![CDATA[0]]></initialValueExpression>
+	</variable>
+	<variable name="sunMar" class="java.lang.Double" resetType="Group" resetGroup="turma" calculation="Sum">
+		<variableExpression><![CDATA[$F{mar}]]></variableExpression>
+		<initialValueExpression><![CDATA[0]]></initialValueExpression>
+	</variable>
+	<variable name="sunApr" class="java.lang.Double" resetType="Group" resetGroup="turma" calculation="Sum">
+		<variableExpression><![CDATA[$F{apr}]]></variableExpression>
+		<initialValueExpression><![CDATA[0]]></initialValueExpression>
+	</variable>
+	<variable name="sunMay" class="java.lang.Double" resetType="Group" resetGroup="turma" calculation="Sum">
+		<variableExpression><![CDATA[$F{may}]]></variableExpression>
+		<initialValueExpression><![CDATA[0]]></initialValueExpression>
+	</variable>
+	<variable name="sunJun" class="java.lang.Double" resetType="Group" resetGroup="turma" calculation="Sum">
+		<variableExpression><![CDATA[$F{jun}]]></variableExpression>
+		<initialValueExpression><![CDATA[0]]></initialValueExpression>
+	</variable>
+	<variable name="sunJul" class="java.lang.Double" resetType="Group" resetGroup="turma" calculation="Sum">
+		<variableExpression><![CDATA[$F{jul}]]></variableExpression>
+		<initialValueExpression><![CDATA[0]]></initialValueExpression>
+	</variable>
+	<variable name="sunAug" class="java.lang.Double" resetType="Group" resetGroup="turma" calculation="Sum">
+		<variableExpression><![CDATA[$F{aug}]]></variableExpression>
+		<initialValueExpression><![CDATA[0]]></initialValueExpression>
+	</variable>
+	<variable name="sunSep" class="java.lang.Double" resetType="Group" resetGroup="turma" calculation="Sum">
+		<variableExpression><![CDATA[$F{sep}]]></variableExpression>
+		<initialValueExpression><![CDATA[0]]></initialValueExpression>
+	</variable>
+	<variable name="sunOct" class="java.lang.Double" resetType="Group" resetGroup="turma" calculation="Sum">
+		<variableExpression><![CDATA[$F{oct}]]></variableExpression>
+		<initialValueExpression><![CDATA[0]]></initialValueExpression>
+	</variable>
+	<variable name="sunNov" class="java.lang.Double" resetType="Group" resetGroup="turma" calculation="Sum">
+		<variableExpression><![CDATA[$F{nov}]]></variableExpression>
+		<initialValueExpression><![CDATA[0]]></initialValueExpression>
+	</variable>
+	<variable name="sunDez" class="java.lang.Double" resetType="Group" resetGroup="turma" calculation="Sum">
+		<variableExpression><![CDATA[$F{dez}]]></variableExpression>
+		<initialValueExpression><![CDATA[0]]></initialValueExpression>
+	</variable>
+	<variable name="sumTotJan" class="java.lang.Double" incrementType="Group" incrementGroup="turma" calculation="Sum">
+		<variableExpression><![CDATA[$V{sunJan}]]></variableExpression>
+	</variable>
+	<variable name="sunTotFeb" class="java.lang.Double" incrementType="Group" incrementGroup="turma" calculation="Sum">
+		<variableExpression><![CDATA[$V{sunFev}]]></variableExpression>
+	</variable>
+	<variable name="sunToMar" class="java.lang.Double" incrementType="Group" incrementGroup="turma" calculation="Sum">
+		<variableExpression><![CDATA[$V{sunMar}]]></variableExpression>
+	</variable>
+	<variable name="sunToApr" class="java.lang.Double" incrementType="Group" incrementGroup="turma" calculation="Sum">
+		<variableExpression><![CDATA[$V{sunApr}]]></variableExpression>
+	</variable>
+	<variable name="sunToMay" class="java.lang.Double" incrementType="Group" incrementGroup="turma" calculation="Sum">
+		<variableExpression><![CDATA[$V{sunMay}]]></variableExpression>
+	</variable>
+	<variable name="sunToJun" class="java.lang.Double" incrementType="Group" incrementGroup="turma" calculation="Sum">
+		<variableExpression><![CDATA[$V{sunJun}]]></variableExpression>
+	</variable>
+	<variable name="sunToJul" class="java.lang.Double" incrementType="Group" incrementGroup="turma" calculation="Sum">
+		<variableExpression><![CDATA[$V{sunJul}]]></variableExpression>
+	</variable>
+	<variable name="sunToAug" class="java.lang.Double" incrementType="Group" incrementGroup="turma" calculation="Sum">
+		<variableExpression><![CDATA[$V{sunAug}]]></variableExpression>
+	</variable>
+	<variable name="sunToSep" class="java.lang.Double" incrementType="Group" incrementGroup="turma" calculation="Sum">
+		<variableExpression><![CDATA[$V{sunSep}]]></variableExpression>
+	</variable>
+	<variable name="sunToOct" class="java.lang.Double" incrementType="Group" incrementGroup="turma" calculation="Sum">
+		<variableExpression><![CDATA[$V{sunOct}]]></variableExpression>
+	</variable>
+	<variable name="sunToNov" class="java.lang.Double" incrementType="Group" incrementGroup="turma" calculation="Sum">
+		<variableExpression><![CDATA[$V{sunNov}]]></variableExpression>
+	</variable>
+	<variable name="sunToDez" class="java.lang.Double" incrementType="Group" incrementGroup="turma" calculation="Sum">
+		<variableExpression><![CDATA[$V{sunDez}]]></variableExpression>
+	</variable>
+	<group name="turma">
+		<groupExpression><![CDATA[$F{team}]]></groupExpression>
+		<groupHeader>
+			<band height="55">
+				<textField>
+					<reportElement x="24" y="8" width="241" height="22"/>
+					<box>
+						<pen lineWidth="0.75"/>
+						<topPen lineWidth="0.0"/>
+						<leftPen lineWidth="0.0"/>
+						<bottomPen lineWidth="0.0"/>
+						<rightPen lineWidth="0.0"/>
+					</box>
+					<textElement verticalAlignment="Bottom">
+						<font fontName="Advantage" size="14"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{team}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="161" y="35" width="57" height="20"/>
+					<box>
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.0"/>
+						<leftPen lineWidth="0.0"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.0"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Advantage"/>
+					</textElement>
+					<text><![CDATA[Janeiro]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="218" y="35" width="59" height="20"/>
+					<box>
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.0"/>
+						<leftPen lineWidth="0.0"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.0"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Advantage"/>
+					</textElement>
+					<text><![CDATA[Fevereiro]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="277" y="35" width="47" height="20"/>
+					<box>
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.0"/>
+						<leftPen lineWidth="0.0"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.0"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Advantage"/>
+					</textElement>
+					<text><![CDATA[Março]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="324" y="35" width="47" height="20"/>
+					<box>
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.0"/>
+						<leftPen lineWidth="0.0"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.0"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Advantage"/>
+					</textElement>
+					<text><![CDATA[Abril]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="371" y="35" width="47" height="20"/>
+					<box>
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.0"/>
+						<leftPen lineWidth="0.0"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.0"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Advantage"/>
+					</textElement>
+					<text><![CDATA[Maio]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="418" y="35" width="47" height="20"/>
+					<box>
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.0"/>
+						<leftPen lineWidth="0.0"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.0"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Advantage"/>
+					</textElement>
+					<text><![CDATA[Junho]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="465" y="35" width="47" height="20"/>
+					<box>
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.0"/>
+						<leftPen lineWidth="0.0"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.0"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Advantage"/>
+					</textElement>
+					<text><![CDATA[Julho]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="512" y="35" width="47" height="20"/>
+					<box>
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.0"/>
+						<leftPen lineWidth="0.0"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.0"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Advantage"/>
+					</textElement>
+					<text><![CDATA[Agosto]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="559" y="35" width="58" height="20"/>
+					<box>
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.0"/>
+						<leftPen lineWidth="0.0"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.0"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Advantage"/>
+					</textElement>
+					<text><![CDATA[Setembro]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="617" y="35" width="57" height="20"/>
+					<box>
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.0"/>
+						<leftPen lineWidth="0.0"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.0"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Advantage"/>
+					</textElement>
+					<text><![CDATA[Outubro]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="674" y="35" width="59" height="20"/>
+					<box>
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.0"/>
+						<leftPen lineWidth="0.0"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.0"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Advantage"/>
+					</textElement>
+					<text><![CDATA[Novembro]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="733" y="35" width="61" height="20"/>
+					<box>
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.0"/>
+						<leftPen lineWidth="0.0"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.0"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Advantage"/>
+					</textElement>
+					<text><![CDATA[Dezembro]]></text>
+				</staticText>
+				<line>
+					<reportElement mode="Transparent" x="1" y="32" width="800" height="1"/>
+				</line>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="21">
+				<textField isBlankWhenNull="true">
+					<reportElement x="161" y="0" width="57" height="20"/>
+					<box>
+						<topPen lineWidth="0.0"/>
+						<bottomPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Advantage"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{sunJan}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement x="218" y="0" width="59" height="20"/>
+					<box>
+						<topPen lineWidth="0.0"/>
+						<bottomPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Advantage"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{sunFev}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement x="277" y="0" width="47" height="20"/>
+					<box>
+						<topPen lineWidth="0.0"/>
+						<bottomPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Advantage"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{sunMar}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement x="324" y="0" width="47" height="20"/>
+					<box>
+						<topPen lineWidth="0.0"/>
+						<bottomPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Advantage"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{sunApr}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement x="371" y="0" width="47" height="20"/>
+					<box>
+						<topPen lineWidth="0.0"/>
+						<bottomPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Advantage"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{sunMay}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement x="418" y="0" width="47" height="20"/>
+					<box>
+						<topPen lineWidth="0.0"/>
+						<bottomPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Advantage"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{sunJun}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement x="465" y="0" width="47" height="20"/>
+					<box>
+						<topPen lineWidth="0.0"/>
+						<bottomPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Advantage"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{sunJul}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement x="559" y="0" width="58" height="20"/>
+					<box>
+						<topPen lineWidth="0.0"/>
+						<bottomPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Advantage"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{sunSep}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement x="512" y="0" width="47" height="20"/>
+					<box>
+						<topPen lineWidth="0.0"/>
+						<bottomPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Advantage"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{sunAug}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement x="617" y="0" width="57" height="20"/>
+					<box>
+						<topPen lineWidth="0.0"/>
+						<bottomPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Advantage"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{sunOct}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement x="733" y="0" width="61" height="20"/>
+					<box>
+						<topPen lineWidth="0.0"/>
+						<bottomPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Advantage"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{sunDez}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement x="674" y="0" width="59" height="20"/>
+					<box>
+						<topPen lineWidth="0.0"/>
+						<bottomPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Advantage"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{sunNov}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="12" y="0" width="149" height="20"/>
+					<box>
+						<topPen lineWidth="0.0"/>
+						<bottomPen lineWidth="0.5"/>
+					</box>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Advantage"/>
+					</textElement>
+					<text><![CDATA[Total por turma]]></text>
+				</staticText>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band height="555" splitType="Stretch">
+			<image scaleImage="FillFrame">
+				<reportElement x="-16" y="-15" width="835" height="570"/>
+				<imageExpression><![CDATA[$P{TIMBRADO}]]></imageExpression>
+			</image>
+			<textField isBlankWhenNull="true">
+				<reportElement x="-23" y="0" width="31" height="555"/>
+				<textElement textAlignment="Center" verticalAlignment="Top" rotation="Left">
+					<font fontName="Advantage" size="20" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{ASSESSORIA}]]></textFieldExpression>
+			</textField>
+		</band>
+	</background>
+	<title>
+		<band height="1" splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="51" splitType="Stretch">
+			<rectangle>
+				<reportElement x="582" y="10" width="200" height="38"/>
+			</rectangle>
+			<staticText>
+				<reportElement mode="Transparent" x="344" y="28" width="91" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Advantage" size="12"/>
+				</textElement>
+				<text><![CDATA[Ano referência:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="435" y="28" width="62" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Advantage" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{YEAR}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="288" y="0" width="235" height="28"/>
+				<textElement textAlignment="Center">
+					<font fontName="Advantage" size="20" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Relatório de Pagamento]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="592" y="16" width="60" height="15"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Advantage"/>
+				</textElement>
+				<text><![CDATA[Dinheiro: DI]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="652" y="16" width="60" height="15"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Advantage"/>
+				</textElement>
+				<text><![CDATA[Cheque: CH]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="712" y="16" width="60" height="15"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Advantage"/>
+				</textElement>
+				<text><![CDATA[Cartão: CA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="593" y="31" width="82" height="15"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Advantage"/>
+				</textElement>
+				<text><![CDATA[Pagseguro: PS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="675" y="31" width="60" height="15"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Advantage"/>
+				</textElement>
+				<text><![CDATA[Outros: OT]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="662" y="1" width="45" height="15"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Advantage"/>
+				</textElement>
+				<text><![CDATA[Legenda]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="39" splitType="Stretch">
+			<rectangle>
+				<reportElement x="9" y="1" width="785" height="37" backcolor="#CCCCCC">
+					<printWhenExpression><![CDATA[new Boolean(($V{COLUMN_COUNT}.intValue() % 2) == 0)]]></printWhenExpression>
+				</reportElement>
+				<graphicElement>
+					<pen lineWidth="0.0"/>
+				</graphicElement>
+			</rectangle>
+			<textField isBlankWhenNull="true">
+				<reportElement x="161" y="19" width="57" height="20"/>
+				<box>
+					<leftPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Advantage"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($F{tpJan} != null)?Double.toString($F{jan}) + $F{tpJan}:" "]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="218" y="19" width="59" height="20"/>
+				<box>
+					<leftPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Advantage"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($F{tpFeb} != null)?Double.toString($F{feb})+$F{tpFeb}:" "]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="277" y="19" width="47" height="20"/>
+				<box>
+					<leftPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Advantage"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($F{tpMar} != null)?Double.toString($F{mar})+$F{tpMar}:" "]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="324" y="19" width="47" height="20"/>
+				<box>
+					<leftPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Advantage"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($F{tpApr} != null)?Double.toString($F{apr})+$F{tpApr}:" "]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="371" y="19" width="47" height="20"/>
+				<box>
+					<leftPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Advantage"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($F{tpMay} != null)?Double.toString($F{may})+$F{tpMay}:" "]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="418" y="19" width="47" height="20"/>
+				<box>
+					<leftPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Advantage"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($F{tpJun} != null)?Double.toString($F{jun})+$F{tpJun}:" "]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="465" y="19" width="47" height="20"/>
+				<box>
+					<leftPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Advantage"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($F{tpJul} != null)?Double.toString($F{jul})+$F{tpJul}:" "]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="512" y="19" width="47" height="20"/>
+				<box>
+					<leftPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Advantage"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($F{tpAug} != null)?Double.toString($F{aug})+$F{tpAug}:" "]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="559" y="19" width="58" height="20"/>
+				<box>
+					<leftPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Advantage"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($F{tpSep} != null)?Double.toString($F{sep})+$F{tpSep}:" "]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="617" y="19" width="57" height="20"/>
+				<box>
+					<leftPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Advantage"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($F{tpOct} != null)?Double.toString($F{oct})+$F{tpOct}:" "]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="674" y="19" width="59" height="20"/>
+				<box>
+					<leftPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Advantage"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($F{tpNov} != null)?Double.toString($F{nov})+$F{tpNov}:" "]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="733" y="19" width="61" height="20"/>
+				<box>
+					<leftPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Advantage"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($F{tpDez} != null)?Double.toString($F{dez})+$F{tpDez}:" "]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="12" y="0" width="149" height="38"/>
+				<box>
+					<leftPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Advantage"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{customer}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement x="218" y="0" width="59" height="20"/>
+				<box>
+					<leftPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Advantage" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{dtFeb}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement x="324" y="0" width="47" height="20"/>
+				<box>
+					<leftPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Advantage" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{dtApr}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement x="277" y="0" width="47" height="20"/>
+				<box>
+					<leftPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Advantage" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{dtMar}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement x="161" y="0" width="57" height="20"/>
+				<box>
+					<leftPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Advantage" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{dtJan}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement x="418" y="0" width="47" height="20"/>
+				<box>
+					<leftPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Advantage" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{dtJun}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement x="512" y="0" width="47" height="20"/>
+				<box>
+					<leftPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Advantage" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{dtAug}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement x="559" y="0" width="58" height="20"/>
+				<box>
+					<leftPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Advantage" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{dtSep}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement x="617" y="0" width="57" height="20"/>
+				<box>
+					<leftPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Advantage" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{dtOct}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement x="674" y="0" width="59" height="20"/>
+				<box>
+					<leftPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Advantage" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{dtNov}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement x="733" y="0" width="61" height="20"/>
+				<box>
+					<leftPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Advantage" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{dtDez}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement x="371" y="0" width="47" height="20"/>
+				<box>
+					<leftPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Advantage" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{dtMay}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement x="465" y="0" width="47" height="20"/>
+				<box>
+					<leftPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Advantage" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{dtJul}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="64" splitType="Stretch"/>
+	</pageFooter>
+	<lastPageFooter>
+		<band height="64">
+			<staticText>
+				<reportElement x="12" y="0" width="108" height="15"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Advantage"/>
+				</textElement>
+				<text><![CDATA[Total por mês]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="161" y="0" width="57" height="15"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Advantage"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{sumTotJan}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="218" y="0" width="59" height="15"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Advantage"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{sunTotFeb}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="277" y="0" width="47" height="15"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Advantage"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{sunToMar}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="324" y="0" width="47" height="15"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Advantage"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{sunToApr}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="371" y="0" width="47" height="15"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Advantage"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{sunToMay}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="418" y="0" width="47" height="15"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Advantage"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{sunToJun}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="465" y="0" width="47" height="15"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Advantage"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{sunToJul}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="512" y="0" width="47" height="15"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Advantage"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{sunToAug}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="559" y="0" width="58" height="15"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Advantage"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{sunToSep}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="617" y="0" width="57" height="15"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Advantage"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{sunToOct}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="674" y="0" width="59" height="15"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Advantage"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{sunToNov}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="733" y="0" width="61" height="15"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Advantage"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{sunToDez}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="12" y="16" width="782" height="1"/>
+			</line>
+		</band>
+	</lastPageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

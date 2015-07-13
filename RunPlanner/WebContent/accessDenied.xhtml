@@ -1,0 +1,31 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="#{loginBean.templateVersion}">
+		
+  <ui:define name="content">
+		
+	<center>
+		<br/><br/><br/><br/><br/><br/>
+		<img src="${facesContext.externalContext.requestContextPath}/images/acesso_negado.png" />
+		
+		<br/>
+		<b><h:outputText value="Acesso Negado." /></b>
+		<br/><br/>
+		
+		<h:outputText value="#{msgs['template.access.denied']}" />
+		
+		<br/><br/>
+		<h:form>
+			<h:commandLink action="#{dashboardMBean.goToIndex}">
+				<h:outputText value="#{msgs['template.link.home']}" />
+			</h:commandLink>
+		</h:form>
+		
+	</center>
+		
+  </ui:define>
+  
+</ui:composition>

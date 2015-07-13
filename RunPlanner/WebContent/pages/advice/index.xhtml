@@ -1,0 +1,120 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="/pages/template/template.xhtml">
+
+	<ui:define name="content">
+		<h:form>
+			<br />
+			<p:messages id="messages" showDetail="false" />
+			<div class="pageTitleBox">#{msgs['advice.pagetitle']}</div>
+			<br />
+			<p:selectOneMenu value="#{managementInformationMBean.activeAdvice}">
+				<f:selectItem itemLabel="#{msgs['template.active.true']}"
+					itemValue="true" />
+				<f:selectItem itemLabel="#{msgs['template.active.false']}"
+					itemValue="false" />
+			</p:selectOneMenu>
+			<p:selectOneMenu id="status"
+				value="#{managementInformationMBean.selectedStatus}"
+				style="padding-left:10px">
+				<f:selectItems value="#{managementInformationMBean.listaStatus}" />
+			</p:selectOneMenu>
+			<p:commandButton action="#{managementInformationMBean.goToList}"
+				ajax="false" update="painel" title="#{msgs['template.button.find']}"
+				value="#{msgs['template.button.find']}" />
+			<p:commandButton onclick="emailResp.show()"
+				title="#{msgs['template.button.email.responsaveis']}"
+				value="#{msgs['template.button.email.responsaveis']}" />
+			<p:dataTable var="mi"
+				selection="#{managementInformationMBean.selectedManagementInformationList}"
+				value="#{managementInformationMBean.managementInformationListDataModel}">
+
+				<p:column selectionMode="multiple" style="text-align: center;" />
+				<p:column headerText="Assessoria" sortBy="#{mi.advice}">
+					<h:commandLink action="#{adviceMBean.goToModify}">
+						<h:outputText value="#{mi.advice}" />
+						<f:setPropertyActionListener target="#{adviceMBean.advice.id}"
+							value="#{mi.id}" />
+					</h:commandLink>
+				</p:column>
+
+				<p:column headerText="Qtd Atividade"
+					sortBy="#{mi.qtdActivitByMonth}">
+					<h:outputText value="#{mi.qtdActivitByMonth}" />
+				</p:column>
+
+				<p:column headerText="Qtd Planilhas"
+					sortBy="#{mi.qtdSpreadSheetByMonth}">
+					<h:outputText value="#{mi.qtdSpreadSheetByMonth}" />
+				</p:column>
+
+				<p:column headerText="Qtd Alunos Ativos"
+					sortBy="#{mi.qtdActiveRunners}">
+					<h:outputText value="#{mi.qtdActiveRunners}" />
+				</p:column>
+				<p:column headerText="Data ultimo Login"
+					sortBy="#{mi.lastLoginDate}">
+					<h:outputText value="#{mi.lastLoginDate}">
+						<f:convertDateTime pattern="dd/MM/yyyy" />
+					</h:outputText>
+				</p:column>
+				<p:column headerText="Tipo ultimo Login"
+					sortBy="#{mi.lastLoginType}">
+					<h:outputText value="#{mi.lastLoginType}" />
+				</p:column>
+				<p:column headerText="Status" sortBy="#{mi.status}">
+					<h:outputText value="#{mi.status}" />
+				</p:column>
+				<p:column headerText="Data de cadastro" sortBy="#{mi.registerDate}">
+					<h:outputText value="#{mi.registerDate}">
+						<f:convertDateTime pattern="dd/MM/yyyy" />
+					</h:outputText>
+				</p:column>
+				<p:column headerText="Fim dos testes" sortBy="#{mi.endTestes}">
+					<h:outputText value="#{mi.endTestes}">
+						<f:convertDateTime pattern="dd/MM/yyyy" />
+					</h:outputText>
+				</p:column>
+				<p:column headerText="Completou Wizard"
+					sortBy="#{mi.wizardComplete}">
+					<h:outputText value="#{mi.wizardComplete}" />
+				</p:column>
+			</p:dataTable>
+		</h:form>
+		<p:dialog header="Effects" widgetVar="emailResp" showEffect="explode"
+			hideEffect="bounce" height="260" modal="true" width="440">
+			<h:form>
+				<div style="padding: 10px">
+					<p>
+						<h:outputLabel value="#{msgs['contact.subject']}"
+							style="width: 80px;" />
+						<p:inputText value="#{managementInformationMBean.subject}"
+							size="70" required="true"
+							requiredMessage="#{msgs['contact.subject.mandatory']}" />
+					</p>
+
+					<p>
+						<h:outputLabel value="#{msgs['contact.message']}"
+							style="width: 150px;" />
+						<p:inputTextarea value="#{managementInformationMBean.message}"
+							cols="70" rows="5" maxlength="300" autoResize="false"
+							required="true"
+							requiredMessage="#{msgs['contact.message.mandatory']}" />
+					</p>
+
+					<p style="text-align: center !important;">
+						<p:commandButton value="#{msgs['template.button.send']}"
+							action="#{managementInformationMBean.sendEmail}" ajax="false"
+							oncomplete="emailResp.hide();" />
+						<p:commandButton value="#{msgs['template.button.cancelar']}"
+							oncomplete="emailResp.hide();" />
+					</p>
+				</div>
+			</h:form>
+		</p:dialog>
+	</ui:define>
+
+</ui:composition>

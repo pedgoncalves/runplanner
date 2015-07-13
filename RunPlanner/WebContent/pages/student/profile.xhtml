@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">  
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="#{loginBean.templateVersion}">
+
+	<ui:define name="content">
+	
+		<style  type="text/css">
+			.ui-fileupload-content {
+			    display:none;   
+			}			
+			
+			.ui-widget-header {
+				background: white !important;
+				border: 0px;
+			}
+		</style>
+		
+		<div class="pageTitleBox">#{msgs['profile.maintitle']}</div>
+		<div class="subtitle">#{msgs['profileStudent.subtitle']}</div>
+
+		<div class="filtro">	
+		<p:tabView activeIndex="#{profileMBean.activeIndex}">  
+			<p:ajax event="tabChange" listener="#{profileMBean.onChange}"/>
+		
+			<p:tab title="Dados Pessoais" id="tab0">  
+				<h:form enctype="multipart/form-data" id="cadastro" acceptcharset="UTF-8">
+				
+				<p:messages id="messages" showDetail="false" />
+			
+				<table width="100%" id="dadosPessoais" class="filtro">
+					<tr>
+						<td align="center" style="padding-left: 10px;vertical-align: top;">
+				
+							<!-- Foto -->	
+							<p:panel id="customerPhoto" widgetVar="customerPhoto">											
+								<p:panel rendered="#{profileMBean.customer.photo==null}" style="text-align:center; border: 0px;">						
+									<img src="${facesContext.externalContext.requestContextPath}/images/nophoto.gif" width="150"/>		
+								</p:panel>
+										
+								<p:panel rendered="#{profileMBean.customer.userPhoto != null}" style="border: 0px;">
+									<p:graphicImage value="#{photoMBean.streamedPhotoByPath}" width="150">
+										<f:param name="photo_path" value="#{profileMBean.customer.userPhoto}" />
+									</p:graphicImage>								
+				   				</p:panel> 
+				   				
+				   				<p:panel rendered="#{profileMBean.customer.photo!=null and profileMBean.customer.userPhoto==null}" style="border: 0px;">
+									<p:graphicImage value="#{profileMBean.photo}" id="image" width="150" />
+				   				</p:panel>
+				   				
+								<p:fileUpload fileUploadListener="#{profileMBean.handleFileUpload}"  
+									mode="advanced" 
+									id="fileUpload"
+									label="#{msgs['template.button.change.photo']}"
+									auto="true" 
+									update="customerPhoto, messages"
+									invalidSizeMessage="#{msgs['template.msg.sizeExceedMessage']}"
+									invalidFileMessage="#{msgs['template.msg.invalidFileMessage']}"/>			   				
+			   				</p:panel>
+			   						
+	   					</td>
+	   					<td>
+	   				
+	   					<p:panel header="#{msgs['header.dadosPessoais.aluno']}" styleClass="center">			
+	   						<!-- Dados Cadastrais -->
+							<p><h:outputLabel for="nome" value="#{msgs['alunos.nome']} " style="text-align:right" /> 
+							<p:inputText id="nome" value="#{profileMBean.customer.nome}" size="70" required="true"
+									requiredMessage="#{msgs['template.nome.mandatory']}" maxlength="100" 
+									style="margin-left:10px"/></p>
+							
+							<p>
+								<h:outputLabel for="email" value="#{msgs['alunos.email']} " style="text-align:right" />
+								<h:outputLabel id="email" value="#{profileMBean.customer.email}" style="margin-left:10px" />
+							</p>
+
+							<p>
+							
+								<h:outputLabel for="nickname" value="#{msgs['alunos.nickname']} " style="text-align:right"/>
+								<p:inputText id="nickname" value="#{profileMBean.customer.shortName}" size="30"  maxlength="30" 
+												style="margin-left:10px" readonly="false"/>
+
+								<h:outputLabel for="nascimento"	value="#{msgs['alunos.nascimento']} " style="width:90px; text-align:right"/>
+								<p:inputMask id="nascimento" value="#{profileMBean.customer.dtNascimento}" mask="99/99/9999" style="margin-left:10px"						
+										size="10" validatorMessage="#{msgs['template.date.invalid']}"
+										converterMessage="#{msgs['template.date.invalid']}" >
+									<f:convertDateTime pattern="dd/MM/yyyy" />
+								</p:inputMask>
+							</p>
+							
+							<p>
+								<h:outputLabel for="cpf" value="#{msgs['alunos.cpf']} " style="text-align:right"/>
+								<p:inputMask id="cpf" value="#{profileMBean.customer.cpf}" mask="999.999.999-99" size="15" 
+												style="margin-left:10px" readonly="true"/>
+								
+								<h:outputLabel for="rg" value="#{msgs['alunos.rg']} " style="width:40px; text-align:right"/>
+								<p:inputText id="rg" value="#{profileMBean.customer.rg}" size="20"  maxlength="15" 
+												style="margin-left:10px" readonly="true"/>
+							</p>
+							
+							
+							<p>
+								<h:outputLabel for="sexo" value="#{msgs['alunos.sexo']}" style="margin-top: 6px; text-align:right"/>
+								<p:selectOneRadio id="sexo" value="#{profileMBean.customer.sexo}" style="padding-left:10px">
+									<f:selectItems value="#{profileMBean.listaSexo}" />
+								</p:selectOneRadio>
+							</p>  
+							</p:panel>	
+						
+							<div class="buttons" >
+								<p:commandButton value="#{msgs['template.button.save']}" ajax="false"
+									action="#{profileMBean.save}" style="align:right;" />
+							</div>
+						</td>
+					</tr>
+				</table>
+				</h:form>				
+			
+			</p:tab>				
+			
+			<p:tab title="#{msgs['alunos.medicaldata']}" id="tab1">
+				<h:form>  
+				
+				<p:panel header="#{msgs['header.valores.metabolicos']}" styleClass="center">
+				<center>
+				<table width="50%" class="filtro">
+					<tr>
+						<td align="right" width="1">
+							<h:outputLabel for="weight" value="#{msgs['alunos.weight']}" style="width: 120px;"/>
+						</td>
+						<td>
+							<p:inputText id="weight" value="#{profileMBean.bodyMeasurements.weight}" 
+								converterMessage="#{msgs['alunos.weight.converter.erro']}" maxlength="6" size="5"/>
+						</td>
+						<td width="1">
+							<h:outputLabel for="vo2Max" value="#{msgs['alunos.vo2Max']}" size="40"  style="width: 120px;"/>
+						</td>
+						<td>
+							<p:inputText id="vo2Max" value="#{profileMBean.bodyMeasurements.vo2Max}" size="5" 
+								converterMessage="#{msgs['alunos.vo2Max.converter.erro']}" maxlength="6"/>
+						</td>
+					</tr>
+					<tr>
+						<td width="1">
+							<h:outputLabel for="heartRateRest" value="#{msgs['alunos.heartRateRest']}" style="width: 120px; text-align:right"/>
+						</td>
+						<td>
+							<p:inputText id="heartRateRest" value="#{profileMBean.bodyMeasurements.heartRateRest}" size="5" 
+								converterMessage="#{msgs['alunos.heartRateRest.converter.erro']}" maxlength="3"/>
+						</td>
+						<td width="1">
+							<h:outputLabel for="heartRateMax" value="#{msgs['alunos.heartRateMax']}"  style="width: 120px; text-align:right"/>
+						</td>
+						<td>
+							<p:inputText id="heartRateMax" value="#{profileMBean.bodyMeasurements.heartRateMax}" size="5"
+								converterMessage="#{msgs['alunos.heartRateMax.converter.erro']}" maxlength="3"/>
+						</td>
+					</tr>
+					<tr>
+						<td width="1">
+							<h:outputLabel for="threshold1" value="#{msgs['alunos.threshold1']}" style="width: 120px; text-align:right"/>
+						</td>
+						<td>
+							<p:inputText id="threshold1" value="#{profileMBean.bodyMeasurements.threshold1}" size="5"
+								converterMessage="#{msgs['alunos.threshold1.converter.erro']}" maxlength="3"/>
+						</td>
+						<td width="1">
+							<h:outputLabel for="threshold2" value="#{msgs['alunos.threshold2']}"  style="width: 120px; text-align:right"/>
+						</td>
+						<td>
+							<p:inputText id="threshold2" value="#{profileMBean.bodyMeasurements.threshold2}" size="5"
+								converterMessage="#{msgs['alunos.threshold2.converter.erro']}" maxlength="3"/>
+						</td>													
+					</tr>
+					<tr>
+						<td colspan="4">
+							<div class="buttons" >
+								<p:commandButton value="#{msgs['template.button.save']}" ajax="false"
+									action="#{profileMBean.saveBodyMeasurements}" style="align:right;" />
+							</div>
+						</td>
+					</tr>
+				</table>
+				</center>	
+				</p:panel>
+				
+				</h:form>						
+			</p:tab>
+			
+			<p:tab title="#{msgs['advice.title.adress']}" id="tab2">
+				<h:form>
+				<center>
+				<p:panel header="#{msgs['header.endereco.aluno']}" styleClass="center">
+				
+				<div class="filtro" style="text-align: right;">
+					<p>
+						<h:outputLabel for="street" value="#{msgs['adress.street']}"  style="width:100px; padding-left:130px; padding-right:2px;"/>
+						<p:inputText id="street" value="#{profileMBean.endereco.logradouro}" size="50"  maxlength="100" readonly="true"/>
+						
+						<h:outputLabel for="number" value="#{msgs['adress.number']}" style="width:60px; text-align:right "/>
+						<p:inputText id="number" value="#{profileMBean.endereco.numero}" size="5" maxlength="5" style="margin-left:10px" readonly="true"/>
+					</p>
+					<p>
+						<h:outputLabel for="complement" value="#{msgs['adress.complement']}"  style="width:100px; padding-right:0px;padding-left:130px;"/>
+						<p:inputText id="complement" value="#{profileMBean.endereco.complemento}" size="37"  maxlength="100" readonly="true"/>
+						
+						<h:outputLabel for="bairro" value="#{msgs['adress.bairro']}"  style="width:50px; text-align:right"/>
+						<p:inputText id="bairro" value="#{profileMBean.endereco.bairro}"  maxlength="100" style="margin-left:10px" readonly="true" />
+					</p>
+					<p>	
+						<h:outputLabel for="cep" value="#{msgs['adress.cep']}"  style="width:100px; padding-right:2px; padding-left:130px;"/>
+						<p:inputMask id="cep" value="#{profileMBean.endereco.cep}" mask="99.999-999" size="12" readonly="true"/>
+						
+						<h:outputLabel for="home" value="#{msgs['adress.phone.home']}" style="width:150px; text-align:right; margin-left:106px"/>
+						<p:inputMask id="home" value="#{profileMBean.endereco.foneResidencial}" mask="(99) 9999-9999" size="14" style="margin-left:10px" readonly="true"/>
+					</p>
+					<p>	
+						<h:outputLabel for="cel" value="#{msgs['adress.phone.cel']}" style="width:100px; padding-right:2px; padding-left:130px;"/>
+						<p:inputMask id="cel" value="#{profileMBean.endereco.foneCelular}" mask="(99) 9999-9999" size="14" readonly="true"/>
+						
+						<h:outputLabel for="work" value="#{msgs['adress.phone.work']}"  style="width:150px; text-align:right ; margin-left:94px"/>
+						<p:inputMask id="work" value="#{profileMBean.endereco.foneComercial}" mask="(99) 9999-9999" size="14" style="margin-left:10px" readonly="true"/>
+					</p><br/><br/>
+					
+				</div>	
+				
+				</p:panel>
+				</center>
+				</h:form>		  
+			</p:tab>
+			
+			<p:tab title="#{msgs['template.changepass.title']}" id="tab3">
+				<h:form>
+					<p:panel header="#{msgs['header.senha.aluno']}" styleClass="center">
+					<center>
+					<div class="" style="width:50%;">
+						<h:panelGrid id="customerDetails" columns="2">
+			
+							<h:outputLabel value="Senha Atual:" />
+							<p:password value="#{userMBean.oldPass}" feedback="false" 
+								required="true" requiredMessage="#{msgs['user.pass.old.mandatory']}"/>
+							
+							<h:outputLabel value="Nova Senha:" />
+							<p:password value="#{userMBean.newPass}" feedback="false" 
+								required="true" requiredMessage="#{msgs['user.pass.new.mandatory']}"/>
+							
+							<h:outputLabel value="Confirme a nova Senha:" style="width: 150px;"/>
+							<p:password value="#{userMBean.retypePass}" feedback="false" 
+								required="true" requiredMessage="#{msgs['user.pass.retype.mandatory']}"/>	
+							
+						</h:panelGrid>
+						
+						<br/>
+						<p:commandButton value="#{msgs['template.button.save']}" update="messages" 
+							action="#{userMBean.changePassword}" ajax="false"/>				
+					</div>
+					</center>			
+					</p:panel>		
+				</h:form> 				
+			</p:tab>
+		</p:tabView>
+		</div>
+
+		<br/>
+								 			   			
+   			
+   	</ui:define>
+</ui:composition>

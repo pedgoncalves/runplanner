@@ -1,0 +1,252 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="#{loginBean.templateVersion}">
+	
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8" />	
+	
+  	<ui:define name="content">
+  	
+		<script type="text/javascript">		
+			PrimeFaces.widget.Schedule.prototype._oldInit = PrimeFaces.widget.Schedule.prototype.init;
+			PrimeFaces.widget.Schedule.prototype.init = function (cfg){
+			        cfg.columnFormat = {
+			             month: 'ddd',
+			             week: 'ddd d/M',
+			             day: 'dddd d/M'
+			        };
+	
+			    this._oldInit.apply(this, arguments);
+			};		
+		</script>
+  	
+		<script type="text/javascript">
+			PrimeFaces.locales['pt'] = {
+                closeText: 'Fechar',
+                prevText: 'Anterior',
+                nextText: 'Próximo',
+                currentText: 'Começo',
+                monthNames: ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'],
+                monthNamesShort: ['Jan','Fev','Mar','Abr','Mai','Jun', 'Jul','Ago','Set','Out','Nov','Des'],
+                dayNames: ['Domingo','Segunda','Terça','Quarta','Quinta','Sexta','Sábado'],
+                dayNamesShort: ['Dom','Seg','Ter','Qua','Qui','Sex','Sáb'],
+                dayNamesMin: ['D','S','T','Q','Q','S','S'],
+                weekHeader: 'Semana',
+                firstDay: 0,
+                isRTL: false,
+                showMonthAfterYear: false,
+                yearSuffix: '',
+                timeOnlyTitle: 'Só Horas',
+                timeText: 'Tempo',
+                hourText: 'Hora',
+                minuteText: 'Minuto',
+                secondText: 'Segundo',
+                currentText: 'Data Atual',
+                ampm: false,
+                month: 'Mês',
+                week: 'Semana',
+                day: 'Dia',
+                allDayText : 'Todo Dia'
+	            };
+		</script>	
+
+		<style type="text/css">
+			.ui-datepicker {
+				background: #f7f7f7 !important;
+				border: 1px solid #e0e0e0 !important;
+			}
+			.ui-datepicker-calendar {
+				background: #f7f7f7 !important;
+			}
+			.col1 {
+				white-space: nowrap; 
+				width: 100px;
+			}
+			.col2 {
+				width: 100%;
+			}
+			
+		</style>
+
+		<h:form >
+			<p:messages id="messages" showDetail="false" />
+			<div class="pageTitleBox">#{msgs['spreadsheet.maintitle']}</div>
+			<div class="subtitle">#{msgs['spreadsheet.subtitle']}</div>
+		
+		  <p:panel header="#{msgs['header.schedule.indentificadores']}">
+			<h:panelGrid id="spreadDetails" columns="2" style="width:100%;" columnClasses="col1,col2">
+				<h:outputLabel value="#{msgs['spreadsheet.student']}" />			              
+				<p:selectOneMenu id="student" value="#{spreadsheetBean.spreadsheet.student.id}" rendered="#{spreadsheetBean.spreadsheet.id==null}" 
+				style="width:500px; overflow:hidden;">   
+			    	<f:selectItems value="#{spreadsheetBean.listaAluno}"  />
+			    </p:selectOneMenu>
+			    <h:outputText value="#{spreadsheetBean.spreadsheet.student.nome}" rendered="#{spreadsheetBean.spreadsheet.id!=null}" style="width:500px;"/>  
+		        				        	
+		        <h:outputLabel value="#{msgs['schedule.template.type']}" />			              
+				<p:selectOneMenu value="#{spreadsheetBean.selectedType}" style="overflow:hidden;" 
+					disabled="#{spreadsheetBean.spreadsheet.id!=null}">   
+			    	<f:selectItems value="#{spreadsheetBean.typeList}"  />
+			    	<p:ajax update="datePanel" listener="#{spreadsheetBean.handleSelectChangeType}"/>
+			    </p:selectOneMenu>  	
+			    
+			    <h:outputLabel value="#{msgs['schedule.template.period']}" />
+			    <h:panelGroup id="datePanel" style="border: 0px; padding: 0px; marging: 0px;">				    
+				    <h:column rendered="#{spreadsheetBean.type=='basicWeek'}" >
+				    	<p:calendar value="#{spreadsheetBean.initialDate}" locale="pt" pattern="dd/MM/yyyy"
+				    		disabled="#{spreadsheetBean.spreadsheet.id!=null}" size="10">
+				    		<f:convertDateTime pattern="dd/MM/yyyy"/> 
+				    	</p:calendar>    				  
+				    </h:column>
+				   	<h:column rendered="#{spreadsheetBean.type=='month'}" >
+				    	<p:selectOneMenu value="#{spreadsheetBean.selectedMonth}" style="width:150px"
+				    		disabled="#{spreadsheetBean.spreadsheet.id!=null}">
+		    				<f:selectItems value="#{spreadsheetBean.monthList}"/>                         	 
+		    			</p:selectOneMenu>
+		    			
+		    			<p:selectOneMenu value="#{spreadsheetBean.selectedYear}" style="width:100px" 
+		    				disabled="#{spreadsheetBean.spreadsheet.id!=null}">
+		    				<f:selectItems value="#{spreadsheetBean.yearList}"/>                         	 
+		    			</p:selectOneMenu>	    				  
+				    </h:column>
+			    </h:panelGroup>				    
+		        
+		        <h:outputLabel for="spreadsheetObs" value="#{msgs['spreadsheet.observations']}" />			              
+		        <p:inputText id="spreadsheetObs" value="#{spreadsheetBean.spreadsheet.observations}" style="width: 100%;"  maxlength="200"/>
+			</h:panelGrid>
+			</p:panel>
+			<br/>
+			
+			<ui:fragment rendered="#{spreadsheetBean.spreadsheet.id!=null}">
+			<p:panel header="Ritmos" styleClass="center" >
+			    <h:panelGrid columns="6" cellpadding="5" width="80%" style="margin: 0 auto" >  
+			        <h:outputLabel value="#{msgs['spreadsheet.rhythm.easyPace']}" style="width:100px" />  
+           			<p:inputMask value="#{spreadsheetBean.spreadsheet.easyPace}" mask="99:99" size="5"/>
+           			
+           			<h:outputLabel value="#{msgs['spreadsheet.rhythm.normalPace']}" style="width:100px"/>  
+           			<p:inputMask value="#{spreadsheetBean.spreadsheet.normalPace}" mask="99:99" size="5"/>
+           			
+           			<h:outputLabel value="#{msgs['spreadsheet.rhythm.moderatePace']}" style="width:100px"/>  
+           			<p:inputMask value="#{spreadsheetBean.spreadsheet.moderatePace}" mask="99:99" size="5"/>
+           			
+           			<h:outputLabel value="#{msgs['spreadsheet.rhythm.mediumPace']}" style="width:100px"/>  
+           			<p:inputMask value="#{spreadsheetBean.spreadsheet.mediumPace}" mask="99:99" size="5"/>
+           			
+           			<h:outputLabel value="#{msgs['spreadsheet.rhythm.strongPace']}" style="width:100px"/>  
+           			<p:inputMask value="#{spreadsheetBean.spreadsheet.strongPace}" mask="99:99" size="5"/>
+           			
+           			<h:outputLabel value="#{msgs['spreadsheet.rhythm.shootingPace']}" style="width:100px"/>  
+           			<p:inputMask value="#{spreadsheetBean.spreadsheet.shootingPace}" mask="99:99" size="5"/>
+			    </h:panelGrid>
+			    </p:panel>    
+			</ui:fragment>
+			
+			<br/>
+			<ui:fragment rendered="#{spreadsheetBean.spreadsheet.id!=null}" >
+				<p:schedule value="#{spreadsheetBean.eventModel}"
+					id="myschedule"  
+					editable="true"  
+					resizable="false"
+					draggable="true" 
+					initialDate="#{spreadsheetBean.initialDate}"
+					widgetVar="myschedule" 
+					rightHeaderTemplate="" 
+					locale="pt" 
+					aspectRatio="#{spreadsheetBean.type=='basicWeek'?5:1.2}"					
+					rendered="#{spreadsheetBean.spreadsheet.id!=null}"
+					leftHeaderTemplate="#{spreadsheetBean.leftHeaderTemplate}" 
+					view="#{spreadsheetBean.type}"
+					timeZone="America/Sao_Paulo" >
+					<p:ajax event="dateSelect" listener="#{spreadsheetBean.onDateSelect}" update="eventDialog" oncomplete="PF('eventDialog').show()" />  
+        			<p:ajax event="eventSelect" listener="#{spreadsheetBean.onEventSelect}" update="eventDialog" oncomplete="PF('eventDialog').show()" />
+        			<p:ajax event="eventMove" listener="#{spreadsheetBean.onEventMove}" update="messages" oncomplete="PF('myschedule').update()" />    
+				</p:schedule>		
+			</ui:fragment>
+							
+			<p:dialog widgetVar="eventDialog" header="#{msgs['spreadsheet.event.detail']}" modal="true" width="500" height="570" 
+		 		id="eventDialog" position="center"   >
+		 		<div id="eventDetails" style="padding: 10px">  
+		        	<p>  
+			        	<h:outputLabel for="from" value="#{msgs['schedule.event.date']}"  style="width: 105px;"/>  
+			        	<p:inputMask id="from" value="#{spreadsheetBean.schedule.date}" mask="99/99/9999" disabled="true" size="10">  
+			                <f:convertDateTime pattern="dd/MM/yyyy" />  
+			            </p:inputMask> 
+			        </p>
+			        
+			        <p>
+			        	<h:outputLabel for="warmup" value="#{msgs['schedule.event.warmup']}"  style="width: 105px;"/>			              
+		            	<p:inputText id="warmup" value="#{spreadsheetBean.schedule.warmUp}" maxlength="50" />  
+		          	</p>
+		          	
+		          	<p>
+		            	<h:outputLabel for="title" value="#{msgs['schedule.event.title']}"  style="width: 150px;"/>			              
+		            	<p:inputTextarea id="title" value="#{spreadsheetBean.schedule.description}"
+		            	style="width:450px;height:120px;" autoResize="false" maxlength="300"/>
+		            </p>
+		            
+		            <p>	
+		            	<h:outputLabel for="cooldown" value="#{msgs['schedule.event.cooldown']}"  style="width: 130px;"/>			              
+		            	<p:inputText id="cooldown" value="#{spreadsheetBean.schedule.coolDown}" maxlength="50" />  
+		  			</p>
+		  			
+		  			<p>
+		            	<h:outputLabel for="obs" value="#{msgs['schedule.event.observations']}" />			              
+		            	<p:inputTextarea id="obs" value="#{spreadsheetBean.schedule.observations}"
+		            	style="width:450px;height:100px;" autoResize="false" maxlength="300"/>
+		            </p>
+		            
+				    <p> 
+		            	<h:outputLabel  value="#{msgs['schedule.event.route']}" />			              
+		            	<p:selectOneMenu value="#{spreadsheetBean.route.id}" style="width:360px; overflow:hidden; position:relative; top:-10px;">
+		            	 	<f:selectItem itemLabel="Selecione..." noSelectionOption="true" />   
+					    	<f:selectItems value="#{spreadsheetBean.routeList}"  />
+					    </p:selectOneMenu>
+		  			</p>
+		            				            				  			        
+			  		<p style="text-align: center !important;">            
+			            <p:commandButton value="#{msgs['template.button.save']}"			               
+			            	actionListener="#{spreadsheetBean.addEvent}"
+			            	oncomplete="PF('myschedule').update();PF('eventDialog').hide();" update="messages, myschedule"/>  				            
+			            	
+			            <p:commandButton value="#{msgs['template.button.delete']}"  
+			   				action="#{spreadsheetBean.deleteEvent}"
+			   				rendered="#{spreadsheetBean.schedule.id!=null}" 
+			   				oncomplete="PF('myschedule').update();PF('eventDialog').hide();" />	
+			            	
+						<p:commandButton value="#{msgs['template.button.cancelar']}"
+				           	oncomplete="PF('myschedule').update();PF('eventDialog').hide();"/>
+				    </p>
+		        </div>
+		    </p:dialog>  	
+		    
+		    <br/>
+		    
+		    <div class="buttons"> 
+			    <p:commandButton value="#{msgs['template.button.save']}" update="messages" ajax="false"              
+			        action="#{spreadsheetBean.save}" style="align:right;"
+			        rendered="#{spreadsheetBean.spreadsheet.id!=null}"/>  	
+			             
+			    <p:commandButton value="#{msgs['template.button.next']}" update="messages,spreadDetails, myschedule"              
+					action="#{spreadsheetBean.saveStepOne}" ajax="false"
+			        rendered="#{spreadsheetBean.spreadsheet.id==null}" />				             
+			    				
+			 	<p:commandButton value="#{msgs['template.button.back']}" ajax="false"
+					action="#{spreadsheetBean.goToList}" immediate="true" />
+			</div>			 		
+						
+
+	     	<p:confirmDialog message="#{msgs['template.msg.delete.confirmation']}" severity="alert" widgetVar="deleteConfirmation" id="deleteConfirmation"
+	     	 	onShow="deleteConfirmation.content.parent().css('top',  '50px !important');" position="50%,50">
+	   			<p:commandButton value="#{msgs['template.button.yes']}"  
+	   				action="#{spreadsheetBean.deleteEvent}"
+	   				oncomplete="PF('deleteConfirmation').hide();PF('myschedule').update();PF('eventDialog').hide();" />
+	   			<p:commandButton value="#{msgs['template.button.no']}" onclick="PF('deleteConfirmation').hide()"/>
+			</p:confirmDialog> 							
+						
+
+		</h:form>
+		
+  </ui:define>
+  
+</ui:composition>

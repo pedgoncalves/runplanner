@@ -1,0 +1,183 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="#{loginBean.templateVersion}">
+
+	<ui:define name="content">
+	
+		<h:form enctype="multipart/form-data">
+		
+			<br/>
+			<p:panel id="filter" header="#{msgs['advice.pagetitle']}">					
+				<p:messages id="messages" showDetail="false" /> 
+			</p:panel>
+ 
+			<p:panel id="panel">
+
+								
+					
+			    <h:panelGrid id="imageDetails" columns="2" rendered="#{adviceMBean.advice.logo!=null}">
+   					<p:graphicImage value="#{adviceMBean.adviceLogo}" id="image" width="100" height="100"/>
+   					<p:commandButton icon="ui-icon ui-icon-trash" action="#{adviceMBean.clearImage}" ajax="false"/>
+   				</h:panelGrid> 						
+					
+			        
+			    <p>    
+				    <h:outputLabel for="name" value="#{msgs['advice.name']}"  style="width:110px;"/>
+					<p:inputText id="name" value="#{adviceMBean.advice.name}" required="true" 
+						requiredMessage="#{msgs['advice.name.mandatory']}"  size="100" maxlength="100"/>
+				</p>
+				
+				<p>
+					<h:outputLabel for="register" value="#{msgs['advice.register.date']}" style="width:110px;" />
+					<p:inputMask id="register" value="#{adviceMBean.advice.registerDate}" mask="99/99/9999"
+						validatorMessage="#{msgs['template.date.invalid']}"
+						converterMessage="#{msgs['template.date.invalid']}" size="12">
+						<f:convertDateTime pattern="dd/MM/yyyy" />
+					</p:inputMask>
+				</p>
+			           
+			    <p>       
+				    <h:outputLabel for="value" value="#{msgs['advice.value']}"  style="width:110px;"/>
+					<p:inputText id="value" value="#{adviceMBean.advice.value}" required="true" 
+						requiredMessage="#{msgs['advice.value.mandatory']}"  size="10" maxlength="10"/>
+						
+					<h:outputLabel for="paymentDay" value="#{msgs['advice.paymentDay']}"  style="width:110px;"/>
+					<p:selectOneMenu id="paymentDay" value="#{adviceMBean.advice.advicePaymentDay}" style="padding: 0px !important;" >
+						 <f:selectItem itemLabel="1" itemValue="1" />
+						 <f:selectItem itemLabel="5" itemValue="5" />
+						 <f:selectItem itemLabel="10" itemValue="10" />
+						 <f:selectItem itemLabel="15" itemValue="15" />
+						 <f:selectItem itemLabel="20" itemValue="20" />
+						 <f:selectItem itemLabel="25" itemValue="25" />						 
+				    </p:selectOneMenu>		
+			 	</p> 
+			 	
+				        
+				<p>
+					<h:outputLabel for="cnpj" value="#{msgs['advice.cnpj']}" style="width:110px;" />
+					<p:inputMask id="cnpj" value="#{adviceMBean.advice.cnpj}"  mask="99.999.999/9999-99" size="20"/>
+				
+					<h:outputLabel for="studendNumber" value="#{msgs['advice.student.number']}" style="width:120px;"/>
+					<p:inputText id="studendNumber" value="#{adviceMBean.advice.studendNumber}" required="true"
+						size="10" requiredMessage="#{msgs['advice.studentnumber.mandatory']}" />
+				</p>
+				
+				<p>	
+					<h:outputLabel for="init" value="#{msgs['advice.contract.init']}"  style="width:110px;"/>
+					<p:inputMask id="init" value="#{adviceMBean.advice.contractInit}" mask="99/99/9999"
+						validatorMessage="#{msgs['template.date.invalid']}"
+						converterMessage="#{msgs['template.date.invalid']}" size="12">
+						<f:convertDateTime pattern="dd/MM/yyyy" />
+					</p:inputMask>
+									
+					<h:outputLabel for="final" value="#{msgs['advice.contract.final']}" style="width:100px;"/>
+					<p:inputMask id="final" value="#{adviceMBean.advice.contractFinal}" mask="99/99/9999"					
+						validatorMessage="#{msgs['template.date.invalid']}"
+						converterMessage="#{msgs['template.date.invalid']}" size="12">
+						<f:convertDateTime pattern="dd/MM/yyyy" />
+					</p:inputMask>
+				</p>			
+				
+				<p>
+					<h:outputLabel for="status" value="#{msgs['advice.status']}"  style="width:110px;"/>
+					<p:selectOneMenu id="status" value="#{adviceMBean.advice.status}" style="padding-left:10px">
+						<f:selectItems value="#{adviceMBean.listaStatus}" />
+					</p:selectOneMenu>
+				</p>
+				<p>									
+					<h:outputLabel for="endTests" value="#{msgs['advice.end.tests']}" style="width:100px;"/>
+					<p:inputMask id="endTests" value="#{adviceMBean.advice.endTestsDate}" mask="99/99/9999"					
+						validatorMessage="#{msgs['template.date.invalid']}"
+						converterMessage="#{msgs['template.date.invalid']}" size="12">
+						<f:convertDateTime pattern="dd/MM/yyyy" />
+					</p:inputMask>
+				</p>
+				
+				        
+				<br/><br/>
+				
+				<h3><h:outputText value="#{msgs['advice.title.adress']}"/></h3>				
+				
+				<p>
+					<h:outputLabel for="street" value="#{msgs['adress.street']}" />
+					<p:inputText id="street" value="#{adviceMBean.advice.adress.logradouro}" size="72"  maxlength="100"/>
+					
+					<h:outputLabel for="number" value="#{msgs['adress.number']}" style="width:60px; text-align:right;" />
+					<p:inputText id="number" value="#{adviceMBean.advice.adress.numero}" size="5" maxlength="5" style="margin-left:5px"/>
+				</p>
+				<p>
+					<h:outputLabel for="complement" value="#{msgs['adress.complement']}" />
+					<p:inputText id="complement" value="#{adviceMBean.advice.adress.complemento}" size="59"  maxlength="100"/>
+					
+					<h:outputLabel for="bairro" value="#{msgs['adress.bairro']}"  style="width:50px;text-align:right;" />
+					<p:inputText id="bairro" value="#{adviceMBean.advice.adress.bairro}"  maxlength="100" style="margin-left:5px"/>
+				</p>
+				<p>	
+					<h:outputLabel for="cep" value="#{msgs['adress.cep']}" />
+					<p:inputMask id="cep" value="#{adviceMBean.advice.adress.cep}" mask="99.999-999" size="12"/>
+					
+					<h:outputLabel for="home" value="#{msgs['adress.phone.home']}" style="width:150px; text-align:right;"/>
+					<p:inputMask id="home" value="#{adviceMBean.advice.adress.foneResidencial}" mask="(99) 9999-9999" size="14" style="margin-left:10px"/>
+				</p>
+				<p>	
+					<h:outputLabel for="cel" value="#{msgs['adress.phone.cel']}" />
+					<p:inputMask id="cel" value="#{adviceMBean.advice.adress.foneCelular}" mask="(99) 9999-9999" size="14"/>
+					
+					<h:outputLabel for="work" value="#{msgs['adress.phone.work']}"  style="width:150px; text-align:right;"/>
+					<p:inputMask id="work" value="#{adviceMBean.advice.adress.foneComercial}" mask="(99) 9999-9999" size="14" style="margin-left:10px"/>
+				</p>
+								
+				<br/>
+				
+				<div class="buttons"> 
+					<p:commandButton value="#{msgs['template.button.save']}" update="messages" action="#{adviceMBean.save}" ajax="false"/>
+						
+					<p:commandButton value="#{msgs['template.button.delete']}" rendered="#{adviceMBean.advice.id!=null}" onclick="confirmation.show()"/>
+
+					<p:commandButton value="#{msgs['template.button.cancelar']}" ajax="false" action="#{adviceMBean.goToList}" style="align:right;" immediate="true" />
+					
+				</div>
+				
+				<p:panel rendered="#{not empty adviceMBean.customerList}">
+					<br/>
+					<h3>Alunos</h3><br/>
+					<div id="painel" class="tabela">
+					<p:dataTable var="customer" value="#{adviceMBean.customerList}"  id="customerListTable"
+						paginator="true" rows="20" paginatorPosition="bottom"
+						paginatorAlwaysVisible="false"
+						paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+						emptyMessage="#{msgs['template.msg.emptyMessage']}">
+						
+						<p:column style="max-width:100px;">
+							<f:facet name="header">
+								<h:outputText value="#{msgs['alunos.nome']}" />
+							</f:facet>
+							
+							<h:outputText value="#{customer.nome}" />           			
+						</p:column>
+						
+						<p:column>
+							<f:facet name="header">
+								<h:outputText value="#{msgs['alunos.email']}" />
+							</f:facet>
+							<h:outputText value="#{customer.email}" />
+						</p:column>				
+						
+					</p:dataTable>				
+					</div>
+				</p:panel>
+				
+				
+				<p:confirmDialog message="#{msgs['template.msg.delete.confirmation']}" severity="alert" widgetVar="confirmation">
+	        		<p:commandButton value="#{msgs['template.button.yes']}" oncomplete="confirmation.hide()" 
+	        			action="#{adviceMBean.delete}" ajax="false"/>  
+	        		<p:commandButton value="#{msgs['template.button.no']}" onclick="confirmation.hide()"/>
+	    		</p:confirmDialog>				
+				
+			</p:panel>
+		</h:form>
+	</ui:define>
+</ui:composition>

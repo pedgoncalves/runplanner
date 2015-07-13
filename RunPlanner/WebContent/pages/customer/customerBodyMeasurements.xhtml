@@ -1,0 +1,54 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="#{loginBean.templateVersion}">
+
+	<ui:define name="content">
+		<h:form>
+		
+			<p:messages id="messages" showDetail="false" /> 
+				
+			<p:panel id="filter" header="#{msgs['alunos.title.measurements']}"> 
+				<h:panelGrid id="customerDetails" columns="4" width="100%">
+					<h:outputLabel for="weight" value="#{msgs['alunos.weight']}" />
+					<p:inputText id="weight" value="#{customerMBean.bodyMeasurements.weight}" 
+						converterMessage="#{msgs['alunos.weight.converter.erro']}" maxlength="6"/>
+	
+					<h:outputLabel for="vo2Max" value="#{msgs['alunos.vo2Max']}" />
+					<p:inputText id="vo2Max" value="#{customerMBean.bodyMeasurements.vo2Max}" 
+						converterMessage="#{msgs['alunos.vo2Max.converter.erro']}" maxlength="6"/>
+					
+					<h:outputLabel for="heartRateRest" value="#{msgs['alunos.heartRateRest']}" />
+					<p:inputText id="heartRateRest" value="#{customerMBean.bodyMeasurements.heartRateRest}" 
+						converterMessage="#{msgs['alunos.heartRateRest.converter.erro']}" maxlength="3"/>
+					
+					<h:outputLabel for="heartRateMax" value="#{msgs['alunos.heartRateMax']}" />
+					<p:inputText id="heartRateMax" value="#{customerMBean.bodyMeasurements.heartRateMax}" 
+						converterMessage="#{msgs['alunos.heartRateMax.converter.erro']}" maxlength="3"/>
+					
+					<h:outputLabel for="threshold1" value="#{msgs['alunos.threshold1']}" />
+					<p:inputText id="threshold1" value="#{customerMBean.bodyMeasurements.threshold1}" 
+						converterMessage="#{msgs['alunos.threshold1.converter.erro']}" maxlength="3"/>
+					
+					<h:outputLabel for="threshold2" value="#{msgs['alunos.threshold2']}" />
+					<p:inputText id="threshold2" value="#{customerMBean.bodyMeasurements.threshold2}" 
+						converterMessage="#{msgs['alunos.threshold2.converter.erro']}" maxlength="3"/>
+				</h:panelGrid>
+			</p:panel>
+	
+			<br />
+			<div class="buttons">
+				<p:commandButton value="#{msgs['template.button.save']}"
+					rendered="#{customerMBean.bodyMeasurements.id == null}" ajax="false"
+					action="#{customerMBean.saveBodyMeasurements}" />
+				<p:commandButton value="#{msgs['template.button.alterar']}" 
+					rendered="#{customerMBean.bodyMeasurements.id != null}" ajax="false"
+					action="#{customerMBean.saveBodyMeasurements}" />
+				<p:commandButton value="#{msgs['template.button.cancelar']}" ajax="false"
+					action="#{customerMBean.goToBodyMeasurementsList}" immediate="true" />			
+			</div>
+		</h:form>
+	</ui:define>
+</ui:composition>

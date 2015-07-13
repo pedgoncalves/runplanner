@@ -1,0 +1,587 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:rp="http://runplanner.com.br/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="#{loginBean.templateVersion}">
+
+	<ui:define name="content">
+			<p:messages id="messages" showDetail="false" />
+			<div class="pageTitleBox">#{msgs['payment.maintitle']}</div>
+			<div class="subtitle">#{msgs['payment.subtitle']}</div>
+
+			<h:form>
+			<table>
+				<tr>
+					<td valign="top" width="15%">
+						<rp:sideMenu menu="studentsAdvice" selectedMenu="studentPayment"/>
+					</td>
+					<td valign="top" align="left" style="padding-left: 10px;">
+							<table>
+								<tr>
+									<td><h:outputLabel value="#{msgs['template.year']}"
+											style="padding:0px !important; width:30px !important;" /></td>
+									<td><p:selectOneMenu value="#{paymentMBean.year}"
+											style="width:100px; overflow:hidden;">
+											<f:selectItems value="#{paymentMBean.yearList}" />
+										</p:selectOneMenu></td>
+									<td><p:commandButton
+											action="#{paymentMBean.preparePaymentList}"
+											title="#{msgs['template.button.find']}" ajax="false"
+											value="#{msgs['template.button.find']}"
+											style="margin-top: -2px !important;" /></td>
+								</tr>
+							</table> <br /> <p:tabView id="tab" var="team"
+								value="#{paymentMBean.teamList}"
+								activeIndex="#{paymentMBean.activeIndex}">
+	
+								<p:tab title="#{team.place}" id="tab#{team.id}">
+									<p:dataTable var="customer" value="#{team.customers}"
+										emptyMessage="#{msgs['template.msg.emptyMessage']}">
+	
+										<p:column style="width:200px;">
+											<f:facet name="header">
+												<h:outputText value="#{msgs['template.menu.cadastro.aluno']}" />
+											</f:facet>
+											<h:outputText value="#{customer.nome}" />
+										</p:column>
+	
+										<p:column style="">
+											<f:facet name="header">
+												<h:outputText value="#{msgs['template.month.short.jan']}" />
+											</f:facet>
+	
+											<p:commandButton oncomplete="PF('paymentDialog').show();"
+												update="@widgetVar(paymentDialog)"
+												rendered="#{!customer.paymentMonths.jan}" icon="unchecked2"
+												actionListener="#{paymentMBean.prepareDetail}">
+												<f:setPropertyActionListener target="#{paymentMBean.month}"
+													value="0" />
+												<f:setPropertyActionListener
+													target="#{paymentMBean.customerDetail.id}"
+													value="#{customer.id}" />
+												<f:setPropertyActionListener
+													target="#{paymentMBean.paymentMontDetail.id}"
+													value="#{customer.paymentMonths.id}" />
+											</p:commandButton>
+	
+											<p:commandButton oncomplete="PF('paymentDialog').show();"
+												update="@widgetVar(paymentDialog)"
+												rendered="#{customer.paymentMonths.jan}" icon="checked"
+												action="#{paymentMBean.getDetailData}">
+												<f:setPropertyActionListener target="#{paymentMBean.month}"
+													value="0" />
+												<f:setPropertyActionListener
+													target="#{paymentMBean.customerDetail.id}"
+													value="#{customer.id}" />
+												<f:setPropertyActionListener
+													target="#{paymentMBean.paymentMontDetail.id}"
+													value="#{customer.paymentMonths.id}" />
+											</p:commandButton>
+	
+										</p:column>
+	
+										<p:column>
+											<f:facet name="header">
+												<h:outputText value="#{msgs['template.month.short.fev']}" />
+											</f:facet>
+	
+											<p:commandButton oncomplete="PF('paymentDialog').show();"
+												update="@widgetVar(paymentDialog)"
+												rendered="#{!customer.paymentMonths.feb}" icon="unchecked2"
+												actionListener="#{paymentMBean.prepareDetail}">
+												<f:setPropertyActionListener target="#{paymentMBean.month}"
+													value="1" />
+												<f:setPropertyActionListener
+													target="#{paymentMBean.customerDetail.id}"
+													value="#{customer.id}" />
+												<f:setPropertyActionListener
+													target="#{paymentMBean.paymentMontDetail.id}"
+													value="#{customer.paymentMonths.id}" />
+											</p:commandButton>
+	
+											<p:commandButton oncomplete="PF('paymentDialog').show();"
+												update="@widgetVar(paymentDialog)"
+												rendered="#{customer.paymentMonths.feb}" icon="checked"
+												action="#{paymentMBean.getDetailData}">
+												<f:setPropertyActionListener target="#{paymentMBean.month}"
+													value="1" />
+												<f:setPropertyActionListener
+													target="#{paymentMBean.customerDetail.id}"
+													value="#{customer.id}" />
+												<f:setPropertyActionListener
+													target="#{paymentMBean.paymentMontDetail.id}"
+													value="#{customer.paymentMonths.id}" />
+											</p:commandButton>
+	
+										</p:column>
+	
+										<p:column>
+											<f:facet name="header">
+												<h:outputText value="#{msgs['template.month.short.mar']}" />
+											</f:facet>
+	
+											<p:commandButton oncomplete="PF('paymentDialog').show();"
+												update="@widgetVar(paymentDialog)"
+												rendered="#{!customer.paymentMonths.mar}" icon="unchecked2"
+												actionListener="#{paymentMBean.prepareDetail}">
+												<f:setPropertyActionListener target="#{paymentMBean.month}"
+													value="2" />
+												<f:setPropertyActionListener
+													target="#{paymentMBean.customerDetail.id}"
+													value="#{customer.id}" />
+												<f:setPropertyActionListener
+													target="#{paymentMBean.paymentMontDetail.id}"
+													value="#{customer.paymentMonths.id}" />
+											</p:commandButton>
+	
+											<p:commandButton oncomplete="PF('paymentDialog').show();"
+												update="@widgetVar(paymentDialog)"
+												rendered="#{customer.paymentMonths.mar}" icon="checked"
+												action="#{paymentMBean.getDetailData}">
+												<f:setPropertyActionListener target="#{paymentMBean.month}"
+													value="2" />
+												<f:setPropertyActionListener
+													target="#{paymentMBean.customerDetail.id}"
+													value="#{customer.id}" />
+												<f:setPropertyActionListener
+													target="#{paymentMBean.paymentMontDetail.id}"
+													value="#{customer.paymentMonths.id}" />
+											</p:commandButton>
+	
+										</p:column>
+	
+										<p:column>
+											<f:facet name="header">
+												<h:outputText value="#{msgs['template.month.short.abr']}" />
+											</f:facet>
+	
+											<p:commandButton oncomplete="PF('paymentDialog').show();"
+												update="@widgetVar(paymentDialog)"
+												rendered="#{!customer.paymentMonths.apr}" icon="unchecked2"
+												actionListener="#{paymentMBean.prepareDetail}">
+												<f:setPropertyActionListener target="#{paymentMBean.month}"
+													value="3" />
+												<f:setPropertyActionListener
+													target="#{paymentMBean.customerDetail.id}"
+													value="#{customer.id}" />
+												<f:setPropertyActionListener
+													target="#{paymentMBean.paymentMontDetail.id}"
+													value="#{customer.paymentMonths.id}" />
+											</p:commandButton>
+	
+											<p:commandButton oncomplete="PF('paymentDialog').show();"
+												update="@widgetVar(paymentDialog)"
+												rendered="#{customer.paymentMonths.apr}" icon="checked"
+												action="#{paymentMBean.getDetailData}">
+												<f:setPropertyActionListener target="#{paymentMBean.month}"
+													value="3" />
+												<f:setPropertyActionListener
+													target="#{paymentMBean.customerDetail.id}"
+													value="#{customer.id}" />
+												<f:setPropertyActionListener
+													target="#{paymentMBean.paymentMontDetail.id}"
+													value="#{customer.paymentMonths.id}" />
+											</p:commandButton>
+	
+										</p:column>
+	
+										<p:column>
+											<f:facet name="header">
+												<h:outputText value="#{msgs['template.month.short.mai']}" />
+											</f:facet>
+	
+											<p:commandButton oncomplete="PF('paymentDialog').show();"
+												update="@widgetVar(paymentDialog)"
+												rendered="#{!customer.paymentMonths.may}" icon="unchecked2"
+												actionListener="#{paymentMBean.prepareDetail}">
+												<f:setPropertyActionListener target="#{paymentMBean.month}"
+													value="4" />
+												<f:setPropertyActionListener
+													target="#{paymentMBean.customerDetail.id}"
+													value="#{customer.id}" />
+												<f:setPropertyActionListener
+													target="#{paymentMBean.paymentMontDetail.id}"
+													value="#{customer.paymentMonths.id}" />
+											</p:commandButton>
+	
+											<p:commandButton oncomplete="PF('paymentDialog').show();"
+												update="@widgetVar(paymentDialog)"
+												rendered="#{customer.paymentMonths.may}" icon="checked"
+												action="#{paymentMBean.getDetailData}">
+												<f:setPropertyActionListener target="#{paymentMBean.month}"
+													value="4" />
+												<f:setPropertyActionListener
+													target="#{paymentMBean.customerDetail.id}"
+													value="#{customer.id}" />
+												<f:setPropertyActionListener
+													target="#{paymentMBean.paymentMontDetail.id}"
+													value="#{customer.paymentMonths.id}" />
+											</p:commandButton>
+	
+										</p:column>
+	
+										<p:column>
+											<f:facet name="header">
+												<h:outputText value="#{msgs['template.month.short.jun']}" />
+											</f:facet>
+	
+											<p:commandButton oncomplete="PF('paymentDialog').show();"
+												update="@widgetVar(paymentDialog)"
+												rendered="#{!customer.paymentMonths.jun}" icon="unchecked2"
+												actionListener="#{paymentMBean.prepareDetail}">
+												<f:setPropertyActionListener target="#{paymentMBean.month}"
+													value="5" />
+												<f:setPropertyActionListener
+													target="#{paymentMBean.customerDetail.id}"
+													value="#{customer.id}" />
+												<f:setPropertyActionListener
+													target="#{paymentMBean.paymentMontDetail.id}"
+													value="#{customer.paymentMonths.id}" />
+											</p:commandButton>
+	
+											<p:commandButton oncomplete="PF('paymentDialog').show();"
+												update="@widgetVar(paymentDialog)"
+												rendered="#{customer.paymentMonths.jun}" icon="checked"
+												action="#{paymentMBean.getDetailData}">
+												<f:setPropertyActionListener target="#{paymentMBean.month}"
+													value="5" />
+												<f:setPropertyActionListener
+													target="#{paymentMBean.customerDetail.id}"
+													value="#{customer.id}" />
+												<f:setPropertyActionListener
+													target="#{paymentMBean.paymentMontDetail.id}"
+													value="#{customer.paymentMonths.id}" />
+											</p:commandButton>
+	
+										</p:column>
+	
+										<p:column>
+											<f:facet name="header">
+												<h:outputText value="#{msgs['template.month.short.jul']}" />
+											</f:facet>
+	
+											<p:commandButton oncomplete="PF('paymentDialog').show();"
+												update="@widgetVar(paymentDialog)"
+												rendered="#{!customer.paymentMonths.jul}" icon="unchecked2"
+												actionListener="#{paymentMBean.prepareDetail}">
+												<f:setPropertyActionListener target="#{paymentMBean.month}"
+													value="6" />
+												<f:setPropertyActionListener
+													target="#{paymentMBean.customerDetail.id}"
+													value="#{customer.id}" />
+												<f:setPropertyActionListener
+													target="#{paymentMBean.paymentMontDetail.id}"
+													value="#{customer.paymentMonths.id}" />
+											</p:commandButton>
+	
+											<p:commandButton oncomplete="PF('paymentDialog').show();"
+												update="@widgetVar(paymentDialog)"
+												rendered="#{customer.paymentMonths.jul}" icon="checked"
+												action="#{paymentMBean.getDetailData}">
+												<f:setPropertyActionListener target="#{paymentMBean.month}"
+													value="6" />
+												<f:setPropertyActionListener
+													target="#{paymentMBean.customerDetail.id}"
+													value="#{customer.id}" />
+												<f:setPropertyActionListener
+													target="#{paymentMBean.paymentMontDetail.id}"
+													value="#{customer.paymentMonths.id}" />
+											</p:commandButton>
+	
+										</p:column>
+	
+										<p:column>
+											<f:facet name="header">
+												<h:outputText value="#{msgs['template.month.short.ago']}" />
+											</f:facet>
+	
+											<p:commandButton oncomplete="PF('paymentDialog').show();"
+												update="@widgetVar(paymentDialog)"
+												rendered="#{!customer.paymentMonths.aug}" icon="unchecked2"
+												actionListener="#{paymentMBean.prepareDetail}">
+												<f:setPropertyActionListener target="#{paymentMBean.month}"
+													value="7" />
+												<f:setPropertyActionListener
+													target="#{paymentMBean.customerDetail.id}"
+													value="#{customer.id}" />
+												<f:setPropertyActionListener
+													target="#{paymentMBean.paymentMontDetail.id}"
+													value="#{customer.paymentMonths.id}" />
+											</p:commandButton>
+	
+											<p:commandButton oncomplete="PF('paymentDialog').show();"
+												update="@widgetVar(paymentDialog)"
+												rendered="#{customer.paymentMonths.aug}" icon="checked"
+												action="#{paymentMBean.getDetailData}">
+												<f:setPropertyActionListener target="#{paymentMBean.month}"
+													value="7" />
+												<f:setPropertyActionListener
+													target="#{paymentMBean.customerDetail.id}"
+													value="#{customer.id}" />
+												<f:setPropertyActionListener
+													target="#{paymentMBean.paymentMontDetail.id}"
+													value="#{customer.paymentMonths.id}" />
+											</p:commandButton>
+	
+										</p:column>
+	
+										<p:column>
+											<f:facet name="header">
+												<h:outputText value="#{msgs['template.month.short.set']}" />
+											</f:facet>
+	
+											<p:commandButton oncomplete="PF('paymentDialog').show();"
+												update="@widgetVar(paymentDialog)"
+												rendered="#{!customer.paymentMonths.sep}" icon="unchecked2"
+												actionListener="#{paymentMBean.prepareDetail}">
+												<f:setPropertyActionListener target="#{paymentMBean.month}"
+													value="8" />
+												<f:setPropertyActionListener
+													target="#{paymentMBean.customerDetail.id}"
+													value="#{customer.id}" />
+												<f:setPropertyActionListener
+													target="#{paymentMBean.paymentMontDetail.id}"
+													value="#{customer.paymentMonths.id}" />
+											</p:commandButton>
+	
+											<p:commandButton oncomplete="PF('paymentDialog').show();"
+												update="@widgetVar(paymentDialog)"
+												rendered="#{customer.paymentMonths.sep}" icon="checked"
+												action="#{paymentMBean.getDetailData}">
+												<f:setPropertyActionListener target="#{paymentMBean.month}"
+													value="8" />
+												<f:setPropertyActionListener
+													target="#{paymentMBean.customerDetail.id}"
+													value="#{customer.id}" />
+												<f:setPropertyActionListener
+													target="#{paymentMBean.paymentMontDetail.id}"
+													value="#{customer.paymentMonths.id}" />
+											</p:commandButton>
+	
+										</p:column>
+	
+										<p:column>
+											<f:facet name="header">
+												<h:outputText value="#{msgs['template.month.short.out']}" />
+											</f:facet>
+	
+											<p:commandButton oncomplete="PF('paymentDialog').show();"
+												update="@widgetVar(paymentDialog)"
+												rendered="#{!customer.paymentMonths.oct}" icon="unchecked2"
+												actionListener="#{paymentMBean.prepareDetail}">
+												<f:setPropertyActionListener target="#{paymentMBean.month}"
+													value="9" />
+												<f:setPropertyActionListener
+													target="#{paymentMBean.customerDetail.id}"
+													value="#{customer.id}" />
+												<f:setPropertyActionListener
+													target="#{paymentMBean.paymentMontDetail.id}"
+													value="#{customer.paymentMonths.id}" />
+											</p:commandButton>
+	
+											<p:commandButton oncomplete="PF('paymentDialog').show();"
+												update="@widgetVar(paymentDialog)"
+												rendered="#{customer.paymentMonths.oct}" icon="checked"
+												action="#{paymentMBean.getDetailData}">
+												<f:setPropertyActionListener target="#{paymentMBean.month}"
+													value="9" />
+												<f:setPropertyActionListener
+													target="#{paymentMBean.customerDetail.id}"
+													value="#{customer.id}" />
+												<f:setPropertyActionListener
+													target="#{paymentMBean.paymentMontDetail.id}"
+													value="#{customer.paymentMonths.id}" />
+											</p:commandButton>
+	
+										</p:column>
+	
+										<p:column>
+											<f:facet name="header">
+												<h:outputText value="#{msgs['template.month.short.nov']}" />
+											</f:facet>
+	
+											<p:commandButton oncomplete="PF('paymentDialog').show();"
+												update="@widgetVar(paymentDialog)"
+												rendered="#{!customer.paymentMonths.nov}" icon="unchecked2"
+												actionListener="#{paymentMBean.prepareDetail}">
+												<f:setPropertyActionListener target="#{paymentMBean.month}"
+													value="10" />
+												<f:setPropertyActionListener
+													target="#{paymentMBean.customerDetail.id}"
+													value="#{customer.id}" />
+												<f:setPropertyActionListener
+													target="#{paymentMBean.paymentMontDetail.id}"
+													value="#{customer.paymentMonths.id}" />
+											</p:commandButton>
+	
+											<p:commandButton oncomplete="PF('paymentDialog').show();"
+												update="@widgetVar(paymentDialog)"
+												rendered="#{customer.paymentMonths.nov}" icon="checked"
+												action="#{paymentMBean.getDetailData}">
+												<f:setPropertyActionListener target="#{paymentMBean.month}"
+													value="10" />
+												<f:setPropertyActionListener
+													target="#{paymentMBean.customerDetail.id}"
+													value="#{customer.id}" />
+												<f:setPropertyActionListener
+													target="#{paymentMBean.paymentMontDetail.id}"
+													value="#{customer.paymentMonths.id}" />
+											</p:commandButton>
+	
+										</p:column>
+	
+										<p:column>
+											<f:facet name="header">
+												<h:outputText value="#{msgs['template.month.short.dez']}" />
+											</f:facet>
+	
+											<p:commandButton oncomplete="PF('paymentDialog').show();"
+												update="@widgetVar(paymentDialog)"
+												rendered="#{!customer.paymentMonths.dez}" icon="unchecked2"
+												actionListener="#{paymentMBean.prepareDetail}">
+												<f:setPropertyActionListener target="#{paymentMBean.month}"
+													value="11" />
+												<f:setPropertyActionListener
+													target="#{paymentMBean.customerDetail.id}"
+													value="#{customer.id}" />
+												<f:setPropertyActionListener
+													target="#{paymentMBean.paymentMontDetail.id}"
+													value="#{customer.paymentMonths.id}" />
+											</p:commandButton>
+	
+											<p:commandButton oncomplete="PF('paymentDialog').show();"
+												update="@widgetVar(paymentDialog)"
+												rendered="#{customer.paymentMonths.dez}" icon="checked"
+												action="#{paymentMBean.getDetailData}">
+												<f:setPropertyActionListener target="#{paymentMBean.month}"
+													value="11" />
+												<f:setPropertyActionListener
+													target="#{paymentMBean.customerDetail.id}"
+													value="#{customer.id}" />
+												<f:setPropertyActionListener
+													target="#{paymentMBean.paymentMontDetail.id}"
+													value="#{customer.paymentMonths.id}" />
+											</p:commandButton>
+	
+										</p:column>
+	
+									</p:dataTable>
+								</p:tab>
+							</p:tabView>
+							<div class="buttons">
+								<p:commandButton
+									value="#{msgs['template.button.imprimir.pagamento']}" ajax="false"
+									action="#{paymentMBean.goToReportDetail}" style="align:right;" />
+							</div>
+					</td>
+				</tr>
+			</table>
+		</h:form>
+
+		<p:dialog widgetVar="paymentDialog" header="Detalhes do Pagamento"
+			id="paymentDialog" modal="true">
+			<h:form>
+				<div style="padding: 10px">
+					<table>
+						<tr>
+							<td><h:outputLabel value="#{msgs['template.aluno']}"
+									style="width: 100px;" /></td>
+							<td><p:inputText size="50" readonly="true"
+									value="#{paymentMBean.customerNameDetail}" /></td>
+						</tr>
+
+						<tr>
+							<td><h:outputLabel value="#{msgs['payment.reference']}"
+									style="width: 100px;" /></td>
+							<td><p:inputText size="12" readonly="true"
+									value="#{paymentMBean.paymentDateStringDetail}" /></td>
+						</tr>
+
+						<tr>
+							<td><h:outputLabel value="#{msgs['payment.date']}"
+									style="width: 100px;" /></td>
+							<td><p:inputMask id="data"
+									value="#{paymentMBean.paymentDateDetail}" mask="99/99/9999"
+									size="12" required="true"
+									requiredMessage="#{msgs['payment.date.mandatory']}"
+									validatorMessage="#{msgs['template.date.invalid']}"
+									converterMessage="#{msgs['template.date.invalid']}">
+									<f:convertDateTime pattern="dd/MM/yyyy" />
+								</p:inputMask></td>
+						</tr>
+
+						<tr>
+							<td><h:outputLabel value="#{msgs['payment.value']}"
+									style="width: 100px;" /></td>
+							<td><p:inputText size="12" readonly="false"
+									value="#{paymentMBean.paymentDetail.value}"
+									converterMessage="#{msgs['payment.value.converter.erro']}"
+									maxlength="6">
+									<f:converter converterId="doubleConverter" />
+								</p:inputText></td>
+						</tr>
+
+
+						<tr>
+							<td><h:outputLabel value="#{msgs['payment.type']}"
+									style="width: 100px;" /></td>
+							<td><p:selectOneMenu
+									value="#{paymentMBean.paymentDetail.type}"
+									style="width:100px; overflow:hidden; padding-top: -13px !important;">
+									<f:selectItems value="#{paymentMBean.paymentTypeList}" />
+								</p:selectOneMenu></td>
+						</tr>
+
+
+						<tr>
+							<td valign="top"><h:outputLabel
+									value="#{msgs['template.observations']}" style="width: 100px;" /></td>
+							<td><p:inputTextarea cols="50" rows="5" maxlength="200"
+									autoResize="false"
+									value="#{paymentMBean.paymentDetail.observation}" /></td>
+						</tr>
+
+					</table>
+
+					<p style="text-align: center !important;">
+						<p:commandButton value="#{msgs['template.button.save']}"
+							ajax="false" oncomplete="PF('paymentDialog').hide();"
+							action="#{paymentMBean.saveNewPayment}"
+							rendered="#{paymentMBean.paymentDetail.id==null}" />
+
+						<p:commandButton value="#{msgs['template.button.alterar']}"
+							ajax="false" oncomplete="PF('paymentDialog').hide();"
+							action="#{paymentMBean.updatePayment}"
+							rendered="#{paymentMBean.paymentDetail.id!=null}" />
+
+						<p:commandButton value="#{msgs['template.button.delete']}"
+							ajax="true" oncomplete="PF('deleteConfirmation').show()"
+							rendered="#{paymentMBean.paymentDetail.id!=null}" />
+
+						<p:commandButton value="#{msgs['template.button.cancelar']}"
+							oncomplete="PF('paymentDialog').hide();"
+							action="#{paymentMBean.clearDetail}" />
+					</p>
+
+				</div>
+			</h:form>
+		</p:dialog>
+
+		<h:form>
+			<p:confirmDialog
+				message="#{msgs['template.msg.delete.confirmation']}"
+				severity="alert" widgetVar="deleteConfirmation"
+				id="deleteConfirmation">
+				<p:commandButton value="#{msgs['template.button.yes']}"
+					oncomplete="PF('deleteConfirmation').hide()"
+					action="#{paymentMBean.removePayment}" ajax="false" />
+				<p:commandButton value="#{msgs['template.button.no']}"
+					onclick="PF('deleteConfirmation').hide()" />
+			</p:confirmDialog>
+		</h:form>
+
+	</ui:define>
+</ui:composition>

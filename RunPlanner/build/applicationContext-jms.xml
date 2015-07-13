@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:security="http://www.springframework.org/schema/security"
+	xmlns:lang="http://www.springframework.org/schema/lang"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+           http://www.springframework.org/schema/tx 
+           http://www.springframework.org/schema/tx/spring-tx-2.0.xsd
+           http://www.springframework.org/schema/context
+           http://www.springframework.org/schema/context/spring-context-3.1.xsd
+           http://www.springframework.org/schema/security 
+           http://www.springframework.org/schema/security/spring-security-3.0.5.xsd
+           http://www.springframework.org/schema/lang 
+           http://www.springframework.org/schema/lang/spring-lang-3.1.xsd
+           http://www.springframework.org/schema/jms
+           http://www.springframework.org/schema/context/spring-jms-3.1.xsd">
+
+	<!-- Conexao ActiveMQ -->
+	<bean id="connectionFactoryQueue" class="org.apache.activemq.ActiveMQConnectionFactory">
+		<property name="brokerURL" value="vm://localhost" />
+	</bean>
+  	
+  	<!-- Jms Template -->
+	<bean id="jsmTemplate" class="org.springframework.jms.core.JmsTemplate">
+		<property name="connectionFactory" ref="connectionFactoryQueue" />
+	</bean> 	
+  	
+  	<!-- Filas -->
+	<bean id="queueEmail" class="org.apache.activemq.command.ActiveMQQueue">
+		<constructor-arg index="0" value="br.com.runplanner.jms.queue.email" />
+	</bean>  	
+	
+	<!-- Produtor -->
+	<bean id="queueProductorEmail" class="br.com.runplanner.util.mail.EmailProductor">
+		<property name="jmsTemplate" ref="jsmTemplate" />
+		<property name="destination" ref="queueEmail" />
+	</bean>
+
+	<!-- Consumidor/Listener -->
+	<bean id="emailListener" class="br.com.runplanner.util.mail.EmailListener" />
+	
+	<!-- Container de Listeners -->
+	<bean class="org.springframework.jms.listener.SimpleMessageListenerContainer">
+		<property name="connectionFactory" ref="connectionFactoryQueue" />
+		<property name="destination" ref="queueEmail" />
+		<property name="messageListener" ref="emailListener" />
+	</bean>			
+  	
+</beans>   

@@ -1,0 +1,158 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="#{loginBean.templateVersion}">
+
+	<ui:define name="content">
+		<h:form>
+			<p:messages id="messages" showDetail="false" />
+			<div class="pageTitleBox">#{msgs['presence.maintitle']}</div>
+			<div class="subtitle">#{msgs['presence.subtitle']}</div>
+
+			<table>
+				<tr>
+					<td><h:outputLabel value="#{msgs['template.periodo']}"
+							style="padding:0px !important; width:50px !important;" /></td>
+					<td><p:selectOneMenu
+							value="#{classPresenceMBean.selectedMonth}"
+							style="width:200px; overflow:hidden;">
+							<f:selectItems value="#{classPresenceMBean.monthList}" />
+						</p:selectOneMenu></td>
+					<td><p:selectOneMenu
+							value="#{classPresenceMBean.selectedYear}"
+							style="width:100px; overflow:hidden;">
+							<f:selectItems value="#{classPresenceMBean.yearList}" />
+						</p:selectOneMenu></td>
+					<td><p:commandButton
+							action="#{classPresenceMBean.prepareFirstWeekList}"
+							title="#{msgs['template.button.find']}" ajax="false"
+							value="#{msgs['template.button.find']}"
+							style="margin-top: -2px !important;" /></td>
+				</tr>
+			</table>
+
+			<br />
+			<div id="painel" class="tabela">
+				<p:panel>
+					<table style="width: 100% !important;">
+						<tr>
+							<td align="left"><p:commandButton
+									value="#{msgs['template.button.previous.simb']}" ajax="true"
+									update="toUpdate,setas"
+									action="#{classPresenceMBean.previous}" style="align:left;" />
+							</td>
+							<td align="center"><h:outputText
+									value="#{classPresenceMBean.selectedWeekText}" id="setas" /></td>
+							<td align="right"><p:commandButton
+									value="#{msgs['template.button.next.simb']}" ajax="true"
+									update="toUpdate,setas"
+									action="#{classPresenceMBean.next}" style="align:right;" /></td>
+						</tr>
+					</table>
+				</p:panel>
+
+				<h:panelGrid id="toUpdate">
+					<p:tabView id="tab" var="team"
+						value="#{classPresenceMBean.teamList}"
+						activeIndex="#{classPresenceMBean.activeIndex}">
+
+						<p:tab title="#{team.place}" id="tab#{team.id}">
+
+							<p:dataTable var="aluPre" value="#{team.customers}"
+								id="presencelist"
+								emptyMessage="#{msgs['template.msg.emptyMessage']}">
+
+								<p:column>
+									<f:facet name="header">
+										<h:outputText value="#{msgs['alunos.nome']}" />
+									</f:facet>
+
+									<h:outputText value="#{aluPre.nome}" />
+								</p:column>
+								<p:column style="text-align: center !important;">
+									<f:facet name="header">
+										<h:outputText value="#{classPresenceMBean.weekDate[0]}" />
+										<br />
+										<h:outputText value="#{msgs['weekdays.sunday']}" />
+									</f:facet>
+
+									<p:selectBooleanCheckbox value="#{aluPre.weekPresences.sunday}" />
+								</p:column>
+								<p:column style="text-align: center;">
+									<f:facet name="header">
+										<h:outputText value="#{classPresenceMBean.weekDate[1]}" />
+										<br />
+										<h:outputText value="#{msgs['weekdays.monday']}" />
+									</f:facet>
+
+									<p:selectBooleanCheckbox value="#{aluPre.weekPresences.monday}" />
+								</p:column>
+								<p:column style="text-align: center;">
+									<f:facet name="header">
+										<h:outputText value="#{classPresenceMBean.weekDate[2]}" />
+										<br />
+										<h:outputText value="#{msgs['weekdays.tuesday']}" />
+									</f:facet>
+
+									<p:selectBooleanCheckbox
+										value="#{aluPre.weekPresences.tuesday}" />
+								</p:column>
+								<p:column style="text-align: center;">
+									<f:facet name="header">
+										<h:outputText value="#{classPresenceMBean.weekDate[3]}" />
+										<br />
+										<h:outputText value="#{msgs['weekdays.wednesday']}" />
+									</f:facet>
+
+									<p:selectBooleanCheckbox
+										value="#{aluPre.weekPresences.wednesday}" />
+								</p:column>
+								<p:column style="text-align: center;">
+									<f:facet name="header">
+										<h:outputText value="#{classPresenceMBean.weekDate[4]}" />
+										<br />
+										<h:outputText value="#{msgs['weekdays.thursday']}" />
+									</f:facet>
+
+									<p:selectBooleanCheckbox
+										value="#{aluPre.weekPresences.thursday}" />
+								</p:column>
+								<p:column style="text-align: center;">
+									<f:facet name="header">
+										<h:outputText value="#{classPresenceMBean.weekDate[5]}" />
+										<br />
+										<h:outputText value="#{msgs['weekdays.friday']}" />
+									</f:facet>
+
+									<p:selectBooleanCheckbox value="#{aluPre.weekPresences.friday}" />
+								</p:column>
+								<p:column style="text-align: center;">
+									<f:facet name="header">
+										<h:outputText value="#{classPresenceMBean.weekDate[6]}" />
+										<br />
+										<h:outputText value="#{msgs['weekdays.saturday']}" />
+									</f:facet>
+
+									<p:selectBooleanCheckbox
+										value="#{aluPre.weekPresences.saturday}" />
+								</p:column>
+							</p:dataTable>
+						</p:tab>
+					</p:tabView>
+				</h:panelGrid>
+			</div>
+
+			<div class="buttons">
+				<p:commandButton value="#{msgs['template.button.save']}"
+					ajax="false" action="#{classPresenceMBean.save}"
+					style="align:right;" />
+				<p:commandButton
+					value="#{msgs['template.button.imprimir.presenca']}" ajax="false"
+					action="#{classPresenceMBean.goToReport}" style="align:right;" />
+			</div>
+		</h:form>
+	</ui:define>
+</ui:composition>

@@ -1,0 +1,486 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">  
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:fb="http://ogp.me/ns/fb#"
+	xmlns:og="http://ogp.me/ns#"
+	xmlns:sec="http://www.springframework.org/security/facelets/tags">
+	
+	<f:view contentType="text/html">
+	
+	<h:head>
+		
+		<link rel="stylesheet" href="${facesContext.externalContext.requestContextPath}/css/estilo.css" type="text/css" charset="utf-8" />		
+		<link rel="stylesheet" type="text/css" href="${facesContext.externalContext.requestContextPath}/js/jqplot/jquery.jqplot.min.css" />
+				
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+		<meta http-equiv="Content-Style-Type" content="text/css" />
+		
+		<meta property="fb:app_id" content="163439590451695"/>
+		<meta property="fb:admins" content="163439590451695"/>
+		<meta property="og:image" content="http://www.runplanner.com.br/runplanner/images/rpicon.png" />
+		<meta property="og:site_name" content="RunPlanner" />
+		<meta property="og:type" content="article" />
+		<meta property="og:title" content="Nova atividade cadastada!" />    
+        <meta property="og:description" content="Nova atividade xpto"  />    
+		
+  		<link href="images/icone.ico" rel="shortcut icon" type="image/x-icon" /> 	
+  		
+		<title>RunPlanner - Keep Running!</title>
+		
+		<script> 
+			$(".container").corner("10px");
+			$(".borda").corner("10px");
+		</script>
+		
+		<ui:insert name="head"></ui:insert>
+		
+		<script src="http://maps.google.com/maps/api/js?sensor=false" type="text/javascript"></script>
+			
+		<script type="text/javascript" src="js/jquery-1.4.2.js"></script>
+		<script type="text/javascript" src="js/jquery.corner.js"></script>	
+
+		<script type="text/javascript">
+		
+		  var _gaq = _gaq || [];
+		  _gaq.push(['_setAccount', 'UA-27218523-1']);
+		  _gaq.push(['_setDomainName', 'runplanner.com.br']);
+		  _gaq.push(['_trackPageview']);
+
+		  (function() {
+		    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+		    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+		    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		  })();
+		
+		</script>						
+		<script type="text/javascript" src="#{facesContext.externalContext.requestContextPath}/js/jquery.qtip.min.js"></script>
+	</h:head>	
+	
+		<h:body>
+		
+			<div id="fb-root"></div>
+			<script>
+				//<![CDATA[ 
+		           (function(d, s, id) {
+					  var js, fjs = d.getElementsByTagName(s)[0];
+					  if (d.getElementById(id)) return;
+					  js = d.createElement(s); js.id = id;
+					  js.src = "//connect.facebook.net/pt_BR/all.js#xfbml=1&appId=163439590451695";
+					  fjs.parentNode.insertBefore(js, fjs);
+					}(document, 'script', 'facebook-jssdk'));
+			  	//]]>
+           </script>	
+
+			<div id="header">
+				<div class="container">
+					<div id="nav">
+						<h:form>
+							<h:commandLink action="#{dashboardMBean.goToIndex}">
+								<img src="${facesContext.externalContext.requestContextPath}/images/logo.png" />
+							</h:commandLink>
+						</h:form>
+					</div>
+					<div id="profile">
+						<div style="white-space: nowrap;">
+							#{loginBean.userName}													
+							<p:graphicImage value="#{loginBean.userPhoto}" id="dynaButton" width="24" height="24" />													
+						</div>
+					</div>
+					<div class="clear" />
+				
+					<div class="panel">
+						<h:form>
+							<table width="100%">
+								<tr>
+									<td colspan="2" >
+										<table>
+											<tr>
+												<td valign="top" width="1">
+													<div class="fotoPerfil">
+														<p:graphicImage value="#{loginBean.userPhoto}" id="dynaButton" width="50" height="50"/>
+													</div>
+												</td>
+												<td align="left" valign="middle" >	
+												
+													#{loginBean.userName} <br/>
+													
+													<sec:ifAnyGranted roles="ROLE_USER">								
+														<h:commandLink action="#{profileMBean.goToList}" >
+															<h:outputText value="#{msgs['template.menu.profile.view']}" styleClass="subtitle"/>
+														</h:commandLink>				
+													</sec:ifAnyGranted>							
+													
+													<sec:ifAnyGranted roles="ROLE_TEACHER, ROLE_ASSESSOR">								
+														<h:commandLink action="#{profileMBean.goToListTeacher}" >
+															<h:outputText value="#{msgs['template.menu.profile.view']}"  styleClass="subtitle"/>
+														</h:commandLink>				
+													</sec:ifAnyGranted>											
+												</td>
+											</tr>
+										</table>									
+									</td>									
+								</tr>
+								<tr>
+									<td colspan="2" style="border-top: 1px solid #dedede;">	
+									</td>
+								</tr>
+								<tr>
+									<td align="left" style="padding-bottom: 5px; padding-top: 5px; padding-left: 5px; white-space: nowrap;" >
+										<b>					
+											<h:commandLink action="#{mailboxMBean.goToList}"  >
+												<h:outputText value="#{msgs['template.menu.mailbox']}" />
+												<h:outputText value=" (#{dashboardMBean.newMessageNumber})" rendered="#{dashboardMBean.newMessageNumber>0}"/>											
+											</h:commandLink>
+										</b>
+									</td>
+									<td align="right" >
+										<p:panel rendered="#{dashboardMBean.newMessageNumber>0}">
+											<img src="${facesContext.externalContext.requestContextPath}/images/new.png" />
+										</p:panel>
+									</td>
+								</tr>								
+								<tr>
+									<td align="left" colspan="2" style="padding-bottom: 5px; padding-top: 5px; padding-left: 5px;">
+										<h:commandLink action="#{userMBean.goToChange}" >
+											<h:outputText value="#{msgs['template.menu.change.pass']}"/>
+										</h:commandLink>
+									</td>									
+								</tr>								
+								<tr>
+									<td colspan="2" style="border-top: 1px solid #dedede;">	
+									</td>
+								</tr>
+								<tr>	
+									<td align="left" colspan="2" style="padding-bottom: 5px; padding-top: 5px; padding-left: 5px;">
+										<h:outputLink value="" >
+											<h:outputText value="#{msgs['template.menu.help']}"/>
+										</h:outputLink >
+									</td>
+								</tr>								
+								<tr>	
+									<td align="left" colspan="2" style="padding-bottom: 5px; padding-top: 5px; padding-left: 5px;">
+										<h:outputLink value="${facesContext.externalContext.requestContextPath}/logout" >
+											<h:outputText value="#{msgs['template.menu.logout']}"/>
+										</h:outputLink >
+									</td>
+								</tr>
+							</table>
+						</h:form>
+					</div>
+				</div>
+			</div>
+			
+			<div id="above_header" />
+			<script>
+				$("#profile").click(function () {
+					$(".panel").slideToggle("slow");
+				});
+			</script>
+			
+			<sec:ifAnyGranted roles="ROLE_TEACHER, ROLE_ASSESSOR, ROLE_USER">
+			<div class="container borda" style="min-height: 700px;">
+				<div id="sidebar">
+					<div class="logo">
+						<p:graphicImage value="#{loginBean.adviceLogo}"  width="110"/>					
+					</div>
+					<div class="tabela transparent" style="padding:0">
+							
+						<h:form>
+							<ul>
+							
+								<li class="#{dashboardMBean.selectedMenu == 'none'?'selected':''}">
+									<h:commandLink action="#{dashboardMBean.goToIndex}">
+										<img src="${facesContext.externalContext.requestContextPath}/images/home.png" width="16" />
+										<p:spacer width="5"/>
+										<h:outputText value="#{msgs['template.menu.home']}" />
+									</h:commandLink>
+								</li>
+							
+								<sec:ifAnyGranted roles="ROLE_ADM">
+									<li class="#{dashboardMBean.selectedMenu == 'advice'?'selected':''}"><h:commandLink action="#{adviceMBean.goToList}">
+										<img src="${facesContext.externalContext.requestContextPath}/images/turma.png" width="16" />
+										<p:spacer width="5"/>
+										<h:outputText value="#{msgs['template.menu.advice']}" />
+									</h:commandLink></li>									
+						
+									<li class="#{dashboardMBean.selectedMenu == 'adviceOwner'?'selected':''}"><h:commandLink action="#{adviceOwnerMBean.goToList}">
+										<img src="${facesContext.externalContext.requestContextPath}/images/profile.png" width="16" />
+										<p:spacer width="5"/>
+										<h:outputText value="#{msgs['template.menu.advice.owner']}" />
+									</h:commandLink></li>
+									
+									<li class="#{dashboardMBean.selectedMenu == 'customer'?'selected':''}"><h:commandLink action="#{adviceMBean.goToCustomerList}">
+										<img src="${facesContext.externalContext.requestContextPath}/images/aluno.png" width="16" />
+										<p:spacer width="5"/>
+										<h:outputText value="#{msgs['template.menu.informacoes']}" />
+									</h:commandLink></li>									
+									
+									<li class="#{dashboardMBean.selectedMenu == 'communication'?'selected':''}"><h:commandLink action="#{communicationMBean.goToListAdm}">
+										<img src="${facesContext.externalContext.requestContextPath}/images/communication.png" width="16" />
+										<p:spacer width="5"/>
+										<h:outputText value="#{msgs['template.menu.communication']}" />
+									</h:commandLink></li>
+									
+									<li class="#{dashboardMBean.selectedMenu == 'payment'?'selected':''}"><h:commandLink action="#{paymentAdviceMBean.goToList}">
+										<img src="${facesContext.externalContext.requestContextPath}/images/pagamento.png" width="16" />
+										<p:spacer width="5"/>
+										<h:outputText value="#{msgs['template.menu.cadastro.pagamentos']}" />
+									</h:commandLink></li>
+								</sec:ifAnyGranted>
+						
+						
+								<sec:ifAnyGranted roles="ROLE_TEACHER, ROLE_ASSESSOR">
+								
+									<li  class="#{dashboardMBean.selectedMenu == 'profile'?'selected':''}"><h:commandLink action="#{profileMBean.goToListTeacher}">
+										<img src="${facesContext.externalContext.requestContextPath}/images/profile.png" width="16" />
+										<p:spacer width="5"/>
+										<h:outputText value="#{msgs['template.menu.aluno.profile']}" />
+									</h:commandLink></li>
+									
+								</sec:ifAnyGranted>
+						
+								<sec:ifAnyGranted roles="ROLE_ASSESSOR">
+								
+									<li class="#{dashboardMBean.selectedMenu == 'teacher'?'selected':''}"><h:commandLink action="#{teacherMBean.goToList}">
+										<img src="${facesContext.externalContext.requestContextPath}/images/professor.png" width="16" />
+										<p:spacer width="5"/>
+										<h:outputText value="#{msgs['template.menu.cadastro.teacher']}" />
+									</h:commandLink></li>
+									
+									<li class="#{dashboardMBean.selectedMenu == 'team'?'selected':''}"><h:commandLink action="#{teamMBean.goToList}">
+										<img src="${facesContext.externalContext.requestContextPath}/images/turma.png" width="16" />
+										<p:spacer width="5"/>
+										<h:outputText value="#{msgs['template.menu.cadastro.team']}" />
+									</h:commandLink></li>
+
+									<li class="#{dashboardMBean.selectedMenu == 'customer'?'selected':''}"><h:commandLink action="#{customerMBean.goToList}">
+										<img src="${facesContext.externalContext.requestContextPath}/images/aluno.png" width="16" />
+										<p:spacer width="5"/>
+										<h:outputText value="#{msgs['template.menu.cadastro.aluno']}" />
+									</h:commandLink></li> 
+									
+									<li class="#{dashboardMBean.selectedMenu == 'payment'?'selected':''}"><h:commandLink action="#{paymentMBean.goToList}">
+										<img src="${facesContext.externalContext.requestContextPath}/images/pagamento.png" width="16" />
+										<p:spacer width="5"/>
+										<h:outputText value="#{msgs['template.menu.cadastro.pagamentos']}" />
+									</h:commandLink></li>
+								
+								</sec:ifAnyGranted>						
+						
+						
+								<sec:ifAnyGranted roles="ROLE_TEACHER, ROLE_ASSESSOR">
+
+									<li class="#{dashboardMBean.selectedMenu == 'presence'?'selected':''}"><h:commandLink action="#{classPresenceMBean.goToList}">
+										<img src="${facesContext.externalContext.requestContextPath}/images/presenca.png" width="16" />
+										<p:spacer width="5"/>
+										<h:outputText value="#{msgs['template.menu.cadastro.presenca']}" />
+									</h:commandLink></li>	
+								
+								</sec:ifAnyGranted>		
+								
+								<sec:ifAnyGranted roles="ROLE_ASSESSOR">
+
+									<li class="#{dashboardMBean.selectedMenu == 'communication'?'selected':''}"><h:commandLink action="#{communicationMBean.goToList}">
+										<img src="${facesContext.externalContext.requestContextPath}/images/communication.png" width="16" />
+										<p:spacer width="5"/>
+										<h:outputText value="#{msgs['template.menu.communication']}" />
+									</h:commandLink></li>
+								
+								</sec:ifAnyGranted>		
+								
+								<sec:ifAnyGranted roles="ROLE_TEACHER, ROLE_ASSESSOR">
+																	
+									<li class="#{dashboardMBean.selectedMenu == 'event'?'selected':''}"><h:commandLink action="#{eventMBean.goToList}">
+										<img src="${facesContext.externalContext.requestContextPath}/images/event.png" width="16" />
+										<p:spacer width="5"/>
+										<h:outputText value="#{msgs['template.menu.cadastro.event']}" />
+									</h:commandLink></li>
+									
+									<li class="#{dashboardMBean.selectedMenu == 'rhythm'?'selected':''}"><h:commandLink action="#{rhythmMBean.goToList}">
+										<img src="${facesContext.externalContext.requestContextPath}/images/ritmo.png" width="16" />
+										<p:spacer width="5"/>
+										<h:outputText value="#{msgs['template.menu.rhythm']}" />
+									</h:commandLink></li>
+									
+									
+									<li class="#{dashboardMBean.selectedMenu == 'template'?'selected':''}"><h:commandLink action="#{scheduleTemplateBean.goToInit}">
+										<img src="${facesContext.externalContext.requestContextPath}/images/template.png" width="16" />
+										<p:spacer width="5"/>
+										<h:outputText value="#{msgs['template.menu.template']}" />
+									</h:commandLink></li>
+									
+									
+									<li class="#{dashboardMBean.selectedMenu == 'spread'?'selected':''}"><h:commandLink action="#{spreadsheetBean.goToInit}">
+										<img src="${facesContext.externalContext.requestContextPath}/images/spread.png" width="16" />
+										<p:spacer width="5"/>
+										<h:outputText value="#{msgs['template.menu.manage']}" />
+									</h:commandLink></li>
+									
+									<li class="#{dashboardMBean.selectedMenu == 'activity'?'selected':''}"><h:commandLink action="#{activityMBean.goToListTeacher}">
+										<img src="${facesContext.externalContext.requestContextPath}/images/atividade.png" width="16" />
+										<p:spacer width="5"/>
+										<h:outputText value="#{msgs['template.menu.activity']}" />
+									</h:commandLink></li>	
+									
+									<li class="#{dashboardMBean.selectedMenu == 'route'?'selected':''}"><h:commandLink action="#{routeMBean.goToList}">
+										<img src="${facesContext.externalContext.requestContextPath}/images/route.png" width="16" />
+										<p:spacer width="5"/>
+										<h:outputText value="#{msgs['template.menu.route']}" />
+									</h:commandLink></li>
+									
+								
+									<li class="#{dashboardMBean.selectedMenu == 'graphActivity'?'selected':''}"><h:commandLink action="#{graphMBean.goToActivityTeacher}">
+										<img src="${facesContext.externalContext.requestContextPath}/images/chart.png" width="16" />
+										<p:spacer width="5"/>
+										<h:outputText value="#{msgs['template.menu.graph.activity']}" />
+									</h:commandLink></li>
+									
+									<li class="#{dashboardMBean.selectedMenu == 'graphProgress'?'selected':''}"><h:commandLink action="#{graphMBean.goToProgressTeacher}">
+										<img src="${facesContext.externalContext.requestContextPath}/images/graph.png" width="16" />
+										<p:spacer width="5"/>
+										<h:outputText value="#{msgs['template.menu.graph.progress']}" />
+									</h:commandLink></li>	
+									
+								</sec:ifAnyGranted>
+								
+								<sec:ifAnyGranted roles="ROLE_USER">
+								
+									<li  class="#{dashboardMBean.selectedMenu == 'profile'?'selected':''}"><h:commandLink action="#{profileMBean.goToList}">
+										<img src="${facesContext.externalContext.requestContextPath}/images/profile.png" width="16" />
+										<p:spacer width="5"/>
+										<h:outputText value="#{msgs['template.menu.aluno.profile']}" />
+									</h:commandLink></li>								
+								
+									<li  class="#{dashboardMBean.selectedMenu == 'event'?'selected':''}"><h:commandLink action="#{eventMBean.goToStudentList}">
+										<img src="${facesContext.externalContext.requestContextPath}/images/event.png" width="16" />
+										<p:spacer width="5"/>
+										<h:outputText value="#{msgs['template.menu.cadastro.event']}" />
+									</h:commandLink></li>		
+
+									<li  class="#{dashboardMBean.selectedMenu == 'spread'?'selected':''}"><h:commandLink action="#{studentSpreadsheetMBean.goToList}">
+										<img src="${facesContext.externalContext.requestContextPath}/images/spread.png" width="16" />
+										<p:spacer width="5"/>
+										<h:outputText value="#{msgs['template.menu.myruns']}" />
+									</h:commandLink></li>
+
+									<li  class="#{dashboardMBean.selectedMenu == 'equipment'?'selected':''}"><h:commandLink action="#{equipmentMBean.goToList}">
+										<img src="${facesContext.externalContext.requestContextPath}/images/shoes.png" width="16" />
+										<p:spacer width="5"/>
+										<h:outputText value="#{msgs['template.menu.equipment']}" />
+									</h:commandLink></li>	
+
+									<li  class="#{dashboardMBean.selectedMenu == 'activity'?'selected':''}"><h:commandLink action="#{activityMBean.goToInit}">
+										<img src="${facesContext.externalContext.requestContextPath}/images/atividade.png" width="16" />
+										<p:spacer width="5"/>
+										<h:outputText value="#{msgs['template.menu.activity']}" />
+									</h:commandLink></li>									
+									
+									<li class="#{dashboardMBean.selectedMenu == 'graphActivity'?'selected':''}"><h:commandLink action="#{graphMBean.goToActivity}">
+										<img src="${facesContext.externalContext.requestContextPath}/images/chart.png" width="16" />
+										<p:spacer width="5"/>
+										<h:outputText value="#{msgs['template.menu.graph.activity']}" />
+									</h:commandLink></li>
+
+									<li class="#{dashboardMBean.selectedMenu == 'graphProgress'?'selected':''}"><h:commandLink action="#{graphMBean.goToProgress}">
+										<img src="${facesContext.externalContext.requestContextPath}/images/graph.png" width="16" />
+										<p:spacer width="5"/>
+										<h:outputText value="#{msgs['template.menu.graph.progress']}" />
+									</h:commandLink></li>
+								</sec:ifAnyGranted>	
+							</ul>
+						</h:form>
+					</div>
+				</div>
+				
+				<div id="principal">
+					<ui:insert name="content">
+					</ui:insert>			
+				</div>
+				<div class="clear" />
+			</div>
+			</sec:ifAnyGranted>
+
+		<sec:ifAnyGranted roles="ROLE_ADM">
+			<h:form>
+				<ul>
+					<li class="#{dashboardMBean.selectedMenu == 'none'?'selected':''}">
+						<h:commandLink action="#{dashboardMBean.goToIndex}">
+							<img src="${facesContext.externalContext.requestContextPath}/images/home.png" width="16" />
+							<p:spacer width="5"/>
+							<h:outputText value="#{msgs['template.menu.home']}" />
+						</h:commandLink>
+					</li>
+					<li class="#{dashboardMBean.selectedMenu == 'advice'?'selected':''}">
+						<h:commandLink action="#{adviceMBean.goToList}">
+							<img
+								src="${facesContext.externalContext.requestContextPath}/images/turma.png"
+								width="16" />
+							<p:spacer width="5" />
+							<h:outputText value="#{msgs['template.menu.advice']}" />
+						</h:commandLink></li>
+
+					<li
+						class="#{dashboardMBean.selectedMenu == 'adviceOwner'?'selected':''}"><h:commandLink
+							action="#{adviceOwnerMBean.goToList}">
+							<img
+								src="${facesContext.externalContext.requestContextPath}/images/profile.png"
+								width="16" />
+							<p:spacer width="5" />
+							<h:outputText value="#{msgs['template.menu.advice.owner']}" />
+						</h:commandLink></li>
+
+					<li
+						class="#{dashboardMBean.selectedMenu == 'customer'?'selected':''}"><h:commandLink
+							action="#{adviceMBean.goToCustomerList}">
+							<img
+								src="${facesContext.externalContext.requestContextPath}/images/aluno.png"
+								width="16" />
+							<p:spacer width="5" />
+							<h:outputText value="#{msgs['template.menu.informacoes']}" />
+						</h:commandLink></li>
+
+					<li
+						class="#{dashboardMBean.selectedMenu == 'communication'?'selected':''}"><h:commandLink
+							action="#{communicationMBean.goToListAdm}">
+							<img
+								src="${facesContext.externalContext.requestContextPath}/images/communication.png"
+								width="16" />
+							<p:spacer width="5" />
+							<h:outputText value="#{msgs['template.menu.communication']}" />
+						</h:commandLink></li>
+
+					<li
+						class="#{dashboardMBean.selectedMenu == 'payment'?'selected':''}"><h:commandLink
+							action="#{paymentAdviceMBean.goToList}">
+							<img
+								src="${facesContext.externalContext.requestContextPath}/images/pagamento.png"
+								width="16" />
+							<p:spacer width="5" />
+							<h:outputText
+								value="#{msgs['template.menu.cadastro.pagamentos']}" />
+						</h:commandLink></li>
+				</ul>
+			</h:form>
+			<div id="principal">
+				<ui:insert name="content">
+				</ui:insert>
+			</div>
+			<div class="clear" />
+		</sec:ifAnyGranted>
+
+		<div id="footer">
+				<span><a href="http://blog.runplanner.com.br" target="_blank">Blog</a></span> <span><a href="http://twitter.com/#!/runplanner" target="_blank">@RunPlanner</a></span> <span><a href="${facesContext.externalContext.requestContextPath}/pages/contact.jsf">Contato</a></span> <span>RunPlanner® 2011</span> <span>v1.2.0</span>
+			</div>
+			
+		</h:body>
+	
+	</f:view>
+
+
+	
+	
+</html>

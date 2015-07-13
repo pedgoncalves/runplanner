@@ -1,0 +1,79 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:rp="http://runplanner.com.br/facelets"
+	template="#{loginBean.templateVersion}">
+		
+  <ui:define name="content">
+			
+		<p:messages id="messages" showDetail="false" /> 
+		<div class="pageTitleBox">#{msgs['partner.maintitle']}</div>
+		<div class="subtitle">#{msgs['partner.subtitle']}</div>
+
+		<table width="100%">
+			<tr>
+				<td valign="top" width="15%">
+					<rp:sideMenu menu="profileAdvice" selectedMenu="parceiro"/>
+				</td>
+				<td valign="top" align="left" style="padding-left: 10px;">
+	    		    <h:form>	    		    
+				        <p:dataTable id="partnerList" value="#{partnerMBean.partnerList}" var="partner"
+							emptyMessage="#{msgs['template.msg.emptyMessage']}"
+							paginator="true" rows="10" paginatorPosition="bottom" paginatorAlwaysVisible="false"
+							paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}">
+				        		        
+				         	<p:column style="max-width:200px;">  
+				                <f:facet name="header">  
+				                    <h:outputText value="#{msgs['partner.name']}" />  
+				                </f:facet>  
+				                
+				                <h:commandLink action="#{partnerMBean.goToModify}">          				
+		           					<h:outputText value="#{partner.name}"/>
+		           					<f:setPropertyActionListener target="#{partnerMBean.partner.id}" value="#{partner.id}" />
+		           				</h:commandLink>
+				                
+				            </p:column>  
+				  		            
+				  		    <p:column style="text-align: left;">  
+				                <f:facet name="header">  
+				                    <h:outputText value="#{msgs['partner.url']}" />  
+				                </f:facet>  
+				                <h:outputText value="#{partner.url}"/>
+				            </p:column>          
+		
+				            <p:column style="text-align:center; width: 80px; white-space: nowrap;">  
+				                <f:facet name="header">  
+				                    <h:outputText value="" />  
+				                </f:facet>  
+				                
+				                <p:commandButton icon="edit" action="#{partnerMBean.goToModify}" ajax="false" title="#{msgs['template.button.edit']}">
+			     					<f:setPropertyActionListener target="#{partnerMBean.partner.id}" value="#{partner.id}" />
+			           			</p:commandButton> 
+		            			          
+			           			<p:commandButton icon="delete" oncomplete="PF('deleteConfirmation').show()" title="#{msgs['template.button.delete']}">           			
+			     					<f:setPropertyActionListener target="#{partnerMBean.partner.id}" value="#{partner.id}" />
+			           			</p:commandButton>
+		            			
+				            </p:column>  
+				        </p:dataTable>
+				        
+			        	<p:confirmDialog message="#{msgs['template.msg.delete.confirmation']}"  
+				           	severity="alert" widgetVar="deleteConfirmation">
+				   			<p:commandButton value="#{msgs['template.button.yes']}" oncomplete="deleteConfirmation.hide()" 
+				   				action="#{partnerMBean.delete}" ajax="false" />
+				   			<p:commandButton value="#{msgs['template.button.no']}" onclick="PF('deleteConfirmation').hide()" />
+						</p:confirmDialog> 			    
+					    
+					    <div class="buttons">  
+						    <p:commandButton value="#{msgs['template.button.incluir']}" ajax="false" 
+						    	action="#{partnerMBean.goToCreate}"/>
+					    </div>
+					</h:form>  
+		    	</td>
+	    	</tr>
+	    </table>
+		    
+  </ui:define>
+</ui:composition>

@@ -1,0 +1,41 @@
+<ui:fragment xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+		
+	<div class="filtro">
+		<p:accordionPanel value="#{activityMBean.activityDisplayList}" var="activityDisplay"  activeIndex="#{activityMBean.activeIndex}">  
+		    <p:tab title="#{activityDisplay.month}/#{activityDisplay.year} (#{activityDisplay.size})" titleStyle="border: 0px !important;">  
+		    	 <div class="tabelaNoHeader" style="width: 100%;">
+			    	
+			    	<p:dataTable var="act" value="#{activityDisplay.activityList}" style="width: 100%;">
+			    		<p:column style="text-align: left;">
+			    		
+			    			<h:commandLink action="#{activityMBean.loadActivity}" >
+				    			<h:outputText value="#{act.date}" >
+				    				<f:convertDateTime pattern="dd/MMM" />
+				    			</h:outputText>
+       							<f:setPropertyActionListener target="#{activityMBean.activity.id}" value="#{act.id}" />   			
+				    		</h:commandLink>
+				    		
+			    		</p:column>
+			    		
+			    		<p:column style="text-align: right; white-space: nowrap;">
+			    												
+			    			<h:commandLink action="#{activityMBean.loadActivity}">
+				    			<h:outputText value="#{act.totalDistance}">
+									<f:convertNumber pattern="#0.00"/>								
+								</h:outputText>	KM
+       							<f:setPropertyActionListener target="#{activityMBean.activity.id}" value="#{act.id}" />   			
+				    		</h:commandLink>		
+				    			    			
+			    		</p:column>
+			    	</p:dataTable>					 
+		    	</div>  
+		    </p:tab>  
+		</p:accordionPanel> 
+	</div>
+	
+</ui:fragment>

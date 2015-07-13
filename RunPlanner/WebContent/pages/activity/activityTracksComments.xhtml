@@ -1,0 +1,264 @@
+<ui:fragment xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+
+	<p:panel rendered="#{activityMBean.activity.lapsSize==1}" style="border: 0px;">
+	
+		
+		<p:panel rendered="#{not empty activityMBean.activity.observation}" style="border: 0px;">
+			<div class="filtro">
+				<div id="actDetails" style="font-size: 12px" class="tabela">
+					<table width="100%">
+						<thead>
+							<tr>
+								<th><h:outputText value="#{msgs['activity.observation']}" /></th>
+							</tr>
+						</thead>
+						<tr>
+							<td>
+								<i><h:outputText value="#{activityMBean.activity.observation}" escape="false" /></i>
+							</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+		</p:panel>
+
+		<br />
+		
+		<!-- Comentarios -->
+		<div class="filtro">
+			<div style="font-size: 12px" class="tabela">
+				<table width="100%" border="0">
+					<tr>
+						<td colspan="2" valign="top">
+						
+							<p:dataTable
+								value="#{activityMBean.commentList}" var="comments"
+								emptyMessage="Nenhum comentário ainda" rows="5" paginator="true"
+								paginatorPosition="bottom" paginatorAlwaysVisible="false"
+								id="commentsList1"	paginatorTemplate="{PreviousPageLink} {NextPageLink}">
+
+								<p:column style="vertical-align: top !important; ">
+									<f:facet name="header">
+										<h:outputText value="#{msgs['dashboard.comments']}" />
+									</f:facet>
+
+									<table>
+										<tr>
+											<td width="45" style="vertical-align: top; border: 0px;">
+												<p:graphicImage style="padding-right: 5px;"
+													value="#{photoMBean.streamedUserThumb}" width="45"
+													height="45" redended="#{comments.pessoa.photo!=null}">
+													<f:param name="client_id" value="#{comments.pessoa.id}" />
+												</p:graphicImage>
+											</td>
+
+											<td style="text-align: justify; border: 0px;">
+											
+												<h:commandLink action="#{profileMBean.goToView}">
+													<b><h:outputText value="#{comments.pessoa.shortName}" /></b>
+													<f:setPropertyActionListener target="#{profileMBean.customer.id}" value="#{comments.pessoa.id}" />
+												</h:commandLink> 
+												
+												<h:commandLink action="#{activityMBean.removeComment}" rendered="#{comments.pessoa.id==loginBean.userId}">
+													<h:outputText value="(#{msgs['template.button.delete']})" styleClass="subtitle" />
+													<f:setPropertyActionListener target="#{activityMBean.comment.id}" value="#{comments.id}" />
+												</h:commandLink> <br /> 
+												
+												<h:outputText value="#{comments.date}" styleClass="subtitle">
+													<f:convertDateTime pattern="dd/MM/yyyy" />
+												</h:outputText> 
+												
+												<h:outputText value=" - " styleClass="subtitle" /> 
+												<h:outputText value="#{comments.comment}" escape="false" />
+											</td>
+										</tr>
+									</table>
+
+								</p:column>
+							</p:dataTable>
+							
+						</td>
+					</tr>
+					<tr>
+						<td width="45">
+							<p:graphicImage  style="padding-right: 5px;"
+								value="#{photoMBean.streamedUserThumb}" width="45"
+								height="45" redended="#{loginBean.userPhoto!=null}">
+								<f:param name="client_id" value="#{loginBean.userId}" />
+							</p:graphicImage>
+						</td>
+						<td>
+							<p:inputTextarea value="#{activityMBean.comment.comment}"
+								id="commentArea1"  rows="2" maxlength="140" autoResize="false" style="width: 100%;" />
+						</td>
+					</tr>
+					<tr>
+						<td colspan="2" align="right">
+							<p:commandButton value="#{msgs['template.button.save']}" ajax="true"
+								action="#{activityMBean.addComment}" update="commentsList1,commentArea1" />
+						</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+	</p:panel>
+
+	<p:panel rendered="#{activityMBean.activity.lapsSize>1}" style="border: 0px;">
+		<table width="100%">
+			<tr>
+				<td width="55%" style="padding-right: 10px" valign="top">
+					<div class="filtro">
+						<div class="tabela">
+						
+							<p:dataTable var="lap" value="#{activityMBean.activity.laps}"
+								rowIndexVar="index" emptyMessage="#{msgs['template.msg.emptyMessage']}">
+
+								<p:column style="text-align: center;">
+									<f:facet name="header">
+										<h:outputText value="#{msgs['spreadsheet.lap.turn']}" />
+									</f:facet>
+									<h:outputText value="#{index+1}" />
+								</p:column>
+
+								<p:column style="text-align: center;">
+									<f:facet name="header">
+										<h:outputText value="#{msgs['spreadsheet.lap.distance']}" />
+									</f:facet>
+									<h:outputText value="#{lap.distanceKm}">
+										<f:convertNumber pattern="#0.00" />
+									</h:outputText>
+								</p:column>
+
+								<p:column style="text-align: center;">
+									<f:facet name="header">
+										<h:outputText value="#{msgs['spreadsheet.lap.time']}" />
+									</f:facet>
+									<h:outputText value="#{lap.totalTimeString}" />
+								</p:column>
+
+								<p:column style="text-align: center;">
+									<f:facet name="header">
+										<h:outputText value="#{msgs['spreadsheet.lap.pace']}" />
+									</f:facet>
+									<h:outputText value="#{lap.pace}" />
+								</p:column>
+
+								<p:column style="text-align: center;">
+									<f:facet name="header">
+										<h:outputText
+											value="#{msgs['spreadsheet.lap.averageHeartRateBpm']}" />
+									</f:facet>
+									<h:outputText value="#{lap.averageHeartRateBpm}" />
+								</p:column>
+							</p:dataTable>
+						</div>
+					</div>
+				</td>
+
+				<td valign="top">
+					<p:panel rendered="#{not empty activityMBean.activity.observation}" style="border: 0px;">
+						<div class="filtro">
+							<div id="actDetails" style="font-size: 12px" class="tabela">
+								<table width="100%">
+									<thead>
+										<tr>
+											<th><h:outputText value="#{msgs['activity.observation']}" /></th>
+										</tr>
+									</thead>
+									<tr>
+										<td>
+											<i><h:outputText value="#{activityMBean.activity.observation}" escape="false" /></i>
+										</td>
+									</tr>
+								</table>
+							</div>
+						</div>
+						<br />
+					</p:panel> 
+					
+					<!-- Comentarios -->
+					<div class="filtro">
+						<div style="font-size: 12px" class="tabela">
+							<table width="100%">
+								<tr>
+									<td colspan="2" valign="top">
+									
+										<p:dataTable
+											value="#{activityMBean.commentList}" var="comments"
+											emptyMessage="Nenhum comentário ainda" rows="5"
+											paginatorPosition="bottom" paginatorAlwaysVisible="false"
+											id="commentsList" paginator="true"
+											paginatorTemplate="{PreviousPageLink} {NextPageLink}">
+
+											<p:column style="vertical-align: top !important; max-width:200px;">
+												<f:facet name="header" style="text-align: center !important;">
+													<h:outputText value="#{msgs['dashboard.comments']}" />
+												</f:facet>
+
+												<table>
+													<tr>
+														<td width="45" style="vertical-align: top; border: 0px;">
+															<p:graphicImage style="padding-right: 5px;"
+																value="#{photoMBean.streamedUserThumb}" width="45"
+																height="45" redended="#{comments.pessoa.photo!=null}">
+																<f:param name="client_id" value="#{comments.pessoa.id}" />
+															</p:graphicImage>
+														</td>
+
+														<td style="text-align: justify; border: 0px;">
+														
+															<h:commandLink action="#{profileMBean.goToView}">
+																<b> <h:outputText value="#{comments.pessoa.shortName}" /> </b>
+																<f:setPropertyActionListener target="#{profileMBean.customer.id}" value="#{comments.pessoa.id}" />
+															</h:commandLink> 
+															
+															<h:commandLink action="#{activityMBean.removeComment}" rendered="#{comments.pessoa.id==loginBean.userId}">
+																<h:outputText value="(#{msgs['template.button.delete']})" styleClass="subtitle" />
+																<f:setPropertyActionListener target="#{activityMBean.comment.id}" value="#{comments.id}" />
+															</h:commandLink> <br /> 
+															
+															<h:outputText value="#{comments.date}" styleClass="subtitle">
+																<f:convertDateTime pattern="dd/MM/yyyy" />
+															</h:outputText> 
+															
+															<h:outputText value=" - " styleClass="subtitle" /> 
+															<h:outputText value="#{comments.comment}" escape="false" />
+														</td>
+													</tr>
+												</table>
+
+											</p:column>
+										</p:dataTable>
+									</td>
+								</tr>
+								<tr>
+									<td width="45px">
+										<p:graphicImage style="padding-right: 5px;"
+											value="#{photoMBean.streamedUserThumb}" width="45"
+											height="45" redended="#{loginBean.userPhoto!=null}">
+											<f:param name="client_id" value="#{loginBean.userId}" />
+										</p:graphicImage>
+									</td>
+									<td>
+										<p:inputTextarea value="#{activityMBean.comment.comment}" id="commentArea"
+											style="width: 100%;" rows="2" maxlength="140" autoResize="false" />
+									</td>
+								</tr>
+								<tr>
+									<td colspan="2" align="right">
+										<p:commandButton value="#{msgs['template.button.save']}" ajax="true"
+											action="#{activityMBean.addComment}" update="commentsList,commentArea" />
+									</td>
+								</tr>
+							</table>
+						</div>
+					</div></td>
+			</tr>
+		</table>
+	</p:panel>
+</ui:fragment>

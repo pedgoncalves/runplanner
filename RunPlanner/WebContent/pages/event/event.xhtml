@@ -1,0 +1,106 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="#{loginBean.templateVersion}">
+
+	<ui:define name="content">
+		<h:form>
+			<p:messages id="messages" showDetail="false" /> 
+			<div class="pageTitleBox">#{msgs['event.maintitle']}</div>
+			<div class="subtitle">#{msgs['event.subtitle']}</div>
+			
+			<p:panel header="#{msgs['header.evento']}" style="align:center" > 			
+				<p><h:outputLabel for="nome" value="#{msgs['event.name']}" />
+				<p:inputText id="nome" value="#{eventMBean.event.name}" size="100" required="true"
+					requiredMessage="#{msgs['event.name.mandatory']}"  maxlength="100"/></p>
+					
+				<p><h:outputLabel for="location" value="#{msgs['event.location']}" />
+				<p:inputText id="location" value="#{eventMBean.event.location}" size="100" required="true"
+					requiredMessage="#{msgs['event.location.mandatory']}"  maxlength="100"/></p>
+					
+				<p><h:outputLabel for="site" value="#{msgs['event.site']}" />
+				<p:inputText id="site" value="#{eventMBean.event.website}" size="100" maxlength="100"/></p>			
+				
+				<p><h:outputLabel for="price" value="#{msgs['event.prices']}" />
+				<p:inputText id="price" value="#{eventMBean.event.value}" size="100" maxlength="100"/></p>
+								
+				<p><h:outputLabel for="date" value="#{msgs['event.date']}" />
+				<p:inputMask id="date" value="#{eventMBean.event.date}" size="11" mask="99/99/9999"
+						validatorMessage="#{msgs['event.date.invalid']}"
+						converterMessage="#{msgs['event.date.invalid']}"
+						required="true" requiredMessage="#{msgs['event.date.mandatory']}">
+					<f:convertDateTime pattern="dd/MM/yyyy" />
+				</p:inputMask>
+				
+				<h:outputLabel for="hour" value="#{msgs['event.hour']}" style="text-align:right"/>
+				<p:inputMask id="hour" value="#{eventMBean.event.time}" size="4" mask="99:99" required="true"
+						requiredMessage="#{msgs['event.time.mandatory']}" style="margin-left:10px"
+						converterMessage="#{msgs['event.time.convert.error']}">			
+					<f:convertDateTime pattern="HH:mm" />
+				</p:inputMask>
+				
+				<h:outputLabel for="distance" value="#{msgs['event.distance']}"  style="text-align:right"/>
+				<p:inputText id="distance" value="#{eventMBean.event.distance}" size="20" required="true"
+					requiredMessage="#{msgs['event.distance.mandatory']}"  maxlength="20" style="margin-left:10px" />
+				</p>
+				
+				<p><h:outputLabel for="inscription" value="#{msgs['event.limit']}" />
+				<p:inputMask id="inscription" value="#{eventMBean.event.finalDate}" size="11" mask="99/99/9999"
+						validatorMessage="#{msgs['event.limit.invalid']}"
+						converterMessage="#{msgs['event.limit.invalid']}"
+						required="true" requiredMessage="#{msgs['event.limit.mandatory']}">
+					<f:convertDateTime pattern="dd/MM/yyyy" />
+				</p:inputMask> <i><h:outputText value="#{msgs['event.finalDate']}" style="width:10px; text-align:left" /></i>
+				</p>
+	
+	
+				<p style="padding-bottom: 8px !important;">
+					<h:outputLabel for="description" value="#{msgs['event.description']}" />
+					<p:inputTextarea id="description" value="#{eventMBean.event.description}" cols="100" rows="5" maxlength="200" autoResize="false" />
+				</p>
+						
+			 </p:panel>
+			
+			<div class="buttons">
+				<p:commandButton value="#{msgs['template.button.save']}"
+					rendered="#{eventMBean.event.id == null}" ajax="false"
+					action="#{eventMBean.save}"  />
+					
+				<p:commandButton value="#{msgs['template.button.alterar']}"
+					rendered="#{eventMBean.event.id != null}" ajax="false"
+					action="#{eventMBean.save}" />
+					
+				<p:commandButton value="#{msgs['template.button.cancelar']}" ajax="false"
+					action="#{eventMBean.goToList}" immediate="true" />
+			</div>
+				
+			<p:outputPanel rendered="#{eventMBean.event.id!=null}">
+				<h3><h:outputText value="#{msgs['event.title.interested']}"/></h3>
+				
+				<div class="tabela">
+					<p:dataTable var="epa" value="#{eventMBean.eventPessoaList}"
+						emptyMessage="#{msgs['template.msg.emptyMessage']}"
+						rendered="#{eventMBean.event.id!=null}" >
+		
+						<p:column>
+							<f:facet name="header">
+								<h:outputText value="#{msgs['alunos.nome']}" />
+							</f:facet>
+							<h:outputText value="#{epa.customer.nome}" />	           			 
+						</p:column>
+						
+						<p:column   style="text-align:center;">
+							<f:facet name="header">
+								<h:outputText value="#{msgs['event.time']}" />
+							</f:facet>
+							<h:outputText value="#{epa.activity.totalTime}" />	           			 
+						</p:column>						
+							
+					</p:dataTable>
+				</div>
+			</p:outputPanel>
+		</h:form>
+	</ui:define>
+</ui:composition>

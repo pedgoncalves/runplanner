@@ -1,0 +1,102 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:rp="http://runplanner.com.br/facelets"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="#{loginBean.templateVersion}">
+
+	<ui:define name="content">
+		
+			<p:messages id="messages" showDetail="false" />
+			<div class="pageTitleBox">#{msgs['team.maintitle']}</div>
+			<div class="subtitle">#{msgs['team.subtitle']}</div>
+
+			<table>
+				<tr>
+					<td valign="top" width="15%">
+						<rp:sideMenu menu="profileAdvice" selectedMenu="turma"/>
+					</td>
+					<td valign="top" align="left" style="padding-left: 10px;">
+						<h:form>
+							<p:dataTable id="teamList" value="#{teamMBean.teamList}" var="team"
+									emptyMessage="#{msgs['template.msg.emptyMessage']}"
+									paginator="true" rows="10" paginatorPosition="bottom"
+									paginatorAlwaysVisible="false"
+									paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}">
+		
+									<p:column>
+										<f:facet name="header">
+											<h:outputText value="#{msgs['team.place']}" />
+										</f:facet>
+		
+										<h:commandLink action="#{teamMBean.goToModify}">
+											<h:outputText value="#{team.place}" />
+											<f:setPropertyActionListener target="#{teamMBean.team.id}"
+												value="#{team.id}" />
+										</h:commandLink>
+									</p:column>
+		
+									<p:column>
+										<f:facet name="header">
+											<h:outputText value="#{msgs['team.description']}" />
+										</f:facet>
+										<h:outputText value="#{team.description}" />
+									</p:column>
+		
+									<p:column style="text-align: center;">
+										<f:facet name="header">
+											<h:outputText value="#{msgs['team.initialHour']}" />
+										</f:facet>
+										<h:outputText value="#{team.initialHour}">
+											<f:convertDateTime pattern="HH:mm" />
+										</h:outputText>
+									</p:column>
+		
+									<p:column style="text-align:center;">
+										<f:facet name="header">
+											<h:outputText value="#{msgs['template.title.actions']}" />
+										</f:facet>
+		
+										<p:commandButton icon="edit"
+											title="#{msgs['template.button.edit']}" immediate="true"
+											action="#{teamMBean.goToModify}" ajax="false">
+											<f:setPropertyActionListener target="#{teamMBean.team.id}"
+												value="#{team.id}" />
+										</p:commandButton>
+		
+										<p:commandButton icon="delete"
+											oncomplete="PF('deleteConfirmation').show()"
+											title="#{msgs['template.button.delete']}">
+											<f:setPropertyActionListener target="#{teamMBean.team.id}"
+												value="#{team.id}" />
+										</p:commandButton>
+		
+									</p:column>
+								</p:dataTable>
+							<p:confirmDialog
+								message="#{msgs['template.msg.delete.confirmation']}"
+								severity="alert" widgetVar="deleteConfirmation">
+								<center>
+									<p:commandButton value="#{msgs['template.button.yes']}"
+										oncomplete="deleteConfirmation.hide()"
+										action="#{teamMBean.delete}" ajax="false" />
+									<p:commandButton value="#{msgs['template.button.no']}"
+										onclick="PF('deleteConfirmation').hide()" />
+								</center>
+							</p:confirmDialog>
+				
+						</h:form>
+					</td>
+				</tr>
+			</table>
+
+
+		<h:form>
+			<div class="buttons">
+				<p:commandButton value="#{msgs['template.button.incluir']}"
+					ajax="false" action="#{teamMBean.goToCreate}" />
+			</div>
+		</h:form>
+	</ui:define>
+</ui:composition>

@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:rp="http://runplanner.com.br/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="#{loginBean.templateVersion}">
+
+	<ui:define name="content">
+		<h:form>
+			<p:messages id="messages" showDetail="false" />
+			<div class="pageTitleBox">#{msgs['customer.maintitle']}</div>
+			<div class="subtitle">#{msgs['customer.subtitle']}</div>
+
+			<table>
+				<tr>
+					<td valign="top" width="15%">
+						<rp:sideMenu menu="studentsAdvice" selectedMenu="studentRegister"/>
+					</td>
+					<td valign="top" align="left" style="padding-left: 10px;">
+
+						<table>
+							<tr>
+								<td><h:outputLabel value="#{msgs['aluno.filter.name']}"
+										style="width:50px;" /></td>
+								<td><p:inputText value="#{customerMBean.findName}"
+										size="25" maxlength="100" /></td>
+
+								<td><h:outputLabel value="#{msgs['aluno.filter.active']}"
+										style="width:60px;" /></td>
+								<td><p:selectOneMenu value="#{customerMBean.findActive}">
+										<f:selectItem itemLabel="#{msgs['template.active.true']}"
+											itemValue="true" />
+										<f:selectItem itemLabel="#{msgs['template.active.false']}"
+											itemValue="false" />
+									</p:selectOneMenu></td>
+								<td><h:outputLabel value="#{msgs['aluno.filter.team']}"
+										style="width:60px;" /></td>
+								<td><p:selectOneMenu value="#{customerMBean.findTeamId}">
+										<f:selectItem itemLabel="#{msgs['template.value.all']}"
+											itemValue="-1" />
+										<f:selectItems value="#{customerMBean.teamList}" />
+									</p:selectOneMenu></td>
+								<td style="padding-left: 5px"><p:commandButton
+										actionListener="#{customerMBean.find}"
+										update="customerListTable,messages"
+										title="#{msgs['template.button.find']}"
+										value="#{msgs['template.button.find']}" /></td>
+							</tr>
+						</table> <br /> <p:dataTable var="customer"
+							value="#{customerMBean.customerList}" id="customerListTable"
+							paginator="true" rows="20" paginatorPosition="bottom"
+							paginatorAlwaysVisible="false"
+							paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+							emptyMessage="#{msgs['template.msg.emptyMessage']}">
+
+							<p:column style="max-width:150px;">
+								<f:facet name="header">
+									<h:outputText value="#{msgs['alunos.nome']}" />
+								</f:facet>
+
+								<h:commandLink action="#{customerMBean.goToModify}">
+									<h:outputText value="#{customer.nome}" />
+									<f:setPropertyActionListener
+										target="#{customerMBean.customer.id}" value="#{customer.id}" />
+								</h:commandLink>
+							</p:column>
+
+							<p:column>
+								<f:facet name="header">
+									<h:outputText value="#{msgs['alunos.email']}" />
+								</f:facet>
+								<h:outputText value="#{customer.email}" />
+							</p:column>
+
+
+							<p:column style="text-align: center; width: 50px;">
+								<f:facet name="header">
+									<h:outputText value="#{msgs['alunos.idade']}" />
+								</f:facet>
+								<h:outputText value="#{customer.idade}" />
+							</p:column>
+
+							<p:column style="text-align:center; white-space: nowrap; ">
+								<f:facet name="header">
+									<h:outputText value="#{msgs['template.title.actions']}" />
+								</f:facet>
+
+								<p:commandButton icon="edit"
+									action="#{customerMBean.goToModify}" ajax="false"
+									title="#{msgs['template.button.edit']}">
+									<f:setPropertyActionListener
+										target="#{customerMBean.customer.id}" value="#{customer.id}" />
+								</p:commandButton>
+
+								<p:commandButton icon="email" oncomplete="PF('emailDialog').show()"
+									update="@widgetVar(emailDialog)"
+									title="#{msgs['template.button.email']}">
+									<f:setPropertyActionListener
+										target="#{customerMBean.customer.id}" value="#{customer.id}" />
+								</p:commandButton>
+
+								<p:commandButton
+									action="#{customerMBean.goToBodyMeasurementsList}" ajax="false"
+									update="painel" title="#{msgs['alunos.medicaldata']}"
+									icon="health">
+									<f:setPropertyActionListener
+										target="#{customerMBean.customer.id}" value="#{customer.id}" />
+								</p:commandButton>
+
+								<p:commandButton icon="restart"
+									oncomplete="PF('confirmationRestart').show()"
+									update="@widgetVar(confirmationRestart)"
+									title="#{msgs['template.button.restart']}"
+									rendered="#{customer.active}">
+									<f:setPropertyActionListener
+										target="#{customerMBean.customer.id}" value="#{customer.id}" />
+								</p:commandButton>
+
+								<p:commandButton icon="ativar" oncomplete="PF('confirmation').show()"
+									update="@widgetVar(confirmation)"
+									title="#{msgs['template.button.deactivate']}"
+									rendered="#{customer.active}">
+									<f:setPropertyActionListener
+										target="#{customerMBean.customer.id}" value="#{customer.id}" />
+								</p:commandButton>
+
+								<p:commandButton icon="desativar"
+									oncomplete="PF('confirmationActive').show()"
+									update="@widgetVar(confirmationActive)"
+									title="#{msgs['template.button.activate']}"
+									rendered="#{!customer.active}">
+									<f:setPropertyActionListener
+										target="#{customerMBean.customer.id}" value="#{customer.id}" />
+								</p:commandButton>
+
+								<p:commandButton icon="delete"
+									oncomplete="PF('deleteConfirmation').show()"
+									update="@widgetVar(deleteConfirmation)"
+									title="#{msgs['template.button.delete']}">
+									<f:setPropertyActionListener
+										target="#{customerMBean.customer.id}" value="#{customer.id}" />
+								</p:commandButton>
+
+							</p:column>
+						</p:dataTable>
+					</td>
+				</tr>
+			</table>
+
+			<div class="buttons">
+				<p:commandButton value="#{msgs['template.button.incluir']}"
+					action="#{customerMBean.goToCreate}" ajax="false" />
+
+				<p:commandButton value="#{msgs['template.button.lista.aluno']}"
+					action="#{customerMBean.goToListaAlunoReport}" ajax="false" />
+			</div>
+
+			<p:dialog message="#{msgs['template.msg.delete.confirmation']}"
+				severity="alert" widgetVar="deleteConfirmation"
+				id="deleteConfirmation" modal="true" width="300">
+				<center> <br />
+				<b><h:outputText
+						value="#{msgs['template.msg.delete.confirmation']}" /></b> <br />
+				<br />
+
+				<p:commandButton value="#{msgs['template.button.yes']}"
+					oncomplete="PF('deleteConfirmation').hide()"
+					action="#{customerMBean.delete}" ajax="false" /> <p:commandButton
+					value="#{msgs['template.button.no']}"
+					onclick="PF('deleteConfirmation').hide()" /> <br />
+				<br />
+				</center>
+			</p:dialog>
+
+			<p:dialog
+				message="#{msgs['template.msg.aluno.activation.confirmation']}"
+				severity="alert" widgetVar="confirmationActive"
+				id="confirmationActive" modal="true" width="300">
+				<center> <br />
+				<b><h:outputText
+						value="#{msgs['template.msg.aluno.activation.confirmation']}" /></b>
+				<br />
+				<br />
+
+				<p:commandButton value="#{msgs['template.button.yes']}"
+					oncomplete="PF('confirmationActive').hide()"
+					action="#{customerMBean.reactive}" ajax="false"
+					title="#{msgs['template.button.activate']}" /> <p:commandButton
+					value="#{msgs['template.button.no']}"
+					onclick="PF('confirmationActive').hide()" /> <br />
+				<br />
+				</center>
+			</p:dialog>
+
+			<p:dialog
+				message="#{msgs['template.msg.aluno.restart.confirmation']}"
+				severity="alert" widgetVar="confirmationRestart"
+				id="confirmationRestart" modal="true" width="300">
+				<center> <br />
+				<b><h:outputText
+						value="#{msgs['template.msg.aluno.restart.confirmation']}" /></b> <br />
+				<br />
+
+				<p:commandButton value="#{msgs['template.button.yes']}"
+					oncomplete="PF('confirmationRestart').hide()"
+					action="#{customerMBean.restartPassword}" ajax="false"
+					title="#{msgs['template.button.activate']}" /> <p:commandButton
+					value="#{msgs['template.button.no']}"
+					onclick="PF('confirmationRestart').hide()" /> <br />
+				<br />
+				</center>
+			</p:dialog>
+
+			<p:dialog
+				message="#{msgs['template.msg.aluno.deactivation.confirmation']}"
+				severity="alert" widgetVar="confirmation" id="confirmation"
+				modal="true" width="300">
+				<center> <br />
+				<b><h:outputText
+						value="#{msgs['template.msg.aluno.deactivation.confirmation']}" /></b>
+				<br />
+				<br />
+
+				<p:commandButton value="#{msgs['template.button.yes']}"
+					oncomplete="PF('confirmation').hide()" action="#{customerMBean.deactive}"
+					ajax="false" title="#{msgs['template.button.deactivate']}" /> <p:commandButton
+					value="#{msgs['template.button.no']}" onclick="PF('confirmation').hide()" />
+				<br />
+				<br />
+				</center>
+			</p:dialog>
+
+		</h:form>
+
+
+		<p:dialog widgetVar="emailDialog"
+			header="#{msgs['aluno.email.title']}" id="emailDialog" modal="true">
+			<h:form>
+				<div style="padding: 10px">
+					<p>
+						<h:outputLabel value="#{msgs['contact.subject']}"
+							style="width: 150px;" />
+						<p:inputText value="#{customerMBean.subject}" size="75"
+							required="true"
+							requiredMessage="#{msgs['contact.subject.mandatory']}" />
+					</p>
+
+					<p>
+						<h:outputLabel value="#{msgs['contact.message']}"
+							style="width: 150px;" />
+						<p:inputTextarea value="#{customerMBean.message}" style="width: 100%"
+							rows="5" maxlength="300" autoResize="false" required="true"
+							requiredMessage="#{msgs['contact.message.mandatory']}" />
+					</p>
+
+					<p style="text-align: center !important;">
+						<p:commandButton value="#{msgs['template.button.send']}"
+							action="#{customerMBean.sendEmail}" ajax="false"
+							oncomplete="PF('emailDialog').hide();" />
+						<p:commandButton value="#{msgs['template.button.cancelar']}"
+							oncomplete="PF('emailDialog').hide();" />
+					</p>
+				</div>
+			</h:form>
+		</p:dialog>
+
+	</ui:define>
+</ui:composition>

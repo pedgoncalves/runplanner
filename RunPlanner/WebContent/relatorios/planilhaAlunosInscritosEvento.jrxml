@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="planilhaAlunosInscritoEvento" language="groovy" printOrder="Horizontal" pageWidth="595" pageHeight="842" columnWidth="547" leftMargin="28" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="209"/>
+	<parameter name="EVENTO_ID" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="TIMBRADO" class="java.lang.String"/>
+	<parameter name="LOGO" class="java.io.InputStream"/>
+	<queryString>
+		<![CDATA[SELECT e.name, e.date, e.location, p.nome, p.email, p.rg,
+       en.foneResidencial, en.foneCelular,p.cpf, p.dtNascimento, a.name as assessoria
+FROM Event e join EventPessoaActivity epa on (e.id = epa.event_id)
+join Pessoa p on (epa.customer_id = p.id) join Endereco en on (p.endereco_id = en.id)
+join Advice a on (p.advice_id = a.id)
+where e.id = $P{EVENTO_ID}
+and p.active = 1
+order by p.nome]]>
+	</queryString>
+	<field name="name" class="java.lang.String"/>
+	<field name="date" class="java.sql.Date"/>
+	<field name="location" class="java.lang.String"/>
+	<field name="nome" class="java.lang.String"/>
+	<field name="email" class="java.lang.String"/>
+	<field name="rg" class="java.lang.String"/>
+	<field name="foneResidencial" class="java.lang.String"/>
+	<field name="foneCelular" class="java.lang.String"/>
+	<field name="cpf" class="java.lang.String"/>
+	<field name="dtNascimento" class="java.sql.Date"/>
+	<field name="assessoria" class="java.lang.String"/>
+	<background>
+		<band height="802" splitType="Stretch">
+			<image>
+				<reportElement x="-11" y="-16" width="574" height="818"/>
+				<imageExpression><![CDATA[$P{TIMBRADO}]]></imageExpression>
+			</image>
+			<textField>
+				<reportElement x="-20" y="0" width="35" height="802"/>
+				<textElement textAlignment="Center" rotation="Left">
+					<font fontName="Advantage" size="20" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{assessoria}]]></textFieldExpression>
+			</textField>
+		</band>
+	</background>
+	<title>
+		<band height="80" splitType="Stretch">
+			<staticText>
+				<reportElement mode="Transparent" x="0" y="6" width="547" height="26"/>
+				<textElement textAlignment="Center">
+					<font fontName="Advantage" size="18" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Relatório de Eventos]]></text>
+			</staticText>
+			<textField>
+				<reportElement mode="Transparent" x="52" y="32" width="327" height="14"/>
+				<textElement>
+					<font fontName="Advantage"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{name}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Transparent" x="14" y="32" width="38" height="14"/>
+				<textElement>
+					<font fontName="Advantage"/>
+				</textElement>
+				<text><![CDATA[Evento: ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Transparent" x="14" y="47" width="38" height="14"/>
+				<textElement>
+					<font fontName="Advantage"/>
+				</textElement>
+				<text><![CDATA[Data: ]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement mode="Transparent" x="52" y="47" width="100" height="14"/>
+				<textElement>
+					<font fontName="Advantage"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{date}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Transparent" x="14" y="62" width="38" height="14"/>
+				<textElement>
+					<font fontName="Advantage"/>
+				</textElement>
+				<text><![CDATA[Local: ]]></text>
+			</staticText>
+			<textField>
+				<reportElement mode="Transparent" x="52" y="62" width="327" height="14"/>
+				<textElement>
+					<font fontName="Advantage"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{location}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="74" splitType="Stretch">
+			<rectangle>
+				<reportElement mode="Transparent" x="12" y="2" width="521" height="70"/>
+			</rectangle>
+			<staticText>
+				<reportElement mode="Transparent" x="17" y="8" width="33" height="14"/>
+				<textElement>
+					<font fontName="Advantage"/>
+				</textElement>
+				<text><![CDATA[Nome:]]></text>
+			</staticText>
+			<textField>
+				<reportElement mode="Transparent" x="50" y="8" width="462" height="14"/>
+				<textElement>
+					<font fontName="Advantage"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nome}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Transparent" x="17" y="22" width="33" height="14"/>
+				<textElement>
+					<font fontName="Advantage"/>
+				</textElement>
+				<text><![CDATA[Email:]]></text>
+			</staticText>
+			<textField>
+				<reportElement mode="Transparent" x="50" y="22" width="264" height="14"/>
+				<textElement>
+					<font fontName="Advantage"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{email}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Transparent" x="317" y="22" width="100" height="14"/>
+				<textElement>
+					<font fontName="Advantage"/>
+				</textElement>
+				<text><![CDATA[Data de Nascimento:]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="416" y="22" width="100" height="14"/>
+				<textElement>
+					<font fontName="Advantage"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{dtNascimento}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Transparent" x="17" y="37" width="33" height="14"/>
+				<textElement>
+					<font fontName="Advantage"/>
+				</textElement>
+				<text><![CDATA[RG:]]></text>
+			</staticText>
+			<textField>
+				<reportElement mode="Transparent" x="50" y="37" width="164" height="14"/>
+				<textElement>
+					<font fontName="Advantage"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{rg}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Transparent" x="317" y="37" width="24" height="14"/>
+				<textElement>
+					<font fontName="Advantage"/>
+				</textElement>
+				<text><![CDATA[CPF:]]></text>
+			</staticText>
+			<textField>
+				<reportElement mode="Transparent" x="340" y="37" width="164" height="14"/>
+				<textElement>
+					<font fontName="Advantage"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cpf}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Transparent" x="17" y="52" width="100" height="14"/>
+				<textElement>
+					<font fontName="Advantage"/>
+				</textElement>
+				<text><![CDATA[Telefone Residencial:]]></text>
+			</staticText>
+			<textField>
+				<reportElement mode="Transparent" x="117" y="52" width="100" height="14"/>
+				<textElement>
+					<font fontName="Advantage"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{foneResidencial}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Transparent" x="317" y="52" width="77" height="14"/>
+				<textElement>
+					<font fontName="Advantage"/>
+				</textElement>
+				<text><![CDATA[Telefone Celular:]]></text>
+			</staticText>
+			<textField>
+				<reportElement mode="Transparent" x="393" y="52" width="100" height="14"/>
+				<textElement>
+					<font fontName="Advantage"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{foneCelular}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="34" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

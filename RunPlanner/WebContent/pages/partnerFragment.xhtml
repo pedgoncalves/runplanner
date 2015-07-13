@@ -1,0 +1,25 @@
+<ui:fragment xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+	
+	<ui:repeat var="partner" value="#{dashboardMBean.partnerList}" itemType="none">
+		<tr>
+			<td>
+				<div class="propaganda">
+					Publicidade
+					<center>
+						<a href="#{partner.url}" target="_blank">
+							<p:graphicImage value="#{photoMBean.streamedBanner}" width="500">
+								<f:param name="banner_path" value="#{partner.banner}" />
+							</p:graphicImage>
+						</a>
+					</center>
+				</div>  
+			</td>
+		</tr>
+	</ui:repeat>
+	
+</ui:fragment>

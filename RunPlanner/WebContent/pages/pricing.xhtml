@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:sec="http://www.springframework.org/security/facelets/tags"
+	template="/pages/template/templateOut.xhtml">
+	
+	<ui:define name="content">
+		<style type="text/css">
+			.button {
+				behavior: url(ie-css3.htc);
+			    
+			    border: 0px !important;
+			    color:#333 !important;
+			    font-weight:bold !important;
+			    padding:3px 8px !important;
+			       
+			    -moz-box-shadow: none !important;
+			    -webkit-box-shadow:  none !important;
+			    box-shadow:  none !important;	
+			    
+			    background: #02425C !important;	
+			}
+			
+			.button:hover {
+				behavior: url(ie-css3.htc);
+				
+			    border: 0px !important;
+			    color:#333 !important;
+			    font-weight:bold !important;
+			    padding:3px 8px !important;
+			       
+			    -moz-box-shadow: none !important;
+			    -webkit-box-shadow:  none !important;
+			    box-shadow:  none !important;	
+			    
+			    background: #02425C !important;	
+			}
+			
+			body {
+            	background-image: url('../images/bgFaq.jpg');
+            	background-repeat: no-repeat;
+            	background-position: bottom right;
+            }  
+        </style> 
+		
+		<br/><br/><br/>
+		<center>
+			
+		
+			<table width="80%" cellpadding="10">
+			
+				<tr>
+					<td colspan="4" style="font-size: 20px; color: #C8C8C8; letter-spacing: 3;">
+						
+						Conheça os pacotes que o <b>RunPlanner</b> oferece para você!
+						<br/><br/>
+					
+					</td>
+				</tr>
+			
+				<tr>
+					<td width="25%" valign="top">
+						<div class="filtro">
+							<h:form>
+							<table border="0" width="100%" >
+								<tr>
+									<td style="text-align:center; color:#F88436; font-size: 20px; letter-spacing: 2; padding-top: 20;">
+										<b>CAMINHANTE</b>
+										
+										<hr size="1" style="border-color: grey;"/>
+									</td>
+								</tr>
+								<tr>
+									<td style="text-align:center; color:#F88436; letter-spacing: 2; padding-top: 20; height: 70;">
+										<font style="font-size: 20px;"><b>Grátis</b></font>
+									</td>
+								</tr>
+								<tr>
+									<td style="text-align:center; color:#F88436; letter-spacing: 2; padding-top: 30; height: 125;">
+										<font style="font-size: 15px; color: grey;">Até </font>
+										<font style="font-size: 20px;">10</font>
+										<font style="font-size: 15px; color: grey;"> alunos</font><br/>
+										
+										<font style="font-size: 15px; color: grey;">Professores </font>
+										<font style="font-size: 20px;">ilimitados</font><br/>
+										
+										<font style="font-size: 15px; color: grey;">Suporte </font>
+										<font style="font-size: 20px;">24 horas</font>											
+									</td>
+								</tr>
+								<tr>
+									<td style="text-align:center; color:#F88436; letter-spacing: 2; padding-top: 50; padding-bottom: 20;">
+										<p:commandButton value="Fale Conosco"  styleClass="entrarButtonAzul"/>
+									</td>
+								</tr>
+							</table>
+							</h:form>
+						</div>
+					</td>
+					<td width="25%" valign="top">
+						<div class="filtro">
+							<h:form>
+							<table border="0" width="100%" >
+								<tr>
+									<td style="text-align:center; color:#F88436; font-size: 20px; letter-spacing: 2; padding-top: 20;">
+										<b>INICIANTE</b>
+										
+										<hr size="1" />
+									</td>
+								</tr>
+								<tr style="height: 50;">
+									<td style="text-align:center; color:#F88436; letter-spacing: 2; padding-top: 20; height: 70;">
+										<font style="font-size: 20px;"><b>R$3,95</b></font><br/>
+										<font style="font-size: 15px; color: grey;">por aluno/mês</font>										
+									</td>
+								</tr>
+								<tr>
+									<td style="text-align:center; color:#F88436; letter-spacing: 2; padding-top: 30; height: 125;">
+										<font style="font-size: 15px; color: grey;">Até </font>
+										<font style="font-size: 20px;">20</font>
+										<font style="font-size: 15px; color: grey;"> alunos</font><br/>
+										
+										<font style="font-size: 15px; color: grey;">Professores </font>
+										<font style="font-size: 20px;">ilimitados</font><br/>
+										<font style="font-size: 15px; color: grey;">Apenas </font>
+										<font style="font-size: 20px;">R$ 79,00</font>
+										<font style="font-size: 15px; color: grey;">/mês</font><br/>
+										
+										<font style="font-size: 15px; color: grey;">Suporte </font>
+										<font style="font-size: 20px;">24 horas</font>										
+									</td>
+								</tr>
+								<tr>
+									<td style="text-align:center; color:#F88436; letter-spacing: 2; padding-top: 50; padding-bottom: 20;">
+										<p:commandButton value="Fale Conosco"  styleClass="entrarButtonAzul"/>
+									</td>
+								</tr>
+							</table>
+							</h:form>
+						</div>
+					</td>
+					<td width="25%" valign="top">
+						<div class="filtro">
+							<h:form>
+							<table border="0" width="100%" >
+								<tr>
+									<td style="text-align:center; color:#F88436; font-size: 20px; letter-spacing: 2; padding-top: 20;">
+										<b>INTERMEDIÁRIO</b>
+										
+										<hr size="1" style="border-color: grey;"/>
+									</td>
+								</tr>
+								<tr>
+									<td style="text-align:center; color:#F88436; letter-spacing: 2; padding-top: 20; height: 70;">
+										<font style="font-size: 20px;"><b>R$2,79</b></font><br/>
+										<font style="font-size: 15px; color: grey;">por aluno/mês</font>										
+									</td>
+								</tr>
+								<tr>
+									<td style="text-align:center; color:#F88436; letter-spacing: 2; padding-top: 30; height: 125;">
+										<font style="font-size: 15px; color: grey;">Até </font>
+										<font style="font-size: 20px;">100</font>
+										<font style="font-size: 15px; color: grey;"> alunos</font><br/>
+										
+										<font style="font-size: 15px; color: grey;">Professores </font>
+										<font style="font-size: 20px;">ilimitados</font><br/>
+										<font style="font-size: 15px; color: grey;">Apenas </font>
+										<font style="font-size: 20px;">R$ 279,00</font>
+										<font style="font-size: 15px; color: grey;">/mês</font><br/>
+										
+										<font style="font-size: 15px; color: grey;">Suporte </font>
+										<font style="font-size: 20px;">24 horas</font>										
+									</td>
+								</tr>
+								<tr>
+									<td style="text-align:center; color:#F88436; letter-spacing: 2; padding-top: 50; padding-bottom: 20;">
+										<p:commandButton value="Fale Conosco"  styleClass="entrarButtonAzul"/>
+									</td>
+								</tr>
+							</table>
+							</h:form>
+						</div>
+					</td>
+					<td width="25%" valign="top">
+						<div class="filtro">
+							<h:form>
+							<table border="0" width="100%" >
+								<tr>
+									<td style="text-align:center; color:#F88436; font-size: 20px; letter-spacing: 2; padding-top: 20;">
+										<b>AVANÇADO</b>
+										
+										<hr size="1" style="border-color: grey;"/>
+									</td>
+								</tr>
+								<tr>
+									<td style="text-align:center; color:#F88436; letter-spacing: 2; padding-top: 20; height: 70;">
+										<font style="font-size: 20px;"><b>R$2,00</b></font><br/>
+										<font style="font-size: 15px; color: grey;">por aluno/mês</font>										
+									</td>
+								</tr>
+								<tr>
+									<td style="text-align:center; color:#F88436; letter-spacing: 2; padding-top: 30; height: 125;">
+										<font style="font-size: 15px; color: grey;">Até </font>
+										<font style="font-size: 20px;">200</font>
+										<font style="font-size: 15px; color: grey;"> alunos</font><br/>
+										
+										<font style="font-size: 15px; color: grey;">Professores </font>
+										<font style="font-size: 20px;">ilimitados</font><br/>
+										<font style="font-size: 15px; color: grey;">Apenas </font>
+										<font style="font-size: 20px;">R$ 400,00</font>
+										<font style="font-size: 15px; color: grey;">/mês</font>	<br/>
+										
+										<font style="font-size: 15px; color: grey;">Suporte </font>
+										<font style="font-size: 20px;">24 horas</font>									
+									</td>
+								</tr>
+								<tr>
+									<td style="text-align:center; color:#F88436; letter-spacing: 2; padding-top: 50; padding-bottom: 20;">
+										<p:commandButton value="Fale Conosco"  styleClass="entrarButtonAzul"/>
+									</td>
+								</tr>
+							</table>
+							</h:form>
+						</div>
+					</td>
+				</tr>
+				
+				<tr>
+					<td colspan="4">
+						<br/><br/><br/><br/><br/>
+						<font style="font-size: 20px; color: #767676; word-spacing: 2;"><b>Nossos parceiros</b></font>
+						<hr size="1"/>
+					</td>
+				</tr>
+				<tr>
+					<td align="center"><img src="${facesContext.externalContext.requestContextPath}/images/parceiro1.png"/></td>
+					<td align="center"><img src="${facesContext.externalContext.requestContextPath}/images/parceiro2.png"/></td>
+					<td align="center"><img src="${facesContext.externalContext.requestContextPath}/images/parceiro1.png"/></td>
+				</tr>
+			
+			</table>
+			<br/><br/><br/><br/><br/>
+		</center>
+		
+			
+	</ui:define>
+</ui:composition>		

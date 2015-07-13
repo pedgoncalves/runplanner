@@ -1,0 +1,138 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	template="#{loginBean.templateVersion}">
+	
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+		
+	<ui:define name="content">
+   	<script type="text/javascript">
+		PrimeFaces.locales['pt'] = {
+               closeText: 'Fechar',
+               prevText: 'Anterior',
+               nextText: 'Próximo',
+               currentText: 'Começo',
+               monthNames: ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'],
+               monthNamesShort: ['Jan','Fev','Mar','Abr','Mai','Jun', 'Jul','Ago','Set','Out','Nov','Des'],
+               dayNames: ['Domingo','Segunda','Terça','Quarta','Quinta','Sexta','Sábado'],
+               dayNamesShort: ['Dom','Seg','Ter','Qua','Qui','Sex','Sáb'],
+               dayNamesMin: ['D','S','T','Q','Q','S','S'],
+               weekHeader: 'Semana',
+               firstDay: 0,
+               isRTL: false,
+               showMonthAfterYear: false,
+               yearSuffix: '',
+               timeOnlyTitle: 'Só Horas',
+               timeText: 'Tempo',
+               hourText: 'Hora',
+               minuteText: 'Minuto',
+               secondText: 'Segundo',
+               currentText: 'Data Atual',
+               ampm: false,
+               month: 'Mês',
+               week: 'Semana',
+               day: 'Dia',
+               allDayText : 'Todo Dia'
+            };
+	</script>
+		
+		
+	<br/><br/>
+	<p:panel id="filter" header="#{msgs['activity.page.new.title']}">					
+		<p:messages id="messages" showDetail="false" /> 
+	</p:panel>			
+	
+	
+	<div style="border-radius:0 !important;" class="filtro">
+		<div class="blueHeader"><b><h:outputText value="#{msgs['activity.title.new.manual']}" /></b></div>
+	
+		<h:form>
+			<table width="100%">
+				<tr>
+					<td nowrap="nowrap" >
+					
+						<center>
+						<p:calendar value="#{activityMBean.activity.date}" mode="inline" locale="pt" pattern="dd/MM/yyyy">
+							<f:convertDateTime pattern="dd/MM/yyyy"/> 
+						</p:calendar>
+						</center>
+						
+						<br/>
+						<h:outputLabel value="#{msgs['activity.observation']}" /><br/><br/>
+						<p:inputTextarea autoResize="false" value="#{activityMBean.activity.observation}" cols="60" rows="2"  maxlength="255"/>										
+													
+					</td>
+					<td align="center">
+						<table> 
+							<tr>
+								<td nowrap="nowrap"><h:outputLabel for="duration" value="#{msgs['activity.duration']}" /></td>
+								<td><p:inputMask id="duration" value="#{activityMBean.stringTime}" mask="99:99:99" size="15" 
+									required="true" requiredMessage="#{msgs['activity.duration.mandatory']}"/></td>
+							</tr>
+										
+							<tr>
+								<td nowrap="nowrap"><h:outputLabel for="distanceMeters" value="#{msgs['spreadsheet.lap.distance']}" /></td>
+								<td><p:inputText id="distanceMeters" value="#{activityMBean.lap.distanceMeters}" size="15" maxlength="6"
+										required="true" requiredMessage="#{msgs['activity.distance.mandatory']}"/></td>
+							</tr>	
+														
+							<tr>
+								<td nowrap="nowrap"><h:outputLabel for="calories" value="#{msgs['activity.calories.desc']}" style="width:100px; "/></td>
+								<td><p:inputText id="calories" value="#{activityMBean.lap.calories}" size="15" maxlength="5"/></td>
+							</tr>
+							
+							<tr>
+								<td nowrap="nowrap"><h:outputLabel for="averageHeartRateBpm" value="#{msgs['spreadsheet.lap.averageHeartRateBpm']}" style="width:100px; "/></td>
+								<td><p:inputText id="averageHeartRateBpm" value="#{activityMBean.lap.averageHeartRateBpm}" size="15" maxlength="3"/></td>
+							</tr>			
+							
+							<tr>
+								<td nowrap="nowrap"><h:outputLabel for="event" value="#{msgs['activity.event']}" /></td>
+								<td>
+									<p:selectOneMenu id="event" value="#{activityMBean.event.id}"  style="width:200px; overflow:hidden;">
+		    							<f:selectItem itemLabel="#{msgs['template.value.none']}" itemValue="-1" />
+										<f:selectItems value="#{activityMBean.userEvents}" />
+									</p:selectOneMenu>
+								</td>
+							</tr>														
+						
+	
+							<tr>
+								<td colspan="2">							
+									<h:outputLabel value="Equipamentos" />						
+								</td>
+							</tr>						
+							<tr>
+								<td colspan="2">
+									<p:pickList value="#{activityMBean.equipments}" var="equipment" 
+										iconOnly="true" itemLabel="#{equipment}" itemValue="#{equipment}" 
+										showSourceControls="false" showTargetControls="false"
+										addLabel="#{msgs['team.picklist.addLabel']}"
+										addAllLabel="#{msgs['team.picklist.addAllLabel']}"
+										removeLabel="#{msgs['team.picklist.removeLabel']}"
+										removeAllLabel="#{msgs['team.picklist.removeAllLabel']}" >
+									</p:pickList>
+								</td>
+							</tr>															
+						</table>
+						
+					</td>
+				</tr>			
+				<tr>
+					<td colspan="2" align="center">
+					<br/>
+					<p:commandButton value="#{msgs['template.button.save']}" ajax="false" action="#{activityMBean.save}"/>
+					<p:commandButton value="#{msgs['template.button.cancelar']}" action="#{activityMBean.goToInit}" ajax="false" immediate="true" />
+				</td>
+			</tr>
+		</table>
+	</h:form>
+	</div>
+
+		
+  </ui:define>
+  
+</ui:composition>

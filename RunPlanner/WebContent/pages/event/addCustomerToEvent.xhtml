@@ -1,0 +1,72 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="#{loginBean.templateVersion}">
+
+	<ui:define name="content">
+	
+		<h:form>
+		
+			<p:messages id="messages" showDetail="false" />
+			<div class="pageTitleBox">#{eventMBean.event.name}</div>
+			<div class="subtitle">#{msgs['event.advice.event.help.inscription.subtitle']}</div> 
+			
+			<table>	
+				<tr>
+					<td>
+						<h:outputLabel value="#{msgs['alunos.nome']}" for="name" style="width: 40px !important;"/> 	
+						<p:autoComplete value="#{eventMBean.selectedCustomer}" completeMethod="#{eventMBean.completeCustomer}"  
+		                    var="p" itemLabel="#{p.nome}" itemValue="#{p.id}" converter="customerConverter" forceSelection="true"
+		                    size="80"  maxlength="100" id="name"/>  
+		            </td>
+		            <td>    
+						<p:commandButton value="#{msgs['template.button.incluir']}" actionListener="#{eventMBean.addCustomerEvento}" ajax="false"/>
+					</td>
+				</tr>				
+			</table>
+			
+			<br/><br/>
+			<h3><h:outputText value="Participantes Inscritos"/></h3>
+			<h:outputText value="#{msgs['event.advice.event.inscription.subtitle']}" styleClass="subtitle"/>
+			<br/><br/>
+			
+			<div class="tabela">
+				<p:dataTable var="customer" value="#{eventMBean.event.customers}"
+					emptyMessage="#{msgs['template.msg.emptyMessage']}" 
+					paginator="true" rows="10" paginatorPosition="bottom" paginatorAlwaysVisible="false"
+					paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}">
+	
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="#{msgs['alunos.nome']}" />
+						</f:facet>
+						<h:outputText value="#{customer.nome}" />	           			 
+					</p:column>		
+					<p:column style="text-align:center; white-space: nowrap; width:60px;">  
+		                <f:facet name="header">  
+		                    <h:outputText value="" />  
+		                </f:facet>  
+						<p:commandButton icon="delete" oncomplete="PF('deleteConfirmation').show()" title="#{msgs['template.button.delete']}">           			
+	     					<f:setPropertyActionListener target="#{eventMBean.deleteCustomer.id}" value="#{customer.id}" />
+	           			</p:commandButton>
+	           		</p:column>   
+				</p:dataTable>
+			</div>			
+			
+			<p:confirmDialog message="#{msgs['template.msg.delete.confirmation']}"  
+	           	severity="alert" widgetVar="deleteConfirmation">
+	   			<p:commandButton value="#{msgs['template.button.yes']}" oncomplete="deleteConfirmation.hide()" 
+	   				action="#{eventMBean.removeCustomerEvento}" ajax="false" />
+	   			<p:commandButton value="#{msgs['template.button.no']}" onclick="deleteConfirmation.hide()" />
+			</p:confirmDialog>
+			
+			<div class="buttons"> 
+				<p:commandButton value="#{msgs['template.button.back']}" ajax="false"
+					action="#{eventMBean.goToList}" immediate="true" />
+			</div>
+
+		</h:form>
+	</ui:define>
+</ui:composition>

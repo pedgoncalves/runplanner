@@ -1,0 +1,110 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	template="#{loginBean.templateVersion}">
+		
+  <ui:define name="content">
+
+		<style type="text/css">
+			.ui-state-active a, .ui-tabs-selected a
+			{
+				color: #000 !important;
+				background-color: #F9F9F9 !important;
+				border: 0px !important;
+			}
+			
+			.ui-accordion-content ui-helper-reset ui-widget-content {
+				border: 1px solid !important;
+			}
+			
+			.filtro{
+				background:#F9F9F9;
+				border: 1px solid #e0e0e0;
+				border-radius: 5px;
+			    -webkit-border-radius: 5px;
+				-moz-border-radius: 5px;
+			
+				width: 99%;	
+				padding:2px;
+			}			
+		</style>  
+
+		<h:form>					
+			<p:messages id="messages" showDetail="false" />
+			<div class="pageTitleBox">#{msgs['activity.maintitle']}</div>
+			<div class="subtitle">#{msgs['activity.subtitle']}</div>
+			
+			<ui:include src="../activity/activityCustomerFilter.xhtml"/>
+			
+			<p:panel rendered="#{not empty activityMBean.activityList}" style="border: 0px; background-color: white;">
+				<table  style="border: 0px; width: 100%;" >
+					<tr>
+						<td align="center" style="vertical-align:top; white-space: nowrap; width:20%;">
+							<ui:include src="../activity/activityListSide.xhtml"/>
+						</td>
+						<td align="center" valign="top"  style="border: 0px;">
+							
+							<p:panel id="activityPanel"  style="border: 0px; width: 100%;">
+							
+								<div id="activityDetail" style="width: 100%; font-size: 12px">
+						 		<table style="width: 100%">
+						 			<tr>
+						 				<td align="right" colspan="2">
+						 					<div id="actDetails" style="width100%; font-size: 12px" class="tabela">
+												<ui:include src="../activity/activitySumary.xhtml"/>
+						 					</div>
+						 				</td>
+						 			</tr>
+						 			<tr>
+						 				<td colspan="2">
+											<ui:include src="../activity/activityMap.xhtml"/>
+						 				</td>
+						 			</tr>
+						 			<tr>
+						 				<td colspan="2">
+											<ui:include src="../activity/activityGraphs.xhtml"/>
+						 				</td>
+						 			</tr>
+						 			<tr>
+						 				<td align="left">
+						 					<div class="blueLink">
+							 					<h:commandLink action="#{activityMBean.loadActivity}" rendered="#{activityMBean.idPrev!=null}">
+									    			<h:outputText value="#{msgs['template.prev']}" />
+	         										<f:setPropertyActionListener target="#{activityMBean.activity.id}" value="#{activityMBean.idPrev}" />   			
+									    		</h:commandLink>
+									    	</div>
+						 				</td>
+						 				<td align="right">
+							 				<div class="blueLink">
+							 					<h:commandLink action="#{activityMBean.loadActivity}" rendered="#{activityMBean.idNext!=null}">
+									    			<h:outputText value="#{msgs['template.next']}" />
+	         										<f:setPropertyActionListener target="#{activityMBean.activity.id}" value="#{activityMBean.idNext}" />   			
+									    		</h:commandLink>
+									    	</div>
+						 				</td>
+						 			</tr>
+						 		</table>
+						    </div>	
+						    					    
+							<br/>					    					    
+					    	<!-- TABELA DE VOLTAS E COMENTARIO -->
+							<ui:include src="../activity/activityTracksComments.xhtml"/>
+						    </p:panel>
+						</td>
+					</tr>
+				</table>
+			</p:panel>		
+
+		</h:form>
+		
+		<script type="text/javascript" src="${facesContext.externalContext.requestContextPath}/js/jqplot/jquery.jqplot.min.js"></script>
+		<script type="text/javascript" src="${facesContext.externalContext.requestContextPath}/js/jqplot/jqplot.categoryAxisRenderer.min.js"></script>
+		<script type="text/javascript" src="${facesContext.externalContext.requestContextPath}/js/jqplot/jqplot.highlighter.min.js"></script>	  						
+		
+		
+  </ui:define>
+  
+</ui:composition>

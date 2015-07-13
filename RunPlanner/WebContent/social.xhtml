@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:sec="http://www.springframework.org/security/facelets/tags"
+	xmlns:fb="https://www.facebook.com/2008/fbml"
+	template="/pages/template/templateOut.xhtml">
+	
+	
+	
+	<ui:define name="content">
+		<script>
+			window.fbAsyncInit = function() {
+				FB.init({
+					appId : '163439590451695',
+					status : true,
+					cookie : true,
+					xfbml : true
+				});
+			};
+
+			(function(d) {
+				var js, id = 'facebook-jssdk';
+				if (d.getElementById(id)) {
+					return;
+				}
+				js = d.createElement('script');
+				js.id = id;
+				js.async = true;
+				js.src = "//connect.facebook.net/en_US/all.js";
+				d.getElementsByTagName('head')[0].appendChild(js);
+			}(document));
+		</script>
+		
+		<fb:login-button show-faces="true" width="200" max-rows="1" scope="publish_actions">
+  		</fb:login-button>
+
+	</ui:define>
+</ui:composition>

@@ -1,0 +1,183 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:rp="http://runplanner.com.br/facelets"
+	template="#{loginBean.templateVersion}">
+		
+  <ui:define name="content">
+  			
+		<p:messages id="messages" showDetail="false" /> 
+		<div class="pageTitleBox">#{msgs['scheduleTemplate.maintitle']}</div>
+		<div class="subtitle">#{msgs['scheduleTemplate.subtitle']}</div>	
+
+		<table width="100%">
+			<tr>
+				<td valign="top" width="15%">
+					  <rp:sideMenu menu="spreadsheetAdvice" selectedMenu="scheduleTemplate"/>
+				</td>
+				<td valign="top" align="left" style="padding-left: 10px;">
+					<h:form>		
+				    	<h:panelGrid id="filterDetails" columns="4" style="width100%; font-size: 12px">
+				    		<h:outputLabel value="#{msgs['schedule.template.date']}" />
+				    		
+				    		<p:selectOneMenu value="#{scheduleTemplateBean.selectedMonth}" style="width:200px">
+				    			<f:selectItems value="#{scheduleTemplateBean.monthList}"/>                         	 
+				    		</p:selectOneMenu>
+				    		
+				    		<p:selectOneMenu value="#{scheduleTemplateBean.selectedYear}" style="width:200px">
+				    			<f:selectItems value="#{scheduleTemplateBean.yearList}"/>                         	 
+				    		</p:selectOneMenu>
+				    		
+				    		<p:commandButton action="#{scheduleTemplateBean.find}" update="templateList"
+		            			title="#{msgs['template.button.find']}"
+		            			value="#{msgs['template.button.find']}"  style="margin-top: -2px !important;"/>
+				    		
+				    	</h:panelGrid>		    	
+						<br/>
+				        <p:dataTable id="templateList" value="#{scheduleTemplateBean.templateList}" var="template"
+							emptyMessage="#{msgs['template.msg.emptyMessage']}"
+							paginator="true" rows="10" paginatorPosition="bottom" paginatorAlwaysVisible="false"
+							paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}">
+				        
+				            <p:column style="width:200px;">  
+				                <f:facet name="header">  
+				                    <h:outputText value="#{msgs['schedule.template.title']}" />  
+				                </f:facet>  
+				                
+				                <h:commandLink action="#{scheduleTemplateBean.goToModify}">          				
+		           					<h:outputText value="#{template.title}" />
+		           					<f:setPropertyActionListener target="#{scheduleTemplateBean.template.id}" value="#{template.id}" />
+		           				</h:commandLink>		                
+				            </p:column>  
+				  
+				            <p:column style="max-width:200px;">  
+				                <f:facet name="header">  
+				                    <h:outputText value="#{msgs['schedule.template.type']}" />  
+				                </f:facet>  
+				                <h:outputText value="#{template.type.label}" />  
+				            </p:column>  
+				            
+				            <p:column style="text-align: center;">  
+				                <f:facet name="header">  
+				                    <h:outputText value="#{msgs['schedule.template.date']}" />  
+				                </f:facet>  
+				                <h:outputText value="#{template.textMonth}" />
+				                <h:outputText value="/" />
+				                <h:outputText value="#{template.year}" />  
+				            </p:column>  		            
+				  
+				            <p:column style="text-align:center; white-space: nowrap;">  
+				                <f:facet name="header">  
+				                    <h:outputText value="" />  
+				                </f:facet>           
+				                
+				                <p:commandButton icon="edit" action="#{scheduleTemplateBean.goToModify}" ajax="false" title="#{msgs['template.button.edit']}">
+			     					<f:setPropertyActionListener target="#{scheduleTemplateBean.template.id}" value="#{template.id}" />
+			           			</p:commandButton> 
+			           			
+								<p:commandButton icon="copy" action="#{scheduleTemplateBean.cloneTemplate}" ajax="false" title="#{msgs['schedule.template.copy']}">           			
+			     					<f:setPropertyActionListener target="#{scheduleTemplateBean.template.id}" value="#{template.id}" />
+			           			</p:commandButton>
+			           			  				           				
+								<p:commandButton icon="pdf" action="#{scheduleTemplateBean.goToOneReport}" ajax="false" title="#{msgs['template.button.lista.um.template']}">           			
+			     					<f:setPropertyActionListener target="#{scheduleTemplateBean.template.id}" value="#{template.id}" />
+			           			</p:commandButton>  
+			           			
+			           			<p:commandButton icon="distribute"  action="#{scheduleTemplateBean.goToDistribution}" ajax="false" title="#{msgs['template.button.atribuir.template']}">           			
+			     					<f:setPropertyActionListener target="#{scheduleTemplateBean.template.id}" value="#{template.id}" />
+			           			</p:commandButton> 				           				
+		            			
+			           			<p:commandButton icon="delete" oncomplete="PF('deleteConfirmation').show()" title="#{msgs['template.button.delete']}">           			
+			     					<f:setPropertyActionListener target="#{scheduleTemplateBean.template.id}" value="#{template.id}" />
+			           			</p:commandButton>
+				            </p:column>  
+				        </p:dataTable>  
+		   
+					  	<br/><br/>
+						<h3>#{msgs['schedule.timeless.template.pagetitle']}</h3>
+		    
+				        <p:dataTable id="templateListTimeless" value="#{scheduleTemplateBean.timelessScheduleTemplateList}" var="template"
+							emptyMessage="#{msgs['template.msg.emptyMessage']}"
+							paginator="true" rows="10" paginatorPosition="bottom" paginatorAlwaysVisible="false"
+							paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}">
+				        
+				            <p:column>  
+				                <f:facet name="header">  
+				                    <h:outputText value="#{msgs['schedule.template.title']}" />  
+				                </f:facet>  
+				                
+				                <h:commandLink action="#{timelessScheduleTemplateMBean.goToModify}">          				
+		           					<h:outputText value="#{template.title}" />
+			     					<f:setPropertyActionListener target="#{timelessScheduleTemplateMBean.timelessScheduleTemplate.id}" value="#{template.id}" />
+		           				</h:commandLink>		                
+				            </p:column>  
+				  
+				            <p:column style="max-width:200px;">  
+				                <f:facet name="header">  
+				                    <h:outputText value="#{msgs['schedule.template.type']}" />  
+				                </f:facet>  
+				                <h:outputText value="Atemporal" />  
+				            </p:column>  
+				           
+				            <p:column style="text-align:center; white-space: nowrap;">  
+				                <f:facet name="header">  
+				                    <h:outputText value="" />  
+				                </f:facet>           
+			           			
+				                <p:commandButton icon="edit" action="#{timelessScheduleTemplateMBean.goToModify}" ajax="false" title="#{msgs['template.button.edit']}">
+			     					<f:setPropertyActionListener target="#{timelessScheduleTemplateMBean.timelessScheduleTemplate.id}" value="#{template.id}" />
+			           			</p:commandButton> 
+			           			
+								<p:commandButton icon="copy"  action="#{timelessScheduleTemplateMBean.cloneTemplate}" ajax="false" title="#{msgs['schedule.template.copy']}">           			
+			     					<f:setPropertyActionListener target="#{timelessScheduleTemplateMBean.timelessScheduleTemplate.id}" value="#{template.id}" />
+			           			</p:commandButton>
+			           			  				           				
+								<p:commandButton icon="pdf" action="#{timelessScheduleTemplateMBean.goToReport}" ajax="false" title="#{msgs['template.button.lista.um.template']}">           			
+			     					<f:setPropertyActionListener target="#{timelessScheduleTemplateMBean.timelessScheduleTemplate.id}" value="#{template.id}" />
+			           			</p:commandButton> 
+			           			
+			           			<p:commandButton icon="distribute"  action="#{timelessScheduleTemplateMBean.goToDistribution}"  ajax="false" title="#{msgs['template.button.atribuir.template']}">           			
+			     					<f:setPropertyActionListener target="#{timelessScheduleTemplateMBean.timelessScheduleTemplate.id}" value="#{template.id}" />
+			           			</p:commandButton>  				           				
+		            			
+			           			<p:commandButton icon="delete" oncomplete="PF('deleteConfirmationTimeless').show()" title="#{msgs['template.button.delete']}">           			
+			     					<f:setPropertyActionListener target="#{timelessScheduleTemplateMBean.timelessScheduleTemplate.id}" value="#{template.id}" />
+			           			</p:commandButton>
+				            </p:column>  
+				        </p:dataTable>  
+		        
+				     	<p:dialog widgetVar="deleteConfirmation" modal="true" width="300">
+				           	<center>
+					           	<br/><b><h:outputText value="#{msgs['template.msg.delete.confirmation']}" /></b><br/><br/>	
+					           	
+					   			<p:commandButton value="#{msgs['template.button.yes']}" oncomplete="deleteConfirmation.hide()"	action="#{scheduleTemplateBean.delete}" ajax="false" />
+					   			<p:commandButton value="#{msgs['template.button.no']}" onclick="PF('deleteConfirmation').hide()" />
+				   				<br/><br/>
+			   				</center>	   			
+						</p:dialog> 		
+						
+						<p:dialog widgetVar="deleteConfirmationTimeless" modal="true" width="300">
+				           	<center>
+					           	<br/><b><h:outputText value="#{msgs['template.msg.delete.confirmation']}" /></b><br/><br/>	
+					           	
+					   			<p:commandButton value="#{msgs['template.button.yes']}" oncomplete="deleteConfirmationTimeless.hide()"	
+					   				action="#{timelessScheduleTemplateMBean.delete}" ajax="false" />
+					   			<p:commandButton value="#{msgs['template.button.no']}" onclick="PF('deleteConfirmationTimeless').hide()" />
+				   				<br/><br/>
+			   				</center>	   			
+						</p:dialog>
+			   
+		    
+					    <div class="buttons">
+						    <p:commandButton value="#{msgs['template.button.incluir']}" ajax="false" 
+						    	action="#{scheduleTemplateBean.goToCreate}"/>
+					    </div>
+					</h:form>
+				</td>
+			</tr>
+		</table>
+		
+  </ui:define>
+</ui:composition>

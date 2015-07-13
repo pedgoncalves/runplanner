@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="#{loginBean.templateVersion}">
+
+	<ui:define name="content">
+	
+		<h:form  id="cadastro" acceptcharset="UTF-8"> 
+
+			<br/>
+			<p:panel id="filter" header="#{msgs['advice.owner.title.form']}">					
+				<p:messages id="messages" showDetail="false" /> 
+			</p:panel>	
+					
+			<h:panelGrid id="ownerDetails">
+
+				<h:outputLabel value="#{msgs['alunos.photo']}" />
+				<p:fileUpload fileUploadListener="#{adviceOwnerMBean.handleFileUpload}"  
+					mode="advanced" 
+					id="fileUpload"
+					auto="true" 
+					update="ownerDetails,messages"
+					rendered="#{adviceOwnerMBean.owner.photo==null}"
+					invalidSizeMessage="#{msgs['template.msg.sizeExceedMessage']}"
+					invalidFileMessage="#{msgs['template.msg.invalidFileMessage']}"/>
+					
+				<h:panelGrid id="imageDetails" columns="2" rendered="#{adviceOwnerMBean.owner.photo!=null}">
+   					<p:graphicImage value="#{adviceOwnerMBean.photo}" id="image" width="150" />
+   					<p:commandButton icon="ui-icon ui-icon-trash" action="#{adviceOwnerMBean.clearImage}" ajax="false"/>
+   				</h:panelGrid> 
+
+				<h:outputLabel for="nome" value="#{msgs['alunos.nome']}" />
+				<p:inputText id="nome" value="#{adviceOwnerMBean.owner.nome}" />
+				
+				<h:outputLabel for="advice" value="#{msgs['advice.owner.advice']}" />
+				<p:selectOneMenu id="advice" value="#{adviceOwnerMBean.owner.advice.id}" style=" overflow:hidden;">
+					<f:selectItems value="#{adviceOwnerMBean.adviceList}" />
+				</p:selectOneMenu>
+
+				<h:outputLabel for="cpf" value="#{msgs['alunos.cpf']}" />
+				<p:inputMask id="cpf" value="#{adviceOwnerMBean.owner.cpf}" mask="999.999.999-99"/>
+
+				<h:outputLabel for="rg" value="#{msgs['alunos.rg']}" />
+				<p:inputText id="rg" value="#{adviceOwnerMBean.owner.rg}" />
+
+				<h:outputLabel for="sexo" value="#{msgs['alunos.sexo']}" />
+				<p:selectOneRadio id="sexo" value="#{adviceOwnerMBean.owner.sexo}">
+					<f:selectItems value="#{adviceOwnerMBean.listaSexo}" />
+				</p:selectOneRadio>
+				
+				<h:outputLabel for="nascimento"	value="#{msgs['alunos.nascimento']}" />
+				<p:inputMask id="nascimento" value="#{adviceOwnerMBean.owner.dtNascimento}" mask="99/99/9999"
+						editable="false">
+					<f:convertDateTime pattern="dd/MM/yyyy" />
+				</p:inputMask>							
+
+				<h:outputLabel for="obs" value="#{msgs['alunos.email']}" />
+				<p:inputText id="obs" value="#{adviceOwnerMBean.owner.email}" />
+
+				<p:fieldset legend="#{msgs['advice.title.adress']}">  
+					<h:panelGrid id="adressDetails" columns="4">
+						<h:outputLabel for="street" value="#{msgs['adress.street']}" />
+						<p:inputText id="street" value="#{adviceOwnerMBean.owner.endereco.logradouro}" size="50"/>
+						
+						<h:outputLabel for="number" value="#{msgs['adress.number']}" />
+						<p:inputText id="number" value="#{adviceOwnerMBean.owner.endereco.numero}"/>
+						
+						<h:outputLabel for="complement" value="#{msgs['adress.complement']}" />
+						<p:inputText id="complement" value="#{adviceOwnerMBean.owner.endereco.complemento}"/>
+						
+						<h:outputLabel for="bairro" value="#{msgs['adress.bairro']}" />
+						<p:inputText id="bairro" value="#{adviceOwnerMBean.owner.endereco.bairro}"/>
+						
+						<h:outputLabel for="cep" value="#{msgs['adress.cep']}" />
+						<p:inputMask id="cep" value="#{adviceOwnerMBean.owner.endereco.cep}" mask="99.999-999"/>
+						
+						<h:outputLabel for="home" value="#{msgs['adress.phone.home']}" />
+						<p:inputMask id="home" value="#{adviceOwnerMBean.owner.endereco.foneResidencial}" mask="(99) 9999.9999" size="14"/>
+						
+						<h:outputLabel for="cel" value="#{msgs['adress.phone.cel']}" />
+						<p:inputMask id="cel" value="#{adviceOwnerMBean.owner.endereco.foneCelular}" mask="(99) 9999.9999" size="14"/>
+						
+						<h:outputLabel for="work" value="#{msgs['adress.phone.work']}" />
+						<p:inputMask id="work" value="#{adviceOwnerMBean.owner.endereco.foneComercial}" mask="(99) 9999.9999" size="14"/>
+					</h:panelGrid>					
+				</p:fieldset>
+			</h:panelGrid>
+			
+			
+			<div class="buttons"> 
+				<p:commandButton value="#{msgs['template.button.save']}" 
+					rendered="#{adviceOwnerMBean.owner.id == null}" ajax="false"
+					action="#{adviceOwnerMBean.save}"  />
+				<p:commandButton value="#{msgs['template.button.alterar']}" 
+					rendered="#{adviceOwnerMBean.owner.id != null}" ajax="false"
+					action="#{adviceOwnerMBean.save}" />
+				<p:commandButton value="#{msgs['template.button.cancelar']}" ajax="false" 
+					action="#{adviceOwnerMBean.goToList}" immediate="true" />
+			</div>
+		</h:form>
+	</ui:define>
+</ui:composition>

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">  
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	template="#{loginBean.templateVersion}">
+	
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+		
+	<ui:define name="content">
+
+		
+	<p:messages id="messages" showDetail="false" />
+	<div class="pageTitleBox">#{msgs['activity.page.new.title']}</div>
+	<div class="subtitle">#{msgs['activity.title.new.import']}</div>
+	
+	<div style="border-radius:0 !important;"  class="filtro">
+		
+		<h:form >
+			<table width="100%">
+				<tr>
+					<td nowrap="nowrap">
+						
+						<center>
+						<img src="${facesContext.externalContext.requestContextPath}/images/garmin.png" /><br/>
+						<h:outputText value="#{msgs['activity.garmin.file']}" />
+						</center>
+						
+						<br/><br/>							
+						<h:outputLabel value="#{msgs['activity.observation']}" /><br/><br/>
+						<p:inputTextarea autoResize="false" value="#{activityMBean.observation}" cols="60" rows="2"  maxlength="255"/>							
+											 
+					</td>
+					<td>
+						<table>
+							<tr>
+								<td nowrap="nowrap"><h:outputLabel for="event" value="#{msgs['activity.event']}" /></td>
+								<td>
+									<p:selectOneMenu id="event" value="#{activityMBean.event.id}"  style="width:200px; overflow:hidden;">
+		    							<f:selectItem itemLabel="#{msgs['template.value.none']}" itemValue="-1" />
+										<f:selectItems value="#{activityMBean.userEvents}" />
+									</p:selectOneMenu>
+								</td>
+							</tr>	
+							
+							<tr>
+								<td colspan="2">							
+									<h:outputLabel value="Equipamentos" />						
+								</td>
+							</tr>						
+							<tr>
+								<td colspan="2">
+									<p:pickList value="#{activityMBean.equipments}" var="equipment" 
+										iconOnly="true" itemLabel="#{equipment}" itemValue="#{equipment}" 
+										showSourceControls="false" showTargetControls="false"
+										addLabel="#{msgs['team.picklist.addLabel']}"
+										addAllLabel="#{msgs['team.picklist.addAllLabel']}"
+										removeLabel="#{msgs['team.picklist.removeLabel']}"
+										removeAllLabel="#{msgs['team.picklist.removeAllLabel']}" >
+									</p:pickList>
+								</td>
+							</tr>	
+						</table>
+					</td>							
+				</tr>	
+				<tr>
+					<td align="center" colspan="2">
+						<br/>
+						<p:commandButton value="#{msgs['template.button.save']}" ajax="false" action="#{activityMBean.handleSyncFile}"/>
+						<p:commandButton value="#{msgs['template.button.cancelar']}" action="#{activityMBean.goToInit}" ajax="false" immediate="true"/>
+					</td>
+				</tr>					
+			</table>
+		</h:form>			
+	</div>
+		
+  </ui:define>
+  
+</ui:composition>

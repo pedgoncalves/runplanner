@@ -1,0 +1,231 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="#{loginBean.templateVersion}">
+		
+  <ui:define name="content">
+  
+  		<style type="text/css">
+			ul {
+			    list-style-type: none !important;
+			    list-style-image: none !important;
+			    
+			    li {
+			        list-style-type: none !important;
+			        list-style-image: none !important;
+			    }
+			}
+			
+			.ui-datalist-item {
+				border: none !important;
+			}
+			
+			.ui-panel {
+				border: none !important;
+			}
+			
+			.ui-widget  {
+				border: none !important;
+			}
+			
+			.ui-widget-content  {
+				border: none !important;
+			}
+			
+			.ui-corner-all {
+				border: none !important;
+			}
+		
+		</style>
+
+		<h:form prependId="false">	
+		
+			<p:messages id="messages" showDetail="false" /> 
+			
+			<div class="pageTitleBox">#{msgs['pagetitle.mailbox']}</div>			  
+					    		    	    
+		    <div id="painel" class="tabela">  
+		    
+		        <p:dataTable id="groupMessages" value="#{mailboxMBean.groupMessages}" var="message"
+					emptyMessage="#{msgs['mailbox.emptyMessage']}"
+					paginator="true" rows="10" paginatorPosition="bottom" paginatorAlwaysVisible="false"
+					paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}">
+		        		        		            
+		            <p:column>  
+		                
+		                <table>
+		                	<tr>
+		                		<td width="1" valign="middle" align="center" style="border: none !important;">		                		
+									<p:panel rendered="#{message.newMessage and (message.lastMessage.sender.id!=loginBean.userId)}" id="imgNew">
+										<img src="${facesContext.externalContext.requestContextPath}/images/new.png" style="padding-right: 5px;"/>
+									</p:panel>	
+		                		</td>
+		                		<td width="35" style="border: none !important;">
+		                			<p:graphicImage id="photo" value="#{photoMBean.streamedUserThumb}" width="35" height="35"
+				        				redended="#{message.sender.photo!=null}">
+				        				<f:param name="client_id" value="#{message.sender.id}" />
+				        			</p:graphicImage>
+		                		</td>
+		                		<td style="border: none !important;">
+		                			<p:commandLink oncomplete="dlgRead.show()" update="@widgetVar(dlgRead),@widgetVar(groupMessages)" action="#{mailboxMBean.readGroup}">
+		                				<b><h:outputText value="#{message.name}"  style="padding-left: 5px;" /></b><br/> 			          
+			           					<f:setPropertyActionListener target="#{mailboxMBean.group}" value="#{message}" />
+			           				</p:commandLink>
+			           				 				
+			           				<h:outputText value="#{message.lastMessageIntro}" styleClass="subtitle" style="padding-left: 5px;"/>
+		                		</td>
+		                		<td align="right" valign="top" style="border: none !important;">
+		                			<h:outputText value="#{message.lastMessageDate}"  styleClass="subtitle">
+			           					<f:convertDateTime pattern="dd/MM/yyyy" />
+			           				</h:outputText> 
+			           				<p:spacer width="5"/> 
+			           				<h:outputText value="#{message.lastMessageHour}"  styleClass="subtitle">
+			           					<f:convertDateTime pattern="HH:mm:ss" timeZone="America/Sao_Paulo"/>
+			           				</h:outputText> 			           				
+		                		</td>
+		                		<td align="right" valign="middle" width="1" style="border: none !important;">
+				        			<p:commandButton icon="viewMsg" oncomplete="dlgRead.show()" update="@widgetVar(dlgRead,groupMessages,imgNew)" action="#{mailboxMBean.readGroup}">           			
+	     								<f:setPropertyActionListener target="#{mailboxMBean.group}" value="#{message}" />
+	           						</p:commandButton>
+		                		</td>		                		
+		                	</tr>		                
+		                </table>		                
+		                
+		            </p:column>  	
+		            
+		        </p:dataTable>      
+			</div>
+			
+   			<div class="buttons"> 
+			    <p:commandButton value="#{msgs['mailbox.send.new']}" id="showDialogButton" type="button" 
+			    	onclick="dlg.show()" />
+		    </div>	    
+		    
+		</h:form>
+		
+		<p:dialog header="#{mailboxMBean.group.name}" widgetVar="dlgRead" id="dlgRead" modal="true" dynamic="true" width="50%">  
+		    <h:form>
+			  	
+			  	<div style="padding: 10px; height:280px !important; max-height:280px !important; overflow: auto; border-bottom: 1px solid #dedede;">						
+					
+					<p:dataList value="#{mailboxMBean.group.mailboxMessages}" var="msg" style="border: none !important;" id="datalist">  						   
+					   
+					   <p:panel rendered="#{msg.message.sender.id!=loginBean.userId}">
+				  	 		
+				  	 		<table width="100%">
+				  	 			<tr>					  	 			
+				  	 				<td align="center" colspan="2" height="1" style="border: none !important;">
+				  	 					<h:outputText value="#{msg.message.date}"  styleClass="subtitle">
+		           							<f:convertDateTime pattern="dd/MM/yyyy" />
+				           				</h:outputText> 
+		           						<p:spacer width="5"/>
+				           				<h:outputText value="#{msg.message.hour}"  styleClass="subtitle">
+				           					<f:convertDateTime pattern="HH:mm:ss" timeZone="America/Sao_Paulo"/>
+				           				</h:outputText> 
+				  	 				</td>
+				  	 			</tr>
+				  	 			<tr>
+				  	 				<td width="1" style="border: none !important;">
+					  	 				<p:graphicImage value="#{photoMBean.streamedUserThumb}" width="35" height="35"
+				        					redended="#{msg.message.sender.photo!=null}">
+				        					<f:param name="client_id" value="#{msg.message.sender.id}" />
+				        				</p:graphicImage>
+				  	 				</td>					  	 			
+				  	 				<td align="left" style="border: none !important;">
+					  	 				<div class="bubbledLeft">									
+											#{msg.message.bodyMessage}
+										</div>
+				  	 				</td>
+				  	 			</tr>				  	 		
+				  	 		</table>
+				  	 		
+						</p:panel>
+						
+						<p:panel rendered="#{msg.message.sender.id==loginBean.userId}">
+		        			
+				  	 		<table width="100%">
+				  	 			<tr>					  	 			
+				  	 				<td align="center" colspan="2" height="1" style="border: none !important;">
+				  	 					<h:outputText value="#{msg.message.date}"  styleClass="subtitle">
+		           							<f:convertDateTime pattern="dd/MM/yyyy" />
+				           				</h:outputText> 
+		           						<p:spacer width="5"/>
+				           				<h:outputText value="#{msg.message.hour}"  styleClass="subtitle">
+				           					<f:convertDateTime pattern="HH:mm:ss" timeZone="America/Sao_Paulo"/>
+				           				</h:outputText> 
+				  	 				</td>
+				  	 			</tr>					  	 		
+				  	 			<tr>	
+				  	 				<td align="right" style="border: none !important;">
+					  	 				<div class="bubbledRight">									
+											#{msg.message.bodyMessage}
+										</div>
+				  	 				</td>
+				  	 				<td width="1" style="border: none !important;">
+					  	 				<p:graphicImage value="#{photoMBean.streamedUserThumb}" width="35" height="35"
+				        					redended="#{msg.message.sender.photo!=null}">
+				        					<f:param name="client_id" value="#{msg.message.sender.id}" />
+				        				</p:graphicImage>
+				  	 				</td>
+				  	 			</tr>				  	 		
+				  	 		</table>
+				  	 			
+						</p:panel>
+													
+					</p:dataList>      
+			        
+			    </div> 
+			    <div style="text-align: right; padding-right: 10px; padding-left: 10px; padding-top: 10px;">    		
+			    	<table width="100%">
+			    		<tr>
+			    			<td style="border: none !important;"> 
+			    				<p:inputTextarea rows="1" cols="85" maxlength="250" autoResize="false" resizable="false"
+			 			 			value="#{mailboxMBean.message.bodyMessage}"/>
+			    			</td>
+			    		</tr>
+			    		<tr>
+			    			<td style="border: none !important;">
+			    				<p:commandButton value="#{msgs['template.button.cancelar']}" onclick="dlgRead.hide()" />
+			    				<p:commandButton value="#{msgs['template.button.send']}" oncomplete="dlgRead.hide()" 
+   									actionListener="#{mailboxMBean.send}" ajax="false" update="messages,groupMessages"/>
+			    			</td>
+			    		</tr>				    	
+			    	</table>
+			    </div>         
+			    
+		    </h:form>  
+		</p:dialog> 	
+
+		<p:dialog header="#{msgs['mailbox.message.title']}" widgetVar="dlg" modal="true" >  
+		    <h:form id="form">  
+		    
+		  	<div style="padding: 10px">  
+		  	
+		  		<h:panelGrid columns="2" style="margin-bottom:10px">
+		  			
+			  		<h:outputLabel value="Para" for="name" style="width: 70px !important;"/>						  			
+		  			
+	                <p:selectOneMenu id="name" style="width:250px; overflow:hidden;" value="#{mailboxMBean.selectedReceiver.id}" >  
+			    		<f:selectItems value="#{mailboxMBean.customerList}"  />
+			    	</p:selectOneMenu>  
+                    
+				</h:panelGrid>
+		        
+		        <h:outputLabel value="#{msgs['mailbox.message']}"  style="width: 70px !important;"/> 
+			 	<p:inputTextarea rows="5" cols="85" maxlength="999" autoResize="false"
+			 			 value="#{mailboxMBean.message.bodyMessage}"/>  
+					
+					
+					<p style="text-align: center !important;">      
+ 					<p:commandButton value="#{msgs['template.button.send']}" oncomplete="dlg.hide()" 
+	   					action="#{mailboxMBean.send}" ajax="false" />
+	   				<p:commandButton value="#{msgs['template.button.cancelar']}" onclick="dlg.hide()" />
+   				</p>	   				
+		    </div>          
+		    </h:form>  
+		</p:dialog>	
+		
+  </ui:define>
+</ui:composition>

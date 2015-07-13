@@ -1,0 +1,60 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="#{loginBean.templateVersion}">
+		
+  <ui:define name="content">
+		
+	<h:form>
+		<br/>
+		<p:panel id="filter" header="#{msgs['contact.advice.title']}"> 
+			<p:messages id="messages" showDetail="false" /> 
+		</p:panel>		
+		
+		
+		<div class="">
+		<center>
+			<br/>
+			<table>
+				<tr>
+					<td><h:outputLabel value="Assessoria" /></td>
+					<td>
+						<p:selectOneMenu id="turma" value="#{communicationMBean.adviceSelect.id}" style="width:200px; overflow:hidden;">  
+							<f:selectItem itemLabel="#{msgs['template.selecionar.all.advice']}" itemValue="-1" />
+						   	<f:selectItems value="#{communicationMBean.adviceList}"  />  
+						</p:selectOneMenu>
+					</td>
+				</tr>				
+				<tr>
+					<td><h:outputLabel value="#{msgs['contact.subject']}" /></td>
+					<td>
+						<p:inputText value="#{communicationMBean.subject}" size="72"  maxlength="100"
+							required="true" requiredMessage="#{msgs['contact.subject.mandatory']}"/>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="2"><h:outputLabel value="#{msgs['contact.message']}" /></td>				
+				</tr>
+				<tr>				
+					<td colspan="2">
+						<p:inputTextarea value="#{communicationMBean.message}"
+							cols="110" rows="5"  maxlength="300" autoResize="false"
+							required="true" requiredMessage="#{msgs['contact.message.mandatory']}"/>	
+					</td>
+				</tr>	
+				<tr>				
+					<td colspan="2" align="center">
+						<p:commandButton value="#{msgs['template.button.send']}" 
+							ajax="false" action="#{communicationMBean.sendAdm}" />
+					</td>
+				</tr>								
+			</table>
+		</center>	
+		</div>
+	</h:form>
+		
+  </ui:define>
+  
+</ui:composition>

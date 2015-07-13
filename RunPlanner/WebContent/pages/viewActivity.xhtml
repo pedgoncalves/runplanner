@@ -1,0 +1,85 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:fb="http://ogp.me/ns/fb#"
+	xmlns:og="http://opengraphprotocol.org/schema/"
+	template="#{loginBean.templateVersion}">
+		
+  <ui:define name="content">
+  
+	<style type="text/css">
+		.ui-state-active a, .ui-tabs-selected a
+		{
+			color: #000 !important;
+			background-color: #F9F9F9 !important;
+			border: 0px !important;
+		}
+		
+		.ui-accordion-content ui-helper-reset ui-widget-content {
+			border: 1px solid !important;
+		}
+			
+		.filtro {
+			background:#F9F9F9;
+			border: 1px solid #e0e0e0;
+			border-radius: 5px;
+		    -webkit-border-radius: 5px;
+			-moz-border-radius: 5px;
+		
+			width: 99%;	
+			padding:2px;
+		}	
+			
+	</style>  
+  
+	<h:form>
+
+		<div class="pageTitleBox">#{msgs['activity.page.view.title']}</div>
+								
+		<center>
+
+			<p:panel id="activityPanel"  style="border: 0px; width: 100%;">
+			
+				<div id="activityDetail" style="width: 100%; font-size: 12px">
+			 		<table style="width: 100%">
+			 			<tr>
+			 				<td align="right" colspan="2">
+			 					<div id="actDetails" style="width100%; font-size: 12px" class="tabela">
+									<ui:include src="activity/activitySumaryView.xhtml"/>
+			 					</div>
+			 				</td>
+			 			</tr>
+			 			<tr>
+			 				<td colspan="2">
+								<ui:include src="activity/activityMap.xhtml"/>
+			 				</td>
+			 			</tr>
+			 			<tr>
+			 				<td colspan="2">
+								<ui:include src="activity/activityGraphsView.xhtml"/>
+			 				</td>
+			 			</tr>
+			 		</table>
+			    </div>	
+			    					    
+				<br/>					    					    
+		    	<!-- TABELA DE VOLTAS E COMENTARIO -->
+				<ui:include src="activity/activityTracksComments.xhtml"/>
+	    	</p:panel>
+
+		</center>		
+				
+	</h:form>	
+	
+	<ui:include src="/pages/mailbox/newMailBoxFragment.xhtml"/>
+		
+	<script type="text/javascript" src="${facesContext.externalContext.requestContextPath}/js/jqplot/jquery.jqplot.min.js"></script>
+	<script type="text/javascript" src="${facesContext.externalContext.requestContextPath}/js/jqplot/jqplot.categoryAxisRenderer.min.js"></script>
+	<script type="text/javascript" src="${facesContext.externalContext.requestContextPath}/js/jqplot/jqplot.highlighter.min.js"></script>	  				
+				
+  </ui:define>
+  
+</ui:composition>

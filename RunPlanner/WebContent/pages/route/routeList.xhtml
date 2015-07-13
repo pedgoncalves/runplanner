@@ -1,0 +1,74 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:rp="http://runplanner.com.br/facelets"
+	template="#{loginBean.templateVersion}">
+
+	<ui:define name="content">
+	
+		<p:messages id="messages" showDetail="false" /> 
+		<div class="pageTitleBox">#{msgs['route.maintitle']}</div>
+		<div class="subtitle">#{msgs['route.subtitle']}</div>
+
+		<table width="100%">
+			<tr>
+				<td valign="top" width="15%">
+					<rp:sideMenu menu="spreadsheetAdvice" selectedMenu="route"/>  
+				</td>
+				<td valign="top" align="left" style="padding-left: 10px;">
+	    		    <h:form>	
+						<p:dataTable var="route" value="#{routeMBean.routeList}"
+								id="routeListTable" emptyMessage="#{msgs['template.msg.emptyMessage']}"
+								paginator="true" rows="10" paginatorPosition="bottom" paginatorAlwaysVisible="false"
+								paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}">
+			
+							<p:column style="max-width:200px;">
+								<f:facet name="header">
+									<h:outputText value="#{msgs['route.name']}" />
+								</f:facet>
+								<h:commandLink action="#{routeMBean.goToModify}">          				
+			           				<h:outputText value="#{route.name}" />
+			           				<f:setPropertyActionListener target="#{routeMBean.route.id}" value="#{route.id}" />
+			           			</h:commandLink>
+							</p:column>
+							
+							<p:column style="max-width:200px;">
+								<f:facet name="header">
+									<h:outputText value="#{msgs['route.description']}" />
+								</f:facet>
+			          			<h:outputText value="#{route.descriptionText}" />           			
+							</p:column>
+							
+							<p:column style="text-align:center;  white-space: nowrap; width: 1px;" >  
+				                <f:facet name="header">  
+				                    <h:outputText value="" />  
+				                </f:facet>   
+				                
+				                <p:commandButton icon="edit" action="#{routeMBean.goToModify}" ajax="false" title="#{msgs['template.button.edit']}">
+			     					<f:setPropertyActionListener target="#{routeMBean.route.id}" value="#{route.id}" />
+			           			</p:commandButton>        		
+			           				 			
+			           			<p:commandButton icon="delete" oncomplete="deleteConfirmation.show()" title="#{msgs['template.button.delete']}">           			
+			     					<f:setPropertyActionListener target="#{routeMBean.route.id}" value="#{route.id}" />
+			           			</p:commandButton>               			
+				            </p:column>  
+						</p:dataTable>
+		
+				     	<p:confirmDialog message="#{msgs['template.msg.delete.confirmation']}" severity="alert" widgetVar="deleteConfirmation">
+				   			<p:commandButton value="#{msgs['template.button.yes']}" oncomplete="deleteConfirmation.hide()" action="#{routeMBean.delete}" ajax="false" />
+				   			<p:commandButton value="#{msgs['template.button.no']}" onclick="deleteConfirmation.hide()" />
+						</p:confirmDialog> 		
+										
+						<div class="buttons"> 
+							<p:commandButton value="#{msgs['template.button.incluir']}" action="#{routeMBean.goToCreate}" ajax="false"  />
+						</div>
+						
+					</h:form>
+		    	</td>
+	    	</tr>
+	    </table>
+	    
+	</ui:define>
+</ui:composition>

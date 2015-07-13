@@ -1,0 +1,107 @@
+<ui:fragment xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:sec="http://www.springframework.org/security/facelets/tags">
+			 				
+	<table width="100%">
+	<tr>
+		<td align="left">
+			<sec:ifAnyGranted roles="ROLE_USER">
+				<div class="blueLink">
+					<p:commandLink value="#{msgs['template.button.incluir.atividade']}" action="#{activityMBean.goToCreate}" ajax="false" /> 
+					
+					<p:commandLink value=" | #{msgs['template.button.edit']}" action="#{activityMBean.goToModify}" ajax="false" rendered="#{activityMBean.polylineModel==null}"/>
+					|
+					<p:commandLink oncomplete="PF('deleteConfirmation').show()" value="#{msgs['template.button.delete']}" />
+				</div>
+			</sec:ifAnyGranted> 
+		</td>
+		<td align="right">
+			<h:commandLink  action="#{profileMBean.goToView}" >  
+       			<h:outputText value=" #{activityMBean.activity.student.nome} - " styleClass="subtitle"/> 
+				<f:setPropertyActionListener target="#{profileMBean.customer.id}" value="#{activityMBean.activity.student.id}" />
+			</h:commandLink>
+			
+			<h:outputText value="#{activityMBean.activity.date}" styleClass="subtitle">						
+		  			<f:convertDateTime pattern="dd MMMM, yyyy" />							
+			</h:outputText>
+			<h:outputText value="  #{activityMBean.event.name}" rendered="#{activityMBean.event!=null}" styleClass="subtitle"/>
+		</td>
+	</tr>
+	</table>
+
+	<div class="filtro">
+
+		<table width="100%">
+			<thead>
+			<tr>
+				<th>					 							
+				<h:outputText value="#{msgs['activity.distance']}"/>	
+				</th>					 						
+				<th>
+				<h:outputText value="#{msgs['activity.duration']}"/>					 							
+				</th>					 		
+				<th>
+				<h:outputText value="#{msgs['activity.pace']}"/>	
+				</th>	
+				<th>
+				<h:outputText value="#{msgs['activity.calories']}"/>	
+				</th>					 											 		
+				<th>
+				<h:outputText value="#{msgs['activity.freq.cad']}"/>	
+				</th>
+			</tr>
+			</thead>
+			
+			<tr>								 										 				
+				<td align="center">							 				
+					<h:outputText value="#{activityMBean.activity.totalDistance}">								 					
+					<f:convertNumber pattern="#0.00"/>	
+					</h:outputText>
+				</td>
+				<td align="center">				 				
+					<h:outputText value="#{activityMBean.activity.totalTime}"/>
+				</td>	
+				<td align="center">							 				
+					<h:outputText value="#{activityMBean.activity.averagePace}"/>
+				</td>
+				<td align="center">		 				
+					<h:outputText value="#{activityMBean.activity.totalCalories}">
+					<f:convertNumber pattern="#0"/>
+				</h:outputText>	
+				</td>
+				<td align="center">							 				
+					<h:outputText value="#{activityMBean.activity.totalAverageHeartRateBpm}">
+					<f:convertNumber pattern="#0.00"/>
+				</h:outputText>		
+				</td>
+			</tr>
+			
+			<tr>								 										 				
+				<td align="center" class="subtitle">		
+					<h:outputText value="#{msgs['activity.km']}" />
+				</td>
+				<td align="center" class="subtitle">
+					<h:outputText value="#{msgs['activity.time.desc']}" />								 						
+				</td>	
+				<td align="center" class="subtitle">
+					<h:outputText value="#{msgs['activity.pace.desc']}" />
+				</td>
+				<td align="center" class="subtitle">
+					<h:outputText value="#{msgs['activity.calories.desc']}" />
+				</td>
+				<td align="center" class="subtitle">
+					<h:outputText value="#{msgs['activity.freq.desc']}" />
+				</td>
+			</tr>								 			
+		</table>
+	</div>
+	
+   	<p:confirmDialog message="#{msgs['template.msg.delete.confirmation']}" severity="alert" widgetVar="deleteConfirmation">
+		<p:commandButton value="#{msgs['template.button.yes']}" oncomplete="deleteConfirmation.hide()" action="#{activityMBean.delete}" ajax="false"/>
+		<p:commandButton value="#{msgs['template.button.no']}" onclick="deleteConfirmation.hide()" />
+	</p:confirmDialog> 
+</ui:fragment>

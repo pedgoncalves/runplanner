@@ -1,0 +1,95 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	template="#{loginBean.templateVersion}">
+	
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+
+	<ui:define name="content">
+		<br/><br/>		
+		<br/>
+		
+		
+		<div class="filtro" align="center">
+			<table>
+				<tr>
+					<td colspan="5" align="center">
+						<br/><br/>
+						<font size="5"><b><h:outputText value="#{msgs['activity.title.new.geral']}" /></b></font>
+						<br/><br/>
+					</td>
+				</tr>
+				<tr>
+					<td align="center" width="180">
+						<h:form>
+						<p:commandLink action="${activityMBean.goToCreateManualMap}" ajax="false">
+							<button class="buttonBig" style="width: 150px !important; height: 120px !important;" >
+								<img src="${facesContext.externalContext.requestContextPath}/images/edit.png" />
+								
+								<font color="#fff">
+									<hr/>Cadastro<br/>
+								</font>
+								<font  color="#fff" size="3">
+									Manual
+								</font>				
+							</button>	
+						</p:commandLink>
+						</h:form>
+					</td>
+					<td rowspan="2" width="60">
+					</td>
+					<td align="center" width="180">
+						<a href="newActivityImport.jsf">
+							<button class="buttonBig" style="width: 150px !important; height: 120px !important;" >
+								<img src="${facesContext.externalContext.requestContextPath}/images/upload.png" />	
+								
+								<font color="#fff">
+									<hr/>Importar<br/>
+								</font>
+								<font  color="#fff" size="3">
+									Arquivo
+								</font>			
+							</button>
+						</a>
+						
+					</td>	
+					<td rowspan="2" width="60">
+					</td>				
+					<td align="center" width="180">
+						<a href="newActivityGarmin.jsf">
+							<button class="buttonBig" style="width: 150px !important; height: 120px !important;" >
+								<img src="${facesContext.externalContext.requestContextPath}/images/sync.png" />	
+								
+								<font color="#fff">
+									<hr/>Sincronizar<br/>
+								</font>
+								<font  color="#fff" size="3">
+									Garmin
+								</font>					
+							</button>
+						</a>
+					</td>
+				</tr>
+				<tr>
+					<td align="center" width="180">
+						<br/>	
+						Informe os dados da atividade de maneira rápida e direta.
+					</td>
+					<td align="center" width="180">
+						<br/>
+						Importe os dados do seu treino de um arquivo GPX, TCX ou FIT.
+					</td>
+					<td align="center" width="180">
+						<br/>
+						Importe os dados diretamente do seu Garmin.
+					</td>
+				</tr>			
+			</table>
+		</div>
+		
+	</ui:define>
+  
+</ui:composition>

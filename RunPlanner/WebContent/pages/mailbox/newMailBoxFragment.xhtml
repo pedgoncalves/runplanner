@@ -1,0 +1,39 @@
+<ui:fragment xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:fb="http://ogp.me/ns/fb#"
+	xmlns:og="http://ogp.me/ns#"
+	xmlns:sec="http://www.springframework.org/security/facelets/tags">
+	
+		<p:dialog header="#{msgs['mailbox.message.title']}" widgetVar="dlgMailBox" resizable="false" width="500" height="230" modal="true"  onShow="dlgMailBox.initPosition();">  
+		    <h:form id="form">  
+		    
+		  	<div style="padding: 10px">  
+		  	
+		  		<h:panelGrid columns="2" style="margin-bottom:10px">
+		  			
+			  		<h:outputLabel value="Para" for="name" style="width: 50px !important;"/>						  			
+		  			
+	                <p:selectOneMenu id="name" style="width:250px; overflow:hidden;" value="#{mailboxMBean.selectedReceiver.id}" >  
+			    		<f:selectItems value="#{mailboxMBean.customerList}"  />
+			    	</p:selectOneMenu>  
+                    
+				</h:panelGrid>
+		        
+		        <h:outputLabel value="#{msgs['mailbox.message']}"  style="width: 50px !important;"/> 
+			 	<p:inputTextarea rows="5" cols="85" maxlength="999" autoResize="false"
+			 			 value="#{mailboxMBean.message.bodyMessage}"/>  
+					
+					
+					<p style="text-align: center !important;">      
+ 					<p:commandButton value="#{msgs['template.button.send']}" oncomplete="dlg.hide()" 
+	   					action="#{mailboxMBean.send}" ajax="false" />
+	   				<p:commandButton value="#{msgs['template.button.cancelar']}" onclick="dlg.hide()" />
+   				</p>	   				
+		    </div>          
+		    </h:form>  
+		</p:dialog>	
+		
+</ui:fragment>

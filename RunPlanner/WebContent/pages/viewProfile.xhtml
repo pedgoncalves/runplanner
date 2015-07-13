@@ -1,0 +1,218 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	template="#{loginBean.templateVersion}">
+		
+  <ui:define name="content">
+  
+	<style type="text/css">
+		.ui-button-text {
+    		color: #02425C !important;
+		}	
+		
+		.col1 {
+			width: 1px;
+			white-space: nowrap;
+		}	
+		
+		.col2 {
+			width: 100%;
+		}	
+		
+		.name {
+			font-family: verdana;
+			font-size: 20px;
+			font-weight: bold;
+			color: #5B5B58;
+		}
+		
+		.text {
+			font-size: 13px;
+		}
+		
+		.ui-datalist-content {
+			border: 0px;
+		} 
+	</style>
+
+	
+
+	<div class="pageTitleBox">#{msgs['profile.view.title']}</div>
+
+	<center>
+	
+	<!-- Foto -->	
+	<table style="width: 80%">											
+		<tr>
+			<td align="center" width="1" nowrap="nowrap" style="padding: 10px;">
+				<p:panel rendered="#{profileMBean.customer.photo==null}" style="text-align:center; ">						
+					<img src="${facesContext.externalContext.requestContextPath}/images/nophoto.gif" width="150"/>		
+				</p:panel>
+						
+				<p:panel rendered="#{profileMBean.customer.userPhoto != null}" >
+					<p:graphicImage value="#{photoMBean.streamedPhotoByPath}" width="150">
+						<f:param name="photo_path" value="#{profileMBean.customer.userPhoto}" />
+					</p:graphicImage>								
+   				</p:panel> 
+   				
+   				<p:panel rendered="#{profileMBean.customer.photo!=null and profileMBean.customer.userPhoto==null}" >
+					<p:graphicImage value="#{profileMBean.photo}" id="image" width="150" />
+   				</p:panel>
+			</td> 
+			<td>
+				<h:outputText value="#{profileMBean.customer.nome}" styleClass="name"/> <br/>
+				
+				<table>
+					<tr>
+						<td>
+							<img src="${facesContext.externalContext.requestContextPath}/images/v3/presence.png" width="32px"/>
+						</td>
+						<td align="right" class="text">
+							<b>Atividades</b> <br/>
+							<h:outputText value="#{profileMBean.activityNumber}" />
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<img src="${facesContext.externalContext.requestContextPath}/images/v3/run.png" width="32px"/>
+						</td>
+						<td align="right" class="text">
+							<b>#{msgs['activity.head.distance']}</b> <br/>
+							<h:outputText value="#{profileMBean.activityDistance}">							 					
+								<f:convertNumber pattern="#0.00"/>
+							</h:outputText>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<img src="${facesContext.externalContext.requestContextPath}/images/v3/classif.png" width="32px"/>
+						</td>
+						<td align="right" class="text">
+							<b>Tempo de corrida</b> <br/>
+							<h:outputText value="#{profileMBean.activityTime}" />
+						</td>
+					</tr>
+				</table>
+			</td>
+		</tr>  				
+	</table>
+  			
+	 		
+	<!-- NOTIFICACOES -->
+	<h:form>  
+		<div style="width: 80%; border: 0px; text-align: left;">
+ 		<h2>#{msgs['dashboard.title.feed']}</h2>	
+ 			
+		<p:dataList value="#{profileMBean.notificationList}" var="notification"  itemType="none" paginatorPosition="bottom"
+	        paginator="false" effectSpeed="fast" paginatorTemplate="{PreviousPageLink} {NextPageLink}"
+	        paginatorAlwaysVisible="false" id="notification" style="border: 0px;">  
+	        
+	        <p:column rendered="#{notification.type.id==0}">				        	
+	        	<div id="painel" class="notificationV2" onmouseover="this.className='notificationV2Hover'" onmouseout="this.className='notificationV2'">
+		        <table>
+		        	<tr>
+		        		<td align="center" width="45">
+		        			<img src="${facesContext.externalContext.requestContextPath}/images/event.png" width="16" />
+		        		</td>
+		        		<td>
+			        		<h:outputText value="#{msgs['feed.msg.new.event']}" /><br/>	
+			        		<h:outputText value="#{msgs['feed.msg.new.event2']}" />	
+			        		
+				        	<h:commandLink  action="#{eventMBean.goToView}" >          				
+	           					<h:outputText value="#{notification.title}" />
+	           					<f:setPropertyActionListener target="#{eventMBean.event.id}" value="#{notification.objectId}" />
+	           				</h:commandLink>
+	           				<br/>
+	           				<h:outputText value="#{notification.date}"  styleClass="subtitle">
+	           					<f:convertDateTime pattern="dd/MM/yyyy" />
+	           				</h:outputText>
+		        		</td>
+		        	</tr>
+		        </table>
+		        </div>
+		        <br/>
+	        </p:column>
+	        
+	        <p:column rendered="#{notification.type.id==1}">
+	        	<div id="painel" class="notificationV2" onmouseover="this.className='notificationV2Hover'" onmouseout="this.className='notificationV2'">
+		        <table>
+		        	<tr>
+		        		<td align="center"  width="45">					        		
+		        			<p:graphicImage id="photo" value="#{photoMBean.streamedUserThumb}" width="45" height="45"
+		        				redended="#{notification.customer.photo!=null}">
+		        				<f:param name="client_id" value="#{notification.customer.id}" />
+		        			</p:graphicImage>
+		        		</td>
+		        		<td>
+			        		<h:commandLink  action="#{profileMBean.goToView}" >  
+			        			<b><h:outputText value="#{notification.customer.shortName}"/> </b> 
+	           					<f:setPropertyActionListener target="#{profileMBean.customer.id}" value="#{notification.customer.id}" />
+							</h:commandLink>
+			        		<h:outputText value="#{msgs['feed.msg.confirm.event']}" />
+			        		
+				        	<b><h:commandLink  action="#{eventMBean.goToView}" >          				
+	           					<h:outputText value="#{notification.title}" />
+	           					<f:setPropertyActionListener target="#{eventMBean.event.id}" value="#{notification.objectId}" />
+	           				</h:commandLink></b>
+	           				<br/>
+	           				<h:outputText value="#{notification.date}"  styleClass="subtitle">
+	           					<f:convertDateTime pattern="dd/MM/yyyy" />
+	           				</h:outputText>
+		        		</td>
+		        	</tr>
+		        </table>
+		        </div>
+		        <br/>
+	        </p:column>	  
+	        
+			<p:column rendered="#{notification.type.id==2}">
+	        	<div id="painel" class="notificationV2" onmouseover="this.className='notificationV2Hover'" onmouseout="this.className='notificationV2'">
+		        <table>
+		        	<tr>
+		        		<td align="center"  width="45">					        	
+		        			<p:graphicImage id="photoAct" value="#{photoMBean.streamedUserThumb}" width="45" height="45"
+		        				redended="#{notification.customer.photo!=null}" style="padding-right: 5px;">
+		        				<f:param name="client_id" value="#{notification.customer.id}" />
+		        			</p:graphicImage>
+		        		</td>
+		        		<td> 
+		        			<h:commandLink  action="#{profileMBean.goToView}" >  
+			        			<b><h:outputText value="#{notification.customer.shortName}"/> </b> 
+	           					<f:setPropertyActionListener target="#{profileMBean.customer.id}" value="#{notification.customer.id}" />
+							</h:commandLink>
+				        	<h:commandLink  action="#{activityMBean.goToView}" >          			
+			        			<h:outputText value="#{msgs['feed.msg.new.activity']}" />
+			        			<b><h:outputText value="#{notification.activity.totalDistance}" >
+			        				<f:convertNumber pattern="#0.00"/>	
+								</h:outputText></b> Km.
+										
+								<h:outputText value=" (#{notification.event.name})" rendered="#{notification.event!=null}"/>
+			        			
+	           					<f:setPropertyActionListener target="#{activityMBean.activity.id}" value="#{notification.objectId}" />
+	           				</h:commandLink>
+	           				<br/>
+	           				<h:outputText value="#{notification.date}"  styleClass="subtitle">
+	           					<f:convertDateTime pattern="dd/MM/yyyy" />
+	           				</h:outputText>
+	           				<h:outputText value=" | #{notification.commentNumber} #{msgs['dashboard.comments.number']}"  styleClass="subtitle" />
+		        		</td>
+		        	</tr>
+		        </table>
+		        </div>
+		        <br/>
+	        </p:column>	  				            
+	    </p:dataList>
+	    
+	    <p:commandButton value="#{msgs['template.button.load.more']}" update="notification" action="#{profileMBean.loadMore}" styleClass="loadMoreButtonV2"/>
+ 			   			
+		</div>
+	</h:form>  
+	</center>
+   				 	
+		
+  </ui:define>
+  
+</ui:composition>

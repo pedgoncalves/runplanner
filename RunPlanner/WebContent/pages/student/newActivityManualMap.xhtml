@@ -1,0 +1,125 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	template="#{loginBean.templateVersion}">
+
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+
+	<ui:define name="content">
+		<script type="text/javascript">
+			PrimeFaces.locales['pt'] = {
+				closeText : 'Fechar',
+				prevText : 'Anterior',
+				nextText : 'Próximo',
+				currentText : 'Começo',
+				monthNames : [ 'Janeiro', 'Fevereiro', 'Março', 'Abril',
+						'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro',
+						'Outubro', 'Novembro', 'Dezembro' ],
+				monthNamesShort : [ 'Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun',
+						'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Des' ],
+				dayNames : [ 'Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta',
+						'Sexta', 'Sábado' ],
+				dayNamesShort : [ 'Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex',
+						'Sáb' ],
+				dayNamesMin : [ 'D', 'S', 'T', 'Q', 'Q', 'S', 'S' ],
+				weekHeader : 'Semana',
+				firstDay : 0,
+				isRTL : false,
+				showMonthAfterYear : false,
+				yearSuffix : '',
+				timeOnlyTitle : 'Só Horas',
+				timeText : 'Tempo',
+				hourText : 'Hora',
+				minuteText : 'Minuto',
+				secondText : 'Segundo',
+				currentText : 'Data Atual',
+				ampm : false,
+				month : 'Mês',
+				week : 'Semana',
+				day : 'Dia',
+				allDayText : 'Todo Dia'
+			};
+		</script>
+		<script type="text/javascript">
+			function findMe() {
+				navigator.geolocation
+						.getCurrentPosition(
+								function(position) {
+									var map = gmap.getMap(), latlng = new google.maps.LatLng(
+											position.coords.latitude,
+											position.coords.longitude);
+
+									map.setCenter(latlng);
+									map.setZoom(15);
+
+								}, function(error) {
+									//alert(error.message);
+								}, {
+									enableHighAccuracy : true
+								});
+			}
+		</script>
+
+		<p:messages id="messages" showDetail="false" />
+		<div class="pageTitleBox">#{msgs['activity.page.new.title']}</div>
+		<div class="subtitle">#{msgs['activity.page.new.manual.subtitle']}</div>
+
+		<div style="border-radius: 0 !important;" class="filtro">
+			<h:form>
+				<table width="100%">
+					<tr>
+						<td align="right" colspan="2">
+							<div class="blueLink">
+								<p:commandLink onclick="findMe();" oncomplete="findMe();"
+									value="#{msgs['route.my.location']}" immediate="true" />
+								|
+								<p:commandLink value="#{msgs['route.clean']}"
+									actionListener="#{activityMBean.clearPath}"
+									update="gmap, distanceMap" immediate="true" />
+							</div> <p:gmap id="gmap" widgetVar="gmap"
+								center="#{activityMBean.initLat},#{activityMBean.initLon}"
+								zoom="#{activityMBean.mapZoom}"
+								model="#{activityMBean.polylineModel}" type="ROADMAP"
+								style="width:100%;height:400px">
+								<p:ajax event="pointSelect"
+									listener="#{activityMBean.onPointSelect}"
+									update="gmap,distanceMap" />
+								<p:ajax event="overlaySelect"
+									listener="#{activityMBean.onMarkerSelect}"
+									update="gmap,distanceMap" />
+								<p:ajax event="markerDrag"
+									listener="#{activityMBean.onMarkerDrag}"
+									update="gmap,distanceMap" />
+								<p:ajax event="stateChange"
+									listener="#{activityMBean.onStateChange}" update="gmap" />
+							</p:gmap>
+							<div class="blueText"
+								style="text-align: center; padding-top: 5px; font-size: 15px;">
+								<h:outputText value="#{msgs['activity.total.distance']} " />
+								<h:outputText value="#{activityMBean.manualMapDistance/1000}"
+									id="distanceMap" />
+								Km
+							</div>
+
+						</td>
+					</tr>
+					<tr>
+						<td nowrap="nowrap" align="left"><p:commandButton
+								value="#{msgs['template.button.cancelar']}"
+								action="#{activityMBean.goToInit}" ajax="false" immediate="true" />
+						</td>
+						<td nowrap="nowrap" align="right"><p:commandButton
+								value="#{msgs['template.button.next']}" ajax="false"
+								action="#{activityMBean.goToCreateManualMapData}" /></td>
+					</tr>
+				</table>
+			</h:form>
+		</div>
+
+
+	</ui:define>
+
+</ui:composition>

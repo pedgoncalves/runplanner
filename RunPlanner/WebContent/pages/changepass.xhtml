@@ -1,0 +1,47 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="#{loginBean.templateVersion}">
+
+	<ui:define name="content">
+		<h:form>
+		
+			<br/><br/>
+			<p:panel id="filter" header="#{msgs['template.changepass.title']}">					
+				<p:messages id="messages" showDetail="false" /> 
+			</p:panel>
+			
+			<br/><br/>
+			<center>
+			<div class="" style="width:50%;">
+				<h:panelGrid id="customerDetails" columns="2">
+	
+					<h:outputLabel value="Senha Atual:" />
+					<p:password value="#{userMBean.oldPass}" feedback="false" 
+						required="true" requiredMessage="#{msgs['user.pass.old.mandatory']}"/>
+					
+					<h:outputLabel value="Nova Senha:" />
+					<p:password value="#{userMBean.newPass}" feedback="true" 
+						required="true" requiredMessage="#{msgs['user.pass.new.mandatory']}"
+						promptLabel="#{msgs['user.label.prompt']}" 
+						weakLabel="#{msgs['user.label.weakLabel']}"  
+	                    goodLabel="#{msgs['user.label.goodLabel']}" 
+	                    strongLabel="#{msgs['user.label.strongLabel']}"/>
+					
+					<h:outputLabel value="Confirme a nova Senha:" style="width: 150px;"/>
+					<p:password value="#{userMBean.retypePass}" feedback="false" 
+						required="true" requiredMessage="#{msgs['user.pass.retype.mandatory']}"/>	
+					
+				</h:panelGrid>
+				
+				<br/>
+				<p:commandButton value="#{msgs['template.button.save']}" update="messages,customerDetails" 
+					action="#{userMBean.changePassword}" ajax="true"/>				
+			</div>
+			</center>
+	
+		</h:form>
+	</ui:define>
+</ui:composition>

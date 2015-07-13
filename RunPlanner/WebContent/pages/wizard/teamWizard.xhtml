@@ -1,0 +1,102 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:sec="http://www.springframework.org/security/facelets/tags">
+
+	<style type="text/css">
+		.ui-picklist-source {	
+    		width: 200px !important;
+    		height: 105px !important;
+		}
+		.ui-picklist-target {	
+    		width: 200px !important;
+    		height: 105px !important;
+		}
+	</style>	
+	
+	<div style="text-align: left; width: 90%">
+		<p><h:outputLabel for="place" value="#{msgs['team.place']}" />
+		<p:inputText id="place" value="#{wizardMBean.team.place}" size="75" maxlength="100"/>
+			
+		<h:outputLabel for="init" value="#{msgs['team.initialHour']}" style="width:52px; text-align:right"/>
+		<p:inputMask id="init" value="#{wizardMBean.team.initialHour}" mask="99:99" size="4" style="margin-left:10px"
+			converterMessage="#{msgs['team.time.convert.error']}">
+			<f:convertDateTime pattern="HH:mm" />
+		</p:inputMask></p>
+	
+		<p><h:outputLabel for="description" value="#{msgs['team.description']}" />
+		<p:inputText id="description" value="#{wizardMBean.team.description}" size="102" maxlength="102"/></p>
+	
+		
+		<br/><br/>
+	
+		<h:outputLabel for="init" value="#{msgs['team.teachers']}" />
+		<p:pickList value="#{wizardMBean.teachers}" var="teacher" 
+			iconOnly="true" itemLabel="#{teacher}" itemValue="#{teacher}" 
+			showSourceControls="false" showTargetControls="false"
+			addLabel="#{msgs['team.picklist.addLabel']}"
+			addAllLabel="#{msgs['team.picklist.addAllLabel']}"
+			removeLabel="#{msgs['team.picklist.removeLabel']}"
+			removeAllLabel="#{msgs['team.picklist.removeAllLabel']}" >
+		</p:pickList>
+	
+		<h3><h:outputText value="#{msgs['team.weekdays']}"/></h3>
+			
+		<p:fieldset>				
+			<div id="weekDetails" >
+				<p:selectBooleanCheckbox value="#{wizardMBean.team.days.sunday}" itemLabel="#{msgs['weekdays.sunday']}" 
+					style="padding-top: 5px; padding-right: 3px;"/>
+				
+				<p:selectBooleanCheckbox value="#{wizardMBean.team.days.monday}" itemLabel="#{msgs['weekdays.monday']}"
+					style="padding-right: 3px;"/>
+				
+				<p:selectBooleanCheckbox value="#{wizardMBean.team.days.tuesday}" itemLabel="#{msgs['weekdays.tuesday']}"
+					style="padding-right: 3px;"/>
+				
+				<p:selectBooleanCheckbox value="#{wizardMBean.team.days.wednesday}" itemLabel="#{msgs['weekdays.wednesday']}"
+					style="padding-right: 3px;"/>
+				
+				<p:selectBooleanCheckbox value="#{wizardMBean.team.days.thursday}" itemLabel="#{msgs['weekdays.thursday']}" 
+					style="padding-right: 3px;"/>
+				
+				<p:selectBooleanCheckbox value="#{wizardMBean.team.days.friday}" itemLabel="#{msgs['weekdays.friday']}"
+					style="padding-right: 3px;"/>
+				
+				<p:selectBooleanCheckbox value="#{wizardMBean.team.days.saturday}" itemLabel="#{msgs['weekdays.saturday']}"/>
+			</div>  
+		</p:fieldset>
+	</div>
+	
+	<p:commandButton value="#{msgs['template.button.save']}" actionListener="#{wizardMBean.saveTeam}" update="teamPanel, messages, buttons"/>
+	
+	<br/><br/>
+    <div id="painel" class="tabela">      
+        <p:dataTable id="teamList" value="#{wizardMBean.teamList}" var="team" rendered="#{not empty wizardMBean.teamList}">        		        		            
+            <p:column>  
+                <f:facet name="header">  
+                    <h:outputText value="#{msgs['team.place']}" />  
+                </f:facet>  
+                <h:outputText value="#{team.place}" />
+            </p:column>  	
+            
+            <p:column>  
+                <f:facet name="header">  
+                    <h:outputText value="#{msgs['team.description']}" />  
+                </f:facet>  
+            	<h:outputText value="#{team.description}" />
+            </p:column> 	
+            		            
+            <p:column  style="text-align: center;">  
+                <f:facet name="header">  
+                    <h:outputText value="#{msgs['team.initialHour']}" />  
+                </f:facet>  
+                <h:outputText value="#{team.initialHour}">
+                	<f:convertDateTime pattern="HH:mm" />
+                </h:outputText>  
+            </p:column>
+        </p:dataTable>      
+	</div>		
+						
+</ui:composition>

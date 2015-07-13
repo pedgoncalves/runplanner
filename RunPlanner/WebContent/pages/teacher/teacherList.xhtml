@@ -1,0 +1,160 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+    xmlns:rp="http://runplanner.com.br/facelets"
+	template="#{loginBean.templateVersion}">
+
+	<ui:define name="content">
+			<p:messages id="messages" showDetail="false" />
+			<div class="pageTitleBox">#{msgs['teacher.maintitle']}</div>
+			<div class="subtitle">#{msgs['teacher.subtitle']}</div>
+
+			<table>
+				<tr>
+					<td valign="top" width="15%">
+						<rp:sideMenu menu="profileAdvice" selectedMenu="professor"/>
+					</td>
+					<td valign="top" align="left" style="padding-left: 10px;">
+						<h:form>
+							<p:dataTable var="teacher" value="#{teacherMBean.teacherList}"
+								emptyMessage="#{msgs['template.msg.emptyMessage']}"
+								paginator="true" rows="10" paginatorPosition="bottom"
+								paginatorAlwaysVisible="false"
+								paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}">
+	
+								<p:column>
+									<f:facet name="header">
+										<h:outputText value="#{msgs['alunos.nome']}" />
+									</f:facet>
+	
+									<h:commandLink action="#{teacherMBean.goToModify}">
+										<h:outputText value="#{teacher.nome}" />
+										<f:setPropertyActionListener
+											target="#{teacherMBean.teacher.id}" value="#{teacher.id}" />
+									</h:commandLink>
+	
+								</p:column>
+	
+								<p:column>
+									<f:facet name="header">
+										<h:outputText value="#{msgs['alunos.email']}" />
+									</f:facet>
+									<h:outputText value="#{teacher.email}" />
+								</p:column>
+	
+								<p:column style="text-align:center;">
+									<f:facet name="header">
+										<h:outputText value="#{msgs['alunos.telefone']}" />
+									</f:facet>
+									<h:outputText value="#{teacher.endereco.foneCelular}" />
+								</p:column>
+	
+								<p:column style="text-align:center;">
+									<f:facet name="header">
+										<h:outputText value="#{msgs['template.title.actions']}" />
+									</f:facet>
+	
+									<p:commandButton icon="edit" action="#{teacherMBean.goToModify}"
+										ajax="false">
+										<f:setPropertyActionListener
+											target="#{teacherMBean.teacher.id}" value="#{teacher.id}" />
+									</p:commandButton>
+	
+									<p:commandButton icon="email" oncomplete="PF('emailDialog').show()"
+										update="@widgetVar(emailDialog)"
+										title="#{msgs['template.button.email']}">
+										<f:setPropertyActionListener
+											target="#{teacherMBean.teacher.id}" value="#{teacher.id}" />
+									</p:commandButton>
+	
+									<p:commandButton icon="restart"
+										oncomplete="PF('confirmationRestart').show()"
+										title="#{msgs['template.button.restart']}">
+										<f:setPropertyActionListener
+											target="#{teacherMBean.teacher.id}" value="#{teacher.id}" />
+									</p:commandButton>
+	
+									<p:commandButton icon="delete"
+										oncomplete="PF('deleteConfirmation').show()"
+										title="#{msgs['template.button.delete']}">
+										<f:setPropertyActionListener
+											target="#{teacherMBean.teacher.id}" value="#{teacher.id}" />
+									</p:commandButton>
+	
+								</p:column>
+							</p:dataTable>
+							
+							<p:confirmDialog
+								message="#{msgs['template.msg.delete.confirmation']}"
+								severity="alert" widgetVar="deleteConfirmation"
+								id="deleteConfirmation">
+								<center>
+									<p:commandButton value="#{msgs['template.button.yes']}"
+										oncomplete="deleteConfirmation.hide()"
+										action="#{teacherMBean.delete}" ajax="false" />
+									<p:commandButton value="#{msgs['template.button.no']}"
+										onclick="PF('deleteConfirmation').hide()" />
+								</center>
+							</p:confirmDialog>
+				
+							<p:confirmDialog
+								message="#{msgs['template.msg.aluno.restart.confirmation']}"
+								severity="alert" widgetVar="confirmationRestart"
+								id="confirmationRestart">
+								<center>
+									<p:commandButton value="#{msgs['template.button.yes']}"
+										oncomplete="confirmationRestart.hide()"
+										action="#{teacherMBean.restartPassword}" ajax="false"
+										title="#{msgs['template.button.activate']}" />
+									<p:commandButton value="#{msgs['template.button.no']}"
+										onclick="PF('confirmationRestart').hide()" />
+								</center>
+							</p:confirmDialog>
+						</h:form>							
+					</td>
+				</tr>
+			</table>
+
+		<h:form>
+			<div class="buttons">
+				<p:commandButton value="#{msgs['template.button.incluir']}"
+					action="#{teacherMBean.goToCreate}" ajax="false" />
+			</div>
+		</h:form>
+
+		<p:dialog widgetVar="emailDialog"
+			header="#{msgs['aluno.email.title']}" id="emailDialog" modal="true">
+			<h:form>
+				<table>
+					<tr>
+						<td valign="top"><h:outputLabel
+								value="#{msgs['contact.subject']}" style="width: 80px;" /></td>
+						<td><p:inputText value="#{teacherMBean.subject}" size="60"
+								required="true"
+								requiredMessage="#{msgs['contact.subject.mandatory']}" /></td>
+					</tr>
+
+					<tr>
+						<td valign="top"><h:outputLabel
+								value="#{msgs['contact.message']}" style="width: 150px;" /></td>
+						<td><p:inputTextarea value="#{teacherMBean.message}"
+								style="width: 100%;" rows="5" maxlength="300" autoResize="false"
+								required="true"
+								requiredMessage="#{msgs['contact.message.mandatory']}" /></td>
+					</tr>
+
+					<tr>
+						<td colspan="2" align="center"><p:commandButton
+								value="#{msgs['template.button.send']}"
+								action="#{teacherMBean.sendEmail}" ajax="false"
+								oncomplete="emailDialog.hide();" /> <p:commandButton
+								value="#{msgs['template.button.cancelar']}"
+								oncomplete="PF('emailDialog').hide();" /></td>
+					</tr>
+				</table>
+			</h:form>
+		</p:dialog>
+	</ui:define>
+</ui:composition>

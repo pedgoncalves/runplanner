@@ -1,0 +1,709 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="templateTimelessAdviceListagem" language="groovy" pageWidth="595" pageHeight="842" columnWidth="547" leftMargin="28" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="2.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="162"/>
+	<parameter name="TEMPLATE_ID" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="TIMBRADO" class="java.lang.String"/>
+	<parameter name="LOGO" class="java.io.InputStream"/>
+	<queryString>
+		<![CDATA[select ad.name assessoria, tst.id, tst.title, tst.observations, tsw.id semanaId,
+	sch1.id, sch1.description day1Desc, sch1.observations day1Obs, sch1.warmUp day1Warm, sch1.coolDown day1Cool,
+	sch2.id, sch2.description day2Desc, sch2.observations day2Obs, sch2.warmUp day2Warm, sch2.coolDown day2Cool,
+	sch3.id, sch3.description day3Desc, sch3.observations day3Obs, sch3.warmUp day3Warm, sch3.coolDown day3Cool,
+	sch4.id, sch4.description day4Desc, sch4.observations day4Obs, sch4.warmUp day4Warm, sch4.coolDown day4Cool,
+	sch5.id, sch5.description day5Desc, sch5.observations day5Obs, sch5.warmUp day5Warm, sch5.coolDown day5Cool,
+	sch6.id, sch6.description day6Desc, sch6.observations day6Obs, sch6.warmUp day6Warm, sch6.coolDown day6Cool,
+	sch7.id, sch7.description day7Desc, sch7.observations day7Obs, sch7.warmUp day7Warm, sch7.coolDown day7Cool
+from timelessscheduletemplate tst
+	join timelessscheduleweek tsw on (tsw.timelessTemplate_id = tst.id)
+	join advice ad on (tst.advice_id = ad.id)
+	left join schedule sch1 on (tsw.firstDay_id = sch1.id)
+	left join schedule sch2 on (tsw.secondDay_id = sch2.id)
+	left join schedule sch3 on (tsw.thirdDay_id = sch3.id)
+	left join schedule sch4 on (tsw.fourthDay_id = sch4.id)
+	left join schedule sch5 on (tsw.fifthDay_id = sch5.id)
+	left join schedule sch6 on (tsw.sixthDay_id = sch6.id)
+	left join schedule sch7 on (tsw.seventhDay_id = sch7.id)
+where tst.id = $P{TEMPLATE_ID}
+order by tst.id, tst.title, tsw.id]]>
+	</queryString>
+	<field name="assessoria" class="java.lang.String"/>
+	<field name="title" class="java.lang.String"/>
+	<field name="observations" class="java.lang.String"/>
+	<field name="day1Desc" class="java.lang.String"/>
+	<field name="day1Obs" class="java.lang.String"/>
+	<field name="day1Warm" class="java.lang.String"/>
+	<field name="day1Cool" class="java.lang.String"/>
+	<field name="day2Desc" class="java.lang.String"/>
+	<field name="day2Obs" class="java.lang.String"/>
+	<field name="day2Warm" class="java.lang.String"/>
+	<field name="day2Cool" class="java.lang.String"/>
+	<field name="day3Desc" class="java.lang.String"/>
+	<field name="day3Obs" class="java.lang.String"/>
+	<field name="day3Warm" class="java.lang.String"/>
+	<field name="day3Cool" class="java.lang.String"/>
+	<field name="day4Desc" class="java.lang.String"/>
+	<field name="day4Obs" class="java.lang.String"/>
+	<field name="day4Warm" class="java.lang.String"/>
+	<field name="day4Cool" class="java.lang.String"/>
+	<field name="day5Desc" class="java.lang.String"/>
+	<field name="day5Obs" class="java.lang.String"/>
+	<field name="day5Warm" class="java.lang.String"/>
+	<field name="day5Cool" class="java.lang.String"/>
+	<field name="day6Desc" class="java.lang.String"/>
+	<field name="day6Obs" class="java.lang.String"/>
+	<field name="day6Warm" class="java.lang.String"/>
+	<field name="day6Cool" class="java.lang.String"/>
+	<field name="day7Desc" class="java.lang.String"/>
+	<field name="day7Obs" class="java.lang.String"/>
+	<field name="day7Warm" class="java.lang.String"/>
+	<field name="day7Cool" class="java.lang.String"/>
+	<field name="semanaId" class="java.lang.Integer"/>
+	<variable name="COUNT_DETAILS" class="java.math.BigDecimal" incrementType="Report" calculation="Count">
+		<variableExpression><![CDATA[]]></variableExpression>
+		<initialValueExpression><![CDATA[1]]></initialValueExpression>
+	</variable>
+	<background>
+		<band height="802" splitType="Stretch">
+			<image scaleImage="FillFrame">
+				<reportElement x="-11" y="-15" width="572" height="817"/>
+				<imageExpression><![CDATA[$P{TIMBRADO}]]></imageExpression>
+			</image>
+			<textField>
+				<reportElement x="-21" y="0" width="35" height="802"/>
+				<textElement textAlignment="Center" rotation="Left">
+					<font fontName="Arial" size="20" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{assessoria}]]></textFieldExpression>
+			</textField>
+		</band>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="63" splitType="Stretch">
+			<textField>
+				<reportElement x="9" y="4" width="301" height="26"/>
+				<textElement markup="none">
+					<font fontName="Arial" size="18" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{report.spread.main.title}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="9" y="30" width="481" height="15"/>
+				<textElement>
+					<font fontName="Arial" size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{title}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="9" y="45" width="481" height="18"/>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{observations}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="283" splitType="Stretch">
+			<textField isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="71" y="24" width="53" height="15"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{day1Warm}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" mode="Transparent" x="126" y="24" width="409" height="33"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Treino: "+ ($F{day1Desc} != null) ? $F{day1Desc} : " "
++"\n"+
+"Obs: "+ ($F{day1Obs} != null) ? $F{day1Obs}: " "]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement positionType="Float" mode="Transparent" x="72" y="41" width="53" height="15"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{day1Cool}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Transparent" x="43" y="24" width="28" height="10" forecolor="#000000"/>
+				<textElement markup="none">
+					<font fontName="Arial" size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{report.spread.aquecimento}+":"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement positionType="Float" mode="Transparent" x="43" y="41" width="29" height="10" forecolor="#000000"/>
+				<textElement markup="none">
+					<font fontName="Arial" size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{report.spread.desaquecimento}+":"]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement positionType="Float" x="8" y="58" width="534" height="1"/>
+				<graphicElement>
+					<pen lineStyle="Solid"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement positionType="Float" x="8" y="23" width="534" height="1"/>
+				<graphicElement>
+					<pen lineStyle="Solid"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement stretchType="RelativeToBandHeight" x="8" y="23" width="1" height="35"/>
+			</line>
+			<line>
+				<reportElement stretchType="RelativeToBandHeight" x="541" y="23" width="1" height="36"/>
+			</line>
+			<line>
+				<reportElement stretchType="RelativeToBandHeight" x="42" y="23" width="1" height="35"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement stretchType="RelativeToBandHeight" x="125" y="23" width="1" height="35"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="14" y="24" width="21" height="15"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[DIA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="14" y="41" width="21" height="15"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[1]]></text>
+			</staticText>
+			<textField>
+				<reportElement positionType="Float" mode="Transparent" x="43" y="78" width="29" height="10" forecolor="#000000"/>
+				<textElement markup="none">
+					<font fontName="Arial" size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{report.spread.desaquecimento}+":"]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" mode="Transparent" x="126" y="61" width="409" height="33"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Treino: "+ (($F{day2Desc} != null) ? $F{day2Desc}:" ")
++"\n"+
+"Obs: "+ (($F{day2Obs} != null) ? $F{day2Obs} : " ")]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement stretchType="RelativeToBandHeight" x="8" y="60" width="1" height="35"/>
+			</line>
+			<textField isBlankWhenNull="true">
+				<reportElement positionType="Float" mode="Transparent" x="72" y="78" width="53" height="15"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{day2Cool}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="14" y="61" width="21" height="15"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[DIA]]></text>
+			</staticText>
+			<line>
+				<reportElement positionType="Float" x="8" y="95" width="534" height="1"/>
+				<graphicElement>
+					<pen lineStyle="Solid"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement positionType="Float" x="8" y="60" width="534" height="1"/>
+				<graphicElement>
+					<pen lineStyle="Solid"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement stretchType="RelativeToBandHeight" x="125" y="60" width="1" height="35"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+			<textField isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="71" y="61" width="53" height="15"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{day2Warm}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement stretchType="RelativeToBandHeight" x="42" y="60" width="1" height="35"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="14" y="78" width="21" height="15"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[2]]></text>
+			</staticText>
+			<textField>
+				<reportElement mode="Transparent" x="43" y="61" width="28" height="10" forecolor="#000000"/>
+				<textElement markup="none">
+					<font fontName="Arial" size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{report.spread.aquecimento}+":"]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement stretchType="RelativeToBandHeight" x="541" y="60" width="1" height="36"/>
+			</line>
+			<textField>
+				<reportElement positionType="Float" mode="Transparent" x="43" y="115" width="29" height="10" forecolor="#000000"/>
+				<textElement markup="none">
+					<font fontName="Arial" size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{report.spread.desaquecimento}+":"]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" mode="Transparent" x="126" y="98" width="409" height="33"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Treino: "+ ($F{day3Desc} != null) ? $F{day3Desc} : " "
++"\n"+
+"Obs: "+ ($F{day3Obs} != null) ? $F{day3Obs} : " "]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement stretchType="RelativeToBandHeight" x="8" y="97" width="1" height="35"/>
+			</line>
+			<textField isBlankWhenNull="true">
+				<reportElement positionType="Float" mode="Transparent" x="72" y="115" width="53" height="15"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{day3Cool}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="14" y="98" width="21" height="15"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[DIA]]></text>
+			</staticText>
+			<line>
+				<reportElement positionType="Float" x="8" y="132" width="534" height="1"/>
+				<graphicElement>
+					<pen lineStyle="Solid"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement positionType="Float" x="8" y="97" width="534" height="1"/>
+				<graphicElement>
+					<pen lineStyle="Solid"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement stretchType="RelativeToBandHeight" x="125" y="97" width="1" height="35"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+			<textField isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="71" y="98" width="53" height="15"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{day3Warm}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement stretchType="RelativeToBandHeight" x="42" y="97" width="1" height="35"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="14" y="115" width="21" height="15"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[3]]></text>
+			</staticText>
+			<textField>
+				<reportElement mode="Transparent" x="43" y="98" width="28" height="10" forecolor="#000000"/>
+				<textElement markup="none">
+					<font fontName="Arial" size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{report.spread.aquecimento}+":"]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement stretchType="RelativeToBandHeight" x="541" y="97" width="1" height="36"/>
+			</line>
+			<textField isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="71" y="135" width="53" height="15"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{day4Warm}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" mode="Transparent" x="126" y="135" width="409" height="33"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Treino: "+ ($F{day4Desc} != null) ? $F{day4Desc} : " "
++"\n"+
+"Obs: "+ ($F{day4Obs} != null) ? $F{day4Obs} : " "]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement positionType="Float" mode="Transparent" x="72" y="152" width="53" height="15"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{day4Cool}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Transparent" x="43" y="135" width="28" height="10" forecolor="#000000"/>
+				<textElement markup="none">
+					<font fontName="Arial" size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{report.spread.aquecimento}+":"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement positionType="Float" mode="Transparent" x="43" y="152" width="29" height="10" forecolor="#000000"/>
+				<textElement markup="none">
+					<font fontName="Arial" size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{report.spread.desaquecimento}+":"]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement positionType="Float" x="8" y="169" width="534" height="1"/>
+				<graphicElement>
+					<pen lineStyle="Solid"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement positionType="Float" x="8" y="134" width="534" height="1"/>
+				<graphicElement>
+					<pen lineStyle="Solid"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement stretchType="RelativeToBandHeight" x="8" y="134" width="1" height="35"/>
+			</line>
+			<line>
+				<reportElement stretchType="RelativeToBandHeight" x="541" y="134" width="1" height="36"/>
+			</line>
+			<line>
+				<reportElement stretchType="RelativeToBandHeight" x="42" y="134" width="1" height="35"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement stretchType="RelativeToBandHeight" x="125" y="134" width="1" height="35"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="14" y="135" width="21" height="15"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[DIA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="14" y="152" width="21" height="15"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[4]]></text>
+			</staticText>
+			<textField>
+				<reportElement positionType="Float" mode="Transparent" x="43" y="189" width="29" height="10" forecolor="#000000"/>
+				<textElement markup="none">
+					<font fontName="Arial" size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{report.spread.desaquecimento}+":"]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" mode="Transparent" x="126" y="172" width="409" height="33"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Treino: "+ ($F{day5Desc} != null) ? $F{day5Desc} : " "
++"\n"+
+"Obs: "+ ($F{day5Obs} != null) ? $F{day5Obs} : " "]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement stretchType="RelativeToBandHeight" x="8" y="171" width="1" height="35"/>
+			</line>
+			<textField isBlankWhenNull="true">
+				<reportElement positionType="Float" mode="Transparent" x="72" y="189" width="53" height="15"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{day5Cool}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="14" y="172" width="21" height="15"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[DIA]]></text>
+			</staticText>
+			<line>
+				<reportElement positionType="Float" x="8" y="206" width="534" height="1"/>
+				<graphicElement>
+					<pen lineStyle="Solid"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement positionType="Float" x="8" y="171" width="534" height="1"/>
+				<graphicElement>
+					<pen lineStyle="Solid"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement stretchType="RelativeToBandHeight" x="125" y="171" width="1" height="35"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+			<textField isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="71" y="172" width="53" height="15"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{day5Warm}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement stretchType="RelativeToBandHeight" x="42" y="171" width="1" height="35"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="14" y="189" width="21" height="15"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[5]]></text>
+			</staticText>
+			<textField>
+				<reportElement mode="Transparent" x="43" y="172" width="28" height="10" forecolor="#000000"/>
+				<textElement markup="none">
+					<font fontName="Arial" size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{report.spread.aquecimento}+":"]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement stretchType="RelativeToBandHeight" x="541" y="171" width="1" height="36"/>
+			</line>
+			<textField>
+				<reportElement positionType="Float" mode="Transparent" x="43" y="226" width="29" height="10" forecolor="#000000"/>
+				<textElement markup="none">
+					<font fontName="Arial" size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{report.spread.desaquecimento}+":"]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" mode="Transparent" x="126" y="209" width="409" height="33"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Treino: "+ ($F{day6Desc} != null) ? $F{day6Desc} : " "
++"\n"+
+"Obs: "+ ($F{day6Obs} != null) ? $F{day6Obs} : " "]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement stretchType="RelativeToBandHeight" x="8" y="208" width="1" height="35"/>
+			</line>
+			<textField isBlankWhenNull="true">
+				<reportElement positionType="Float" mode="Transparent" x="72" y="226" width="53" height="15"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{day6Cool}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="14" y="209" width="21" height="15"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[DIA]]></text>
+			</staticText>
+			<line>
+				<reportElement positionType="Float" x="8" y="243" width="534" height="1"/>
+				<graphicElement>
+					<pen lineStyle="Solid"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement positionType="Float" x="8" y="208" width="534" height="1"/>
+				<graphicElement>
+					<pen lineStyle="Solid"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement stretchType="RelativeToBandHeight" x="125" y="208" width="1" height="35"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+			<textField isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="71" y="209" width="53" height="15"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{day6Warm}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement stretchType="RelativeToBandHeight" x="42" y="208" width="1" height="35"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="14" y="226" width="21" height="15"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[6]]></text>
+			</staticText>
+			<textField>
+				<reportElement mode="Transparent" x="43" y="209" width="28" height="10" forecolor="#000000"/>
+				<textElement markup="none">
+					<font fontName="Arial" size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{report.spread.aquecimento}+":"]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement stretchType="RelativeToBandHeight" x="541" y="208" width="1" height="36"/>
+			</line>
+			<staticText>
+				<reportElement x="14" y="246" width="21" height="15"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[DIA]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="71" y="246" width="53" height="15"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{day7Warm}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement positionType="Float" mode="Transparent" x="72" y="263" width="53" height="15"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{day7Cool}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Transparent" x="43" y="246" width="28" height="10" forecolor="#000000"/>
+				<textElement markup="none">
+					<font fontName="Arial" size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{report.spread.aquecimento}+":"]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement stretchType="RelativeToBandHeight" x="8" y="245" width="1" height="35"/>
+			</line>
+			<line>
+				<reportElement positionType="Float" x="8" y="245" width="534" height="1"/>
+				<graphicElement>
+					<pen lineStyle="Solid"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement stretchType="RelativeToBandHeight" x="125" y="245" width="1" height="35"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement positionType="Float" x="8" y="280" width="534" height="1"/>
+				<graphicElement>
+					<pen lineStyle="Solid"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement stretchType="RelativeToBandHeight" x="42" y="245" width="1" height="35"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+			<textField>
+				<reportElement positionType="Float" mode="Transparent" x="43" y="263" width="29" height="10" forecolor="#000000"/>
+				<textElement markup="none">
+					<font fontName="Arial" size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{report.spread.desaquecimento}+":"]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement stretchType="RelativeToBandHeight" x="541" y="245" width="1" height="36"/>
+			</line>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" mode="Transparent" x="126" y="246" width="409" height="33"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Treino: "+ ($F{day7Desc} != null) ? $F{day7Desc} : " "
++"\n"+
+"Obs: "+ ($F{day7Obs} != null) ? $F{day7Obs} : " "]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="14" y="263" width="21" height="15"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[7]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="9" y="6" width="50" height="15"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Semana]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="59" y="6" width="28" height="15"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{REPORT_COUNT}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="33" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

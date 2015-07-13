@@ -1,0 +1,91 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:sec="http://www.springframework.org/security/facelets/tags">
+
+	<table >
+		<tr>
+			<td valign="top">
+				<!-- Foto -->	
+				<h:panelGrid id="teacherDetails">					
+					<p:fileUpload fileUploadListener="#{wizardMBean.handleFileUploadTeacher}"  
+						mode="advanced" 
+						label="#{msgs['template.button.change.photo']}"
+						auto="true" 
+						update="teacherDetails,messages"
+						rendered="#{wizardMBean.teacher.photo==null}"
+						style="margin-left:-3px"
+						invalidSizeMessage="#{msgs['template.msg.sizeExceedMessage']}"
+						invalidFileMessage="#{msgs['template.msg.invalidFileMessage']}"/>					
+					
+					<p:panel id="imageDetails" rendered="#{wizardMBean.teacher.photo!=null}">  
+						<center> 					
+							<p:graphicImage value="#{wizardMBean.teacherPhoto}"  width="150" /><br/>
+	   						<p:commandButton actionListener="#{wizardMBean.clearTeacherImage}" icon="delete" immediate="true"
+		   						title="#{msgs['template.button.delete.photo']}" update="teacherDetails" value="Remover"/>
+		   				</center>		   				 
+	   				</p:panel>
+				</h:panelGrid>
+			</td>								
+			<td valign="top" align="right">
+ 				<!-- Dados Cadastrais -->
+			 	<p><h:outputLabel  value="#{msgs['alunos.nome']}"  style="width:100px; text-align:right; padding-right:5px;"/>
+				<p:inputText value="#{wizardMBean.teacher.nome}" size="80" maxlength="100"/></p>
+					
+				<p><h:outputLabel value="#{msgs['alunos.email']}"  style="width:100px; text-align:right; padding-right:5px;"/>
+				<p:inputText  value="#{wizardMBean.teacher.email}"  size="80" maxlength="100">
+					<f:validator validatorId="EmailValidator"/>
+				</p:inputText></p>
+		
+
+				<p><h:outputLabel  value="#{msgs['adress.street']}"  style="padding-right:5px;"/>
+				<p:inputText  value="#{wizardMBean.teacher.endereco.logradouro}" size="60"  maxlength="100"/>
+				
+				<h:outputLabel  value="#{msgs['adress.number']}" style="width:60px; text-align:right;"  />
+				<p:inputText value="#{wizardMBean.teacher.endereco.numero}" size="5" maxlength="5" style="margin-left:5px"/></p>
+						
+				<p><h:outputLabel value="#{msgs['adress.complement']}"  style="padding-right:5px;"/>
+				<p:inputText  value="#{wizardMBean.teacher.endereco.complemento}" size="47" maxlength="100"/>
+				
+				<h:outputLabel  value="#{msgs['adress.bairro']}"  style="width:50px; text-align:right;"/>
+				<p:inputText  value="#{wizardMBean.teacher.endereco.bairro}" maxlength="100" style="margin-left:7px"/></p>
+				
+				<p><h:outputLabel  value="#{msgs['adress.cep']}"  style="padding-right:5px;"/>
+				<p:inputMask  value="#{wizardMBean.teacher.endereco.cep}" mask="99.999-999" size="12"/>
+				<h:outputLabel  value="#{msgs['adress.phone.home']}" style="width:150px; text-align:right;" />
+				<p:inputMask value="#{wizardMBean.teacher.endereco.foneResidencial}" mask="(99) 9999-9999" size="14" style="margin-left:10px"/></p>
+				
+				<p><h:outputLabel  value="#{msgs['adress.phone.cel']}"  style="padding-right:5px;"/>
+				<p:inputMask  value="#{wizardMBean.teacher.endereco.foneCelular}" mask="(99) 9999-9999" size="14"/>
+				<h:outputLabel  value="#{msgs['adress.phone.work']}" style="width:150px; text-align:right;" />
+				<p:inputMask  value="#{wizardMBean.teacher.endereco.foneComercial}" mask="(99) 9999-9999" size="14" style="margin-left:10px"/></p>
+			
+			</td>	
+		</tr>
+	</table>
+	
+    <p:commandButton value="#{msgs['template.button.save']}" actionListener="#{wizardMBean.saveTeacher}" update="teacherPanel, messages, buttons"/>
+
+	<br/><br/>
+	<div id="painel" class="tabela">
+		<p:dataTable var="teacher" value="#{wizardMBean.teacherList}"
+			emptyMessage="#{msgs['template.msg.emptyMessage']}">
+
+			<p:column>
+				<f:facet name="header">
+					<h:outputText value="#{msgs['alunos.nome']}" />
+				</f:facet>         				
+   				<h:outputText value="#{teacher.nome}" />				
+			</p:column>
+			
+			<p:column>
+				<f:facet name="header">
+					<h:outputText value="#{msgs['alunos.email']}" />
+				</f:facet>
+				<h:outputText value="#{teacher.email}" />
+			</p:column>			
+		</p:dataTable>
+	</div>						
+</ui:composition>

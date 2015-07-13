@@ -1,0 +1,78 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="#{loginBean.templateVersion}">
+
+	<ui:define name="content">
+		
+		<style  type="text/css">
+			.ui-fileupload-content {
+			    display:none;   
+			}			
+			
+			.ui-widget-header {
+				background: white !important;
+				border: 0px;
+			}
+		</style>
+	
+		<h:form enctype="multipart/form-data" acceptcharset="UTF-8">
+		
+			<p:messages id="messages" showDetail="false" /> 
+			<div class="pageTitleBox">#{msgs['partner.maintitle']}</div>
+			<div class="subtitle">#{msgs['partner.subtitle']}</div>		
+
+					
+			<h:panelGrid columns="2" cellpadding="10">  
+		        <h:outputLabel value="#{msgs['partner.name']}" style="width: 30px;"/>
+		        <p:inputText id="nome" value="#{partnerMBean.partner.name}" size="70" required="true" requiredMessage="#{msgs['template.nome.mandatory']}" maxlength="100"/>
+		        
+		        <h:outputLabel value="#{msgs['partner.url']}" style="width: 30px;"/>
+		        <p:inputText id="url" value="#{partnerMBean.partner.url}" size="70" required="true" requiredMessage="#{msgs['template.nome.mandatory']}" maxlength="100"/>
+		        
+       	 		<h:outputLabel value="#{msgs['partner.banner']}" style="width: 30px;"/>
+       	 		<h:panelGrid columns="1" cellpadding="10" id="bannerImage" widgetVar="bannerImage">
+			 		<ui:fragment rendered="#{partnerMBean.partner.banner!=null}" >
+						
+						<p:graphicImage value="#{photoMBean.streamedBanner}" width="500">
+							<f:param name="banner_path" value="#{partnerMBean.partner.banner}" />
+						</p:graphicImage>
+						
+					</ui:fragment> 
+					<p:column>
+						<p:fileUpload fileUploadListener="#{partnerMBean.handleFileUpload}" 
+							mode="advanced"
+							id="fileUpload"
+							label="#{msgs['template.button.upload']}"
+							auto="true" 
+							immediate="true"
+							update="bannerImage"
+							invalidSizeMessage="#{msgs['template.msg.sizeExceedMessage']}"
+							invalidFileMessage="#{msgs['template.msg.invalidFileMessage']}"/>
+		       	 		<h:outputText value="* #{msgs['partnet.banner.subtitle']}" styleClass="subtitle"/>
+	       	 		</p:column>
+				</h:panelGrid>
+	 		</h:panelGrid>
+	 		
+
+				
+			<br />
+			
+			<div class="buttons"> 
+				<p:commandButton value="#{msgs['template.button.save']}"
+					update="messages" action="#{partnerMBean.save}" ajax="false"
+					rendered="#{partnerMBean.partner.id == null}"/>
+					
+				<p:commandButton value="#{msgs['template.button.alterar']}"
+					update="messages" action="#{partnerMBean.save}" ajax="false"
+					rendered="#{partnerMBean.partner.id != null}"/>
+					
+				<p:commandButton value="#{msgs['template.button.cancelar']}" ajax="false"
+					action="#{partnerMBean.goToList}" immediate="true" />
+			</div>				
+		
+		</h:form>
+	</ui:define>
+</ui:composition>

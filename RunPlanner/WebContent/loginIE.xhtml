@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:sec="http://www.springframework.org/security/facelets/tags"
+	template="/pages/template/templateOut.xhtml">
+	
+	
+	
+	<ui:define name="content">
+
+	
+	<style type="text/css">
+		.ui-button-text{
+    		color: #FFF !important;
+			font-size: 12;
+			font-weight: bold;
+    		
+		}		
+		
+	</style>		
+		
+		<h:form>
+				
+			<div class="banner" align="center">
+			
+				<div style="width: 818px; margin:auto;">
+				
+					
+					<div class="bannerImg">
+						
+						<p:graphicImage value="images/banner1.png" />
+																	
+					</div>
+						
+					<div class="contato">
+						<br/><br/><br/>
+						<font size="4">#{msgs['loginpage.contact.title']}</font><br/>
+						<font color="#DFF76B">#{msgs['loginpage.contact.subtitle']}</font><br/><br/><br/>
+																
+						<p:inputText id="name" label="Nome" style="padding: 8px !important; float: none; margin-bottom: 8px; height: 32px !important;" 
+							value="#{contactMBean.name}" size="40"  maxlength="100" 
+							required="true" requiredMessage="#{msgs['contactus.name.mandatory']}"/>   
+	        			<p:watermark for="name" value="#{msgs['loginpage.watermark.name']}" /><br/>
+	        			
+	        			<p:inputText id="empresa" label="Empresa" style="padding: 8px !important; float: none; margin-bottom: 8px; height: 32px !important;" 
+							value="#{contactMBean.company}" size="40"  maxlength="100" />     
+	        			<p:watermark for="empresa" value="#{msgs['loginpage.watermark.company']}" /><br/>
+	        			
+	        			<p:inputText id="email" label="E-Mail" style="padding: 8px !important; float: none; margin-bottom: 8px; height: 32px !important;" 
+	        				value="#{contactMBean.email}" size="40"  maxlength="100" 
+	        				required="true" requiredMessage="#{msgs['contactus.email.mandatory']}"/>   
+	        			<p:watermark for="email" value="#{msgs['loginpage.watermark.email']}" /><br/>
+	        			
+	        			<p:inputText id="telefone" label="Telefone" style="padding: 8px !important; float: none; margin-bottom: 8px; height: 32px !important;" 
+	        				value="#{contactMBean.phone}" size="40"  maxlength="100" 
+	        				required="true" requiredMessage="#{msgs['contactus.phone.mandatory']}"/>   
+	        			<p:watermark for="telefone" value="#{msgs['loginpage.watermark.phone']}" /><br/><br/>
+	        			
+	        			<p:commandButton value="#{msgs['loginpage.contact.button']}"  styleClass="entrarButton" actionListener="#{contactMBean.sendContactInit}" 
+	        				 onclick="PrimeFaces.cleanWatermarks();" oncomplete="PrimeFaces.showWatermarks();" update="messages"/>
+	        			
+					</div>
+				</div>		
+			
+			</div>
+		</h:form>
+		
+		<div class="subbanner">
+			#{msgs['loginpage.whatis.title']}
+		</div>
+	
+		<div class="textoInicial">
+			<h:outputText value="#{msgs['loginpage.whatis']}"  escape="false" />			
+		</div>
+		
+		<center>
+		
+			<table width="60%">
+				<tr>
+					<td align="center" valign="middle">
+						<img src="${facesContext.externalContext.requestContextPath}/images/mainIcon1.png"/>
+					</td>
+					<td class="textoIcones">
+						#{msgs['loginpage.icon.acompanhamento']}
+					</td>
+					
+					<td align="center" valign="middle">
+						<img src="${facesContext.externalContext.requestContextPath}/images/mainIcon2.png"/>
+					</td>
+					<td class="textoIcones">
+						#{msgs['loginpage.icon.planilha']}
+					</td>
+				</tr>
+				
+				<tr>
+					<td align="center" valign="middle">
+						<img src="${facesContext.externalContext.requestContextPath}/images/mainIcon3.png"/>
+					</td>
+					<td class="textoIcones">
+						#{msgs['loginpage.icon.desempenho']}
+					</td>
+						
+					<td align="center" valign="middle">
+						<img src="${facesContext.externalContext.requestContextPath}/images/mainIcon4.png"/>
+					</td>
+					<td class="textoIcones">
+						#{msgs['loginpage.icon.pagamento']}						
+					</td>
+				</tr>				
+			</table><br/>
+			
+		</center>
+		
+	</ui:define>
+</ui:composition>

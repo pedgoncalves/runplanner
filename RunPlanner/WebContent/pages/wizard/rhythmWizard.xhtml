@@ -1,0 +1,92 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:sec="http://www.springframework.org/security/facelets/tags">
+
+	<h:panelGrid columns="2" cellpadding="10">  
+        <h:outputLabel value="#{msgs['rhythm.classification']}" />
+        <p:inputText  value="#{wizardMBean.rhythm.classification}" size="95" maxlength="50"/>
+		</h:panelGrid>
+
+    <h:panelGrid columns="6" cellpadding="10">  
+        <h:outputLabel value="#{msgs['spreadsheet.rhythm.easyPace']}" />  
+		<p:inputMask value="#{wizardMBean.rhythm.easyPace}" mask="99:99" size="7"/>
+		
+		<h:outputLabel value="#{msgs['spreadsheet.rhythm.normalPace']}" />  
+		<p:inputMask value="#{wizardMBean.rhythm.normalPace}" mask="99:99" size="7"/>
+		
+		<h:outputLabel value="#{msgs['spreadsheet.rhythm.moderatePace']}" />  
+		<p:inputMask value="#{wizardMBean.rhythm.moderatePace}" mask="99:99" size="7"/>
+		
+		<h:outputLabel value="#{msgs['spreadsheet.rhythm.mediumPace']}" />  
+		<p:inputMask value="#{wizardMBean.rhythm.mediumPace}" mask="99:99" size="7"/>
+		
+		<h:outputLabel value="#{msgs['spreadsheet.rhythm.strongPace']}" />  
+		<p:inputMask value="#{wizardMBean.rhythm.strongPace}" mask="99:99" size="7"/>
+		
+		<h:outputLabel value="#{msgs['spreadsheet.rhythm.shootingPace']}" />  
+		<p:inputMask value="#{wizardMBean.rhythm.shootingPace}" mask="99:99" size="7"/>
+    </h:panelGrid> 
+    
+    <p:commandButton value="#{msgs['template.button.save']}" actionListener="#{wizardMBean.saveRhythm}" 
+    	update="rhythmPanel, messages, buttons"/>
+
+	<br/><br/>
+	<div id="painel" class="tabela">  
+       <p:dataTable id="rhythmList" value="#{wizardMBean.rhythmList}" var="rhythm"
+       	rendered="#{not empty wizardMBean.rhythmList}">
+       		        
+        	<p:column style="max-width:200px;">  
+               <f:facet name="header">  
+                   <h:outputText value="#{msgs['rhythm.classification']}" />  
+               </f:facet>  			
+        				<h:outputText value="#{rhythm.classification}"/>
+           </p:column>  
+ 		            
+ 		    <p:column style="text-align: center;">  
+               <f:facet name="header">  
+                   <h:outputText value="#{msgs['rhythm.easyPace']}" />  
+               </f:facet>  
+               <h:outputText value="#{rhythm.easyPace}"/>
+           </p:column>          
+
+ 		    <p:column style="text-align: center;">  
+               <f:facet name="header">  
+                   <h:outputText value="#{msgs['rhythm.normalPace']}" />  
+               </f:facet>  
+               <h:outputText value="#{rhythm.normalPace}"/>
+           </p:column>  
+           
+ 		    <p:column style="text-align: center;">  
+               <f:facet name="header">  
+                   <h:outputText value="#{msgs['rhythm.moderatePace']}" />  
+               </f:facet>  
+               <h:outputText value="#{rhythm.moderatePace}"/>
+           </p:column>
+ 		            	
+ 		    <p:column style="text-align: center;">  
+               <f:facet name="header">  
+                   <h:outputText value="#{msgs['rhythm.mediumPace']}" />  
+               </f:facet>  
+               <h:outputText value="#{rhythm.mediumPace}"/>
+           </p:column>
+           
+ 		    <p:column style="text-align: center;">  
+               <f:facet name="header">  
+                   <h:outputText value="#{msgs['rhythm.strongPace']}" />  
+               </f:facet>  
+               <h:outputText value="#{rhythm.strongPace}"/>
+           </p:column>  
+           
+ 		    <p:column style="text-align: center;">  
+               <f:facet name="header">  
+                   <h:outputText value="#{msgs['rhythm.shootingPace']}" />  
+               </f:facet>  
+               <h:outputText value="#{rhythm.shootingPace}"/>
+           </p:column>          
+       </p:dataTable>
+     </div>  
+						
+</ui:composition>

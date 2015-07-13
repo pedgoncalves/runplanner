@@ -1,0 +1,23 @@
+<ui:fragment xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+	<table>									
+		<tr>
+			<td><h:outputLabel value="#{msgs['graph.activity.user']}"  style="width: 40px;"/></td>
+			<td>
+				<p:selectOneMenu value="#{activityMBean.user.id}" style="width:300px; overflow:hidden;">   
+	    			<f:selectItems value="#{activityMBean.customerList}"  />
+	    		</p:selectOneMenu>
+			</td>
+			
+			<td>
+				<p:commandButton action="#{activityMBean.findByUser}" ajax="false"
+	          			title="#{msgs['template.button.find']}" value="#{msgs['template.button.find']}"/>
+			</td>
+		</tr>
+	</table>
+	<br/>	
+</ui:fragment>

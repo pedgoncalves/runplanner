@@ -1,0 +1,401 @@
+<ui:fragment xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" xmlns:fb="http://ogp.me/ns/fb#"
+	xmlns:og="http://ogp.me/ns#"
+	xmlns:sec="http://www.springframework.org/security/facelets/tags">
+
+	<p:dialog widgetVar="eventDialogFirstDay"
+		header="#{msgs['schedule.event.detail']}" modal="true" width="500"
+		height="570" id="eventDialogFirstDay" position="center"
+		onShow="eventDialogFirstDay.initPosition();">
+
+		<div id="eventDetails" style="padding: 10px">
+
+			<p>
+				<h:outputLabel  value="#{msgs['schedule.event.warmup']}" style="width: 105px;" />
+				<p:inputText  value="#{timelessScheduleTemplateMBean.timelessScheduleWeek.firstDay.warmUp}" maxlength="50" id="warmUp1"/>
+			</p>
+
+			<p>
+				<h:outputLabel  value="#{msgs['schedule.event.title']}" style="width: 150px;" />				
+				<p:inputTextarea 
+					value="#{timelessScheduleTemplateMBean.timelessScheduleWeek.firstDay.description}"
+					style="width:450px;height:120px;" autoResize="false" maxlength="500" id="desc1" />
+			</p>
+
+			<p>
+				<h:outputLabel value="#{msgs['schedule.event.cooldown']}" style="width: 115px;" />
+				<p:inputText value="#{timelessScheduleTemplateMBean.timelessScheduleWeek.firstDay.coolDown}" maxlength="50" id="coolDown1" />
+			</p>
+
+			<p>
+				<h:outputLabel value="#{msgs['schedule.event.observations']}" />
+				<p:inputTextarea 
+					value="#{timelessScheduleTemplateMBean.timelessScheduleWeek.firstDay.observations}"
+					style="width:450px;height:100px;" autoResize="false" maxlength="500" />
+			</p>
+
+			<p>
+				<h:outputLabel value="#{msgs['schedule.event.route']}" style="width: 105px;" />
+				<p:selectOneMenu value="#{timelessScheduleTemplateMBean.route1.id}"
+					style="width:450px; position:relative;">
+			        <f:selectItem itemLabel="Selecione..." noSelectionOption="true" />   
+					<f:selectItems value="#{timelessScheduleTemplateMBean.routeList}" />
+				</p:selectOneMenu>
+			</p>
+
+			<p style="text-align: center !important;">
+				<p:commandButton value="#{msgs['template.button.save']}"
+					action="updateWeek"
+					oncomplete="PF('eventDialogFirstDay').hide();"
+					update="panelWeek" />
+					
+				<p:commandButton value="#{msgs['template.button.delete']}"
+					actionListener="#{timelessScheduleTemplateMBean.deleteDay1}"
+					oncomplete="PF('eventDialogFirstDay').hide(); document.getElementById('warmUp1').value=''; 
+						document.getElementById('desc1').value=''; document.getElementById('coolDown1').value=''; )"
+					update="panelWeek">
+				</p:commandButton>
+			</p>
+		</div>
+	</p:dialog>
+
+	<p:dialog widgetVar="eventDialogSecondDay"
+		header="#{msgs['schedule.event.detail']}" modal="true" width="500"
+		height="570" id="eventDialogSecondDay" position="center"
+		onShow="eventDialogSecondDay.initPosition();">
+
+		<div id="eventDetails" style="padding: 10px">
+
+			<p>
+				<h:outputLabel  value="#{msgs['schedule.event.warmup']}" style="width: 105px;" />
+				<p:inputText  value="#{timelessScheduleTemplateMBean.timelessScheduleWeek.secondDay.warmUp}" maxlength="50" id="warmUp2" />
+			</p>
+
+			<p>
+				<h:outputLabel  value="#{msgs['schedule.event.title']}" style="width: 150px;" />				
+				<p:inputTextarea 
+					value="#{timelessScheduleTemplateMBean.timelessScheduleWeek.secondDay.description}"
+					style="width:450px;height:120px;" autoResize="false" maxlength="500" id="desc2"/>
+			</p>
+
+			<p>
+				<h:outputLabel value="#{msgs['schedule.event.cooldown']}" style="width: 115px;" />
+				<p:inputText value="#{timelessScheduleTemplateMBean.timelessScheduleWeek.secondDay.coolDown}" maxlength="50" id="coolDown2"/>
+			</p>
+
+			<p>
+				<h:outputLabel value="#{msgs['schedule.event.observations']}" />
+				<p:inputTextarea 
+					value="#{timelessScheduleTemplateMBean.timelessScheduleWeek.secondDay.observations}"
+					style="width:450px;height:100px;" autoResize="false" maxlength="500" />
+			</p>
+
+			<p>
+				<h:outputLabel value="#{msgs['schedule.event.route']}" style="width: 105px;" />
+				<p:selectOneMenu value="#{timelessScheduleTemplateMBean.route2.id}"
+					style="width:450px; position:relative;">
+			        <f:selectItem itemLabel="Selecione..." noSelectionOption="true" />
+					<f:selectItems value="#{timelessScheduleTemplateMBean.routeList}" />
+				</p:selectOneMenu>
+			</p>
+
+			<p style="text-align: center !important;">
+				<p:commandButton value="#{msgs['template.button.save']}"
+					action="updateWeek"
+					oncomplete="PF('eventDialogSecondDay').hide();"
+					update="panelWeek" />
+					
+				<p:commandButton value="#{msgs['template.button.delete']}"
+					actionListener="#{timelessScheduleTemplateMBean.deleteDay2}"
+					oncomplete="PF('eventDialogSecondDay').hide(); document.getElementById('warmUp2').value=''; 
+						document.getElementById('desc2').value=''; document.getElementById('coolDown2').value=''; )"
+					update="panelWeek">
+				</p:commandButton>
+			</p>
+		</div>
+	</p:dialog>
+	
+	<p:dialog widgetVar="eventDialogThirdDay"
+		header="#{msgs['schedule.event.detail']}" modal="true" width="500"
+		height="570" id="eventDialogThirdDay" position="center"
+		onShow="eventDialogThirdDay.initPosition();">
+
+		<div id="eventDetails" style="padding: 10px">
+
+			<p>
+				<h:outputLabel  value="#{msgs['schedule.event.warmup']}" style="width: 105px;" />
+				<p:inputText  value="#{timelessScheduleTemplateMBean.timelessScheduleWeek.thirdDay.warmUp}" maxlength="50" id="warmUp3"/>
+			</p>
+
+			<p>
+				<h:outputLabel  value="#{msgs['schedule.event.title']}" style="width: 150px;" />				
+				<p:inputTextarea 
+					value="#{timelessScheduleTemplateMBean.timelessScheduleWeek.thirdDay.description}"
+					style="width:450px;height:120px;" autoResize="false" maxlength="500" id="desc3" />
+			</p>
+
+			<p>
+				<h:outputLabel value="#{msgs['schedule.event.cooldown']}" style="width: 115px;" />
+				<p:inputText value="#{timelessScheduleTemplateMBean.timelessScheduleWeek.thirdDay.coolDown}" maxlength="50" id="coolDown3"/>
+			</p>
+
+			<p>
+				<h:outputLabel value="#{msgs['schedule.event.observations']}" />
+				<p:inputTextarea 
+					value="#{timelessScheduleTemplateMBean.timelessScheduleWeek.thirdDay.observations}"
+					style="width:450px;height:100px;" autoResize="false" maxlength="500" />
+			</p>
+
+			<p>
+				<h:outputLabel value="#{msgs['schedule.event.route']}" style="width: 105px;" />
+				<p:selectOneMenu value="#{timelessScheduleTemplateMBean.route3.id}"
+					style="width:450px; position:relative;">
+			        <f:selectItem itemLabel="Selecione..." noSelectionOption="true" />
+					<f:selectItems value="#{timelessScheduleTemplateMBean.routeList}" />
+				</p:selectOneMenu>
+			</p>
+
+			<p style="text-align: center !important;">
+				<p:commandButton value="#{msgs['template.button.save']}"
+					action="updateWeek"
+					oncomplete="PF('eventDialogThirdDay').hide();"
+					update="panelWeek" />
+					
+				<p:commandButton value="#{msgs['template.button.delete']}"
+					actionListener="#{timelessScheduleTemplateMBean.deleteDay3}"
+					oncomplete="PF('eventDialogThirdDay').hide(); document.getElementById('warmUp3').value=''; 
+						document.getElementById('desc3').value=''; document.getElementById('coolDown3').value=''; )"
+					update="panelWeek">
+				</p:commandButton>
+			</p>
+		</div>
+	</p:dialog>	
+	
+	<p:dialog widgetVar="eventDialogFourthDay"
+		header="#{msgs['schedule.event.detail']}" modal="true" width="500"
+		height="570" id="eventDialogFourthDay" position="center"
+		onShow="eventDialogFourthDay.initPosition();">
+
+		<div id="eventDetails" style="padding: 10px">
+
+			<p>
+				<h:outputLabel  value="#{msgs['schedule.event.warmup']}" style="width: 105px;" />
+				<p:inputText  value="#{timelessScheduleTemplateMBean.timelessScheduleWeek.fourthDay.warmUp}" maxlength="50" id="warmUp4" />
+			</p>
+
+			<p>
+				<h:outputLabel  value="#{msgs['schedule.event.title']}" style="width: 150px;" />				
+				<p:inputTextarea 
+					value="#{timelessScheduleTemplateMBean.timelessScheduleWeek.fourthDay.description}"
+					style="width:450px;height:120px;" autoResize="false" maxlength="500" id="desc4" />
+			</p>
+
+			<p>
+				<h:outputLabel value="#{msgs['schedule.event.cooldown']}" style="width: 115px;" />
+				<p:inputText value="#{timelessScheduleTemplateMBean.timelessScheduleWeek.fourthDay.coolDown}" maxlength="50" id="coolDown4"/>
+			</p>
+
+			<p>
+				<h:outputLabel value="#{msgs['schedule.event.observations']}" />
+				<p:inputTextarea 
+					value="#{timelessScheduleTemplateMBean.timelessScheduleWeek.fourthDay.observations}"
+					style="width:450px;height:100px;" autoResize="false" maxlength="500" />
+			</p>
+
+			<p>
+				<h:outputLabel value="#{msgs['schedule.event.route']}" style="width: 105px;" />
+				<p:selectOneMenu value="#{timelessScheduleTemplateMBean.route4.id}"
+					style="width:450px;position:relative;">
+			        <f:selectItem itemLabel="Selecione..." noSelectionOption="true" />
+					<f:selectItems value="#{timelessScheduleTemplateMBean.routeList}" />
+				</p:selectOneMenu>
+			</p>
+
+			<p style="text-align: center !important;">
+				<p:commandButton value="#{msgs['template.button.save']}"
+					action="updateWeek"
+					oncomplete="PF('eventDialogFourthDay').hide();"
+					update="panelWeek" />
+					
+				<p:commandButton value="#{msgs['template.button.delete']}"
+					actionListener="#{timelessScheduleTemplateMBean.deleteDay4}"
+					oncomplete="PF('eventDialogFourthDay').hide(); document.getElementById('warmUp4').value=''; 
+						document.getElementById('desc4').value=''; document.getElementById('coolDown4').value=''; )"
+					update="panelWeek">
+				</p:commandButton>
+			</p>
+		</div>
+	</p:dialog>	
+	
+	<p:dialog widgetVar="eventDialogFifthDay"
+		header="#{msgs['schedule.event.detail']}" modal="true" width="500"
+		height="570" id="eventDialogFifthDay" position="center"
+		onShow="eventDialogFifthDay.initPosition();">
+
+		<div id="eventDetails" style="padding: 10px">
+
+			<p>
+				<h:outputLabel  value="#{msgs['schedule.event.warmup']}" style="width: 105px;" />
+				<p:inputText  value="#{timelessScheduleTemplateMBean.timelessScheduleWeek.fifthDay.warmUp}" maxlength="50" id="warmUp5" />
+			</p>
+
+			<p>
+				<h:outputLabel  value="#{msgs['schedule.event.title']}" style="width: 150px;" />				
+				<p:inputTextarea 
+					value="#{timelessScheduleTemplateMBean.timelessScheduleWeek.fifthDay.description}"
+					style="width:450px;height:120px;" autoResize="false" maxlength="500" id="desc5" />
+			</p>
+
+			<p>
+				<h:outputLabel value="#{msgs['schedule.event.cooldown']}" style="width: 115px;" />
+				<p:inputText value="#{timelessScheduleTemplateMBean.timelessScheduleWeek.fifthDay.coolDown}" maxlength="50" id="coolDown5"/>
+			</p>
+
+			<p>
+				<h:outputLabel value="#{msgs['schedule.event.observations']}" />
+				<p:inputTextarea 
+					value="#{timelessScheduleTemplateMBean.timelessScheduleWeek.fifthDay.observations}"
+					style="width:450px;height:100px;" autoResize="false" maxlength="500" />
+			</p>
+
+			<p>
+				<h:outputLabel value="#{msgs['schedule.event.route']}" style="width: 105px;" />
+				<p:selectOneMenu value="#{timelessScheduleTemplateMBean.route5.id}"
+					style="width:450px; position:relative;">
+			        <f:selectItem itemLabel="Selecione..." noSelectionOption="true" />
+					<f:selectItems value="#{timelessScheduleTemplateMBean.routeList}" />
+				</p:selectOneMenu>
+			</p>
+
+			<p style="text-align: center !important;">
+				<p:commandButton value="#{msgs['template.button.save']}"
+					action="updateWeek"
+					oncomplete="PF('eventDialogFifthDay').hide();"
+					update="panelWeek" />
+					
+				<p:commandButton value="#{msgs['template.button.delete']}"
+					actionListener="#{timelessScheduleTemplateMBean.deleteDay5}"
+					oncomplete="PF('eventDialogFifthDay').hide(); document.getElementById('warmUp5').value=''; 
+						document.getElementById('desc5').value=''; document.getElementById('coolDown5').value=''; )"
+					update="panelWeek">
+				</p:commandButton>
+			</p>
+		</div>
+	</p:dialog>
+	
+	<p:dialog widgetVar="eventDialogSixthDay"
+		header="#{msgs['schedule.event.detail']}" modal="true" width="500"
+		height="570" id="eventDialogSixthDay" position="center"
+		onShow="eventDialogSixthDay.initPosition();">
+
+		<div id="eventDetails" style="padding: 10px">
+
+			<p>
+				<h:outputLabel  value="#{msgs['schedule.event.warmup']}" style="width: 105px;" />
+				<p:inputText  value="#{timelessScheduleTemplateMBean.timelessScheduleWeek.sixthDay.warmUp}" maxlength="50" id="warmUp6" />
+			</p>
+
+			<p>
+				<h:outputLabel  value="#{msgs['schedule.event.title']}" style="width: 150px;" />				
+				<p:inputTextarea 
+					value="#{timelessScheduleTemplateMBean.timelessScheduleWeek.sixthDay.description}"
+					style="width:450px;height:120px;" autoResize="false" maxlength="500" id="desc6" />
+			</p>
+
+			<p>
+				<h:outputLabel value="#{msgs['schedule.event.cooldown']}" style="width: 115px;" />
+				<p:inputText value="#{timelessScheduleTemplateMBean.timelessScheduleWeek.sixthDay.coolDown}" maxlength="50" id="coolDown6"/>
+			</p>
+
+			<p>
+				<h:outputLabel value="#{msgs['schedule.event.observations']}" />
+				<p:inputTextarea 
+					value="#{timelessScheduleTemplateMBean.timelessScheduleWeek.sixthDay.observations}"
+					style="width:450px;height:100px;" autoResize="false" maxlength="500" />
+			</p>
+
+			<p>
+				<h:outputLabel value="#{msgs['schedule.event.route']}" style="width: 105px;" />
+				<p:selectOneMenu value="#{timelessScheduleTemplateMBean.route6.id}"
+					style="width:450px; position:relative;">
+			        <f:selectItem itemLabel="Selecione..." noSelectionOption="true" />
+					<f:selectItems value="#{timelessScheduleTemplateMBean.routeList}" />
+				</p:selectOneMenu>
+			</p>
+
+			<p style="text-align: center !important;">
+				<p:commandButton value="#{msgs['template.button.save']}"
+					action="updateWeek"
+					oncomplete="PF('eventDialogSixthDay').hide();"
+					update="panelWeek" />
+					
+				<p:commandButton value="#{msgs['template.button.delete']}"
+					actionListener="#{timelessScheduleTemplateMBean.deleteDay6}"
+					oncomplete="PF('eventDialogSixthDay').hide(); document.getElementById('warmUp6').value=''; 
+						document.getElementById('desc6').value=''; document.getElementById('coolDown6').value=''; )"
+					update="panelWeek">
+				</p:commandButton>
+			</p>
+		</div>
+	</p:dialog>		
+	
+	<p:dialog widgetVar="eventDialogSeventhDay"
+		header="#{msgs['schedule.event.detail']}" modal="true" width="500"
+		height="570" id="eventDialogSeventhDay" position="center"
+		onShow="eventDialogSeventhDay.initPosition();">
+
+		<div id="eventDetails" style="padding: 10px">
+
+			<p>
+				<h:outputLabel  value="#{msgs['schedule.event.warmup']}" style="width: 105px;" />
+				<p:inputText  value="#{timelessScheduleTemplateMBean.timelessScheduleWeek.seventhDay.warmUp}" maxlength="50" id="warmUp7" />
+			</p>
+
+			<p>
+				<h:outputLabel  value="#{msgs['schedule.event.title']}" style="width: 150px;" />				
+				<p:inputTextarea 
+					value="#{timelessScheduleTemplateMBean.timelessScheduleWeek.seventhDay.description}"
+					style="width:450px;height:120px;" autoResize="false" maxlength="500" id="desc7" />
+			</p>
+
+			<p>
+				<h:outputLabel value="#{msgs['schedule.event.cooldown']}" style="width: 115px;" />
+				<p:inputText value="#{timelessScheduleTemplateMBean.timelessScheduleWeek.seventhDay.coolDown}" maxlength="50" id="coolDown7"/>
+			</p>
+
+			<p>
+				<h:outputLabel value="#{msgs['schedule.event.observations']}" />
+				<p:inputTextarea 
+					value="#{timelessScheduleTemplateMBean.timelessScheduleWeek.seventhDay.observations}"
+					style="width:450px;height:100px;" autoResize="false" maxlength="500" />
+			</p>
+
+			<p>
+				<h:outputLabel value="#{msgs['schedule.event.route']}" style="width: 105px;" />
+				<p:selectOneMenu value="#{timelessScheduleTemplateMBean.route7.id}"
+					style="width:450px; position:relative;">
+			        <f:selectItem itemLabel="Selecione..." noSelectionOption="true" />
+					<f:selectItems value="#{timelessScheduleTemplateMBean.routeList}" />
+				</p:selectOneMenu>
+			</p>
+
+			<p style="text-align: center !important;">
+				<p:commandButton value="#{msgs['template.button.save']}"
+					action="updateWeek"
+					oncomplete="PF('eventDialogSeventhDay').hide();"
+					update="panelWeek" />
+					
+				<p:commandButton value="#{msgs['template.button.delete']}"
+					actionListener="#{timelessScheduleTemplateMBean.deleteDay7}"
+					oncomplete="PF('eventDialogSeventhDay').hide(); document.getElementById('warmUp7').value=''; 
+						document.getElementById('desc7').value=''; document.getElementById('coolDown7').value=''; )"
+					update="panelWeek">
+				</p:commandButton>
+			</p>
+		</div>
+	</p:dialog>	
+
+</ui:fragment>

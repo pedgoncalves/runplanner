@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="#{loginBean.templateVersion}">
+
+	<ui:define name="content">
+		<h:form>
+		
+			<br/>
+			<p:panel id="filter" header="#{msgs['advice.owner.title.list']}"> 
+				<p:messages id="messages" showDetail="false" /> 
+				    	
+		    	<div id="filterDetails" style="width100%; font-size: 12px" class="filtro">
+		    	<table>
+		    		<tr>
+			    		<td style="padding-left:5px">
+							<h:outputText value="#{msgs['advice.owner.advice']}" />	
+						</td>
+				    	<td>    		
+				    		<p:selectOneMenu value="#{adviceOwnerMBean.advice.id}">	    			
+				    			<f:selectItems value="#{adviceOwnerMBean.adviceListSI}"/>                       	 
+				    		</p:selectOneMenu>	   		
+			    		</td>
+			    		<td style="padding-left:5px">
+				    		<p:commandButton action="#{adviceOwnerMBean.find}" update="ownerListTable"
+			           			title="#{msgs['template.button.find']}"
+			           			value="#{msgs['template.button.find']}" ajax="false"/>
+		           		</td>
+		    		</tr>
+		    		</table>
+		    	</div>		    	
+		    </p:panel>
+		    <br/>		
+				
+			<div id="painel" class="tabela">
+				<p:dataTable var="owner" value="#{adviceOwnerMBean.ownerList}"
+					emptyMessage="#{msgs['template.msg.emptyMessage']}" id="ownerListTable"
+					paginator="true" rows="10" paginatorPosition="bottom" paginatorAlwaysVisible="false"
+					paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}">
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="#{msgs['alunos.nome']}" />
+						</f:facet>
+												
+		                <h:commandLink action="#{adviceOwnerMBean.goToModify}">
+		                	<h:outputText value="#{owner.nome}" />
+           					<f:setPropertyActionListener target="#{adviceOwnerMBean.owner.id}" value="#{owner.id}" />
+           				</h:commandLink>  						
+						
+					</p:column>
+
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="#{msgs['advice.owner.advice']}" />
+						</f:facet>
+						<h:outputText value="#{owner.advice.name}" />
+					</p:column>
+					
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="#{msgs['alunos.email']}" />
+						</f:facet>
+						<h:outputText value="#{owner.email}" />
+					</p:column>
+					
+					<p:column style="text-align:center;">  
+		                <f:facet name="header">  
+		                    <h:outputText value="" />  
+		                </f:facet>  
+		                
+	           			<p:commandButton icon="restart" oncomplete="confirmationRestart.show()" 
+	           				title="#{msgs['template.button.restart']}">         			          			
+	     					<f:setPropertyActionListener target="#{adviceOwnerMBean.owner.id}" value="#{owner.id}" />
+	           			</p:commandButton>
+            				                      			
+	           			<p:commandButton icon="delete" oncomplete="deleteConfirmation.show()" title="#{msgs['template.button.delete']}">           			
+	     					<f:setPropertyActionListener target="#{adviceOwnerMBean.owner.id}" value="#{owner.id}" />
+	           			</p:commandButton>         			
+            			
+		            </p:column>  
+				</p:dataTable>
+			</div>
+
+	     	<p:confirmDialog message="#{msgs['template.msg.delete.confirmation']}"  
+	           	severity="alert" widgetVar="deleteConfirmation">
+	   			<p:commandButton value="#{msgs['template.button.yes']}" oncomplete="deleteConfirmation.hide()" 
+	   				action="#{adviceOwnerMBean.delete}" ajax="false" />
+	   			<p:commandButton value="#{msgs['template.button.no']}" onclick="deleteConfirmation.hide()" />
+			</p:confirmDialog> 
+        
+	        <p:confirmDialog message="#{msgs['template.msg.aluno.restart.confirmation']}"  
+	        	severity="alert" widgetVar="confirmationRestart">        	
+	        	<p:commandButton value="#{msgs['template.button.yes']}" oncomplete="confirmationRestart.hide()"  
+	        		action="#{adviceOwnerMBean.restartPassword}" ajax="false" 
+	        		title="#{msgs['template.button.activate']}"/>        	
+	        	<p:commandButton value="#{msgs['template.button.no']}" onclick="confirmationRestart.hide()" />
+	        </p:confirmDialog>		
+				
+								
+			<div class="buttons">  
+				<p:commandButton value="#{msgs['template.button.incluir']}" action="#{adviceOwnerMBean.goToCreate}" ajax="false" />
+			</div>
+
+		</h:form>
+	</ui:define>
+</ui:composition>

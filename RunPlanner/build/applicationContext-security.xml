@@ -1,0 +1,66 @@
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+    xmlns:beans="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans 
+                    http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+                    http://www.springframework.org/schema/security 
+                    http://www.springframework.org/schema/security/spring-security-3.1.xsd">
+
+
+	
+    <http use-expressions="true" access-denied-page="/accessDenied.jsf">
+		<intercept-url pattern="/pages/advice/**" access="hasAnyRole('ROLE_ADM')" />
+		<intercept-url pattern="/pages/customer/**" access="hasAnyRole('ROLE_ASSESSOR', 'ROLE_TEACHER')" />
+		<intercept-url pattern="/pages/payment/**" access="hasAnyRole('ROLE_ASSESSOR', 'ROLE_TEACHER')" />
+		<intercept-url pattern="/pages/route/**" access="hasAnyRole('ROLE_ASSESSOR', 'ROLE_TEACHER')" />
+		<intercept-url pattern="/pages/event/**" access="hasAnyRole('ROLE_ASSESSOR', 'ROLE_TEACHER')" />
+		<intercept-url pattern="/pages/rhythm/**" access="hasAnyRole('ROLE_ASSESSOR', 'ROLE_TEACHER')" />
+    	<intercept-url pattern="/pages/schedule/**" access="hasAnyRole('ROLE_ASSESSOR', 'ROLE_TEACHER')" />
+    	<intercept-url pattern="/pages/team/**" access="hasAnyRole('ROLE_ASSESSOR')" />
+    	<intercept-url pattern="/pages/partner/**" access="hasAnyRole('ROLE_ASSESSOR')" />
+    	<intercept-url pattern="/pages/teacher/index.jsf" access="hasAnyRole('ROLE_ASSESSOR', 'ROLE_TEACHER')" />
+    	<intercept-url pattern="/pages/teacher/activity.jsf" access="hasAnyRole('ROLE_ASSESSOR', 'ROLE_TEACHER')" />
+    	<intercept-url pattern="/pages/teacher/activityReport.jsf" access="hasAnyRole('ROLE_ASSESSOR', 'ROLE_TEACHER')" />
+    	<intercept-url pattern="/pages/teacher/progressReport.jsf" access="hasAnyRole('ROLE_ASSESSOR', 'ROLE_TEACHER')" />
+    	<intercept-url pattern="/pages/teacher/profile.jsf" access="hasAnyRole('ROLE_ASSESSOR', 'ROLE_TEACHER')" />
+    	<intercept-url pattern="/pages/teacher/**" access="hasAnyRole('ROLE_ASSESSOR', 'ROLE_TEACHER')" />
+    	<intercept-url pattern="/pages/student/**" access="hasAnyRole('ROLE_USER')" />
+    	<intercept-url pattern="/pages/equipment/**" access="hasAnyRole('ROLE_USER')" />
+    	<intercept-url pattern="/pages/mailbox/**" access="permitAll" />
+    	<intercept-url pattern="/pages/template/**" access="permitAll" />
+    	<intercept-url pattern="/pages/contactus.jsf" access="permitAll" />
+    	<intercept-url pattern="/pages/recover.jsf" access="permitAll" />
+    	<intercept-url pattern="/pages/pricing.jsf" access="permitAll" />
+    	<intercept-url pattern="/pages/**" access="hasAnyRole('ROLE_ADM','ROLE_ASSESSOR','ROLE_TEACHER','ROLE_USER')" />
+        <intercept-url pattern="/**" access="permitAll" />
+
+		    	    	   	 	
+    	    	   	 	
+    	<logout logout-url="/logout" logout-success-url="/"/>
+    	
+    	<!-- default-target-url="/pages/index.jsf" always-use-default-target="true" -->
+    	<form-login login-processing-url="/j_spring_security_check" login-page="/login.jsf" 
+    		authentication-failure-url="/login.jsf" authentication-success-handler-ref="myAuthenticationSuccessHandler"/>
+  	</http>
+
+	<beans:bean id="myAuthenticationSuccessHandler" class="br.com.runplanner.security.UrlAuthenticationSuccessHandler" />
+ 
+	<beans:bean id="daoAuthenticationProvider" class="org.springframework.security.authentication.dao.DaoAuthenticationProvider">
+		<beans:property name="userDetailsService" ref="userDetailsService" />
+	</beans:bean>
+
+	<beans:bean id="authenticationManager" class="org.springframework.security.authentication.ProviderManager">
+		<beans:property name="providers">
+			<beans:list>
+				<beans:ref local="daoAuthenticationProvider" />
+			</beans:list>
+		</beans:property>
+	</beans:bean>
+
+	<authentication-manager>
+		<authentication-provider user-service-ref="userDetailsService">
+			<password-encoder hash="md5"/>
+		</authentication-provider>
+	</authentication-manager>
+  	
+</beans:beans>   

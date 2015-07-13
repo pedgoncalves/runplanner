@@ -1,0 +1,464 @@
+<f:view xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:h="http://java.sun.com/jsf/html"
+    	xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:p="http://primefaces.org/ui"
+        xmlns:pm="http://primefaces.org/mobile"
+        contentType="text/html">
+
+    <pm:page title="RunPlanner Mobile">
+       <f:facet name="postinit">
+            <h:outputScript library="primefaces" name="gmap/gmap.js" />
+			<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
+		</f:facet>
+    
+        <!-- Main View -->
+        <pm:view id="main">
+            <pm:header title="RunPlanner" swatch="b" />
+
+            <pm:content>
+            	<p:messages id="messages" showDetail="false" /> 
+            	<h:form>
+					<p:inputText label="Login:" value="#{mobileMBean.login}" />
+					<p:inputText label="Senha:" type="password" value="#{mobileMBean.password}" /> 
+	                <p:commandButton value="Login" action="#{mobileMBean.doLogin}" update="messages,nextTraining,resume,rhythm,
+	                	:eventForm:eventList,:equipForm:equipList,resumeActivity,activityForm,activityDisplay,innerActivityList,
+	                	footerInit,footerEvent,footerEventDetail,footerEquip,footerActiv" />	                
+                </h:form>
+            </pm:content>            
+        </pm:view>
+        
+        <!-- Initial View -->
+        <pm:view id="init">
+            <pm:header title="RunPlanner" swatch="b">            
+                <f:facet name="right">
+                	<h:form><p:commandButton value="Sair" icon="delete" action="#{mobileMBean.doLogout}" /></h:form>                
+                </f:facet>
+                <pm:navBar>
+                    <p:button value="Home" icon="home" href="#init" styleClass="ui-btn-active"/>
+                    <p:button value="Eventos" icon="star" href="#event" />
+                    <p:button value="Equipamentos" icon="grid" href="#equip" />
+                    <p:button value="Atividades" icon="check" href="#activity"/>
+                </pm:navBar>
+            </pm:header>
+
+            
+            <pm:content>      
+            
+            	<p:dataList id="nextTraining" type="inset">	            
+	            	<f:facet name="header">#{msgs['dashboard.nextTrain']}</f:facet>
+	            	
+            		<p:column rendered="#{mobileMBean.nextTraining!=null}">
+	            		Data: 
+	            		<h:outputText value="#{mobileMBean.nextTraining.date}">
+							<f:convertDateTime pattern="dd/MM/yyyy" />
+						</h:outputText>
+					</p:column>
+					
+					<p:column rendered="#{mobileMBean.nextTraining!=null}">
+						Aquec.: <h:outputText value="#{mobileMBean.nextTraining.warmUp}"/>
+					</p:column>
+					
+					<p:column rendered="#{mobileMBean.nextTraining!=null}">
+						Treino: <h:outputText value="#{mobileMBean.nextTraining.description}" scape="false"/>
+					</p:column>
+					
+					<p:column rendered="#{mobileMBean.nextTraining!=null}">
+						Desaq.: <h:outputText value="#{mobileMBean.nextTraining.coolDown}"/>
+					</p:column>
+					
+	           		<h:outputText value="Nenhum treino cadastrado"  rendered="#{mobileMBean.nextTraining==null}"/>
+	            </p:dataList>
+	            
+	            <h:form>
+	            <p:commandButton value="#{msgs['mobile.download.spreadsheet']}" ajax="false" 
+			    		action="#{mobileMBean.printSpreadsheet}">
+			    </p:commandButton>
+			    </h:form>
+	            
+	            <p:dataList id="rhythm" type="inset">
+	            	<f:facet name="header">#{msgs['template.menu.rhythm']}</f:facet>
+	            	
+	            	<p:column>
+		            	<table width="100%">
+		            		<tr>
+		            			<td><h:outputLabel value="#{msgs['mobile.rhythm.easyPace']}: " /> </td>
+		            			<td><h:outputText value="#{mobileMBean.easyPace}" mask="99:99" /> </td>
+		            			
+		            			<td><h:outputLabel value="#{msgs['mobile.rhythm.normalPace']}: " /> </td>
+		            			<td><h:outputText value="#{mobileMBean.normalPace}" mask="99:99"/> </td>
+		            		</tr>
+		            		<tr>
+		            			<td><h:outputLabel value="#{msgs['mobile.rhythm.moderatePace']}: " /> </td>
+		            			<td><h:outputText value="#{mobileMBean.moderatePace}" mask="99:99"/> </td>
+		            			
+		            			<td><h:outputLabel value="#{msgs['mobile.rhythm.mediumPace']}: " /> </td>
+		            			<td><h:outputText value="#{mobileMBean.mediumPace}" mask="99:99"/> </td>
+		            		</tr>
+		            		<tr>
+		            			<td><h:outputLabel value="#{msgs['mobile.rhythm.strongPace']}: " /> </td>
+		            			<td><h:outputText value="#{mobileMBean.strongPace}" mask="99:99"/> </td>
+		            			
+		            			<td><h:outputLabel value="#{msgs['mobile.rhythm.shootingPace']}: " /> </td>
+		            			<td><h:outputText value="#{mobileMBean.shootingPace}" mask="99:99"/> </td>
+		            		</tr>
+		            	</table>	
+	           		</p:column>
+	            </p:dataList>	            	
+	            
+            </pm:content>  
+            
+            <pm:footer swatch="b">
+				<center><h:outputText value="#{mobileMBean.adviceName}" id="footerInit"/></center>	
+			</pm:footer>          
+        </pm:view>  
+        
+        <!-- Events View -->
+        <pm:view id="event">
+            <pm:header title="RunPlanner" swatch="b">
+                <f:facet name="right">
+                	<h:form><p:commandButton value="Sair" icon="delete" action="#{mobileMBean.doLogout}" /></h:form>                
+                </f:facet>            
+                <pm:navBar>
+                    <p:button value="Home" icon="home" href="#init"/>
+                    <p:button value="Eventos" icon="star" href="#event" styleClass="ui-btn-active"/>
+                    <p:button value="Equipamentos" icon="grid" href="#equip" />
+                    <p:button value="Atividades" icon="check" href="#activity"/>
+                </pm:navBar>
+            </pm:header>
+
+            <pm:content>
+            	<h:form id="eventForm" prependId="false">
+					<p:dataList value="#{mobileMBean.eventList}" var="event" id="eventList" type="inset">
+	            		<f:facet name="header">#{msgs['dashboard.event']}</f:facet>
+	            		
+	            		<p:column>
+		            		<p:commandLink action="pm:eventDetail" update="selectedEvent"> 
+		                    	 <f:setPropertyActionListener value="#{event}" target="#{mobileMBean.selectedEvent}" />	
+		                    	<h:outputText value="#{event.name}" />
+		                    </p:commandLink>
+	                    </p:column>
+	                    
+	                    
+	           			<h:outputText value="Nenhum evento cadastrado"  rendered="#{mobileMBean.eventList==null}"/>
+	                </p:dataList>
+                </h:form>
+            </pm:content>  
+            
+            <pm:footer swatch="b">
+				<center><h:outputText value="#{mobileMBean.adviceName}" id="footerEvent"/></center>	
+			</pm:footer>
+        </pm:view>   
+        
+        <!-- EventsDetail View -->
+        <pm:view id="eventDetail">
+            <pm:header title="RunPlanner" swatch="b">
+                <f:facet name="left"><p:button value="Voltar" icon="back" href="#event?reverse=true"/></f:facet>
+                <f:facet name="right">
+                	<h:form><p:commandButton value="Sair" icon="delete" action="#{mobileMBean.doLogout}" /></h:form>                
+                </f:facet>                
+            </pm:header>
+
+            <pm:content>
+				<p:dataList type="inset" id="selectedEvent">
+					<f:facet name="header">#{mobileMBean.selectedEvent.name}</f:facet>
+	            		
+                    <p:column>
+                    	Data: 
+                    	<h:outputText value="#{mobileMBean.selectedEvent.date}">
+							<f:convertDateTime pattern="dd/MM/yyyy" />
+						</h:outputText>
+					</p:column>
+					<p:column>
+                    	Hora: <h:outputText value="#{mobileMBean.selectedEvent.time}"/>
+                    </p:column>	
+                    <p:column>	
+                    	Local: <h:outputText value="#{mobileMBean.selectedEvent.location}"/>
+                    </p:column>
+                    <p:column>	
+                    	Valor: <h:outputText value="#{mobileMBean.selectedEvent.value}"/>
+                    </p:column>
+                    <p:column>
+                    	<h:outputText value="#{msgs['activity.distance']}"/>: <h:outputText value="#{mobileMBean.selectedEvent.distance}"/>
+                   	</p:column>
+                    	
+                </p:dataList>
+            </pm:content>  
+            
+            <pm:footer swatch="b">
+				<center><h:outputText value="#{mobileMBean.adviceName}" id="footerEventDetail"/></center>	
+			</pm:footer>
+        </pm:view>
+        
+        <!-- Equipments View -->
+        <pm:view id="equip">
+            <pm:header title="RunPlanner" swatch="b">
+                <f:facet name="right">
+                	<h:form><p:commandButton value="Sair" icon="delete" action="#{mobileMBean.doLogout}" /></h:form>                
+                </f:facet>                
+                <pm:navBar>
+                    <p:button value="Home" icon="home" href="#init"/>
+                    <p:button value="Eventos" icon="star" href="#event"/>
+                    <p:button value="Equipamentos" icon="grid" href="#equip" styleClass="ui-btn-active"/>
+                    <p:button value="Atividades" icon="check" href="#activity"/>
+                </pm:navBar>
+            </pm:header>
+
+            <pm:content>
+            	<h:form id="equipForm" prependId="false">
+					<p:dataList value="#{mobileMBean.equipList}" var="equip" id="equipList" type="inset">
+	            		<f:facet name="header">Equipamentos</f:facet>
+	            		
+	            		<p:column>
+	            			<h:outputText value="#{equip.name}  -  " />
+	                    	
+	            			<h:outputText value="#{equip.kilometers}">
+	            				<f:convertNumber pattern="#0.00"/>	            			
+	            			</h:outputText> Km
+	                    </p:column>
+	                    
+	                </p:dataList>
+                </h:form>
+            </pm:content>
+            
+            <pm:footer swatch="b">
+				<center><h:outputText value="#{mobileMBean.adviceName}" id="footerEquip"/></center>	
+			</pm:footer>  
+        </pm:view>                               
+    
+		<!-- Activity View -->
+        <pm:view id="activity">
+        
+            <pm:header title="RunPlanner" swatch="b">
+                <f:facet name="right">
+                	<h:form><p:commandButton value="Sair" icon="delete" action="#{mobileMBean.doLogout}" /></h:form>                
+                </f:facet>            
+                <pm:navBar>
+                    <p:button value="Home" icon="home" href="#init"/>
+                    <p:button value="Eventos" icon="star" href="#event"/>
+                    <p:button value="Equipamentos" icon="grid" href="#equip"/>
+                    <p:button value="Atividades" icon="check" href="#activity" styleClass="ui-btn-active"/>
+                </pm:navBar>
+            </pm:header>
+
+            <pm:content>
+            
+            	<p:dataList id="resumeActivity" type="inset">	            
+	            	<f:facet name="header">
+						<table width="100%">
+							<tr>
+								<td align="center" width="33%">					 							
+									<h:outputText value="#{msgs['activity.head.number.mobile']}"/>
+								</td>					 						
+								<td align="center" width="33%">
+									<h:outputText value="#{msgs['activity.head.distance.mobile']}"/>		 							
+								</td>	
+								<td align="center" width="33%">
+									<h:outputText value="#{msgs['activity.head.time']}"/>					 							
+								</td>					
+							</tr>
+				 			<tr>								 										 				
+				 				<td align="center" width="33%">							 				
+				 					<h:outputText value="#{mobileMBean.activityNumber}" />
+				 				</td>
+				 				<td align="center" width="33%">				 				
+				 					<h:outputText value="#{mobileMBean.activityDistance}">							 					
+										<f:convertNumber pattern="#0.00"/>
+									</h:outputText>
+				 				</td>
+				 				<td align="center" width="33%">							 				
+				 					<h:outputText value="#{mobileMBean.activityTime}" />
+				 				</td>
+				 			</tr>
+				 		</table>
+			 		</f:facet>
+			 	</p:dataList>  
+			 	
+			 	<h:form id="activityForm" >
+					<pm:field>				
+						<center>	
+							<h:selectOneMenu id="monthListMenu" value="#{mobileMBean.selectedDisplay}">
+				    			<f:selectItems value="#{mobileMBean.monthList}"/>                       
+		                   	</h:selectOneMenu>
+		                   
+							<p:commandButton value="Buscar" inline="true" icon="search" 
+								actionListener="#{mobileMBean.filterActivityList}" update="activityDisplay,innerActivityList,activityForm"/>
+						</center>
+					</pm:field>
+				</h:form>
+							
+				<h:form id="activityDetailForm" prependId="false">	
+					<p:dataList value="#{mobileMBean.activityDisplayList}" var="activityDisplay" id="activityDisplay" type="inset">  
+					    <f:facet name="header">
+					    	<h:outputText value="#{mobileMBean.selectedMonth}" />
+					    </f:facet>  
+					    
+				    	 <p:column>
+				    	 
+							<p:dataTable var="act" value="#{activityDisplay.activityList}" style="border:0px !important;" id="innerActivityList">
+					    		
+					    		<p:column style="text-align: center; border:0px !important;">
+					    			<f:facet name="header">
+					    				Dia
+					    			</f:facet>
+					    			<p:commandLink action="pm:activityDetail" update="selectedActivity,selectedActivityLaps"> 
+					    				<f:setPropertyActionListener value="#{act}" target="#{mobileMBean.selectedActivity}" />	
+					    				<h:outputText value="#{act.date}" >
+					    					<f:convertDateTime pattern="dd/MM" />
+					    				</h:outputText>
+					    			</p:commandLink>						    		
+					    		</p:column>
+					    		
+					    		<p:column style="text-align: center; border:0px !important;">
+					    			<f:facet name="header">
+					    				Km
+					    			</f:facet>	
+					    			<p:commandLink action="pm:activityDetail" update="selectedActivity,selectedActivityLaps"> 
+					    				<f:setPropertyActionListener value="#{act}" target="#{mobileMBean.selectedActivity}" />					    							    		
+						    			<h:outputText value="#{act.totalDistance}">
+											<f:convertNumber pattern="#0.00"/>								
+										</h:outputText>		   						    		 			
+									</p:commandLink>
+					    		</p:column>
+					    		
+					    		<p:column style="text-align: center; border:0px !important;">
+					    			<f:facet name="header">
+					    				Tempo
+					    			</f:facet>		
+					    			<p:commandLink action="pm:activityDetail" update="selectedActivity,selectedActivityLaps"> 
+					    				<f:setPropertyActionListener value="#{act}" target="#{mobileMBean.selectedActivity}" />					    						    		
+					    				<h:outputText value="#{act.totalTime}"/>
+					    			</p:commandLink>	    		 			
+					    		</p:column>
+					    		
+					    		<p:column style="text-align: center; border:0px !important;">
+					    			<f:facet name="header">
+					    				Pace
+					    			</f:facet>	
+					    			<p:commandLink action="pm:activityDetail" update="selectedActivity,selectedActivityLaps"> 
+					    				<f:setPropertyActionListener value="#{act}" target="#{mobileMBean.selectedActivity}" />					    							    		
+					    				<h:outputText value="#{act.averagePace}"/>
+					    			</p:commandLink>	    		 			
+					    		</p:column>					    		
+					    							    	
+				    	 	</p:dataTable>
+				    	 </p:column>			    	
+					</p:dataList>
+				</h:form>
+				
+            </pm:content>
+            
+            <pm:footer swatch="b">
+				<center><h:outputText value="#{mobileMBean.adviceName}" id="footerActiv"/></center>	
+			</pm:footer>  
+            
+        </pm:view>     
+        
+		<!-- ActivityDetail View -->
+        <pm:view id="activityDetail">
+            <pm:header title="RunPlanner" swatch="b">
+                <f:facet name="left"><p:button value="Voltar" icon="back" href="#activity?reverse=true"/></f:facet>
+                <f:facet name="right">
+                	<h:form><p:commandButton value="Sair" icon="delete" action="#{mobileMBean.doLogout}" /></h:form>                
+                </f:facet>                
+            </pm:header>
+
+            <pm:content>
+				
+				<p:dataList type="inset" id="selectedActivity">
+					<f:facet name="header">
+						Resumo
+					</f:facet>
+	            		
+		    		<p:column style="text-align: center; border:0px !important;">
+		    			Data:
+		    			<h:outputText value="#{mobileMBean.selectedActivity.date}" >
+		    				<f:convertDateTime pattern="dd/MM" />
+		    			</h:outputText>						    		
+		    		</p:column>	   
+		    		         		
+		    		<p:column style="text-align: center; border:0px !important;">
+		    			<h:outputText value="#{msgs['activity.distance']}"/>:					    		
+		    			<h:outputText value="#{mobileMBean.selectedActivity.totalDistance}">
+							<f:convertNumber pattern="#0.00"/>								
+						</h:outputText> 
+						<h:outputText value="#{msgs['activity.km']}" />		   						    		 			
+		    		</p:column>
+		    		
+		    		<p:column style="text-align: center; border:0px !important;">
+		    			<h:outputText value="#{msgs['activity.duration']}"/>: 					    		
+		    			<h:outputText value="#{mobileMBean.selectedActivity.totalTime}"/>	    		 			
+		    		</p:column>
+		    		
+		    		<p:column style="text-align: center; border:0px !important;">
+		    			<h:outputText value="#{msgs['activity.pace']}"/>:				    		
+		    			<h:outputText value="#{mobileMBean.selectedActivity.averagePace}"/>
+						<h:outputText value="#{msgs['activity.pace.desc']}" />	    		 			
+		    		</p:column>
+		    		
+		    		<p:column style="text-align: center; border:0px !important;">
+		    			<h:outputText value="#{msgs['activity.calories']}"/>:					    		
+		    			<h:outputText value="#{mobileMBean.selectedActivity.totalCalories}"/>
+		    			<h:outputText value="#{msgs['activity.calories.desc']}" />	    		 			
+		    		</p:column>	   
+		    		
+		    		<p:column style="text-align: center; border:0px !important;">
+		    			<h:outputText value="#{msgs['activity.freq.cad']}"/>:
+			    		<h:outputText value="#{mobileMBean.selectedActivity.totalAverageHeartRateBpm}">
+							<f:convertNumber pattern="#0.00"/>
+						</h:outputText> 
+						<h:outputText value="#{msgs['activity.freq.desc']}" />
+					</p:column>	                    	
+                </p:dataList>
+                
+                <p:dataList type="inset" id="selectedActivityLaps">
+					<f:facet name="header">
+						Voltas
+					</f:facet>
+					
+					<p:column style="text-align: center; border:0px !important;">
+					
+						<p:dataTable var="lap" value="#{mobileMBean.selectedActivity.laps}"
+							rendered="#{mobileMBean.selectedActivity!=null}"
+							style="border:0px !important;" 
+			            	emptyMessage="#{msgs['template.msg.emptyMessage']}">
+							          														
+							<p:column style="text-align: center; border:0px !important;">
+								<f:facet name="header">
+									<b><h:outputText value="#{msgs['spreadsheet.lap.distance.short']}" /></b>
+								</f:facet>
+								<h:outputText value="#{lap.distanceKm}">
+									<f:convertNumber pattern="#0.00"/>								
+								</h:outputText>
+							</p:column>
+							
+							<p:column style="text-align: center; border:0px !important;">
+								<f:facet name="header">
+									<b><h:outputText value="#{msgs['spreadsheet.lap.time.short']}" /></b>
+								</f:facet>
+								<h:outputText value="#{lap.totalTimeString}" />
+							</p:column>
+							
+							<p:column style="text-align: center; border:0px !important;">
+								<f:facet name="header">
+									<b><h:outputText value="#{msgs['spreadsheet.lap.pace']}" /></b>
+								</f:facet>
+								<h:outputText value="#{lap.pace}" /> 
+							</p:column>
+							
+						</p:dataTable>					
+					
+					</p:column>
+					
+				</p:dataList>
+                
+            </pm:content>  
+            
+            <pm:footer swatch="b">
+				<center><h:outputText value="#{mobileMBean.adviceName}" id="footerActivityDetail"/></center>	
+			</pm:footer>
+        </pm:view>   
+    
+    </pm:page>
+    
+</f:view>

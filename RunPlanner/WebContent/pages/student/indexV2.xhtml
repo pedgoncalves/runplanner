@@ -1,0 +1,245 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="/pages/template/templateV2.xhtml">
+	
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+
+	<ui:define name="content">
+
+		<style type="text/css">
+		.ui-button-text {
+			color: #02425C !important;
+		}
+		
+		.ui-datalist-content {
+			border: 0px;
+		} 
+		</style>
+
+		<h:form>
+			
+				
+			#{dashboardMBean.data}
+			
+			<table style="min-width: 1028px; max-width: 1028px; width: 1028px; margin-left: 0px; padding-left: 0px; margin-bottom: 8px;">
+				<tr>
+					<td width="50%" style="padding-right: 8px;" valign="top">
+
+						<div style="background-color: white; border: 1px solid #C8C8C8; text-align: left;">
+							<h2>#{msgs['dashboard.title.feed']}</h2>
+
+							<p:dataList value="#{dashboardMBean.notifications}" var="notification" itemType="none" id="notification">
+
+								<p:column rendered="#{notification.type.id==0}">
+									<div class="notificationV2" onmouseover="this.className='notificationV2Hover'" onmouseout="this.className='notificationV2'">
+										<table>
+											<tr>
+												<td align="center" width="55">
+													<img src="${facesContext.externalContext.requestContextPath}/images/v2/newEventIco.png"  />
+												</td>
+												<td align="left">
+													<h:commandLink action="#{eventMBean.goToView}">
+														<b><h:outputText value="#{msgs['feed.msg.new.event']}"/></b><br/>
+														<h:outputText value="#{msgs['feed.msg.new.event2']} "/> 
+														
+														<b><h:outputText value="#{notification.title}" /></b><br/>
+														
+													 	<h:outputText value="#{notification.date}" styleClass="subtitle">
+															<f:convertDateTime pattern="dd/MM/yyyy" />
+														</h:outputText>
+														
+														<f:setPropertyActionListener target="#{eventMBean.event.id}" value="#{notification.objectId}" />
+													</h:commandLink>
+												</td>
+											</tr>
+										</table>
+									</div>
+									<br />
+								</p:column>
+
+								<p:column rendered="#{notification.type.id==1}">
+									<div class="notificationV2" onmouseover="this.className='notificationV2Hover'" onmouseout="this.className='notificationV2'">
+										<table>
+											<tr>
+												<td align="center" width="55">
+													<p:graphicImage	id="photo" value="#{photoMBean.streamedUserPhoto}" width="55" height="55" 
+														redended="#{notification.customer.photo!=null}" style="padding-right: 5px;">
+														<f:param name="client_id" value="#{notification.customer.id}" />
+													</p:graphicImage>
+												</td>
+												<td align="left">
+													<h:commandLink action="#{profileMBean.goToView}">
+														<b><h:outputText value="#{notification.customer.shortName}" /> </b>
+														<f:setPropertyActionListener target="#{profileMBean.customer.id}" value="#{notification.customer.id}" />
+													</h:commandLink> 
+													
+													<h:outputText value="#{msgs['feed.msg.confirm.event']}" />
+
+													<b><h:commandLink action="#{eventMBean.goToView}">
+														<h:outputText value="#{notification.title}" />
+														<f:setPropertyActionListener target="#{eventMBean.event.id}" value="#{notification.objectId}" />
+													</h:commandLink></b><br/> 
+														
+													<h:outputText value="#{notification.date}" styleClass="subtitle">
+														<f:convertDateTime pattern="dd/MM/yyyy" />
+													</h:outputText>
+												</td>
+											</tr>
+										</table>
+									</div>
+									<br />
+								</p:column>
+
+								<p:column rendered="#{notification.type.id==2}" style="margin:0 !important;">
+									<div class="notificationV2" onmouseover="this.className='notificationV2Hover'" onmouseout="this.className='notificationV2'">
+										<table>
+											<tr>
+												<td align="center" width="55" valign="middle">
+													<p:graphicImage id="photoAct" value="#{photoMBean.streamedUserPhoto}" width="55" height="55"
+														redended="#{notification.customer.photo!=null}" style="padding-right: 5px;">
+														<f:param name="client_id" value="#{notification.customer.id}" />
+													</p:graphicImage>
+												</td>
+												<td align="left" valign="middle">
+													<h:commandLink action="#{profileMBean.goToView}">
+														<b><h:outputText value="#{notification.customer.shortName}"/></b>
+														<f:setPropertyActionListener target="#{profileMBean.customer.id}" value="#{notification.customer.id}" />
+													</h:commandLink><br/>
+
+													<h:commandLink action="#{activityMBean.goToView}">
+														<h:outputText value="#{msgs['feed.msg.new.activity']}" />
+														<b><h:outputText value="#{notification.activity.totalDistance}">
+																<f:convertNumber pattern="#0.00" />
+														</h:outputText></b> Km em 
+														<b><h:outputText value="#{notification.activity.time}" /></b>.
+											
+														<h:outputText value=" (#{notification.event.name})" rendered="#{notification.event!=null}" />
+
+														<f:setPropertyActionListener target="#{activityMBean.activity.id}" value="#{notification.objectId}" />
+													</h:commandLink><br/> 
+													
+													<h:outputText value="#{notification.date}" styleClass="subtitle">
+														<f:convertDateTime pattern="dd/MM/yyyy" />
+													</h:outputText> 
+													
+													<h:outputText value=" | #{notification.commentNumber} #{msgs['dashboard.comments.number']}" styleClass="subtitle" />
+												</td>
+											</tr>
+										</table>
+									</div>
+									<br />
+								</p:column>
+							</p:dataList>
+							
+							<p:commandButton value="#{msgs['template.button.load.more']}" update="notification" action="#{dashboardMBean.loadMore}" styleClass="loadMoreButtonV2"/>
+
+						</div>
+
+					</td>
+					<td valign="top" style="padding: 0; margin: 0; border: 0; white-space:nowrap;">
+						
+						<table>
+							<tr>
+								<td style="white-space:nowrap;">
+									<div class="nextEventBox">
+										<div style="margin-top: 8px; margin-left: 8px;">
+											<font color="#5B5B58" size="2px" face="verdana">
+												<b>#{msgs['dashboard.nextEvent']}</b>
+											</font> 
+											<font color="#5B5B58" face="verdana"> </font>
+										</div>
+									</div>
+									
+									<div class="nextTrainBox">
+										<div style="margin-top: 8px; margin-left: 8px; word-wrap: break-word; width: 90%; float:left; ">
+			
+											<font color="#5B5B58" size="2px" face="verdana"><b>#{msgs['dashboard.nextTrain']}</b></font>
+											<br /> 
+											<b><h:outputText value="Data: "	rendered="#{dashboardMBean.proximoTreino!=null}" /></b>
+											<h:outputText value="#{dashboardMBean.proximoTreino.date}"	rendered="#{dashboardMBean.proximoTreino!=null}">
+												<f:convertDateTime pattern="dd/MM/yyyy" />
+											</h:outputText>
+											<br /> 
+											<b><h:outputText value="Treino: " rendered="#{dashboardMBean.proximoTreino!=null}" /></b>
+											<h:outputText
+												value="#{dashboardMBean.proximoTreino.description}"
+												rendered="#{dashboardMBean.proximoTreino!=null}" />
+										</div>
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<div class="recordBox">
+										<div style="margin-top: 8px; margin-left: 8px; margin-right: 8px;">
+											<font color="#C8C8C8" size="2px" face="verdana"><b>Seus</b></font>
+											<font color="#5B5B58" size="5px" face="verdana"><b>Recordes</b></font>
+											<br /> <br /> 
+											
+											<table width="100%">
+												<tr>
+													<td nowrap="nowrap" align="center" class="headerBlueV2"><h:outputText value="Maior Distancia"/></td>
+													<td nowrap="nowrap" align="center" class="headerBlueV2"><h:outputText value="Maior Duracao"/></td>
+													<td nowrap="nowrap" align="center" class="headerBlueV2"><h:outputText value="Menor Pace"/></td>
+												</tr>
+												<tr>
+													<td align="center">
+														<h:commandLink action="#{activityMBean.goToView}">
+															<f:setPropertyActionListener target="#{activityMBean.activity.id}" value="#{dashboardMBean.longestActivityKmId}" />
+													
+															<font color="#02425C" size="5px" face="verdana"><b>
+																<h:outputText value="#{dashboardMBean.longestActivityKm}">
+																	<f:convertNumber pattern="#0.00" />
+																</h:outputText>
+															</b>KM</font><br/>
+															<h:outputText value="#{dashboardMBean.longestActivityKmDate}" styleClass="subtitle">
+																<f:convertDateTime pattern="dd/MM/yyyy" />
+															</h:outputText>
+														</h:commandLink>
+													</td>
+													<td align="center">
+														<h:commandLink action="#{activityMBean.goToView}">
+															<f:setPropertyActionListener target="#{activityMBean.activity.id}" value="#{dashboardMBean.longestActivityTimeId}" />
+													
+															<font color="#02425C" size="5px" face="verdana"><b>
+																<h:outputText value="#{dashboardMBean.longestActivityTime}" />
+															</b></font><br/>
+															<h:outputText value="#{dashboardMBean.longestActivityTimeDate}" styleClass="subtitle">
+																<f:convertDateTime pattern="dd/MM/yyyy" />
+															</h:outputText>
+														</h:commandLink>
+													</td>
+													<td align="center">
+														<h:commandLink action="#{activityMBean.goToView}">
+															<f:setPropertyActionListener target="#{activityMBean.activity.id}" value="#{dashboardMBean.longestActivityPaceId}" />
+													
+															<font color="#02425C" size="5px" face="verdana"><b>
+																<h:outputText value="#{dashboardMBean.longestActivityPace}" />
+															</b></font><br/>
+															<h:outputText value="#{dashboardMBean.longestActivityPaceDate}" styleClass="subtitle">
+																<f:convertDateTime pattern="dd/MM/yyyy" />
+															</h:outputText>
+														</h:commandLink>
+													</td>
+												</tr>
+											</table>
+										</div>
+									</div>
+								</td>
+							</tr>
+
+							<ui:include src="../partnerFragment.xhtml"/>
+							
+						</table>
+						
+					</td>
+				</tr>
+			</table>
+
+		</h:form>
+	</ui:define>
+
+</ui:composition>

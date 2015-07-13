@@ -1,0 +1,121 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="#{loginBean.templateVersion}">
+
+	<ui:define name="content">
+		<div class="pageTitleBox">#{msgs['equipment.maintitle']}</div>
+		<div class="subtitle">#{msgs['equipment.subtitle']}</div>
+		<h:form>
+	
+		<div id="filter"> 
+			
+			<div id="filterDetails" style="width100%; font-size: 12px" class="filtro">
+	    		<table>
+	    		<tr>
+	    			<td>
+			    		<h:outputLabel value="#{msgs['equipment.filter.active']}" style="width: 60px;" />	 
+			    	</td>
+			    	<td>   		
+			    		<p:selectOneMenu value="#{equipmentMBean.findActive}" style="width:200px; overflow:hidden;">
+			    			<f:selectItem itemLabel="#{msgs['equipment.active.true']}" itemValue="true" />
+			    			<f:selectItem itemLabel="#{msgs['equipment.active.false']}" itemValue="false" />                        	 
+			    		</p:selectOneMenu>	    
+		    		</td>		    		
+		    		<td style="padding-left:5px">
+			    		<p:commandButton action="#{equipmentMBean.find}" update="equipmentListTable"
+		           			title="#{msgs['template.button.find']}"
+		           			value="#{msgs['template.button.find']}"/>
+	           		</td>
+	    		</tr>
+	    		</table>	
+			</div>
+			 
+		</div><br/>
+		
+		<div id="painel" class="tabela">
+			<p:dataTable var="equipment" value="#{equipmentMBean.equipmentList}"
+					id="equipmentListTable" emptyMessage="#{msgs['template.msg.emptyMessage']}"
+					paginator="true" rows="10" paginatorPosition="bottom" paginatorAlwaysVisible="false"
+					paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}">
+
+				<p:column style="max-width:200px;">
+					<f:facet name="header">
+						<h:outputText value="#{msgs['equipment.name']}" />
+					</f:facet>
+					
+					<h:commandLink action="#{equipmentMBean.goToModify}">          				
+           				<h:outputText value="#{equipment.name}" />
+           				<f:setPropertyActionListener target="#{equipmentMBean.equipment.id}" value="#{equipment.id}" />
+           			</h:commandLink> 
+					
+				</p:column>
+				
+				<p:column style="max-width:200px; text-align:center;">
+					<f:facet name="header">
+						<h:outputText value="#{msgs['equipment.date']}" />
+					</f:facet>					
+					<h:outputText value="#{equipment.date}">										
+	                	<f:convertDateTime pattern="dd/MM/yyyy" />
+					</h:outputText>
+				</p:column>	
+				
+				<p:column style="max-width:200px; text-align:center;">
+					<f:facet name="header">
+						<h:outputText value="#{msgs['equipment.distance.list']}" />
+					</f:facet>
+					<h:outputText value="#{equipment.kilometers}" >
+						<f:convertNumber pattern="#0.00"/>
+					</h:outputText>
+				</p:column>
+				
+				<p:column style="text-align:center;  white-space: nowrap;" >  
+	                <f:facet name="header">  
+	                    <h:outputText value="" />  
+	                </f:facet>           			
+
+           			<p:commandButton icon="retire" oncomplete="PF('confirmation').show()" 
+           				title="#{msgs['equipment.button.deactivate']}" rendered="#{equipment.active}">
+           				<f:setPropertyActionListener target="#{equipmentMBean.equipment.id}" value="#{equipment.id}" />
+           			</p:commandButton>
+           				
+           			<p:commandButton icon="reactive" oncomplete="PF('confirmationActive').show()" 
+           				title="#{msgs['equipment.button.activate']}" rendered="#{!equipment.active}">
+           				<f:setPropertyActionListener target="#{equipmentMBean.equipment.id}" value="#{equipment.id}" />
+           			</p:commandButton>
+           				 			
+           			<p:commandButton icon="delete" oncomplete="PF('deleteConfirmation').show()" title="#{msgs['template.button.delete']}">           			
+     					<f:setPropertyActionListener target="#{equipmentMBean.equipment.id}" value="#{equipment.id}" />
+           			</p:commandButton>               			
+           			
+	            </p:column>  
+			</p:dataTable>
+		</div>
+		
+     	<p:confirmDialog message="#{msgs['template.msg.delete.confirmation']}" severity="alert" widgetVar="deleteConfirmation">
+   			<p:commandButton value="#{msgs['template.button.yes']}" oncomplete="PF('deleteConfirmation').hide()" action="#{equipmentMBean.delete}" ajax="false" />
+   			<p:commandButton value="#{msgs['template.button.no']}" onclick="PF('deleteConfirmation').hide()" />
+		</p:confirmDialog> 		
+		
+  		<p:confirmDialog message="#{msgs['equipment.activation.confirmation']}" severity="alert" widgetVar="confirmationActive">        	
+        	<p:commandButton value="#{msgs['template.button.yes']}" oncomplete="PF('confirmationActive').hide()"  
+        		action="#{equipmentMBean.activate}" ajax="false" title="#{msgs['template.button.activate']}"/>        	
+        	<p:commandButton value="#{msgs['template.button.no']}" onclick="PF('confirmationActive').hide()" />
+        </p:confirmDialog>	
+        
+   		<p:confirmDialog message="#{msgs['equipment.deactivation.confirmation']}" severity="alert" widgetVar="confirmation">         	
+         	<p:commandButton value="#{msgs['template.button.yes']}" oncomplete="PF('confirmation').hide()"  
+         		action="#{equipmentMBean.deactivate}" ajax="false" 
+         		title="#{msgs['template.button.deactivate']}" />         	
+         	<p:commandButton value="#{msgs['template.button.no']}" onclick="PF('confirmation').hide()" />
+         </p:confirmDialog>		
+						
+		<div class="buttons"> 
+			<p:commandButton value="#{msgs['template.button.incluir']}" action="#{equipmentMBean.goToCreate}" ajax="false"  />
+		</div>
+		
+		</h:form>
+	</ui:define>
+</ui:composition>
