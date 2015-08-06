@@ -39,8 +39,8 @@
     	<logout logout-url="/logout" logout-success-url="/"/>
     	
     	<!-- default-target-url="/pages/index.jsf" always-use-default-target="true" -->
-    	<form-login login-processing-url="/j_spring_security_check" login-page="/login.jsf" 
-    		authentication-failure-url="/login.jsf" authentication-success-handler-ref="myAuthenticationSuccessHandler"/>
+    	<form-login login-processing-url="/j_spring_security_check" login-page="/runplanner.jsf" 
+    		authentication-failure-url="/runplanner.jsf" authentication-success-handler-ref="myAuthenticationSuccessHandler"/>
   	</http>
 
 	<beans:bean id="myAuthenticationSuccessHandler" class="br.com.runplanner.security.UrlAuthenticationSuccessHandler" />
