@@ -17,14 +17,8 @@
 		<table width="100%">
 		 <tr>
 			<td valign="top" width="15%">
-					<h:form>
-						<p:menu>  
-					        <p:submenu label="#{msgs['template.menu.opcoes']}">  
-					            <p:menuitem value="#{msgs['graph.progress.title']}" action="#{graphMBean.goToProgress}" ajax="false" />
-					        </p:submenu>
-					    </p:menu>
-					</h:form>  
-				</td>
+				<rp:sideMenu menu="reportStudent" selectedMenu="activityReportStudent"/>
+			</td>
 			<td valign="top" align="left" style="padding-left: 10px;">
 				<h:form>
 				<p:panel id="filter"> 

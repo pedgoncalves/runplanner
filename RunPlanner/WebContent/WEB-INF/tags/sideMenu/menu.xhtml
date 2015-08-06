@@ -63,8 +63,8 @@
 				<h:form>
 					<p:menu>  
 						<p:submenu label="#{msgs['template.menu.opcoes']}">
-							<p:menuitem value="#{msgs['graph.progress.title']}" action="#{graphMBean.goToProgress}" ajax="false" styleClass="#{selectedMenu != 'progressReportStudent'?'menuUnselected':'menuSelected'}"/>
 							<p:menuitem value="#{msgs['graph.activity.title']}"	action="#{graphMBean.goToActivity}" ajax="false" styleClass="#{selectedMenu != 'activityReportStudent'?'menuUnselected':'menuSelected'}"/>
+							<p:menuitem value="#{msgs['graph.progress.title']}" action="#{graphMBean.goToProgress}" ajax="false" styleClass="#{selectedMenu != 'progressReportStudent'?'menuUnselected':'menuSelected'}"/>							
 					    </p:submenu>
 					</p:menu>
 				</h:form>
