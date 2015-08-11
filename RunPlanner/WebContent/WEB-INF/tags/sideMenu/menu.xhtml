@@ -17,7 +17,7 @@
 					<p:menu>  
 				        <p:submenu label="#{msgs['template.menu.opcoes']}">
 				        	<p:menuitem value="#{msgs['template.menu.aluno.profile']}" action="#{profileMBean.goToListAdvice}" ajax="false" styleClass="#{selectedMenu!='perfil'?'menuUnselected':'menuSelected'}"/>
-				            <p:menuitem value="#{msgs['aluno.filter.team']}" action="#{teamMBean.goToList}" ajax="false" styleClass="#{selectedMenu != 'turma'?'menuUnselected':'menuSelected'}"/>
+				            <p:menuitem value="#{msgs['aluno.turmas']}" action="#{teamMBean.goToList}" ajax="false" styleClass="#{selectedMenu != 'turma'?'menuUnselected':'menuSelected'}"/>
 	  				        <p:menuitem value="#{msgs['template.menu.cadastro.teacher']}" action="#{teacherMBean.goToList}" ajax="false" styleClass="#{selectedMenu != 'professor'?'menuUnselected':'menuSelected'}"/>  
 				            <p:menuitem value="#{msgs['template.menu.rhythm']}" action="#{rhythmMBean.goToList}" ajax="false" styleClass="#{selectedMenu != 'classificacao'?'menuUnselected':'menuSelected'}"/>
 				            <p:menuitem value="#{msgs['template.menu.partner']}" action="#{partnerMBean.goToList}" ajax="false" styleClass="#{selectedMenu != 'parceiro'?'menuUnselected':'menuSelected'}"/>

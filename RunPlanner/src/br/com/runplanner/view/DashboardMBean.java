@@ -54,6 +54,7 @@ import br.com.runplanner.service.PessoaService;
 import br.com.runplanner.service.RhythmService;
 import br.com.runplanner.service.SpreadsheetService;
 import br.com.runplanner.service.TeamService;
+import br.com.runplanner.to.TopActivityTO;
 import br.com.runplanner.util.Utils;
 import br.com.runplanner.view.util.Constants;
 import br.com.runplanner.view.util.MessagesResources;
@@ -97,6 +98,10 @@ public class DashboardMBean implements Serializable {
 	private List<Activity> activityList = new ArrayList<Activity>();
 	private List<Spreadsheet> spreadsheetList = new ArrayList<Spreadsheet>();
 	private List<Event> eventList = new ArrayList<Event>();	
+	private List<TopActivityTO> topList5Masc = new ArrayList<TopActivityTO>();
+	private List<TopActivityTO> topList5Fem = new ArrayList<TopActivityTO>();
+	private List<TopActivityTO> topList10Masc = new ArrayList<TopActivityTO>();
+	private List<TopActivityTO> topList10Fem = new ArrayList<TopActivityTO>();
 	@SuppressWarnings("unused")
 	private List<Advice> adviceList = new ArrayList<Advice>();
 	private Schedule proximoTreino;
@@ -177,6 +182,14 @@ public class DashboardMBean implements Serializable {
 		if (eventList!=null && eventList.size()>0) {
 			nextEvent = eventList.get(eventList.size()-1);
 		}
+		
+		//Melhores tempos de 5KM
+		topList5Masc = activityService.getTopActivity5k(advice.getId(), 0);
+		topList5Fem = activityService.getTopActivity5k(advice.getId(), 1);
+		
+		//Melhores tempos de 10KM
+		topList10Masc = activityService.getTopActivity10k(advice.getId(), 0);
+		topList10Fem = activityService.getTopActivity10k(advice.getId(), 1);
 		
 		if ( customer.getTipoPessoa() == TipoPessoa.PROFESSOR || customer.getTipoPessoa() == TipoPessoa.ASSESSORIA ) {	
 			
@@ -813,5 +826,23 @@ public class DashboardMBean implements Serializable {
 	public void setPartnerList(List<Partner> partnerList) {
 		this.partnerList = partnerList;
 	}
+
+	public List<TopActivityTO> getTopList5Masc() {
+		return topList5Masc;
+	}
+
+	public List<TopActivityTO> getTopList5Fem() {
+		return topList5Fem;
+	}
+
+	public List<TopActivityTO> getTopList10Masc() {
+		return topList10Masc;
+	}
+
+	public List<TopActivityTO> getTopList10Fem() {
+		return topList10Fem;
+	}
+	
+	
 
 }
