@@ -1,1 +1,11 @@
+/META-INF/
+/application.properties
+/applicationContext-jms.xml
+/applicationContext-security.xml
+/applicationContext.xml
+/applicationContext_prod.xml
+/application_prod.properties
 /br/
+/log4j.properties
+/messages_en.properties
+/messages_pt_BR.properties
