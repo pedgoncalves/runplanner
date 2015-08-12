@@ -149,8 +149,38 @@
 						<table>
 							<tr>
 								<td style="white-space:nowrap;">
-								
-									<ui:include src="../eventFragment.xhtml"/>
+									<div class="nextEventBox">
+										<div style="margin-top: 8px; margin-left: 8px;">
+											<font color="#5B5B58" size="2px" face="verdana" >
+												<b>#{msgs['dashboard.nextEvent']}</b>
+											</font> 
+											<br /> <br /> 
+											<b>
+												<h:commandLink  action="#{eventMBean.goToView}" rendered="#{dashboardMBean.nextEvent!=null}" style="color: black;">
+						           					<f:setPropertyActionListener target="#{eventMBean.event.id}" value="#{dashboardMBean.nextEvent.id}" />
+													<h:outputText value="#{dashboardMBean.nextEvent.name}" rendered="#{dashboardMBean.nextEvent!=null}" />
+												</h:commandLink>
+											</b>
+											<br/>
+											
+											<b><h:outputText value="Data: "	rendered="#{dashboardMBean.nextEvent!=null}" /></b>
+											<h:outputText value="#{dashboardMBean.nextEvent.date}"	rendered="#{dashboardMBean.nextEvent!=null}">
+												<f:convertDateTime pattern="dd/MM/yyyy" />
+											</h:outputText>
+											<br/> 
+											
+											<b><h:outputText value="Horário: "	rendered="#{dashboardMBean.nextEvent!=null}" /></b>
+											<h:outputText value="#{dashboardMBean.nextEvent.time}"	rendered="#{dashboardMBean.nextEvent!=null}">
+												<f:convertDateTime pattern="hh:mm" />
+											</h:outputText>
+											<br/> 
+											
+											<b><h:outputText value="Local: "	rendered="#{dashboardMBean.nextEvent!=null}" /></b>
+											<h:outputText
+												value="#{dashboardMBean.nextEvent.location}"
+												rendered="#{dashboardMBean.nextEvent!=null}" />
+										</div>
+									</div>
 									
 									<div class="nextTrainBox">
 										<div style="margin-top: 8px; margin-left: 8px;">
@@ -236,7 +266,63 @@
 									
 									<br/>
 									
-									<ui:include src="../topActivityFragment.xhtml"/>	
+									<h:panelGroup id="topActivity">
+										<div class="topActivityBox">
+											<div style="margin-top: 8px; margin-left: 8px; margin-right: 8px;">
+											
+												<table width="100%">
+													<tr>
+														<td align="left">
+															<font color="#C8C8C8" size="2px" face="verdana"><b>Top</b></font>
+															<font color="#5B5B58" size="5px" face="verdana"><b>#{dashboardMBean.topActivityTitle}</b></font>
+														</td>
+														<td align="right">
+															<p:selectOneMenu value="#{dashboardMBean.topActivitySelected}">
+																<p:ajax listener="#{dashboardMBean.handleChangeTopActivity}" update="topActivity" />
+													            <f:selectItem itemLabel="5KM Masculino" itemValue="5M" />
+													            <f:selectItem itemLabel="5KM Feminino" itemValue="5F" />
+													            <f:selectItem itemLabel="10KM Masculino" itemValue="10M" />
+													            <f:selectItem itemLabel="10KM Feminino" itemValue="10F" />
+													            <f:selectItem itemLabel="21KM Masculino" itemValue="21M" />
+													            <f:selectItem itemLabel="21KM Feminino" itemValue="21F" />
+													            <f:selectItem itemLabel="42KM Masculino" itemValue="42M" />
+													            <f:selectItem itemLabel="42KM Feminino" itemValue="42F" />
+													        </p:selectOneMenu>
+														</td>
+													</tr>
+												</table>
+												
+												<br /> <br /> 
+												
+												<table width="70%">
+													<p:dataList var="top" value="#{dashboardMBean.topList}" 
+														paginator="false" rows="5" emptyMessage="Nenhuma atividade cadastrada"
+														type="definition">
+																				
+														<p:column style="max-width:100px;">
+															<f:facet name="header">
+																<h:outputText value="#{msgs['template.aluno']}" />
+															</f:facet>
+															
+																<tr>
+																	<td>														
+																		<b><h:outputText value="#{top.name}" /></b>
+																	</td>
+																	<td style="padding-left: 10px;" width="1%">
+																		<b><h:outputText value="#{top.date}">							
+														                	<f:convertDateTime pattern="dd/MM/yy" />
+														                </h:outputText></b>
+																	</td>
+																	<td style="padding-left: 10px;" width="1%">
+																		<b><h:outputText value="#{top.totalTime}" /></b>
+																	</td>
+																</tr>
+														</p:column>
+													</p:dataList>	
+												</table>										
+											</div>
+										</div>
+									</h:panelGroup>
 																		
 								</td>
 							</tr>							
