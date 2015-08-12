@@ -98,10 +98,7 @@ public class DashboardMBean implements Serializable {
 	private List<Activity> activityList = new ArrayList<Activity>();
 	private List<Spreadsheet> spreadsheetList = new ArrayList<Spreadsheet>();
 	private List<Event> eventList = new ArrayList<Event>();	
-	private List<TopActivityTO> topList5Masc = new ArrayList<TopActivityTO>();
-	private List<TopActivityTO> topList5Fem = new ArrayList<TopActivityTO>();
-	private List<TopActivityTO> topList10Masc = new ArrayList<TopActivityTO>();
-	private List<TopActivityTO> topList10Fem = new ArrayList<TopActivityTO>();
+	private List<TopActivityTO> topList = new ArrayList<TopActivityTO>();
 	@SuppressWarnings("unused")
 	private List<Advice> adviceList = new ArrayList<Advice>();
 	private Schedule proximoTreino;
@@ -148,7 +145,16 @@ public class DashboardMBean implements Serializable {
 	private int partnerListSize = 2;
 	private List<Partner> partnerList = new ArrayList<Partner>(partnerListSize);
 	
-	    
+	//Titulos para TopActivity 
+	private String topActivityTitle = "";
+	private String topActivityTitle5 = "5KM ";
+	private String topActivityTitle10 = "10KM ";
+	private String topActivityTitle21 = "21KM ";
+	private String topActivityTitle42 = "42KM ";
+	private String topActivityTitleMas = "Masculino";
+	private String topActivityTitleFem = "Feminino";
+	private String topActivitySelected = "";
+	
     public DashboardMBean() {  
               
     }
@@ -184,12 +190,9 @@ public class DashboardMBean implements Serializable {
 		}
 		
 		//Melhores tempos de 5KM
-		topList5Masc = activityService.getTopActivity5k(advice.getId(), 0);
-		topList5Fem = activityService.getTopActivity5k(advice.getId(), 1);
-		
-		//Melhores tempos de 10KM
-		topList10Masc = activityService.getTopActivity10k(advice.getId(), 0);
-		topList10Fem = activityService.getTopActivity10k(advice.getId(), 1);
+		topList = activityService.getTopActivity5k(advice.getId(), 0);
+		topActivitySelected = "5M";
+		topActivityTitle = topActivityTitle5+topActivityTitleMas;
 		
 		if ( customer.getTipoPessoa() == TipoPessoa.PROFESSOR || customer.getTipoPessoa() == TipoPessoa.ASSESSORIA ) {	
 			
@@ -349,6 +352,38 @@ public class DashboardMBean implements Serializable {
 		
 		return "";
     }
+    
+    public void handleChangeTopActivity() {
+    	Pessoa customer = getSessionUser();
+		Advice advice = customer.getAdvice();		
+		
+		if (topActivitySelected.equals("5M")) {
+			topList = activityService.getTopActivity5k(advice.getId(), 0);
+			topActivityTitle = topActivityTitle5+topActivityTitleMas;
+		} else if (topActivitySelected.equals("5F")) {
+			topList = activityService.getTopActivity5k(advice.getId(), 1);
+			topActivityTitle = topActivityTitle5+topActivityTitleFem;
+		} else if (topActivitySelected.equals("10M")) {
+			topList = activityService.getTopActivity10k(advice.getId(), 0);
+			topActivityTitle = topActivityTitle10+topActivityTitleMas;
+		} else if (topActivitySelected.equals("10F")) {
+			topList = activityService.getTopActivity10k(advice.getId(), 1);
+			topActivityTitle = topActivityTitle10+topActivityTitleFem;
+		} else if (topActivitySelected.equals("21M")) {
+			topList = activityService.getTopActivity21k(advice.getId(), 0);
+			topActivityTitle = topActivityTitle21+topActivityTitleMas;
+		} else if (topActivitySelected.equals("21F")) {
+			topList = activityService.getTopActivity21k(advice.getId(), 1);
+			topActivityTitle = topActivityTitle21+topActivityTitleFem;
+		} else if (topActivitySelected.equals("42M")) {
+			topList = activityService.getTopActivity42k(advice.getId(), 0);
+			topActivityTitle = topActivityTitle42+topActivityTitleMas;
+		} else if (topActivitySelected.equals("42F")) {
+			topList = activityService.getTopActivity42k(advice.getId(), 1);
+			topActivityTitle = topActivityTitle42+topActivityTitleFem;
+		}
+		
+	}
 
 	
 	public String goToIndex() {
@@ -827,22 +862,20 @@ public class DashboardMBean implements Serializable {
 		this.partnerList = partnerList;
 	}
 
-	public List<TopActivityTO> getTopList5Masc() {
-		return topList5Masc;
+	public List<TopActivityTO> getTopList() {
+		return topList;
 	}
 
-	public List<TopActivityTO> getTopList5Fem() {
-		return topList5Fem;
+	public String getTopActivitySelected() {
+		return topActivitySelected;
 	}
 
-	public List<TopActivityTO> getTopList10Masc() {
-		return topList10Masc;
+	public void setTopActivitySelected(String topActivitySelected) {
+		this.topActivitySelected = topActivitySelected;
 	}
 
-	public List<TopActivityTO> getTopList10Fem() {
-		return topList10Fem;
+	public String getTopActivityTitle() {
+		return topActivityTitle;
 	}
 	
-	
-
 }

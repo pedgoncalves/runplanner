@@ -23,5 +23,7 @@ public interface ActivityService extends GenericService<Activity, Long>{
 	Activity getLongestActivityPace(Long studentId);
 	List<TopActivityTO> getTopActivity5k(Long adviceId, int sex);
 	List<TopActivityTO> getTopActivity10k(Long adviceId, int sex);
+	List<TopActivityTO> getTopActivity21k(Long adviceId, int sex);
+	List<TopActivityTO> getTopActivity42k(Long adviceId, int sex);
 	
 }
