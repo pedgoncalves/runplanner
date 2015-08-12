@@ -56,7 +56,7 @@
 								<f:validator validatorId="EmailValidator"/>
 							</p:inputText>
 							
-							<p:commandButton action="#{loginBean.recover}" value="#{msgs['template.button.send']}" ajax="false" styleClass="button" />						
+							<p:commandButton action="#{loginBean.recover}" value="#{msgs['template.button.send']}"  ajax="false" />						
 						</h:form>
 						
 						
@@ -95,7 +95,7 @@
 						
 						<div class="buttons">
 							<p:commandButton value="#{msgs['template.button.send']}" 
-								ajax="false" action="#{contactMBean.send}"  styleClass="button"/>
+								ajax="false" action="#{contactMBean.send}" />
 						</div>
 						
 						</h:form>

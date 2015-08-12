@@ -784,6 +784,18 @@ input[disabled], .readonly {
 	border-radius: 0.5em !important;
 }
 
+.entrarAbout {	
+	background: #00B9EE !important;
+	width: 200px !important;
+	height: 45px !important;
+	border-color: #ccc !important;	
+
+	font-weight: bold;
+	letter-spacing: 1;
+	text-transform: uppercase;
+	border-radius: 0.5em !important;
+}
+
 .entrarButtonAzul:HOVER {	
 	background: #2DA5B3 !important;	
 }

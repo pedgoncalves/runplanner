@@ -40,7 +40,7 @@
 									<tr>
 										<td align="center" style="padding-left: 10px; vertical-align: top;">
 											<!-- Foto --> 
-											<p:panel id="customerPhoto" widgetVar="customerPhoto">
+											<p:panel id="customerPhoto" widgetVar="customerPhoto" style="border: 0px;">
 												<p:panel rendered="#{profileMBean.customer.photo==null}" style="text-align:center; border: 0px;">
 													<img src="${facesContext.externalContext.requestContextPath}/images/nophoto.gif" width="150" />
 												</p:panel>
@@ -68,7 +68,7 @@
 
 										</td>
 										<td>
-										<p:panel header="#{msgs['profileUser.dados.pessoais']}">
+										<p:panel style="border: 0px;">
 											<!-- Dados Cadastrais -->
 											<p>
 												<h:outputLabel for="nome" value="#{msgs['alunos.nome']}"
