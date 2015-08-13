@@ -81,7 +81,7 @@ import org.imgscalr.Scalr;
 			+ "where (o.tipoPessoa = :tipoPessoa) and (o.advice.id = :adviceId) and (o.nome like :nome) " 
 			+ "and (o.active = true) order by o.nome"),
 	@NamedQuery(name = "Pessoa.getByTipoPessoaAdviceClassification", query = "select o from Pessoa o "
-			+ "where (o.tipoPessoa = :tipoPessoa) and (o.advice.id = :adviceId) and (o.classification.id = :rhythmId) and (o.active = true) " 
+			+ "where (o.tipoPessoa = :tipoPessoa) and (o.advice.id = :adviceId) and (o.classification.id = :rhythmId) " 
 			+ "order by o.nome"),	
 	@NamedQuery(name = "Pessoa.findByEmailActive", query = "select o from Pessoa o "
 			+ "where (o.email = :email) and (o.active = :active) " 

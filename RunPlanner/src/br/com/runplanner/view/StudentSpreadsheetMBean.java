@@ -258,7 +258,7 @@ public class StudentSpreadsheetMBean extends BasicMBean {
     
     private void verifyLeftHeader() {
     	leftHeaderTemplate = "";
-    	if ( spreadsheet.getSchedules()==null || spreadsheet.getSchedules().size()==0 ) return;
+    	if ( spreadsheet==null || spreadsheet.getSchedules()==null || spreadsheet.getSchedules().size()==0 ) return;
     	
     	int firstMonth = spreadsheet.getSchedules().get(0).getDate().getMonth();  
     	for(Schedule schedule:spreadsheet.getSchedules()) {
