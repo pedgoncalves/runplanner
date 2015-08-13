@@ -1599,6 +1599,18 @@ Versao v2
 	min-height: 120px;
 }
 
+.calendarBox {
+	background-color: white;
+	border: 1px solid #C8C8C8;
+	width: 508px; 
+	float: left; 
+	text-align: left;
+	margin-top: 8px;
+	padding-bottom: 12px;
+	font-weight: bold;
+	min-height: 120px;
+}
+
 .topActivityBox {
 	background-color: white;
 	border: 1px solid #C8C8C8;
