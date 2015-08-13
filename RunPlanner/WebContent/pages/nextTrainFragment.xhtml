@@ -1,0 +1,25 @@
+<ui:fragment xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+
+	<div class="nextTrainBox">
+		<div style="margin-top: 8px; margin-left: 8px; word-wrap: break-word; width: 90%; float:left; ">
+
+			<font color="#5B5B58" size="2px" face="verdana"><b>#{msgs['dashboard.nextTrain']}</b></font>
+			<br /> 
+			<b><h:outputText value="Data: "	rendered="#{dashboardMBean.proximoTreino!=null}" /></b>
+			<h:outputText value="#{dashboardMBean.proximoTreino.date}"	rendered="#{dashboardMBean.proximoTreino!=null}">
+				<f:convertDateTime pattern="dd/MM/yyyy" />
+			</h:outputText>
+			<br /> 
+			<b><h:outputText value="Treino: " rendered="#{dashboardMBean.proximoTreino!=null}" /></b>
+			<h:outputText
+				value="#{dashboardMBean.proximoTreino.description}"
+				rendered="#{dashboardMBean.proximoTreino!=null}" />
+		</div>
+	</div>
+										
+</ui:fragment>
