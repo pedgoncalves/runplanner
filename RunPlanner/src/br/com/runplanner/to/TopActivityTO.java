@@ -11,7 +11,14 @@ public class TopActivityTO {
 	private String name;
 	private Long activityId;
 	private Date date;
+	private int position;
 	
+	public int getPosition() {
+		return position;
+	}
+	public void setPosition(int position) {
+		this.position = position;
+	}
 	public double getTotalDistance() {
 		return totalDistance;
 	}

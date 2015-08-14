@@ -206,6 +206,7 @@ public class ActivityServiceImpl extends GenericServiceImpl<Activity, Long> impl
 		
 		List<Object[]> list = nativeQuery.getResultList();
 		List<TopActivityTO> result = new ArrayList<TopActivityTO>();
+		int position = 1;
 		for(Object[] l: list) {
 			TopActivityTO to = new TopActivityTO();
 			to.setTotalDistance( Double.parseDouble(l[0].toString()) );
@@ -213,7 +214,9 @@ public class ActivityServiceImpl extends GenericServiceImpl<Activity, Long> impl
 			to.setName( l[2].toString() );
 			to.setActivityId( Long.parseLong(l[3].toString()) );
 			to.setDate( new Date( ((java.sql.Date)l[4]).getTime() ) );
+			to.setPosition(position);
 			result.add(to);
+			position++;
 		}
 		
 		return result;
@@ -238,6 +241,7 @@ public class ActivityServiceImpl extends GenericServiceImpl<Activity, Long> impl
 		
 		List<Object[]> list = nativeQuery.getResultList();
 		List<TopActivityTO> result = new ArrayList<TopActivityTO>();
+		int position = 1;
 		for(Object[] l: list) {
 			TopActivityTO to = new TopActivityTO();
 			to.setTotalDistance( Double.parseDouble(l[0].toString()) );
@@ -245,7 +249,10 @@ public class ActivityServiceImpl extends GenericServiceImpl<Activity, Long> impl
 			to.setName( l[2].toString() );
 			to.setActivityId( Long.parseLong(l[3].toString()) );
 			to.setDate( new Date( ((java.sql.Date)l[4]).getTime() ) );
+			to.setPosition(position);
 			result.add(to);
+			position++;
+
 		}
 		
 		return result;
@@ -270,6 +277,7 @@ public class ActivityServiceImpl extends GenericServiceImpl<Activity, Long> impl
 		
 		List<Object[]> list = nativeQuery.getResultList();
 		List<TopActivityTO> result = new ArrayList<TopActivityTO>();
+		int position = 1;
 		for(Object[] l: list) {
 			TopActivityTO to = new TopActivityTO();
 			to.setTotalDistance( Double.parseDouble(l[0].toString()) );
@@ -277,7 +285,10 @@ public class ActivityServiceImpl extends GenericServiceImpl<Activity, Long> impl
 			to.setName( l[2].toString() );
 			to.setActivityId( Long.parseLong(l[3].toString()) );
 			to.setDate( new Date( ((java.sql.Date)l[4]).getTime() ) );
+			to.setPosition(position);
 			result.add(to);
+			position++;
+
 		}
 		
 		return result;
@@ -302,6 +313,7 @@ public class ActivityServiceImpl extends GenericServiceImpl<Activity, Long> impl
 		
 		List<Object[]> list = nativeQuery.getResultList();
 		List<TopActivityTO> result = new ArrayList<TopActivityTO>();
+		int position = 1; 
 		for(Object[] l: list) {
 			TopActivityTO to = new TopActivityTO();
 			to.setTotalDistance( Double.parseDouble(l[0].toString()) );
@@ -309,7 +321,9 @@ public class ActivityServiceImpl extends GenericServiceImpl<Activity, Long> impl
 			to.setName( l[2].toString() );
 			to.setActivityId( Long.parseLong(l[3].toString()) );
 			to.setDate( new Date( ((java.sql.Date)l[4]).getTime() ) );
+			to.setPosition(position);
 			result.add(to);
+			position++;
 		}
 		
 		return result;

@@ -1602,7 +1602,7 @@ Versao v2
 .topActivityBox {
 	background-color: white;
 	border: 1px solid #C8C8C8;
-	width: 508px; 
+	width: 508px;
 	float: left; 
 	text-align: left;
 	margin-top: 8px;
@@ -1613,7 +1613,7 @@ Versao v2
 	background-repeat: no-repeat;		
 	background-position: right bottom;
 	
-	min-height: 120px;
+	min-height: 160px;
 }
 
 .messageBox {

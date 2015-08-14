@@ -47,6 +47,12 @@
 								<tr>
 									<td>														
 										<h:commandLink action="#{activityMBean.goToView}" style="color: black;">
+											<b><h:outputText value="#{top.position}. " /></b>
+											<f:setPropertyActionListener target="#{activityMBean.activity.id}" value="#{top.activityId}" />
+										</h:commandLink>
+									</td>
+									<td>														
+										<h:commandLink action="#{activityMBean.goToView}" style="color: black;">
 											<b><h:outputText value="#{top.name}" /></b>
 											<f:setPropertyActionListener target="#{activityMBean.activity.id}" value="#{top.activityId}" />
 										</h:commandLink>
