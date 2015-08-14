@@ -149,38 +149,8 @@
 						<table>
 							<tr>
 								<td style="white-space:nowrap;">
-									<div class="nextEventBox">
-										<div style="margin-top: 8px; margin-left: 8px;">
-											<font color="#5B5B58" size="2px" face="verdana" >
-												<b>#{msgs['dashboard.nextEvent']}</b>
-											</font> 
-											<br /> <br /> 
-											<b>
-												<h:commandLink  action="#{eventMBean.goToView}" rendered="#{dashboardMBean.nextEvent!=null}" style="color: black;">
-						           					<f:setPropertyActionListener target="#{eventMBean.event.id}" value="#{dashboardMBean.nextEvent.id}" />
-													<h:outputText value="#{dashboardMBean.nextEvent.name}" rendered="#{dashboardMBean.nextEvent!=null}" />
-												</h:commandLink>
-											</b>
-											<br/>
-											
-											<b><h:outputText value="Data: "	rendered="#{dashboardMBean.nextEvent!=null}" /></b>
-											<h:outputText value="#{dashboardMBean.nextEvent.date}"	rendered="#{dashboardMBean.nextEvent!=null}">
-												<f:convertDateTime pattern="dd/MM/yyyy" />
-											</h:outputText>
-											<br/> 
-											
-											<b><h:outputText value="Horário: "	rendered="#{dashboardMBean.nextEvent!=null}" /></b>
-											<h:outputText value="#{dashboardMBean.nextEvent.time}"	rendered="#{dashboardMBean.nextEvent!=null}">
-												<f:convertDateTime pattern="hh:mm" />
-											</h:outputText>
-											<br/> 
-											
-											<b><h:outputText value="Local: "	rendered="#{dashboardMBean.nextEvent!=null}" /></b>
-											<h:outputText
-												value="#{dashboardMBean.nextEvent.location}"
-												rendered="#{dashboardMBean.nextEvent!=null}" />
-										</div>
-									</div>
+								
+									<ui:include src="../eventFragment.xhtml"/>
 									
 									<div class="nextTrainBox">
 										<div style="margin-top: 8px; margin-left: 8px;">
@@ -203,66 +173,13 @@
 							</tr>
 							<tr>
 								<td>
-									<div class="messageBox">
-										<div style="margin-top: 8px; margin-left: 8px; margin-right: 8px;">
-											
-											<table width="100%">
-												<tr>
-													<td>
-														<font color="#C8C8C8" size="2px" face="verdana"><b>Suas</b></font>
-														<font color="#5B5B58" size="5px" face="verdana"><b>Mensagens</b></font>
-													</td>
-													<td align="right">
-														<h:commandLink action="#{mailboxMBean.goToList}"  >
-															<img src="${facesContext.externalContext.requestContextPath}/images/external.png" />
-														</h:commandLink>
-													</td>
-												</tr>
-											</table>
-											<br/>
-											
-											<!-- MENSAGENS -->		
-											<h:outputText value="#{msgs['template.msg.new1']}"/>
-											<h:outputText value=" #{dashboardMBean.newMessageNumber} "/>
-											<h:outputText value="#{msgs['template.msg.new2']}"/>
-											 
-										</div>
-									</div>
+									<ui:include src="../messageFragment.xhtml"/>
 								</td>
 							</tr>							
 							<tr>
 								<td>
-									<div class="birthdayBox">
-										<div style="margin-top: 8px; margin-left: 8px; margin-right: 8px;">
-											<font color="#C8C8C8" size="2px" face="verdana"><b>Próximos</b></font>
-											<font color="#5B5B58" size="5px" face="verdana"><b>Aniversariantes</b></font>
-											<br /> <br /> 
-											
-											<table width="70%">
-												<p:dataList var="customer" value="#{dashboardMBean.birthdayList}" 
-													paginator="false" rows="5" emptyMessage="#{msgs['dashboard.birthday.empty']}"
-													type="definition">
-																			
-													<p:column style="max-width:100px;">
-														<f:facet name="header">
-															<h:outputText value="#{msgs['template.aluno']}" />
-														</f:facet>
-														
-															<tr>
-																<td>														
-																	<b><h:outputText value="#{customer.shortName}" /></b>
-																</td>
-																<td style="padding-left: 10px;" width="1%">
-																	<b><h:outputText value="#{customer.dtNascimento}">							
-													                	<f:convertDateTime pattern="dd/MM" />
-													                </h:outputText></b>
-																</td>
-															</tr>
-													</p:column>
-												</p:dataList>	
-											</table>										
-										</div>
-									</div>
+									
+									<ui:include src="../birthdayFragment.xhtml"/>
 									
 									<br/>
 									

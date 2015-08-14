@@ -1,0 +1,36 @@
+
+<ui:fragment xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+	
+	<div class="messageBox">
+		<div style="margin-top: 8px; margin-left: 8px; margin-right: 8px;">
+			
+			<table width="100%">
+				<tr>
+					<td>
+						<font color="#C8C8C8" size="2px" face="verdana"><b>Suas</b></font>
+						<font color="#5B5B58" size="5px" face="verdana"><b>Mensagens</b></font>
+					</td>
+					<td align="right">
+						<h:commandLink action="#{mailboxMBean.goToList}"  >
+							<img src="${facesContext.externalContext.requestContextPath}/images/external.png" />
+						</h:commandLink>
+					</td>
+				</tr>
+			</table>
+			<br/>
+			
+			<!-- MENSAGENS -->
+			<h:commandLink action="#{mailboxMBean.goToList}"  style="color:black;">		
+				<h:outputText value="#{msgs['template.msg.new1']}"/>
+				<font size="4"><h:outputText value=" #{dashboardMBean.newMessageNumber} "/></font>
+				<h:outputText value="#{msgs['template.msg.new2']}"/>
+			</h:commandLink>
+			 
+		</div>
+	</div>
+</ui:fragment>

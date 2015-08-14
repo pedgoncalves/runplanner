@@ -194,16 +194,16 @@ public class DashboardMBean implements Serializable {
 		topActivitySelected = "5M";
 		topActivityTitle = topActivityTitle5+topActivityTitleMas;
 		
+		//Aniversariantes
+		birthdayList = pessoaService.getByTipoPessoaAdviceAniversario(TipoPessoa.ALUNO,advice.getId(),month,day);
+		
+		//Mensagens
+		newMessageNumber = mailboxService.getNewByUserId(customer.getId());
+		
 		if ( customer.getTipoPessoa() == TipoPessoa.PROFESSOR || customer.getTipoPessoa() == TipoPessoa.ASSESSORIA ) {	
 			
 			//Notificacoes	    	
 	    	notifications = notificationService.getByAdvice(customer.getAdvice().getId(), 0, PAGE_SIZE);	
-	    	
-	    	//Aniversariantes
-			birthdayList = pessoaService.getByTipoPessoaAdviceAniversario(TipoPessoa.ALUNO,advice.getId(),month,day);
-			
-			//Mensagens
-			newMessageNumber = mailboxService.getNewByUserId(customer.getId());
 
 			//Numeros - Alunos					
 			activeCustomerNumber = pessoaService.getSumByAdviceActiveTipoPessoa(customer.getAdvice().getId(), true, TipoPessoa.ALUNO);
@@ -269,9 +269,6 @@ public class DashboardMBean implements Serializable {
 			
 			//Buscar proximo treino
 			proximoTreino = spreadsheetService.findByStudentActual(customer.getId());
-			
-			//Aniversariantes
-			birthdayList = pessoaService.getByTipoPessoaAdviceAniversario(TipoPessoa.ALUNO,advice.getId(),month);
 			
 			//Notificacao de pagamento
 			if ( customer.getAdvice().getPaymentNotificationDialog() ) {

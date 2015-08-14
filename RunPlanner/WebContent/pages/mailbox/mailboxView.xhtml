@@ -7,10 +7,8 @@
 		
 	<ui:define name="content">
 
-		<br/><br/>
-		<p:panel id="filter" header="#{msgs['pagetitle.mailbox']}"> 
-			<p:messages id="messages" showDetail="false" /> 
-		</p:panel>
+		<p:messages id="messages" showDetail="false" />
+		<div class="pageTitleBox">#{msgs['pagetitle.mailbox']}</div>
 		
 		<center>
 			<div class="filtro" style="width:80%; text-align: left;" >

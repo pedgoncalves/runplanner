@@ -42,9 +42,8 @@
 
 		<h:form prependId="false">	
 		
-			<p:messages id="messages" showDetail="false" /> 
-			
-			<div class="pageTitleBox">#{msgs['pagetitle.mailbox']}</div>			  
+			<p:messages id="messages" showDetail="false" />
+			<div class="pageTitleBox">#{msgs['pagetitle.mailbox']}</div>		  
 					    		    	    
 		    <div id="painel" class="tabela">  
 		    
@@ -57,19 +56,18 @@
 		                
 		                <table>
 		                	<tr>
-		                		<td width="1" valign="middle" align="center" style="border: none !important;">		                		
+		                		<td width="25" valign="middle" align="center" style="border: none !important;">		                		
 									<p:panel rendered="#{message.newMessage and (message.lastMessage.sender.id!=loginBean.userId)}" id="imgNew">
 										<img src="${facesContext.externalContext.requestContextPath}/images/new.png" style="padding-right: 5px;"/>
 									</p:panel>	
 		                		</td>
 		                		<td width="35" style="border: none !important;">
-		                			<p:graphicImage id="photo" value="#{photoMBean.streamedUserThumb}" width="35" height="35"
-				        				redended="#{message.sender.photo!=null}">
+		                			<p:graphicImage id="photo" value="#{photoMBean.streamedUserThumb}" width="35" height="35" redended="#{message.sender.photo!=null}">
 				        				<f:param name="client_id" value="#{message.sender.id}" />
 				        			</p:graphicImage>
 		                		</td>
 		                		<td style="border: none !important;">
-		                			<p:commandLink oncomplete="dlgRead.show()" update="@widgetVar(dlgRead),@widgetVar(groupMessages)" action="#{mailboxMBean.readGroup}">
+		                			<p:commandLink oncomplete="PF('dlgRead').show()" update="@widgetVar(dlgRead),@widgetVar(groupMessages)" action="#{mailboxMBean.readGroup}">
 		                				<b><h:outputText value="#{message.name}"  style="padding-left: 5px;" /></b><br/> 			          
 			           					<f:setPropertyActionListener target="#{mailboxMBean.group}" value="#{message}" />
 			           				</p:commandLink>
@@ -85,8 +83,8 @@
 			           					<f:convertDateTime pattern="HH:mm:ss" timeZone="America/Sao_Paulo"/>
 			           				</h:outputText> 			           				
 		                		</td>
-		                		<td align="right" valign="middle" width="1" style="border: none !important;">
-				        			<p:commandButton icon="viewMsg" oncomplete="dlgRead.show()" update="@widgetVar(dlgRead,groupMessages,imgNew)" action="#{mailboxMBean.readGroup}">           			
+		                		<td align="right" valign="middle" width="20" style="border: none !important;">
+				        			<p:commandButton icon="viewMsg" oncomplete="PF('dlgRead').show()" update="@widgetVar(dlgRead,groupMessages,imgNew)"  action="#{mailboxMBean.readGroup}">           			
 	     								<f:setPropertyActionListener target="#{mailboxMBean.group}" value="#{message}" />
 	           						</p:commandButton>
 		                		</td>		                		
@@ -99,8 +97,7 @@
 			</div>
 			
    			<div class="buttons"> 
-			    <p:commandButton value="#{msgs['mailbox.send.new']}" id="showDialogButton" type="button" 
-			    	onclick="dlg.show()" />
+			    <p:commandButton value="#{msgs['mailbox.send.new']}" id="showDialogButton" type="button"  onclick="PF('dlg').show()" />
 		    </div>	    
 		    
 		</h:form>
