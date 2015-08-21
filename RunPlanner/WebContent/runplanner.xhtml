@@ -78,19 +78,16 @@
 			<div class="form-bg">
 				<h:form prependId="false" >
 					<h2><img src="images/logo3.png" style="width:35%; vertical-align: middle; padding-top: 5px;" /></h2>
-					<p><input type="text" placeholder="Email" name="j_username" id="j_username"/></p>
-					<p><input type="password" placeholder="Senha" name="j_password" id="j_password"/></p>
+					<p><input type="text" placeholder="Email" name="j_username" id="inUsuario"/></p>
+					<p><input type="password" placeholder="Senha" name="j_password" id="inSenha"/></p>
 					
-					<h:commandButton action="#{loginBean.doLogin}" value="Entrar" style="padding: 0.05em 1.35em !important; margin-right: 30px; float: right;"/>
+					<h:commandButton id="btEntrar" action="#{loginBean.doLogin}" value="Entrar" style="padding: 0.05em 1.35em !important; margin-right: 30px; float: right;"/>
 				</h:form>
 			</div>	
 			
 			<p class="forgot">Esqueceu sua senha? <a href="pages/recover.jsf">Click aqui.</a></p>
 			<p class="forgot">Possui uma assessoria esportiva e deseja conhecer o RunPlanner? <a href="about.jsf">Click aqui.</a></p>
 		</div>
-	
-		<script src="javascripts/jquery-1.5.1.min.js"></script>	
-		<script src="javascripts/app.js"></script>
 	
 	</h:body>
 	</f:view>

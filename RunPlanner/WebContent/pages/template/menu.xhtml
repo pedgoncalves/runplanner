@@ -23,7 +23,7 @@
 		
 			<h:commandLink action="#{profileMBean.goToListTeacher}">	
 				<div style="width: 80; text-align: center; float: left; margin-left: 1px;" >
-					<div class="#{dashboardMBean.selectedMenu == 'profile'?'menuItemV2Selected':'menuItemV2'}" style="line-height: 40px;">
+					<div id="lkPerfil" class="#{dashboardMBean.selectedMenu == 'profile'?'menuItemV2Selected':'menuItemV2'}" style="line-height: 40px;">
 						PERFIL
 					</div>
 					
@@ -35,7 +35,7 @@
 			
 			<h:commandLink action="#{profileMBean.goToListAdvice}">	
 				<div style="width: 120; text-align: center; float: left; margin-left: 1px;" >
-					<div class="#{dashboardMBean.selectedMenu == 'advice'?'menuItemV2Selected':'menuItemV2'}" style="line-height: 40px;">
+					<div id="lkAssessoria" class="#{dashboardMBean.selectedMenu == 'advice'?'menuItemV2Selected':'menuItemV2'}" style="line-height: 40px;">
 						ASSESSORIA
 					</div>
 					
@@ -47,7 +47,7 @@
 			
 			<h:commandLink  action="#{customerMBean.goToList}">	
 				<div style="width: 110; text-align: center; float: left; margin-left: 1px;" >
-					<div class="#{dashboardMBean.selectedMenu == 'customer'?'menuItemV2Selected':'menuItemV2'}" style="line-height: 40px;">
+					<div id="lkAlunos" class="#{dashboardMBean.selectedMenu == 'customer'?'menuItemV2Selected':'menuItemV2'}" style="line-height: 40px;">
 						ALUNOS
 					</div>
 					
@@ -59,7 +59,7 @@
 			
 			<h:commandLink action="#{spreadsheetBean.goToInit}">	
 				<div style="width: 109; text-align: center; float: left; margin-left: 1px" >
-					<div class="#{dashboardMBean.selectedMenu == 'spread'?'menuItemV2Selected':'menuItemV2'}" style="line-height: 40px;">
+					<div id="lkPlanilhas" class="#{dashboardMBean.selectedMenu == 'spread'?'menuItemV2Selected':'menuItemV2'}" style="line-height: 40px;">
 						PLANILHAS
 					</div>
 					
@@ -71,7 +71,7 @@
 			
 			<h:commandLink action="#{classPresenceMBean.goToList}">	
 				<div style="width: 110; text-align: center; float: left; margin-left: 1px;" >
-					<div class="#{dashboardMBean.selectedMenu == 'presence'?'menuItemV2Selected':'menuItemV2'}" style="line-height: 40px;">
+					<div id="lkPresenca" class="#{dashboardMBean.selectedMenu == 'presence'?'menuItemV2Selected':'menuItemV2'}" style="line-height: 40px;">
 						PRESENÇA
 					</div>
 					
@@ -83,7 +83,7 @@
 		
 			<h:commandLink action="#{eventMBean.goToList}">	
 				<div style="width: 110; text-align: center; float: left; margin-left: 1px;" >
-					<div class="#{dashboardMBean.selectedMenu == 'event'?'menuItemV2Selected':'menuItemV2'}" style="line-height: 40px;">
+					<div id="lkEventos" class="#{dashboardMBean.selectedMenu == 'event'?'menuItemV2Selected':'menuItemV2'}" style="line-height: 40px;">
 						EVENTOS
 					</div>
 					
@@ -95,7 +95,7 @@
 			
 			<h:commandLink action="#{activityMBean.goToListTeacher}">	
 				<div style="width: 121; text-align: center; float: left; margin-left: 1px;" >
-					<div class="#{dashboardMBean.selectedMenu == 'activity'?'menuItemV2Selected':'menuItemV2'}" style="line-height: 40px;">
+					<div id="lkAtividades" class="#{dashboardMBean.selectedMenu == 'activity'?'menuItemV2Selected':'menuItemV2'}" style="line-height: 40px;">
 						ATIVIDADES
 					</div>
 					
@@ -107,7 +107,7 @@
 			
 			<h:commandLink action="#{graphMBean.goToActivityTeacher}">	
 				<div style="width: 121; text-align: center; float: left; margin-left: 1px;" >
-					<div class="#{dashboardMBean.selectedMenu == 'graphActivity'?'menuItemV2Selected':'menuItemV2'}" style="line-height: 40px;">
+					<div id="lkDesempenho" class="#{dashboardMBean.selectedMenu == 'graphActivity'?'menuItemV2Selected':'menuItemV2'}" style="line-height: 40px;">
 						DESEMPENHO
 					</div>
 					
@@ -119,7 +119,7 @@
 			
 			<h:outputLink value="${facesContext.externalContext.requestContextPath}/logout" >
 				<div style="width: 69; text-align: center; float: left; margin-left: 1px;" >
-					<div class="menuItemV2" style="line-height: 40px;">
+					<div id="lkSair" class="menuItemV2" style="line-height: 40px;">
 						SAIR
 					</div>
 					

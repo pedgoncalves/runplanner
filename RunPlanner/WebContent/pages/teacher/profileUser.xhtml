@@ -40,7 +40,7 @@
 									<tr>
 										<td align="center" style="padding-left: 10px; vertical-align: top;">
 											<!-- Foto --> 
-											<p:panel id="customerPhoto" widgetVar="customerPhoto" style="border: 0px;">
+											<p:panel id="inFoto" widgetVar="customerPhoto" style="border: 0px;">
 												<p:panel rendered="#{profileMBean.customer.photo==null}" style="text-align:center; border: 0px;">
 													<img src="${facesContext.externalContext.requestContextPath}/images/nophoto.gif" width="150" />
 												</p:panel>
@@ -60,7 +60,7 @@
 													id="fileUpload"
 													label="#{msgs['template.button.change.photo']}"
 													auto="true" 
-													update="customerPhoto, messages"
+													update="inFoto, messages"
 													invalidSizeMessage="#{msgs['template.msg.sizeExceedMessage']}"
 													invalidFileMessage="#{msgs['template.msg.invalidFileMessage']}"/>
 
@@ -71,18 +71,18 @@
 										<p:panel style="border: 0px;">
 											<!-- Dados Cadastrais -->
 											<p>
-												<h:outputLabel for="nome" value="#{msgs['alunos.nome']}"
+												<h:outputLabel for="inNome" value="#{msgs['alunos.nome']}"
 													style="text-align:right" />
-												<p:inputText id="nome" value="#{profileMBean.customer.nome}"
+												<p:inputText id="inNome" value="#{profileMBean.customer.nome}"
 													size="50" required="true"
 													requiredMessage="#{msgs['template.nome.mandatory']}"
 													maxlength="100" style="margin-left:10px" />
 											</p>
 
 											<p>
-												<h:outputLabel for="email" value="#{msgs['alunos.email']} "
+												<h:outputLabel for="inEmail" value="#{msgs['alunos.email']} "
 													style="text-align:right" />
-												<p:inputText id="email"
+												<p:inputText id="inEmail"
 													value="#{profileMBean.customer.email}" required="true"
 													requiredMessage="#{msgs['template.email.mandatory']}"
 													size="50" maxlength="100" style="margin-left:10px">
@@ -91,15 +91,15 @@
 											</p>
 
 											<p>
-												<h:outputLabel for="cpf" value="#{msgs['alunos.cpf']} "
+												<h:outputLabel for="inCpf" value="#{msgs['alunos.cpf']} "
 													style="text-align:right" />
-												<p:inputMask id="cpf" value="#{profileMBean.customer.cpf}"
+												<p:inputMask id="inCpf" value="#{profileMBean.customer.cpf}"
 													mask="999.999.999-99" size="14" readonly="true"
 													style="margin-left:10px" styleClass="readonly" />
 
-												<h:outputLabel for="rg" value="#{msgs['alunos.rg']} "
+												<h:outputLabel for="inRg" value="#{msgs['alunos.rg']} "
 													style="width:30px; text-align:right" />
-												<p:inputText id="rg" value="#{profileMBean.customer.rg}"
+												<p:inputText id="inRg" value="#{profileMBean.customer.rg}"
 													size="14" maxlength="15" readonly="true"
 													style="margin-left:10px" styleClass="readonly" />
 											</p>
@@ -107,7 +107,7 @@
 												<h:outputLabel for="nascimento"
 													value="#{msgs['alunos.nascimento']} "
 													style="width:90px; text-align:right" />
-												<p:inputMask id="nascimento"
+												<p:inputMask id="dtNascimento"
 													value="#{profileMBean.customer.dtNascimento}"
 													mask="99/99/9999" style="margin-left:10px" size="10"
 													validatorMessage="#{msgs['template.date.invalid']}"
@@ -117,9 +117,9 @@
 											</p>
 
 											<p>
-												<h:outputLabel for="sexo" value="#{msgs['alunos.sexo']}"
+												<h:outputLabel for="rdSexo" value="#{msgs['alunos.sexo']}"
 													style="margin-top: 6px; text-align:right" />
-												<p:selectOneRadio id="sexo"
+												<p:selectOneRadio id="rdSexo"
 													value="#{profileMBean.customer.sexo}"
 													style="padding-left:10px">
 													<f:selectItems value="#{profileMBean.listaSexo}" />
@@ -127,7 +127,7 @@
 											</p>
 											</p:panel>
 											<div class="buttons">
-												<p:commandButton value="#{msgs['template.button.save']}"
+												<p:commandButton id="btSalvarDadosPessoais" value="#{msgs['template.button.save']}"
 													ajax="false" action="#{profileMBean.save}"
 													style="align:right;" />
 											</div>
@@ -211,25 +211,25 @@
 									<h:panelGrid id="customerDetails" columns="2">
 
 										<h:outputLabel value="Senha Atual:" />
-										<p:password value="#{userMBean.oldPass}" feedback="false"
+										<p:password id="inSenhaAtual" value="#{userMBean.oldPass}" feedback="false"
 											required="true"
 											requiredMessage="#{msgs['user.pass.old.mandatory']}" />
 
 										<h:outputLabel value="Nova Senha:" />
-										<p:password value="#{userMBean.newPass}" feedback="false"
+										<p:password id="inNovaSenha" value="#{userMBean.newPass}" feedback="false"
 											required="true"
 											requiredMessage="#{msgs['user.pass.new.mandatory']}" />
 
 										<h:outputLabel value="Confirme a nova Senha:"
 											style="width: 150px;" />
-										<p:password value="#{userMBean.retypePass}" feedback="false"
+										<p:password id="inConfirmacaoSenha" value="#{userMBean.retypePass}" feedback="false"
 											required="true"
 											requiredMessage="#{msgs['user.pass.retype.mandatory']}" />
 
 									</h:panelGrid>
 
 									<br />
-									<p:commandButton value="#{msgs['template.button.save']}"
+									<p:commandButton id="btSalvarSenha" value="#{msgs['template.button.save']}"
 										update="@widgetVar(messages)"
 										action="#{userMBean.changePassword}" ajax="false" />
 								</div>
