@@ -33,6 +33,9 @@ public class TesteInicial {
 			
 			SeleniumBaseTest.logInfo("Finalizando testes...");
 			
+			//Desconectar e fechar o browser
+			EfetuarLogin.desconectar();
+			
 		} catch (Exception e) {
 			// Desconectar e fechar o browser
 			//EfetuarLogin.desconectar();

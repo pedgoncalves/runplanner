@@ -18,7 +18,7 @@ public class Assessoria {
 		before();
 		SeleniumBaseTest.selecionarItemMenu(item);
 		SeleniumBaseTest.clicarLinkPorIdJS("mPerfil");
-		SeleniumBaseTest.waitPorId("inNome");
+		SeleniumBaseTest.wait(SeleniumBaseTest.WAIT_SHORT);
 		SeleniumBaseTest.escreverPorId("inNome", massa.getString("nome"));
 		SeleniumBaseTest.escreverPorId("inMensalidade", massa.getString("mensalidade"));
 		SeleniumBaseTest.selecionarComboPorIdPrimeJS("inDiaPagamento", massa.getString("diaPagamento"));
@@ -32,7 +32,7 @@ public class Assessoria {
 		before();
 		SeleniumBaseTest.selecionarItemMenu(item);
 		SeleniumBaseTest.clicarLinkPorIdJS("mTurmas");
-		SeleniumBaseTest.wait(SeleniumBaseTest.WAIT_MEDIUM);
+		SeleniumBaseTest.wait(SeleniumBaseTest.WAIT_SHORT);
 		SeleniumBaseTest.clicarBotaoPorIdJS("btIncluir");
 		SeleniumBaseTest.escreverPorId("inLocal", massa.getString("local"));
 		SeleniumBaseTest.escreverPorId("inHorario", massa.getString("horario"));
