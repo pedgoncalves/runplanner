@@ -34,12 +34,12 @@ public class DriverFactory {
 
 		DesiredCapabilities capabilities = DesiredCapabilities.chrome();
 		
-//		org.openqa.selenium.Proxy proxy = new org.openqa.selenium.Proxy();
- //       proxy.setHttpProxy("localhost:8080");
-//		capabilities.setCapability(CapabilityType.PROXY, proxy); 
+		org.openqa.selenium.Proxy proxy = new org.openqa.selenium.Proxy();
+        proxy.setHttpProxy("localhost:8080");
+		capabilities.setCapability(CapabilityType.PROXY, proxy); 
 		capabilities.setJavascriptEnabled(true);
 		capabilities.setCapability("chrome.binary", "c:/Program Files (x86)/Google/Chrome/Application/chrome.exe");
-		System.setProperty("webdriver.chrome.driver", "./Drivers/chromedriver");
+		System.setProperty("webdriver.chrome.driver", "./Drivers/chromedriver.exe");
 		driver = new ChromeDriver(capabilities);
 		driver.manage().window().maximize();
 		return driver;

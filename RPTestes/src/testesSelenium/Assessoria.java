@@ -13,7 +13,6 @@ public class Assessoria {
 		SeleniumBaseTest.waitPorId(item.getURLItem());
 	} 
 	
-
 	public static void adicionarDadosPerfilAssessoria(Massa massa){
 		
 		before();
@@ -49,6 +48,5 @@ public class Assessoria {
 		SeleniumBaseTest.clicarBotaoPorIdJS("btSalvar");
 		
 	}
-	
 	
 }

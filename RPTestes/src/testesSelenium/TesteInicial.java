@@ -24,11 +24,11 @@ public class TesteInicial {
 			//Executar passos
 			
 			// Perfil
-			//PerfilPessoa.adicionarDadosPessoais(massaPessoaPerfil);
-			//PerfilPessoa.alterarSenha(massaPessoaPerfil);
+			PerfilPessoa.adicionarDadosPessoais(massaPessoaPerfil);
+			PerfilPessoa.alterarSenha(massaPessoaPerfil);
 
 			// Assessoria
-			//Assessoria.adicionarDadosPerfilAssessoria(massaAssessoriaPerfil);
+			Assessoria.adicionarDadosPerfilAssessoria(massaAssessoriaPerfil);
 			Assessoria.adicionarTurma(massaAssessoriaTurma);  	
 			
 			SeleniumBaseTest.logInfo("Finalizando testes...");
