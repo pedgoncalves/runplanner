@@ -18,7 +18,10 @@ public class SeleniumBaseTest {
 	
 	
 	private final static Integer TIMEOUT = 30000; 
-	public final static Integer WAIT_TIME = 2000; 
+	public final static Integer WAIT_SHORT = 1000;
+	public final static Integer WAIT_MEDIUM = 3000;
+	public final static Integer WAIT_LONG = 5000;
+	
 	
 	
 	public static WebDriver getDriver(){
@@ -183,6 +186,12 @@ public class SeleniumBaseTest {
 		return getDriver().findElement(By.xpath(locator)).isSelected();
 	}
 	
+	//List Box
+	public static void clicarDuploListBoxPorIdPrimeJS(String position){
+		jsExec("$('li:" + position + "').dblclick()");
+	}
+	
+	
 	// Click genérico
 	
 	public static void clicarGenerico(String locator){
@@ -217,6 +226,10 @@ public class SeleniumBaseTest {
 		
 	}
 
+	public static void clicarCheckPorIdPrimeJS(String id) {
+		String fullId = id + "_input"; 
+		jsExec("$('[id$=\"" + fullId + "\"]').click()");
+	}
 	
 	public static void clicarBotaoPorIdJS(String id) {
 		logInfo(id);
@@ -250,7 +263,7 @@ public class SeleniumBaseTest {
 	
 	public static void clicarCheckBoxPorIdJS(String id) {
 		logInfo(id);
-		jsExec("$('[id=\"" + id + "\"]').click()");
+		jsExec("$('[id$=\"" + id + "\"]').click()");
 	}
 	
 	public static void clicarCheckBoxPorNameJS(String name, boolean valor) {
@@ -259,6 +272,12 @@ public class SeleniumBaseTest {
 	}
 	
 	//Combo-box
+	
+	public static void selecionarComboPorIdPrimeJS(String id, String value) {
+		String fullId = id + "_label"; 
+		jsExec("$('[id$=\"" + fullId + "\"]').text(\"" + value + "\")");
+	}
+
 	
 	public static void selecionarComboPorLocator(String locator, String valor){
 		Select select = new Select(getDriver().findElement(By.xpath(locator)));
@@ -467,7 +486,7 @@ public class SeleniumBaseTest {
 	
 	// Waits
 	public static void waitTime(){
-		wait(WAIT_TIME);
+		wait(WAIT_MEDIUM);
 	}
 	
 	public static void wait(int timeMili){

@@ -11,22 +11,34 @@ public class TesteInicial {
 		//Limpar Base
 		//SeleniumBaseTest.prepararBase();
 
-		Massa massaPerfilAssessoria = new Massa("resources/massa_perfil_assessoria.properties");
+		Massa massaPessoaPerfil = new Massa("resources/massa_pessoa_perfil.properties");
+		Massa massaAssessoriaPerfil = new Massa("resources/massa_assessoria_perfil.properties");
+		Massa massaAssessoriaTurma = new Massa("resources/massa_assessoria_turma.properties");
 		
 		SeleniumBaseTest.logInfo("Iniciando testes...");
 		
-		// Realizar o login do sistema
-		EfetuarLogin.efetuarLogin(Usuario.ADMINISTRADOR);
+		try {
+			// Realizar o login do sistema
+			EfetuarLogin.efetuarLogin(Usuario.ADMINISTRADOR);
+
+			//Executar passos
+			
+			// Perfil
+			//PerfilPessoa.adicionarDadosPessoais(massaPessoaPerfil);
+			//PerfilPessoa.alterarSenha(massaPessoaPerfil);
+
+			// Assessoria
+			//Assessoria.adicionarDadosPerfilAssessoria(massaAssessoriaPerfil);
+			Assessoria.adicionarTurma(massaAssessoriaTurma);  	
+			
+			SeleniumBaseTest.logInfo("Finalizando testes...");
+			
+		} catch (Exception e) {
+			// Desconectar e fechar o browser
+			//EfetuarLogin.desconectar();
+		}
 		
-					
-		//Executar passos
-		Perfil.adicionarDadosPessoais(massaPerfilAssessoria);
-		Perfil.alterarSenha(massaPerfilAssessoria);
 	
-		SeleniumBaseTest.logInfo("Finalizando testes...");
-		
-		// Desconectar e fechar o browser
-		//EfetuarLogin.desconectar();
 	}
 	
 }
