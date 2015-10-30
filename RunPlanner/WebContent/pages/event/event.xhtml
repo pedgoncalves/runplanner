@@ -27,7 +27,7 @@
 				<p:inputText id="price" value="#{eventMBean.event.value}" size="100" maxlength="100"/></p>
 								
 				<p><h:outputLabel for="date" value="#{msgs['event.date']}" />
-				<p:inputMask id="date" value="#{eventMBean.event.date}" size="11" mask="99/99/9999"
+				<p:inputMask id="date" value="#{eventMBean.event.date}" size="10" mask="99/99/9999"
 						validatorMessage="#{msgs['event.date.invalid']}"
 						converterMessage="#{msgs['event.date.invalid']}"
 						required="true" requiredMessage="#{msgs['event.date.mandatory']}">
@@ -35,7 +35,7 @@
 				</p:inputMask>
 				
 				<h:outputLabel for="hour" value="#{msgs['event.hour']}" style="text-align:right"/>
-				<p:inputMask id="hour" value="#{eventMBean.event.time}" size="4" mask="99:99" required="true"
+				<p:inputMask id="hour" value="#{eventMBean.event.time}" size="5" mask="99:99" required="true"
 						requiredMessage="#{msgs['event.time.mandatory']}" style="margin-left:10px"
 						converterMessage="#{msgs['event.time.convert.error']}">			
 					<f:convertDateTime pattern="HH:mm" />
@@ -47,7 +47,7 @@
 				</p>
 				
 				<p><h:outputLabel for="inscription" value="#{msgs['event.limit']}" />
-				<p:inputMask id="inscription" value="#{eventMBean.event.finalDate}" size="11" mask="99/99/9999"
+				<p:inputMask id="inscription" value="#{eventMBean.event.finalDate}" size="10" mask="99/99/9999"
 						validatorMessage="#{msgs['event.limit.invalid']}"
 						converterMessage="#{msgs['event.limit.invalid']}"
 						required="true" requiredMessage="#{msgs['event.limit.mandatory']}">

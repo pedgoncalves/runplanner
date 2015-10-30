@@ -15,7 +15,7 @@
 			<p:messages id="messages" showDetail="false" />	
 			
 			<p:panel header="#{msgs['header.teacher.title']}" styleClass="center">
-			<h:panelGrid id="teacherDetails" columns="2" style="margin: 0 auto;">
+			<h:panelGrid id="teacherDetails" columns="2" style="margin-left: 90px;">
 				<h:outputLabel value="#{msgs['alunos.photo']}" styleClass="rigth"/>
 				
 				<p:fileUpload fileUploadListener="#{teacherMBean.handleFileUpload}"  
@@ -25,7 +25,7 @@
 					auto="true" 
 					update="teacherDetails,messages"
 					rendered="#{teacherMBean.teacher.photo==null}"
-					style="margin-left:-3px"
+					style="margin-left:-30px"
 					invalidSizeMessage="#{msgs['template.msg.sizeExceedMessage']}"
 					invalidFileMessage="#{msgs['template.msg.invalidFileMessage']}"/>
 										
@@ -44,12 +44,12 @@
 			</h:panelGrid>
 			
 			 <p><h:outputLabel for="nome" value="#{msgs['alunos.nome']}"  style="padding-right:5px; padding-left:60px;"/>
-				<p:inputText id="nome" value="#{teacherMBean.teacher.nome}" size="100" required="true"
-					requiredMessage="#{msgs['template.name.mandatory']}"  maxlength="100"/></p>
+				<p:inputText id="nome" value="#{teacherMBean.teacher.nome}" size="90" required="true"
+					requiredMessage="#{msgs['template.name.mandatory']}"  maxlength="90"/></p>
 					
 				<p><h:outputLabel for="email" value="#{msgs['alunos.email']}"  style="padding-right:5px;padding-left:60px;"/>
 				<p:inputText id="email" value="#{teacherMBean.teacher.email}" required="true"
-					requiredMessage="#{msgs['template.email.mandatory']}" size="100" maxlength="100">
+					requiredMessage="#{msgs['template.email.mandatory']}" size="90" maxlength="90">
 					<f:validator validatorId="EmailValidator"/>
 				</p:inputText></p>
 
