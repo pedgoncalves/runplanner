@@ -61,18 +61,16 @@
 								<tr>
 									<td valign="top" align="center"  height="1px">
 										<div class="blueHeader"><h:outputText value="Detalhes da Rota"/></div><br/>
-										
-										<div class="buttonNumber" style="width: 80% !important; height: 50px !important; padding-top: 15px;">
-											<h:outputText value="#{routeMBean.mapDistance/1000}" id="distanceMap">
-												<f:convertNumber pattern="#0.00"/>	
-											</h:outputText><br/> 
-											<h:outputText value="Km" styleClass="subtitle"/>
-										</div>
 									</td>
 								</tr>
 								<tr>
 									<td>
 										<div  style="padding-left: 10px;">
+											<h:outputLabel value="#{msgs['route.distance']}:" style="width:100px;"/>																				
+											<b><h:outputText value="#{routeMBean.mapDistance/1000}" id="distanceMap" style="text-align:left; font-size: large;">
+												<f:convertNumber pattern="#0.00"/>	
+											</h:outputText></b><br/><br/><br/> 	
+										
 											<h:outputLabel value="#{msgs['route.name']}"/><br/>
 											<p:inputText value="#{routeMBean.route.name}"  maxlength="200" style="width: 85%" 
 												required="true"	requiredMessage="#{msgs['route.name.mandatory']}"  /> <br/><br/><br/>
