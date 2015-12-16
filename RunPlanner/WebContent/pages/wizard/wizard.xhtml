@@ -10,6 +10,10 @@
     		color: white !important;
 		}
 		
+		.ui-panel {
+   			background-color: transparent !important;
+		}
+		
 	</style>
 
 	<p:dialog widgetVar="wizardDialog" 
@@ -32,10 +36,10 @@
 				<p:messages id="messages" showDetail="false" />
 				 		
 				
-				<p:panel id="contentPanel">
+				<p:panel id="contentPanel" style="background-color: transparent !important; border: 0px;">
 					<div style="padding: 10px">
 					
-					<p:panel rendered="#{wizardMBean.stepNow == 0}" >
+					<p:panel rendered="#{wizardMBean.stepNow == 0}"  style="background-color: transparent !important; border: 0px;">
 						<div style="padding-left: 150px; padding-top: 80px;">
 							<h:outputText value="Bem-Vindo ao RunPlanner!" style="color: #00829C; font-weight: 900; font-size: 16px;"/>
 							<br/><br/><br/><br/>
@@ -44,7 +48,7 @@
 					</p:panel>
 					
 					
-					<p:panel rendered="#{wizardMBean.stepNow == 1}" id="advicePanel">
+					<p:panel rendered="#{wizardMBean.stepNow == 1}" id="advicePanel" style="background-color: transparent !important; border: 0px;">
 					
 						<div class="stepBox">
 							<div class="help">
@@ -85,7 +89,7 @@
 						</center>						
 		   			</p:panel>
 		   			
-		   			<p:panel rendered="#{wizardMBean.stepNow == 2}" id="rhythmPanel">
+		   			<p:panel rendered="#{wizardMBean.stepNow == 2}" id="rhythmPanel" style="background-color: transparent !important; border: 0px;">
 		   			
 
 						<div class="stepBox" id="stepBox">
@@ -127,7 +131,7 @@
 						</center>
 					</p:panel>
 					
-					<p:panel rendered="#{wizardMBean.stepNow == 3}" id="teacherPanel">
+					<p:panel rendered="#{wizardMBean.stepNow == 3}" id="teacherPanel" style="background-color: transparent !important; border: 0px;">
 
 						<div class="stepBox">
 							<div class="help">
@@ -168,7 +172,7 @@
 						</center>	
 					</p:panel>
 					
-					<p:panel rendered="#{wizardMBean.stepNow == 4}" id="teamPanel">
+					<p:panel rendered="#{wizardMBean.stepNow == 4}" id="teamPanel" style="background-color: transparent !important; border: 0px;">
 						
 						<div class="stepBox">
 							<div class="help">
@@ -209,7 +213,7 @@
 						</center>
 					</p:panel>
 					
-					<p:panel rendered="#{wizardMBean.stepNow == 5}" >
+					<p:panel rendered="#{wizardMBean.stepNow == 5}"  style="background-color: transparent !important; border: 0px;">
 						<div style="padding-left: 150px; padding-top: 80px;">
 							<h:outputText value="#{msgs['wizard.stepFinal.title']}" style="color: #00829C; font-weight: 900; font-size: 16px;"/>
 							<br/><br/><br/><br/>
@@ -223,19 +227,19 @@
 			</div>
 			
 			<div class="divWizardButton">
-				<p:panel id="buttons">
+				<p:panel id="buttons" style="background-color: transparent !important; border: 0px;">
 					<p:commandButton 
 						id="backBtn" 
 						value="Voltar" 
 						styleClass="wizardButton" 
-						update="stepTitles, stepSubTitles, contentPanel, messages, buttons"
+						update="contentPanel, messages, buttons"
 						actionListener="#{wizardMBean.back}"
 						rendered="#{wizardMBean.stepNow>0}"/>
 				
 					<p:commandButton  
 						value="Prosseguir" 
 						styleClass="wizardButton" 
-						update="stepTitles, stepSubTitles, contentPanel, messages, buttons"
+						update="contentPanel, messages, buttons"
 						actionListener="#{wizardMBean.next}"
 						disabled="#{wizardMBean.nextDisabled}"
 						rendered="#{wizardMBean.stepsNumber>wizardMBean.stepNow}"/>
