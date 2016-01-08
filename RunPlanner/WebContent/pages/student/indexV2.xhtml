@@ -157,95 +157,29 @@
 							</tr>	
 							<tr>
 								<td>
-									<ui:include src="../calendarFragment.xhtml"/>
+									<!-- ui:include src="../calendarFragment.xhtml"/ -->
 								</td>
 							</tr>												
 							<tr>
-								<td>
-								
-									<div class="recordBox">
-										<div style="margin-top: 8px; margin-left: 8px; margin-right: 8px;">
-											<font color="#C8C8C8" size="2px" face="verdana"><b>Suas</b></font>
-											<font color="#5B5B58" size="5px" face="verdana"><b>Atividades</b></font>
-											<br /> <br /> 
-											
-											
-											<img src="${facesContext.externalContext.requestContextPath}/images/v2/imapmyrun_icon.png" />
-										</div>	
-									</div>										
-										
-									<br/>
-																	
-									<div class="recordBox">
-										<div style="margin-top: 8px; margin-left: 8px; margin-right: 8px;">
-											<font color="#C8C8C8" size="2px" face="verdana"><b>Seus</b></font>
-											<font color="#5B5B58" size="5px" face="verdana"><b>Recordes</b></font>
-											<br /> <br /> 
-											
-											<table width="100%">
-												<tr>
-													<td nowrap="nowrap" align="center" class="headerBlueV2"><h:outputText value="Maior Distancia"/></td>
-													<td nowrap="nowrap" align="center" class="headerBlueV2"><h:outputText value="Maior Duracao"/></td>
-													<td nowrap="nowrap" align="center" class="headerBlueV2"><h:outputText value="Menor Pace"/></td>
-												</tr>
-												<tr>
-													<td align="center">
-														<h:commandLink action="#{activityMBean.goToView}">
-															<f:setPropertyActionListener target="#{activityMBean.activity.id}" value="#{dashboardMBean.longestActivityKmId}" />
-													
-															<font color="#02425C" size="5px" face="verdana"><b>
-																<h:outputText value="#{dashboardMBean.longestActivityKm}">
-																	<f:convertNumber pattern="#0.00" />
-																</h:outputText>
-															</b>KM</font><br/>
-															<h:outputText value="#{dashboardMBean.longestActivityKmDate}" styleClass="subtitle">
-																<f:convertDateTime pattern="dd/MM/yyyy" />
-															</h:outputText>
-														</h:commandLink>
-													</td>
-													<td align="center">
-														<h:commandLink action="#{activityMBean.goToView}">
-															<f:setPropertyActionListener target="#{activityMBean.activity.id}" value="#{dashboardMBean.longestActivityTimeId}" />
-													
-															<font color="#02425C" size="5px" face="verdana"><b>
-																<h:outputText value="#{dashboardMBean.longestActivityTime}" />
-															</b></font><br/>
-															<h:outputText value="#{dashboardMBean.longestActivityTimeDate}" styleClass="subtitle">
-																<f:convertDateTime pattern="dd/MM/yyyy" />
-															</h:outputText>
-														</h:commandLink>
-													</td>
-													<td align="center">
-														<h:commandLink action="#{activityMBean.goToView}">
-															<f:setPropertyActionListener target="#{activityMBean.activity.id}" value="#{dashboardMBean.longestActivityPaceId}" />
-													
-															<font color="#02425C" size="5px" face="verdana"><b>
-																<h:outputText value="#{dashboardMBean.longestActivityPace}" />
-															</b></font><br/>
-															<h:outputText value="#{dashboardMBean.longestActivityPaceDate}" styleClass="subtitle">
-																<f:convertDateTime pattern="dd/MM/yyyy" />
-															</h:outputText>
-														</h:commandLink>
-													</td>
-												</tr>
-											</table>
-										</div>
-																				
-										<br/>
-										
-										<ui:include src="../birthdayFragment.xhtml"/>
-									
-										<br/>
-										
-										<ui:include src="../topActivityFragment.xhtml"/>									
-										
-										
-									</div>
+								<td>																	
+									<ui:include src="../recordBoxFragment.xhtml"/>
 								</td>
 							</tr>
-
-							<ui:include src="../partnerFragment.xhtml"/>
-							
+							<tr>
+								<td>										
+									<ui:include src="../birthdayFragment.xhtml"/>
+								</td>
+							</tr>
+							<tr>
+								<td>										
+									<ui:include src="../topActivityFragment.xhtml"/>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<ui:include src="../partnerFragment.xhtml"/>
+								</td>
+							</tr>
 						</table>
 						
 					</td>
