@@ -44,6 +44,7 @@ import br.com.runplanner.service.ReportServiceImpl;
 import br.com.runplanner.service.RhythmService;
 import br.com.runplanner.service.TeamService;
 import br.com.runplanner.to.PlanilhaListagemAlunosTO;
+import br.com.runplanner.util.Utils;
 import br.com.runplanner.util.mail.EmailThreadProductor;
 import br.com.runplanner.view.util.Constants;
 import br.com.runplanner.view.util.MD5Util;
@@ -703,6 +704,14 @@ public class CustomerMBean extends BasicMBean {
 		}
 
 		String extencao = fileName.substring(fileName.lastIndexOf("."));
+		
+		if ( !Utils.verifyUserPhotoPath() ) {
+			addMessage(FacesMessage.SEVERITY_ERROR, "template.msg.foto.erro");
+			System.err.println("Erro ao criar diretório para Fotos");
+			
+			return;
+		}
+		
 		String fotoFileName = Constants.PHOTO_PATH + Constants.PHOTO_USER_NAME
 				+ customer.getId() + extencao;
 

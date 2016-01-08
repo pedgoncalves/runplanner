@@ -1,5 +1,9 @@
 package br.com.runplanner.util;
 
+import java.io.File;
+
+import br.com.runplanner.view.util.Constants;
+
 public class Utils {
 
 	public static String formataTempo(long elapsed) {  
@@ -34,5 +38,33 @@ public class Utils {
            
         return Math.round(constant * c * 1000); // resultado em metros.
     }
+	
+	public static boolean verifyUserPhotoPath() {
+		return verifyPath(Constants.PHOTO_PATH);
+	} 
+	
+	public static boolean verifyAdvicePhotoPath() {
+		return verifyPath(Constants.PHOTO_PATH);
+	} 
+	
+	public static boolean verifyAdviceBannerPhotoPath() {
+		return verifyPath(Constants.BANNER_PATH);
+	} 
+	
+	private static boolean verifyPath(String path) {
+		File dir = new File(path);
+		boolean result = true;
+		if ( !dir.exists() ) {
+			result = false;
+			try {
+				result = dir.mkdir();			
+			}
+			catch(Exception e) {
+				e.printStackTrace();
+			}			
+		}
+		return result;
+	} 
+		
 			
 }

@@ -11,8 +11,8 @@ public class Constants {
 	//PHOTO
 	public static final long PHOTO_MAX_SIZE = 1024000; //1 mega
 	public static final long BANNER_MAX_SIZE = 1024000; //1 mega
-	public static final String PHOTO_PATH = "userImage/"; 
-	public static final String BANNER_PATH = "partnerBanners/";
+	public static final String PHOTO_PATH = System.getProperty("user.home")+File.separator+"userImage/"; 
+	public static final String BANNER_PATH = System.getProperty("user.home")+File.separator+"partnerBanners/";
 	public static final String PHOTO_USER_NAME = "USER";
 	public static final String PHOTO_ADVICE_NAME = "ADVICE"; 
 	public static final String PHOTO_ADVICE_BANNER_NAME = "ADVICEBANNER";

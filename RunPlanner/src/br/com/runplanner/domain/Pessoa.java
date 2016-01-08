@@ -331,6 +331,8 @@ public class Pessoa implements BasicEntity {
 		
 		if ( hasUserPhoto() ) {
 			File f = new File(userPhoto);
+			if ( !f.exists() ) return null;
+			
 			photo = new byte[(int)f.length()];
 			
 			FileInputStream in;
@@ -352,11 +354,13 @@ public class Pessoa implements BasicEntity {
 		
 		if ( hasUserPhoto() ) {
 			
-			String extencao = userPhoto.substring( userPhoto.indexOf(".") );
-			String name =  userPhoto.substring( 0, userPhoto.indexOf(".") );
+			String extencao = userPhoto.substring( userPhoto.lastIndexOf(".") );
+			String name =  userPhoto.substring( 0, userPhoto.lastIndexOf(".") );
 			String thumbFileName = name+"_thumb"+extencao;
 			
 			File f = new File(thumbFileName);
+			if ( !f.exists() ) return null;
+			
 			photo = new byte[(int)f.length()];
 			
 			FileInputStream in;
@@ -573,8 +577,8 @@ public class Pessoa implements BasicEntity {
 					photo = baos.toByteArray();
 					baos.close();
 					
-					String extencao = userPhoto.substring( userPhoto.indexOf(".") );
-					String name =  userPhoto.substring( 0, userPhoto.indexOf(".") );
+					String extencao = userPhoto.substring( userPhoto.lastIndexOf(".") );
+					String name =  userPhoto.substring( 0, userPhoto.lastIndexOf(".") );
 					String thumbFileName = name+"_thumb"+extencao;
 					
 					

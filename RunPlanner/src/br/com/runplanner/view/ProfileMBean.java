@@ -510,12 +510,21 @@ public class ProfileMBean extends BasicMBean {
 		}
 		
 		String extencao = fileName.substring( fileName.lastIndexOf(".") );
+		
+		if ( !Utils.verifyUserPhotoPath() ) {
+			addMessage(FacesMessage.SEVERITY_ERROR, "template.msg.foto.erro");
+			System.err.println("Erro ao criar diretório para Fotos");
+			
+			return;
+		}
+		
 		String fotoFileName = Constants.PHOTO_PATH+Constants.PHOTO_USER_NAME+user.getId()+extencao;
 		
 		byte[] foto = event.getFile().getContents();
 		
-		try {
+		try {			
 			File fileFoto = new File(fotoFileName);		
+			
 			fileFoto.createNewFile();
 			
 			FileOutputStream out = new FileOutputStream(fileFoto);
@@ -536,7 +545,7 @@ public class ProfileMBean extends BasicMBean {
 		
 		customer.setUserPhoto(fotoFileName);
         customer.setPhoto( foto ); 
-    }  
+    }
 	
 	public void handleFileUploadAdvice(FileUploadEvent event) { 
 
@@ -565,6 +574,14 @@ public class ProfileMBean extends BasicMBean {
 		}
 		
 		String extencao = fileName.substring( fileName.lastIndexOf(".") );
+		
+		if ( !Utils.verifyAdvicePhotoPath() ) {
+			addMessage(FacesMessage.SEVERITY_ERROR, "template.msg.foto.erro");
+			System.err.println("Erro ao criar diretório para Fotos");
+			
+			return;
+		}
+		
 		String fotoFileName = Constants.PHOTO_PATH+Constants.PHOTO_ADVICE_NAME+advice.getId()+extencao;
 		
 		byte[] foto = event.getFile().getContents();
@@ -572,6 +589,7 @@ public class ProfileMBean extends BasicMBean {
 		try {
 			File fileFoto = new File(fotoFileName);		
 			fileFoto.createNewFile();
+			
 			
 			FileOutputStream out = new FileOutputStream(fileFoto);
 			out.write(foto);
@@ -618,6 +636,14 @@ public class ProfileMBean extends BasicMBean {
 		}
 		
 		String extencao = fileName.substring( fileName.lastIndexOf(".") );
+		
+		if ( !Utils.verifyAdviceBannerPhotoPath() ) {
+			addMessage(FacesMessage.SEVERITY_ERROR, "template.msg.foto.erro");
+			System.err.println("Erro ao criar diretório para Fotos");
+			
+			return;
+		}
+		
 		String fotoFileName = Constants.PHOTO_PATH+Constants.PHOTO_ADVICE_BANNER_NAME+advice.getId()+extencao;
 		
 		byte[] foto = event.getFile().getContents();
