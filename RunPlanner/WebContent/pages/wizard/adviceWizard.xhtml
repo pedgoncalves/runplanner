@@ -9,7 +9,7 @@
 		<tr>
 			<td>
 				<!-- Foto -->	
-				<p:panel id="advicePhoto" style="border: 1px solid #dedede; ">											
+				<p:panel id="advicePhoto" widgetVar="advicePhoto" style="border: 1px solid #dedede; ">											
 					<p:panel rendered="#{wizardMBean.advice.logo==null}" style="text-align:left;">						
 						<img src="${facesContext.externalContext.requestContextPath}/images/nophoto.gif" width="150"/>		
 					</p:panel>
@@ -23,7 +23,7 @@
 						id="fileUpload"
 						label="#{msgs['template.button.change.photo']}"
 						auto="true" 
-						update="advicePhoto,messages"
+						update="@widgetVar(advicePhoto),@widgetVar(messages)"
 						style="margin-left:15px"
 						invalidSizeMessage="#{msgs['template.msg.sizeExceedMessage']}"
 						invalidFileMessage="#{msgs['template.msg.invalidFileMessage']}"/>			   				

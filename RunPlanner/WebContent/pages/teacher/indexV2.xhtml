@@ -10,9 +10,7 @@
 	<ui:define name="content">
 
 		<style type="text/css">
-		.ui-button-text {
-			color: #02425C !important;
-		}
+		
 		
 		.ui-datalist-content {
 			border: 0px;
@@ -34,7 +32,8 @@
 							<h2>#{msgs['dashboard.title.feed']}</h2>
 
 							<p:dataList value="#{dashboardMBean.notifications}" var="notification" 
-									itemType="none" id="notification" style="border: 0px;">
+									itemType="none" id="notification" style="border: 0px;"
+									emptyMessage="#{msgs['template.msg.emptyMessage']}">
 
 								<p:column rendered="#{notification.type.id==0}">
 									<div class="notificationV2" onmouseover="this.className='notificationV2Hover'" onmouseout="this.className='notificationV2'">
@@ -257,9 +256,9 @@
 		</h:form>
 
 		<h:panelGroup id="wrapperPanel">
-		    <h:panelGroup id="tableRenderPanel" rendered="#{dashboardMBean.wizard}">
+		    <!-- h:panelGroup id="tableRenderPanel" rendered="#{dashboardMBean.wizard}">
 				<ui:include src="../wizard/wizard.xhtml"/>
-		    </h:panelGroup>
+		    </h:panelGroup -->
 		    
 		    <h:panelGroup id="tableRenderPane2" rendered="#{dashboardMBean.paymentNotification}">
 				<ui:include src="../notification/advicePaymentNotification.xhtml"/>

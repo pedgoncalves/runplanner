@@ -125,6 +125,8 @@ public class DashboardMBean implements Serializable {
 
 	private Long newMessageNumber = 0l;
 	
+	private RhythmTable rhythmTable;
+	
     private CartesianChartModel activityNumberGraph;
 	
 	//Wizard
@@ -287,6 +289,9 @@ public class DashboardMBean implements Serializable {
 			else {
 				paymentNotification=false;
 			}
+			
+			//Tabela de Ritmo
+			rhythmTable = rhythmService.getByCustomer(customer.getId());
 		}   
 		else if ( customer.getTipoPessoa() == TipoPessoa.ADMINISTRADOR ) {
 			
@@ -873,6 +878,14 @@ public class DashboardMBean implements Serializable {
 
 	public String getTopActivityTitle() {
 		return topActivityTitle;
+	}
+
+	public RhythmTable getRhythmTable() {
+		return rhythmTable;
+	}
+
+	public void setRhythmTable(RhythmTable rhythmTable) {
+		this.rhythmTable = rhythmTable;
 	}
 	
 }
