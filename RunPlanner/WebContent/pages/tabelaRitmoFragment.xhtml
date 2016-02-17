@@ -1,0 +1,44 @@
+
+<ui:fragment xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+	
+	<div class="messageBox">
+		<div style="margin-top: 8px; margin-left: 8px; margin-right: 8px;">
+			
+			<table width="100%">
+				<tr>
+					<td>
+						<font color="#C8C8C8" size="2px" face="verdana"><b>Tabela de</b></font>
+						<font color="#5B5B58" size="5px" face="verdana"><b>Ritmos</b></font>
+					</td>
+				</tr>
+			</table>
+			<br/>
+
+		    <h:panelGrid columns="6" cellpadding="10" width="100%">  
+		        <h:outputLabel value="#{msgs['spreadsheet.rhythm.easyPace']}" />  
+       			<h:outputText value="#{dashboardMBean.rhythmTable.easyPace}" mask="99:99"/>
+       			
+       			<h:outputLabel value="#{msgs['spreadsheet.rhythm.normalPace']}" />  
+       			<h:outputText value="#{dashboardMBean.rhythmTable.normalPace}" mask="99:99"/>
+       			
+       			<h:outputLabel value="#{msgs['spreadsheet.rhythm.moderatePace']}" />  
+       			<h:outputText value="#{dashboardMBean.rhythmTable.moderatePace}" mask="99:99"/>
+       			
+       			<h:outputLabel value="#{msgs['spreadsheet.rhythm.mediumPace']}" />  
+       			<h:outputText value="#{dashboardMBean.rhythmTable.mediumPace}" mask="99:99"/>
+       			
+       			<h:outputLabel value="#{msgs['spreadsheet.rhythm.strongPace']}" />  
+       			<h:outputText value="#{dashboardMBean.rhythmTable.strongPace}" mask="99:99"/>
+       			
+       			<h:outputLabel value="#{msgs['spreadsheet.rhythm.shootingPace']}" />  
+       			<h:outputText value="#{dashboardMBean.rhythmTable.shootingPace}" mask="99:99"/>
+		    </h:panelGrid> 			
+			 
+		</div>
+	</div>
+</ui:fragment>

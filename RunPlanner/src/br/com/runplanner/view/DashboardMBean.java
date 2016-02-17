@@ -54,6 +54,7 @@ import br.com.runplanner.service.PessoaService;
 import br.com.runplanner.service.RhythmService;
 import br.com.runplanner.service.SpreadsheetService;
 import br.com.runplanner.service.TeamService;
+import br.com.runplanner.to.TopActivityTO;
 import br.com.runplanner.util.Utils;
 import br.com.runplanner.view.util.Constants;
 import br.com.runplanner.view.util.MessagesResources;
@@ -97,6 +98,7 @@ public class DashboardMBean implements Serializable {
 	private List<Activity> activityList = new ArrayList<Activity>();
 	private List<Spreadsheet> spreadsheetList = new ArrayList<Spreadsheet>();
 	private List<Event> eventList = new ArrayList<Event>();	
+	private List<TopActivityTO> topList = new ArrayList<TopActivityTO>();
 	@SuppressWarnings("unused")
 	private List<Advice> adviceList = new ArrayList<Advice>();
 	private Schedule proximoTreino;
@@ -123,6 +125,8 @@ public class DashboardMBean implements Serializable {
 
 	private Long newMessageNumber = 0l;
 	
+	private RhythmTable rhythmTable;
+	
     private CartesianChartModel activityNumberGraph;
 	
 	//Wizard
@@ -143,7 +147,16 @@ public class DashboardMBean implements Serializable {
 	private int partnerListSize = 2;
 	private List<Partner> partnerList = new ArrayList<Partner>(partnerListSize);
 	
-	    
+	//Titulos para TopActivity 
+	private String topActivityTitle = "";
+	private String topActivityTitle5 = "5KM ";
+	private String topActivityTitle10 = "10KM ";
+	private String topActivityTitle21 = "21KM ";
+	private String topActivityTitle42 = "42KM ";
+	private String topActivityTitleMas = "Masculino";
+	private String topActivityTitleFem = "Feminino";
+	private String topActivitySelected = "";
+	
     public DashboardMBean() {  
               
     }
@@ -178,16 +191,21 @@ public class DashboardMBean implements Serializable {
 			nextEvent = eventList.get(eventList.size()-1);
 		}
 		
+		//Melhores tempos de 5KM
+		topList = activityService.getTopActivity5k(advice.getId(), 0);
+		topActivitySelected = "5M";
+		topActivityTitle = topActivityTitle5+topActivityTitleMas;
+		
+		//Aniversariantes
+		birthdayList = pessoaService.getByTipoPessoaAdviceAniversario(TipoPessoa.ALUNO,advice.getId(),month,day);
+		
+		//Mensagens
+		newMessageNumber = mailboxService.getNewByUserId(customer.getId());
+		
 		if ( customer.getTipoPessoa() == TipoPessoa.PROFESSOR || customer.getTipoPessoa() == TipoPessoa.ASSESSORIA ) {	
 			
 			//Notificacoes	    	
 	    	notifications = notificationService.getByAdvice(customer.getAdvice().getId(), 0, PAGE_SIZE);	
-	    	
-	    	//Aniversariantes
-			birthdayList = pessoaService.getByTipoPessoaAdviceAniversario(TipoPessoa.ALUNO,advice.getId(),month,day);
-			
-			//Mensagens
-			newMessageNumber = mailboxService.getNewByUserId(customer.getId());
 
 			//Numeros - Alunos					
 			activeCustomerNumber = pessoaService.getSumByAdviceActiveTipoPessoa(customer.getAdvice().getId(), true, TipoPessoa.ALUNO);
@@ -254,9 +272,6 @@ public class DashboardMBean implements Serializable {
 			//Buscar proximo treino
 			proximoTreino = spreadsheetService.findByStudentActual(customer.getId());
 			
-			//Aniversariantes
-			birthdayList = pessoaService.getByTipoPessoaAdviceAniversario(TipoPessoa.ALUNO,advice.getId(),month);
-			
 			//Notificacao de pagamento
 			if ( customer.getAdvice().getPaymentNotificationDialog() ) {
 				
@@ -274,6 +289,9 @@ public class DashboardMBean implements Serializable {
 			else {
 				paymentNotification=false;
 			}
+			
+			//Tabela de Ritmo
+			rhythmTable = rhythmService.getByCustomer(customer.getId());
 		}   
 		else if ( customer.getTipoPessoa() == TipoPessoa.ADMINISTRADOR ) {
 			
@@ -336,6 +354,38 @@ public class DashboardMBean implements Serializable {
 		
 		return "";
     }
+    
+    public void handleChangeTopActivity() {
+    	Pessoa customer = getSessionUser();
+		Advice advice = customer.getAdvice();		
+		
+		if (topActivitySelected.equals("5M")) {
+			topList = activityService.getTopActivity5k(advice.getId(), 0);
+			topActivityTitle = topActivityTitle5+topActivityTitleMas;
+		} else if (topActivitySelected.equals("5F")) {
+			topList = activityService.getTopActivity5k(advice.getId(), 1);
+			topActivityTitle = topActivityTitle5+topActivityTitleFem;
+		} else if (topActivitySelected.equals("10M")) {
+			topList = activityService.getTopActivity10k(advice.getId(), 0);
+			topActivityTitle = topActivityTitle10+topActivityTitleMas;
+		} else if (topActivitySelected.equals("10F")) {
+			topList = activityService.getTopActivity10k(advice.getId(), 1);
+			topActivityTitle = topActivityTitle10+topActivityTitleFem;
+		} else if (topActivitySelected.equals("21M")) {
+			topList = activityService.getTopActivity21k(advice.getId(), 0);
+			topActivityTitle = topActivityTitle21+topActivityTitleMas;
+		} else if (topActivitySelected.equals("21F")) {
+			topList = activityService.getTopActivity21k(advice.getId(), 1);
+			topActivityTitle = topActivityTitle21+topActivityTitleFem;
+		} else if (topActivitySelected.equals("42M")) {
+			topList = activityService.getTopActivity42k(advice.getId(), 0);
+			topActivityTitle = topActivityTitle42+topActivityTitleMas;
+		} else if (topActivitySelected.equals("42F")) {
+			topList = activityService.getTopActivity42k(advice.getId(), 1);
+			topActivityTitle = topActivityTitle42+topActivityTitleFem;
+		}
+		
+	}
 
 	
 	public String goToIndex() {
@@ -814,4 +864,28 @@ public class DashboardMBean implements Serializable {
 		this.partnerList = partnerList;
 	}
 
+	public List<TopActivityTO> getTopList() {
+		return topList;
+	}
+
+	public String getTopActivitySelected() {
+		return topActivitySelected;
+	}
+
+	public void setTopActivitySelected(String topActivitySelected) {
+		this.topActivitySelected = topActivitySelected;
+	}
+
+	public String getTopActivityTitle() {
+		return topActivityTitle;
+	}
+
+	public RhythmTable getRhythmTable() {
+		return rhythmTable;
+	}
+
+	public void setRhythmTable(RhythmTable rhythmTable) {
+		this.rhythmTable = rhythmTable;
+	}
+	
 }

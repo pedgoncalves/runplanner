@@ -122,7 +122,7 @@ public class GraphicMBean {
     	bodymeasurementsList = bodyMeasurementsService.findByCustomerIdIntervalAsc(user.getId(),initialDate,finalDate);
     	
     
-    	setSelectedMenu(Constants.MENU_GRAPH_PROGRESS);
+    	setSelectedMenu(Constants.MENU_GRAPH_ACTIVITY);
     	
     	return PAGES_STUDENT_PROGRESS_REPORT;
     }
@@ -176,7 +176,7 @@ public class GraphicMBean {
     	Pessoa user = getSessionUser();
 		activityList = activityService.findByUserIdDateAsc(user.getId(),initialDate,finalDate);
 		
-    	setSelectedMenu(Constants.MENU_GRAPH_ACTIVITY);
+		setSelectedMenu(Constants.MENU_GRAPH_ACTIVITY);
 		
     	return getReturnPageActivity(false);
     }
@@ -206,7 +206,7 @@ public class GraphicMBean {
     	type = 1;
     	
 		activityList = activityService.findByUserIdDateAsc(student.getId(),initialDate,finalDate);
-    	setSelectedMenu(Constants.MENU_GRAPH_ACTIVITY);
+		setSelectedMenu(Constants.MENU_GRAPH_ACTIVITY);
 		
     	return getReturnPageActivity(true);
     }

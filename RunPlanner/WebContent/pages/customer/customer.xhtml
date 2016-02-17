@@ -15,8 +15,8 @@
 			<p:messages id="messages" showDetail="false" /> 
 	
 			<p:panel header="#{msgs['header.dados.aluno']}" styleClass="center">					
-			<h:panelGrid id="customerPhoto" columns="2">
-				<h:outputLabel value="#{msgs['alunos.photo']}" />
+			<h:panelGrid id="customerPhoto" columns="2" >
+				<h:outputLabel value="#{msgs['alunos.photo']}" style="margin-left:30px"/>
 				<p:fileUpload fileUploadListener="#{customerMBean.handleFileUpload}"  
 					mode="advanced" 
 					id="fileUpload"
@@ -24,7 +24,7 @@
 					auto="true" 
 					update="customerPhoto, messages"
 					rendered="#{customerMBean.customer.photo==null}"					
-					style="margin-left:2px"
+					style="margin-left:-25px"
 					invalidSizeMessage="#{msgs['template.msg.sizeExceedMessage']}"
 					invalidFileMessage="#{msgs['template.msg.invalidFileMessage']}"/>
 					
@@ -44,12 +44,12 @@
 			<h:panelGroup id="customerDetails">
 
 				<p><h:outputLabel for="nome" value="#{msgs['alunos.nome']} " /> 
-				<p:inputText id="nome" value="#{customerMBean.customer.nome}" size="100" required="true"
+				<p:inputText id="nome" value="#{customerMBean.customer.nome}" size="100" required="true" style="margin-left:10px;"
 						requiredMessage="#{msgs['template.nome.mandatory']}" maxlength="100"/></p>
 				
 				<p>
 					<h:outputLabel for="email" value="#{msgs['alunos.email']} " />
-					<p:inputText id="email" value="#{customerMBean.customer.email}" required="true"
+					<p:inputText id="email" value="#{customerMBean.customer.email}" required="true" style="margin-left:10px;"
 						requiredMessage="#{msgs['template.email.mandatory']}" size="100"  maxlength="100">
 						<f:validator validatorId="EmailValidator"/>
 					</p:inputText>
@@ -57,13 +57,13 @@
 				
 				<p>
 					<h:outputLabel for="cpf" value="#{msgs['alunos.cpf']} " />
-					<p:inputMask id="cpf" value="#{customerMBean.customer.cpf}" mask="999.999.999-99" size="14"/>
+					<p:inputMask id="cpf" value="#{customerMBean.customer.cpf}" mask="999.999.999-99" size="14" style="margin-left:10px;"/>
 					
 					<h:outputLabel for="rg" value="#{msgs['alunos.rg']} " style="width:30px; text-align:right"/>
-					<p:inputText id="rg" value="#{customerMBean.customer.rg}" size="14"  maxlength="15" style="margin-left:10px"/>
+					<p:inputText id="rg" value="#{customerMBean.customer.rg}" size="14"  maxlength="15" style="margin-left:10px;"/>
 					
 					<h:outputLabel for="nascimento"	value="#{msgs['alunos.nascimento']} "  style="width:80px; text-align:right"/>
-					<p:inputMask id="nascimento" value="#{customerMBean.customer.dtNascimento}" mask="99/99/9999" style="margin-left:10px"						
+					<p:inputMask id="nascimento" value="#{customerMBean.customer.dtNascimento}" mask="99/99/9999" style="margin-left:10px;"						
 							size="10" validatorMessage="#{msgs['template.date.invalid']}"
 							converterMessage="#{msgs['template.date.invalid']}">
 						<f:convertDateTime pattern="dd/MM/yyyy" />
@@ -71,7 +71,7 @@
 				</p>
 				
 				<p>
-					<h:outputLabel for="sexo" value="#{msgs['alunos.sexo']}" style="margin-top:5px;"/>
+					<h:outputLabel for="sexo" value="#{msgs['alunos.sexo']}" style="margin-top:5px; margin-left:10px;"/>
 					<p:selectOneRadio id="sexo" value="#{customerMBean.customer.sexo}">
 						<f:selectItems value="#{customerMBean.listaSexo}" />
 					</p:selectOneRadio>
@@ -79,31 +79,31 @@
 				
 				<p>
 					<h:outputLabel for="street" value="#{msgs['adress.street']}" />
-					<p:inputText id="street" value="#{customerMBean.customer.endereco.logradouro}" size="80"  maxlength="100"/>
+					<p:inputText id="street" value="#{customerMBean.customer.endereco.logradouro}" size="80"  maxlength="100" style="margin-left:10px;"/>
 					
 					<h:outputLabel for="number" value="#{msgs['adress.number']}" style="width:60px; text-align:right;" />
-					<p:inputText id="number" value="#{customerMBean.customer.endereco.numero}" size="5" maxlength="5" style="margin-left:5px"/>
+					<p:inputText id="number" value="#{customerMBean.customer.endereco.numero}" size="5" maxlength="5" style="margin-left:10px"/>
 				</p>
 				<p>
 					<h:outputLabel for="complement" value="#{msgs['adress.complement']}" />
-					<p:inputText id="complement" value="#{customerMBean.customer.endereco.complemento}" size="67"  maxlength="100"/>
+					<p:inputText id="complement" value="#{customerMBean.customer.endereco.complemento}" size="67"  maxlength="100" style="margin-left:10px;"/>
 					
 					<h:outputLabel for="bairro" value="#{msgs['adress.bairro']}"  style="width:50px;text-align:right;" />
 					<p:inputText id="bairro" value="#{customerMBean.customer.endereco.bairro}"  maxlength="100" style="margin-left:5px"/>
 				</p>
 				<p>	
 					<h:outputLabel for="cep" value="#{msgs['adress.cep']}" />
-					<p:inputMask id="cep" value="#{customerMBean.customer.endereco.cep}" mask="99.999-999" size="12"/>
+					<p:inputMask id="cep" value="#{customerMBean.customer.endereco.cep}" mask="99.999-999" size="12" style="margin-left:10px;"/>
 					
 					<h:outputLabel for="home" value="#{msgs['adress.phone.home']}" style="width:150px; text-align:right;"/>
-					<p:inputMask id="home" value="#{customerMBean.customer.endereco.foneResidencial}" mask="(99) 9999-9999" size="14" style="margin-left:10px"/>
+					<p:inputMask id="home" value="#{customerMBean.customer.endereco.foneResidencial}" mask="(99) 9999-9999" size="14" style="margin-left:10px;"/>
 				</p>
 				<p>	
 					<h:outputLabel for="cel" value="#{msgs['adress.phone.cel']}" />
-					<p:inputMask id="cel" value="#{customerMBean.customer.endereco.foneCelular}" mask="(99) 9999-9999" size="14"/>
+					<p:inputMask id="cel" value="#{customerMBean.customer.endereco.foneCelular}" mask="(99) 9999-9999" size="14" style="margin-left:10px;"/>
 					
 					<h:outputLabel for="work" value="#{msgs['adress.phone.work']}"  style="width:150px; text-align:right;"/>
-					<p:inputMask id="work" value="#{customerMBean.customer.endereco.foneComercial}" mask="(99) 9999-9999" size="14" style="margin-left:10px"/>
+					<p:inputMask id="work" value="#{customerMBean.customer.endereco.foneComercial}" mask="(99) 9999-9999" size="14" style="margin-left:10px;"/>
 				</p>
 				
 				</h:panelGroup>
@@ -258,28 +258,28 @@
 			<p:panel border="1">
 				<p>
 					<h:outputLabel for="height" value="#{msgs['alunos.height']}" />
-					<p:inputText id="height" value="#{customerMBean.customer.medicalData.height}" size="3"/>
+					<p:inputText id="height" value="#{customerMBean.customer.medicalData.height}" size="4" maxlength="4"/>
 					
-					<h:outputLabel for="bloodType" value="#{msgs['alunos.bloodType']}" style="width:100px !important; text-align:right" />
+					<h:outputLabel for="bloodType" value="#{msgs['alunos.bloodType']}" style="width:160px !important; text-align:right" />
 					<p:inputText id="bloodType" value="#{customerMBean.customer.medicalData.bloodType}" size="3" maxlength="3" style="margin-left:10px"/>
 				</p>	
 				<p style="padding-bottom: 8px !important;">
-					<h:outputLabel for="sportsHistory" value="#{msgs['alunos.sportsHistory']}" />			              
+					<h:outputLabel for="sportsHistory" value="#{msgs['alunos.sportsHistory']}" style="width:175;"/>			              
 					<p:inputTextarea id="sportsHistory" value="#{customerMBean.customer.medicalData.sportsHistory}"
 						cols="110" rows="5"  maxlength="200" autoResize="false"/>
 				</p>	
 				<p style="padding-bottom: 8px !important;">
-					<h:outputLabel for="healthHistory" value="#{msgs['alunos.healthHistory']}" />			              
+					<h:outputLabel for="healthHistory" value="#{msgs['alunos.healthHistory']}" style="width:160;"/>			              
 					<p:inputTextarea id="healthHistory" value="#{customerMBean.customer.medicalData.healthHistory}"
 						cols="110" rows="5"  maxlength="200" autoResize="false"/>
 				</p>	
 				<p style="padding-bottom: 8px !important;">
-					<h:outputLabel for="objective" value="#{msgs['alunos.objective']}" />			              
+					<h:outputLabel for="objective" value="#{msgs['alunos.objective']}" style="width:105;"/>			              
 					<p:inputTextarea id="objective" value="#{customerMBean.customer.medicalData.objective}"
 						cols="110" rows="5"  maxlength="200" autoResize="false"/>
 				</p>	
 				<p style="padding-bottom: 8px !important;">
-					<h:outputLabel for="observation" value="#{msgs['alunos.observation']}" />			              
+					<h:outputLabel for="observation" value="#{msgs['alunos.observation']}" style="width:130;"/>			              
 					<p:inputTextarea id="observation" value="#{customerMBean.customer.medicalData.observation}"
 						cols="110" rows="5"  maxlength="200" autoResize="false"/>			
 				</p>

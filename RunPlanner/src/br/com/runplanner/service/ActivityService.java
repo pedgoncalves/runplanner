@@ -5,6 +5,7 @@ import java.util.List;
 
 import br.com.runplanner.domain.Activity;
 import br.com.runplanner.domain.ActivityTack;
+import br.com.runplanner.to.TopActivityTO;
 
 
 public interface ActivityService extends GenericService<Activity, Long>{
@@ -20,5 +21,9 @@ public interface ActivityService extends GenericService<Activity, Long>{
 	Activity getLongestActivityKm(Long studentId);
 	Activity getLongestActivityTime(Long studentId);
 	Activity getLongestActivityPace(Long studentId);
+	List<TopActivityTO> getTopActivity5k(Long adviceId, int sex);
+	List<TopActivityTO> getTopActivity10k(Long adviceId, int sex);
+	List<TopActivityTO> getTopActivity21k(Long adviceId, int sex);
+	List<TopActivityTO> getTopActivity42k(Long adviceId, int sex);
 	
 }

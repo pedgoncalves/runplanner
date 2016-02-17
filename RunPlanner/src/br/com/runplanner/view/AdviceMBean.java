@@ -31,6 +31,7 @@ import br.com.runplanner.service.ActivityService;
 import br.com.runplanner.service.AdviceService;
 import br.com.runplanner.service.PessoaService;
 import br.com.runplanner.service.SpreadsheetService;
+import br.com.runplanner.util.Utils;
 import br.com.runplanner.view.util.Constants;
 
 @Component("adviceMBean")
@@ -261,6 +262,15 @@ public class AdviceMBean extends BasicMBean {
 		}
 		
 		String extencao = fileName.substring( fileName.lastIndexOf(".") );
+		
+		if ( !Utils.verifyAdvicePhotoPath() ) {
+			addMessage(FacesMessage.SEVERITY_ERROR, "template.msg.foto.erro");
+			System.err.println("Erro ao criar diretório para Fotos");
+			
+			return;
+		}
+		
+		
 		String fotoFileName = Constants.PHOTO_PATH+Constants.PHOTO_ADVICE_NAME+advice.getId()+extencao;
 		
 		byte[] foto = event.getFile().getContents();

@@ -1,0 +1,40 @@
+
+<ui:fragment xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+	
+	<div class="birthdayBox">
+		<div style="margin-top: 8px; margin-left: 8px; margin-right: 8px;">
+			<font color="#C8C8C8" size="2px" face="verdana"><b>Próximos</b></font>
+			<font color="#5B5B58" size="5px" face="verdana"><b>Aniversariantes</b></font>
+			<br /> <br /> 
+			
+			<table width="70%">
+				<p:dataList var="customer" value="#{dashboardMBean.birthdayList}" 
+					paginator="false" rows="5" emptyMessage="#{msgs['dashboard.birthday.empty']}"
+					type="definition">
+											
+					<p:column style="max-width:100px;">
+						<f:facet name="header">
+							<h:outputText value="#{msgs['template.aluno']}" />
+						</f:facet>
+						
+							<tr>
+								<td>														
+									<b><h:outputText value="#{customer.shortName}" /></b>
+								</td>
+								<td style="padding-left: 10px;" width="1%">
+									<b><h:outputText value="#{customer.dtNascimento}">							
+					                	<f:convertDateTime pattern="dd/MM" />
+					                </h:outputText></b>
+								</td>
+							</tr>
+					</p:column>
+				</p:dataList>	
+			</table>										
+		</div>
+	</div>
+</ui:fragment>

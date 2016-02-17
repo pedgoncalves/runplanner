@@ -5,11 +5,11 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:sec="http://www.springframework.org/security/facelets/tags">
 
-	<table >
+	<table>
 		<tr>
 			<td>
 				<!-- Foto -->	
-				<p:panel id="advicePhoto" style="border: 1px solid #dedede; ">											
+				<p:panel id="advicePhoto" widgetVar="advicePhoto" style="border: 1px solid #dedede; ">											
 					<p:panel rendered="#{wizardMBean.advice.logo==null}" style="text-align:left;">						
 						<img src="${facesContext.externalContext.requestContextPath}/images/nophoto.gif" width="150"/>		
 					</p:panel>
@@ -23,7 +23,7 @@
 						id="fileUpload"
 						label="#{msgs['template.button.change.photo']}"
 						auto="true" 
-						update="advicePhoto,messages"
+						update="@widgetVar(advicePhoto),@widgetVar(messages)"
 						style="margin-left:15px"
 						invalidSizeMessage="#{msgs['template.msg.sizeExceedMessage']}"
 						invalidFileMessage="#{msgs['template.msg.invalidFileMessage']}"/>			   				
@@ -34,10 +34,10 @@
  						<table width="100%" style="border:0px; padding: 0px;">			   						
  							<tr>
  								<td>
- 									<h:outputLabel for="nome" value="#{msgs['advice.name']} " style="text-align:right; width:100px;" /> 
+ 									<h:outputLabel for="nome" value="#{msgs['advice.name']} " style="text-align:right; width:50px;" /> 
  								</td>			   							
  								<td align="left" colspan="3">
- 									<p:inputText id="nome" value="#{wizardMBean.advice.name}" size="76" required="true"
+ 									<p:inputText id="nome" value="#{wizardMBean.advice.name}" size="50" required="true"
 								requiredMessage="#{msgs['template.nome.mandatory']}" maxlength="100" 
 								style="text-align:left; "/>
  								</td>
@@ -48,23 +48,23 @@
  									<h:outputLabel for="customerPaymenValue" value="#{msgs['advice.customer.paymentValue']}"  style="text-align:right; width:100px;"/>
  								</td>
  								<td width="1" nowrap="nowrap">
-							<p:inputText id="customerPaymenValue" value="#{wizardMBean.advice.customerPaymentValue}" size="10" maxlength="6">
-								<f:converter converterId="doubleConverter" />
-							</p:inputText>  
+									<p:inputText id="customerPaymenValue" value="#{wizardMBean.advice.customerPaymentValue}" size="10" maxlength="6">
+										<f:converter converterId="doubleConverter" />
+									</p:inputText>  
  								</td>			   								
  								<td width="1" nowrap="nowrap">
- 									<h:outputLabel for="customerPaymentDay" value="#{msgs['aluno.payment.day']}"  style="text-align:right; width:50px;"/>
+ 									<h:outputLabel for="customerPaymentDay" value="#{msgs['aluno.payment.day']}"  style="text-align:right;"/>
  								</td>
  								<td>
  									<p:selectOneMenu id="customerPaymentDay" value="#{wizardMBean.advice.customerPaymentDay}" 
-								style="text-align:left; " >
-								 <f:selectItem itemLabel="1" itemValue="1" />
-								 <f:selectItem itemLabel="5" itemValue="5" />
-								 <f:selectItem itemLabel="10" itemValue="10" />
-								 <f:selectItem itemLabel="15" itemValue="15" />
-								 <f:selectItem itemLabel="20" itemValue="20" />
-								 <f:selectItem itemLabel="25" itemValue="25" />						 
-						    </p:selectOneMenu>	
+ 											style="text-align:left; width:80px;" >
+										 <f:selectItem itemLabel="1" itemValue="1" />
+										 <f:selectItem itemLabel="5" itemValue="5" />
+										 <f:selectItem itemLabel="10" itemValue="10" />
+										 <f:selectItem itemLabel="15" itemValue="15" />
+										 <f:selectItem itemLabel="20" itemValue="20" />
+										 <f:selectItem itemLabel="25" itemValue="25" />						 
+								    </p:selectOneMenu>	
  								</td>		   							
  							</tr>
  							
@@ -73,38 +73,38 @@
  									<h:outputLabel for="cnpj" value="#{msgs['advice.cnpj']} " style="text-align:right; width:100px;" />
  								</td>
  								<td align="left" colspan="3">
- 									<p:inputText id="cnpj" value="#{wizardMBean.advice.cnpj}" size="76"  maxlength="100"/>
+ 									<p:inputText id="cnpj" value="#{wizardMBean.advice.cnpj}" size="50"  maxlength="100"/>
  								</td>			   							
  							</tr>
  						</table>
 				
 				<p>
 					<h:outputLabel for="street" value="#{msgs['adress.street']}"  style="width:100px; padding-right:2px;"/>
-					<p:inputText id="street" value="#{wizardMBean.enderecoAdvice.logradouro}" size="50"  maxlength="100" />
+					<p:inputText id="street" value="#{wizardMBean.enderecoAdvice.logradouro}" size="30"  maxlength="100" />
 					
 					<h:outputLabel for="number" value="#{msgs['adress.number']}" style="width:50px; text-align:right" />
 					<p:inputText id="number" value="#{wizardMBean.enderecoAdvice.numero}" size="5" maxlength="5" style="margin-left:10px" />
 				</p>
 				<p>
 					<h:outputLabel for="complement" value="#{msgs['adress.complement']}"  style="width:100px; padding-right:2px;"/>
-					<p:inputText id="complement" value="#{wizardMBean.enderecoAdvice.complemento}" size="37"  maxlength="100" />
+					<p:inputText id="complement" value="#{wizardMBean.enderecoAdvice.complemento}" size="17"  maxlength="100" />
 					
 					<h:outputLabel for="bairro" value="#{msgs['adress.bairro']}"  style="width:40px; text-align:right"/>
 					<p:inputText id="bairro" value="#{wizardMBean.enderecoAdvice.bairro}"  maxlength="100" style="margin-left:10px" />
 				</p>
 				<p>	
 					<h:outputLabel for="cep" value="#{msgs['adress.cep']}" style="width:100px; padding-right:2px;" />
-					<p:inputMask id="cep" value="#{wizardMBean.enderecoAdvice.cep}" mask="99.999-999" size="12" />
+					<p:inputMask id="cep" value="#{wizardMBean.enderecoAdvice.cep}" mask="99.999-999" size="10" />
 					
-					<h:outputLabel for="home" value="#{msgs['adress.phone.home']}" style="width:140px; text-align:right; margin-left:64px"/>
-					<p:inputMask id="home" value="#{wizardMBean.enderecoAdvice.foneResidencial}" mask="(99) 9999-9999" size="14" style="margin-left:10px" />
+					<h:outputLabel for="home" value="#{msgs['adress.phone.home']}" style="width:100px; text-align:right; margin-left:64px"/>
+					<p:inputMask id="home" value="#{wizardMBean.enderecoAdvice.foneResidencial}" mask="(99) 9999-9999" size="10" style="margin-left:10px" />
 				</p>
 				<p>	
-					<h:outputLabel for="cel" value="#{msgs['adress.phone.cel']}"  style="width:100px; padding-right:2px;"/>
-					<p:inputMask id="cel" value="#{wizardMBean.enderecoAdvice.foneCelular}" mask="(99) 9999-9999" size="14" />
+					<h:outputLabel for="cel" value="#{msgs['adress.phone.cel']}"  style="width:100px; padding-right:2px;"/> 
+					<p:inputMask id="cel" value="#{wizardMBean.enderecoAdvice.foneCelular}" mask="(99) 9999-9999" size="12" />
 					
-					<h:outputLabel for="work" value="#{msgs['adress.phone.work']}"  style="width:140px; text-align:right ; margin-left:64px"/>
-					<p:inputMask id="work" value="#{wizardMBean.enderecoAdvice.foneComercial}" mask="(99) 9999-9999" size="14" style="margin-left:10px"/>
+					<h:outputLabel for="work" value="#{msgs['adress.phone.work']}"  style="width:90px; text-align:right ; margin-left:64px"/>
+					<p:inputMask id="work" value="#{wizardMBean.enderecoAdvice.foneComercial}" mask="(99) 9999-9999" size="10" style="margin-left:10px"/>
 				</p>
 				<br/>		
 			</td>	

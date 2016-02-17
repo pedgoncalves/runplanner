@@ -37,6 +37,7 @@ import br.com.runplanner.service.AdviceService;
 import br.com.runplanner.service.PessoaService;
 import br.com.runplanner.service.RhythmService;
 import br.com.runplanner.service.TeamService;
+import br.com.runplanner.util.Utils;
 import br.com.runplanner.util.mail.EmailThreadProductor;
 import br.com.runplanner.view.util.Constants;
 import br.com.runplanner.view.util.MD5Util;
@@ -410,6 +411,14 @@ public class WizardMBean {
 		}
 		
 		String extencao = fileName.substring( fileName.lastIndexOf(".") );
+		
+		if ( !Utils.verifyAdvicePhotoPath() ) {
+			addMessage(FacesMessage.SEVERITY_ERROR, "template.msg.foto.erro");
+			System.err.println("Erro ao criar diretório para Fotos");
+			
+			return;
+		}		
+		
 		String fotoFileName = Constants.PHOTO_PATH+Constants.PHOTO_ADVICE_NAME+advice.getId()+extencao;
 		
 		byte[] foto = event.getFile().getContents();
@@ -467,6 +476,14 @@ public class WizardMBean {
 		}
 		
 		String extencao = fileName.substring( fileName.lastIndexOf(".") );
+		
+		if ( !Utils.verifyUserPhotoPath() ) {
+			addMessage(FacesMessage.SEVERITY_ERROR, "template.msg.foto.erro");
+			System.err.println("Erro ao criar diretório para Fotos");
+			
+			return;
+		}
+		
 		String fotoFileName = Constants.PHOTO_PATH+Constants.PHOTO_USER_NAME+teacher.getId()+extencao;
 		
 		byte[] foto = event.getFile().getContents();

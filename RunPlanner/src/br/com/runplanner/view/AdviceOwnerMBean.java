@@ -27,6 +27,7 @@ import br.com.runplanner.domain.TipoPessoa;
 import br.com.runplanner.exception.EntityNotFoundException;
 import br.com.runplanner.service.AdviceService;
 import br.com.runplanner.service.PessoaService;
+import br.com.runplanner.util.Utils;
 import br.com.runplanner.util.mail.EmailThreadProductor;
 import br.com.runplanner.view.util.Constants;
 import br.com.runplanner.view.util.MD5Util;
@@ -241,6 +242,14 @@ public class AdviceOwnerMBean extends BasicMBean {
 		}
 		
 		String extencao = fileName.substring( fileName.lastIndexOf(".") );
+		
+		if ( !Utils.verifyUserPhotoPath() ) {
+			addMessage(FacesMessage.SEVERITY_ERROR, "template.msg.foto.erro");
+			System.err.println("Erro ao criar diretório para Fotos");
+			
+			return;
+		}
+		
 		String fotoFileName = Constants.PHOTO_PATH+Constants.PHOTO_USER_NAME+owner.getId()+extencao;
 		
 		byte[] foto = event.getFile().getContents();

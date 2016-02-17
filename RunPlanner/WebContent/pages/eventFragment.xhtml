@@ -1,0 +1,41 @@
+<ui:fragment xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+
+	<div class="nextEventBox">
+		<div style="margin-top: 8px; margin-left: 8px;">
+			<font color="#5B5B58" size="2px" face="verdana">
+				<b>#{msgs['dashboard.nextEvent']}</b>
+			</font> 
+			<br /> <br /> 
+			<b>
+				<h:commandLink  action="#{eventMBean.goToView}" rendered="#{dashboardMBean.nextEvent!=null}" style="color: black;">
+         					<f:setPropertyActionListener target="#{eventMBean.event.id}" value="#{dashboardMBean.nextEvent.id}" />
+					<h:outputText value="#{dashboardMBean.nextEvent.name}" rendered="#{dashboardMBean.nextEvent!=null}" />
+				</h:commandLink>
+			</b>
+			<br/>
+			
+			<b><h:outputText value="Data: "	rendered="#{dashboardMBean.nextEvent!=null}" /></b>
+			<h:outputText value="#{dashboardMBean.nextEvent.date}"	rendered="#{dashboardMBean.nextEvent!=null}">
+				<f:convertDateTime pattern="dd/MM/yyyy" />
+			</h:outputText>
+			<br/> 
+			
+			<b><h:outputText value="Horário: "	rendered="#{dashboardMBean.nextEvent!=null}" /></b>
+			<h:outputText value="#{dashboardMBean.nextEvent.time}"	rendered="#{dashboardMBean.nextEvent!=null}">
+				<f:convertDateTime pattern="hh:mm" />
+			</h:outputText>
+			<br/> 
+			
+			<b><h:outputText value="Local: "	rendered="#{dashboardMBean.nextEvent!=null}" /></b>
+			<h:outputText
+				value="#{dashboardMBean.nextEvent.location}"
+				rendered="#{dashboardMBean.nextEvent!=null}" />
+		</div>
+	</div>
+										
+</ui:fragment>

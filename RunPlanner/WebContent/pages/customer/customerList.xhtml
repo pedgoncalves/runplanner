@@ -82,6 +82,13 @@
 								</f:facet>
 								<h:outputText value="#{customer.idade}" />
 							</p:column>
+							
+							<p:column style="text-align: center; width: 50px;">
+								<f:facet name="header">
+									<h:outputText value="#{msgs['aluno.turma']}" />
+								</f:facet>
+								<h:outputText value="#{customer.team.place}" />
+							</p:column>
 
 							<p:column style="text-align:center; white-space: nowrap; ">
 								<f:facet name="header">

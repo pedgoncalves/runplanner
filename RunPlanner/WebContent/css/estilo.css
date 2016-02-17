@@ -784,6 +784,18 @@ input[disabled], .readonly {
 	border-radius: 0.5em !important;
 }
 
+.entrarAbout {	
+	background: #00B9EE !important;
+	width: 200px !important;
+	height: 45px !important;
+	border-color: #ccc !important;	
+
+	font-weight: bold;
+	letter-spacing: 1;
+	text-transform: uppercase;
+	border-radius: 0.5em !important;
+}
+
 .entrarButtonAzul:HOVER {	
 	background: #2DA5B3 !important;	
 }
@@ -1337,7 +1349,7 @@ Versao v2
 .subrodapeV2{
 	vertical-align: middle;
 	text-align:center;
-	padding:5px 0 0 0;
+	padding:50px 0 0 0;
 	color: ddd;	
 	background-color: #fff;
 	width: 1024px;
@@ -1585,6 +1597,35 @@ Versao v2
 	background-position: right bottom;
 	
 	min-height: 120px;
+}
+
+.calendarBox {
+	background-color: white;
+	border: 1px solid #C8C8C8;
+	width: 508px; 
+	float: left; 
+	text-align: left;
+	margin-top: 8px;
+	padding-bottom: 12px;
+	font-weight: bold;
+	min-height: 120px;
+}
+
+.topActivityBox {
+	background-color: white;
+	border: 1px solid #C8C8C8;
+	width: 508px;
+	float: left; 
+	text-align: left;
+	margin-top: 8px;
+	padding-bottom: 12px;
+	font-weight: bold;
+	
+	background-image: url("../images/v2/trofeuIco.png") !important;	
+	background-repeat: no-repeat;		
+	background-position: right bottom;
+	
+	min-height: 160px;
 }
 
 .messageBox {

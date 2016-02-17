@@ -1,0 +1,65 @@
+<ui:fragment xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+
+
+		<div class="recordBox">
+			<div style="margin-top: 8px; margin-left: 8px; margin-right: 8px;">
+				<font color="#C8C8C8" size="2px" face="verdana"><b>Seus</b></font>
+				<font color="#5B5B58" size="5px" face="verdana"><b>Recordes</b></font>
+				<br /> <br /> 
+				
+				<table width="100%">
+					<tr>
+						<td nowrap="nowrap" align="center" class="headerBlueV2"><h:outputText value="Maior Distancia"/></td>
+						<td nowrap="nowrap" align="center" class="headerBlueV2"><h:outputText value="Maior Duracao"/></td>
+						<td nowrap="nowrap" align="center" class="headerBlueV2"><h:outputText value="Menor Pace"/></td>
+					</tr>
+					<tr>
+						<td align="center">
+							<h:commandLink action="#{activityMBean.goToView}">
+								<f:setPropertyActionListener target="#{activityMBean.activity.id}" value="#{dashboardMBean.longestActivityKmId}" />
+						
+								<font color="#02425C" size="5px" face="verdana"><b>
+									<h:outputText value="#{dashboardMBean.longestActivityKm}">
+										<f:convertNumber pattern="#0.00" />
+									</h:outputText>
+								</b>KM</font><br/>
+								<h:outputText value="#{dashboardMBean.longestActivityKmDate}" styleClass="subtitle">
+									<f:convertDateTime pattern="dd/MM/yyyy" />
+								</h:outputText>
+							</h:commandLink>
+						</td>
+						<td align="center">
+							<h:commandLink action="#{activityMBean.goToView}">
+								<f:setPropertyActionListener target="#{activityMBean.activity.id}" value="#{dashboardMBean.longestActivityTimeId}" />
+						
+								<font color="#02425C" size="5px" face="verdana"><b>
+									<h:outputText value="#{dashboardMBean.longestActivityTime}" />
+								</b></font><br/>
+								<h:outputText value="#{dashboardMBean.longestActivityTimeDate}" styleClass="subtitle">
+									<f:convertDateTime pattern="dd/MM/yyyy" />
+								</h:outputText>
+							</h:commandLink>
+						</td>
+						<td align="center">
+							<h:commandLink action="#{activityMBean.goToView}">
+								<f:setPropertyActionListener target="#{activityMBean.activity.id}" value="#{dashboardMBean.longestActivityPaceId}" />
+						
+								<font color="#02425C" size="5px" face="verdana"><b>
+									<h:outputText value="#{dashboardMBean.longestActivityPace}" />
+								</b></font><br/>
+								<h:outputText value="#{dashboardMBean.longestActivityPaceDate}" styleClass="subtitle">
+									<f:convertDateTime pattern="dd/MM/yyyy" />
+								</h:outputText>
+							</h:commandLink>
+						</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+		
+</ui:fragment>

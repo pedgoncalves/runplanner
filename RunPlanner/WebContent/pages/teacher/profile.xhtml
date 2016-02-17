@@ -42,10 +42,10 @@
 													<!-- Dados Cadastrais -->
 													<table width="85%" style="border: 0px; padding: 10px;">
 														<tr>
-															<td><h:outputLabel for="nome"
+															<td><h:outputLabel for="inNome"
 																	value="#{msgs['advice.name']} "
 																	style="text-align:right; width:100px;" /></td>
-															<td align="left" colspan="3"><p:inputText id="nome"
+															<td align="left" colspan="3"><p:inputText id="inNome"
 																	value="#{profileMBean.advice.name}" size="50"
 																	required="true"
 																	requiredMessage="#{msgs['template.nome.mandatory']}"
@@ -54,11 +54,11 @@
 
 														<tr>
 															<td width="1" nowrap="nowrap"><h:outputLabel
-																	for="customerPaymenValue"
+																	for="inMensalidade"
 																	value="#{msgs['advice.customer.paymentValue']}"
 																	style="text-align:right; width:100px;" /></td>
 															<td width="1" nowrap="nowrap"><p:inputText
-																	id="customerPaymenValue"
+																	id="inMensalidade"
 																	value="#{profileMBean.advice.customerPaymentValue}"
 																	size="10" maxlength="6">
 																	<f:converter converterId="doubleConverter" />
@@ -66,10 +66,10 @@
 															</td>
 															<td style="white-space: nowrap" colspan="2">
 																<h:outputLabel
-																	for="customerPaymentDay"
+																	for="inDiaPagamento"
 																	value="#{msgs['aluno.payment.day']}"
 																	style="text-align:left; width:65px;" />
-																<p:selectOneMenu id="customerPaymentDay"
+																<p:selectOneMenu id="inDiaPagamento"
 																	value="#{profileMBean.advice.customerPaymentDay}"
 																	style="text-align:left;">
 																	<f:selectItem itemLabel="1" itemValue="1" />
@@ -84,6 +84,7 @@
 
 														<tr>
 															<td style="text-align: right;"><p:selectBooleanCheckbox
+																	id="chAtrasoMensagem"
 																	value="#{profileMBean.advice.paymentNotificationDialog}" />
 															</td>
 															<td colspan="3" style="white-space: nowrap"><h:outputLabel
@@ -93,6 +94,7 @@
 
 														<tr>
 															<td style="text-align: right;"><p:selectBooleanCheckbox
+																	id="chAtrasoEmail"
 																	value="#{profileMBean.advice.paymentNotificationMail}" />
 															</td>
 															<td colspan="3" style="white-space: nowrap"><h:outputLabel
@@ -106,7 +108,7 @@
 																style="width:100px; padding-right:2px;" />
 															</td>
 															<td colspan="3">
-																<p:themeSwitcher value="#{themeSwitcherBean.theme}" style="width:300px" id="defaultSwitcher">  
+																<p:themeSwitcher value="#{themeSwitcherBean.theme}" style="width:300px" id="corTema">  
 														            <f:selectItem itemLabel="Escolha um tema" itemValue="" />  
 														            <f:selectItems value="#{themeSwitcherBean.themes}" />  
 														            <p:ajax listener="#{themeSwitcherBean.setTheme}" />
@@ -115,22 +117,22 @@
 														</tr>
 
 														<tr>
-															<td><h:outputLabel for="cnpj"
+															<td><h:outputLabel for="inCnpj"
 																	value="#{msgs['advice.cnpj']} "
 																	style="text-align:right; width:100px;" /></td>
-															<td align="left" colspan="3"><p:inputText id="cnpj"
+															<td align="left" colspan="3"><p:inputText id="inCnpj"
 																	value="#{profileMBean.advice.cnpj}" size="20"
 																	maxlength="100" style="" readonly="true"
 																	styleClass="readonly" /></td>
 														</tr>
 														<tr>
 															<td style="text-align: right;">
-																<h:outputLabel for="street"
+																<h:outputLabel for="inLogradouro"
 																	value="#{msgs['adress.street']}"
 																	style="width:100px; padding-right:2px;" />
 															</td>
 															<td colspan="3">
-																<p:inputText id="street"
+																<p:inputText id="inLogradouro"
 																	value="#{profileMBean.enderecoAdvice.logradouro}"
 																	size="50" maxlength="100" readonly="true"
 																	styleClass="readonly" />
@@ -139,22 +141,22 @@
 													
 														<tr>
 															<td style="text-align: right;">
-																<h:outputLabel for="number" value="#{msgs['adress.number']}" 
+																<h:outputLabel for="inNumero" value="#{msgs['adress.number']}" 
 																style="width:100px; padding-right:2px;"/>
 															</td>
 															<td style="text-align: left;">
-																<p:inputText id="number"
+																<p:inputText id="inNumero"
 																	value="#{profileMBean.enderecoAdvice.numero}" size="5"
 																	maxlength="5" style="margin-left:0px" readonly="true"
 																	styleClass="readonly" />
 															</td>
 															<td style="text-align: right;">
-																<h:outputLabel for="complement"
+																<h:outputLabel for="inComplemento"
 																	value="#{msgs['adress.complement']}"
 																	style="padding-right:2px;" />
 															</td>
 															<td>
-																<p:inputText id="complement"
+																<p:inputText id="inComplemento"
 																	value="#{profileMBean.enderecoAdvice.complemento}"
 																	size="20" maxlength="100" readonly="true"
 																	styleClass="readonly" />
@@ -162,32 +164,32 @@
 														</tr>
 														<tr>
 															<td style="text-align: right; padding-right:2px;">																
-																<h:outputLabel for="bairro"
+																<h:outputLabel for="inBairro"
 																	value="#{msgs['adress.bairro']}" />
 															</td>
 															<td colspan="3">
-																<p:inputText id="bairro" value="#{profileMBean.enderecoAdvice.bairro}"
+																<p:inputText id="inBairro" value="#{profileMBean.enderecoAdvice.bairro}"
 																	maxlength="100" size="50" readonly="true"
 																	styleClass="readonly" />
 															</td>
 														</tr>
 														<tr>
 															<td style="text-align: right; padding-right:2px;">																								
-																<h:outputLabel for="cep" value="#{msgs['adress.cep']}"/>
+																<h:outputLabel for="inCep" value="#{msgs['adress.cep']}"/>
 															</td>
 															<td>
-																<p:inputMask id="cep"
+																<p:inputMask id="inCep"
 																	value="#{profileMBean.enderecoAdvice.cep}"
 																	mask="99.999-999" size="12" readonly="true"
 																	styleClass="readonly" />
 															</td>
 															<td width="1">
-																<h:outputLabel for="home"
+																<h:outputLabel for="inTelCasa"
 																	value="#{msgs['adress.phone.home']}"
 																	style="text-align:left; white-space: nowrap" />
 															</td>
 															<td>
-																<p:inputMask id="home"
+																<p:inputMask id="inTelefone"
 																	value="#{profileMBean.enderecoAdvice.foneResidencial}"
 																	mask="(99) 9999-9999" size="14" style="margin-left:10px"
 																	readonly="true" styleClass="readonly" />
@@ -195,23 +197,23 @@
 														</tr>
 														<tr>
 															<td>
-																<h:outputLabel for="cel"
+																<h:outputLabel for="inCelular"
 																	value="#{msgs['adress.phone.cel']}"
 																	style="text-align:right; white-space: nowrap" />
 															</td>
 															<td>															
-																<p:inputMask id="cel"
+																<p:inputMask id="inCelular"
 																	value="#{profileMBean.enderecoAdvice.foneCelular}"
 																	mask="(99) 9999-9999" size="14" readonly="true"
 																	styleClass="readonly" />
 															</td>
 															<td width="1">
-																<h:outputLabel for="work"
+																<h:outputLabel for="inTelComercial"
 																	value="#{msgs['adress.phone.work']}"
 																	style="width:105px; text-align:right; white-space: nowrap" />
 															</td>
 															<td>														
-																<p:inputMask id="work"
+																<p:inputMask id="inTelComercial"
 																	value="#{profileMBean.enderecoAdvice.foneComercial}"
 																	mask="(99) 9999-9999" size="14" style="margin-left:10px"
 																	readonly="true" styleClass="readonly" />
@@ -221,7 +223,7 @@
 													<br />
 													
 													<div class="buttons">
-														<p:commandButton value="#{msgs['template.button.save']}"
+														<p:commandButton id="btSalvar" value="#{msgs['template.button.save']}"
 															ajax="false" action="#{profileMBean.saveAdvice}"
 															style="align:right;" />
 													</div>

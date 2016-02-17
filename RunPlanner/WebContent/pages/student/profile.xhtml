@@ -37,7 +37,7 @@
 						<td align="center" style="padding-left: 10px;vertical-align: top;">
 				
 							<!-- Foto -->	
-							<p:panel id="customerPhoto" widgetVar="customerPhoto">											
+							<p:panel id="customerPhoto" widgetVar="customerPhoto" style="border: 0px;">											
 								<p:panel rendered="#{profileMBean.customer.photo==null}" style="text-align:center; border: 0px;">						
 									<img src="${facesContext.externalContext.requestContextPath}/images/nophoto.gif" width="150"/>		
 								</p:panel>
@@ -65,7 +65,7 @@
 	   					</td>
 	   					<td>
 	   				
-	   					<p:panel header="#{msgs['header.dadosPessoais.aluno']}" styleClass="center">			
+	   					<p:panel  styleClass="center" style="border: 0px;">			
 	   						<!-- Dados Cadastrais -->
 							<p><h:outputLabel for="nome" value="#{msgs['alunos.nome']} " style="text-align:right" /> 
 							<p:inputText id="nome" value="#{profileMBean.customer.nome}" size="70" required="true"
@@ -124,7 +124,7 @@
 			<p:tab title="#{msgs['alunos.medicaldata']}" id="tab1">
 				<h:form>  
 				
-				<p:panel header="#{msgs['header.valores.metabolicos']}" styleClass="center">
+				<p:panel  styleClass="center" style="border: 0px;">
 				<center>
 				<table width="50%" class="filtro">
 					<tr>
@@ -193,7 +193,7 @@
 			<p:tab title="#{msgs['advice.title.adress']}" id="tab2">
 				<h:form>
 				<center>
-				<p:panel header="#{msgs['header.endereco.aluno']}" styleClass="center">
+				<p:panel styleClass="center" style="border: 0px;">
 				
 				<div class="filtro" style="text-align: right;">
 					<p>
@@ -234,7 +234,7 @@
 			
 			<p:tab title="#{msgs['template.changepass.title']}" id="tab3">
 				<h:form>
-					<p:panel header="#{msgs['header.senha.aluno']}" styleClass="center">
+					<p:panel  styleClass="center" style="border: 0px;">
 					<center>
 					<div class="" style="width:50%;">
 						<h:panelGrid id="customerDetails" columns="2">

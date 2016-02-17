@@ -24,7 +24,7 @@
 							
 			<p>
 				<h:outputLabel for="date" value="#{msgs['equipment.date']}" />
-				<p:inputMask id="date" value="#{equipmentMBean.equipment.date}" size="9" mask="99/99/9999"
+				<p:inputMask id="date" value="#{equipmentMBean.equipment.date}" size="10" mask="99/99/9999"
 					validatorMessage="#{msgs['equipment.date.invalid']}"
 					converterMessage="#{msgs['equipment.date.invalid']}">
 					<f:convertDateTime pattern="dd/MM/yyyy" />
