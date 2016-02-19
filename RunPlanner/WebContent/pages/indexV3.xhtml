@@ -16,7 +16,7 @@
 	            <div class="ContainerIndent">
 	                <div class="EmptyBox20"></div>
 	
-	                <div class="Container25 Responsive">
+	                <div class="Container25 Responsive100">
 	                    <div class="ContainerIndent">
 	                        <p:panel style="min-height: 300px;">
                             	<i class="icon-user-2 Fs50 Fleft Wid25 hardblue TexAlCenter"></i>
@@ -44,7 +44,7 @@
 	                    </div>
 	                </div>
 	
-	                <div class="Container25 Responsive">
+	                <div class="Container25 Responsive100">
 	                    <div class="ContainerIndent">
 	                        <p:panel style="min-height: 300px;">
 	                            <div class="Container">
@@ -87,7 +87,7 @@
 	                    </div>
 	                </div>
 	
-	                <div class="Container25 Responsive">
+	                <div class="Container25 Responsive100">
 	                    <div class="ContainerIndent">
 	                        <p:panel style="min-height: 300px;">
 	                            <div class="Container">
@@ -120,7 +120,7 @@
 	                    </div>
 	                </div>
 	
-	                <div class="Container25 Responsive">
+	                <div class="Container25 Responsive100">
 	                    <div class="ContainerIndent">
 	                        <p:panel style="min-height: 300px;">
 	                            <div class="Container">
@@ -180,8 +180,8 @@
 	
 	                <div class="Container50 Responsive50">
 	                    <div class="ContainerIndent">
-	                        <p:panel style="min-height:400px;">
-	                            <div class="Container100 Responsive Fs20 Wid25">
+	                        <p:panel style="min-height:300px;">
+	                            <div class="ContainerIndent Fs20 Wid25">
 	                                <i class="icon-calendar hardblue "></i> Agenda de Treinos
 	                            </div>
 	                            
@@ -189,7 +189,7 @@
 		                        <p:separator styleClass="Wid100"></p:separator>
 		                        <div class="EmptyBox10"></div>
 		                        	                     
-	                            <div class="Container100">
+	                            <div class="ContainerIndent">
 									<p:dataTable var="schedule" value="#{dashboardMBean.listaProximosTreinos}" rows="3"  
 										paginator="false" paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}" 
 										emptyMessage="Sem treinos cadastrados" reflow="true" paginatorPosition="bottom">															
@@ -209,22 +209,25 @@
 									</p:dataTable>	   
 									
 									<p:separator styleClass="Wid100"></p:separator>
-		                            <a href="#" class="DispInlBlock Fs14 Fright MarRight10"><i class="icon-doc-1 orange"> Ver Planilha Completa</i></a>                              
+		                            <a href="#" class="Fs14"><i class="icon-doc-1 orange"> Ver Planilha Completa</i></a>                              
 	                            </div>
 	                        </p:panel>
 	                    </div>
 	                </div>
 	
-	                <div class="Container25 Responsive">
+	                <div class="Container25 Responsive50">
 	                    <div class="ContainerIndent">
-	                        <p:panel style="min-height: 400px;" id="topActivity">
-	                            <div class="Container100">	                                
-	                                <div class="Container100 Responsive Fs24">
-                                    	<i class="icon-flash Fs50 Fleft Wid25 hardblue TexAlCenter" />                                    	
-	                                	<div class="Fs24 Fright MarTop10 leaden Wid70">Top #{dashboardMBean.topActivityTitle}</div> 
+	                        <p:panel style="min-height: 300px;" id="topActivity">
+	                            <div class="ContainerIndent">	                                
+	                                <div class="ContainerIndent Fs20">
+                                    	<i class="icon-flash hardblue" /> Top #{dashboardMBean.topActivityTitle} 
 	                                </div>
-	                                <p:separator styleClass="Wid100"></p:separator>
-	                                <div class="Container100 TexAlRight Responsive Fs12">
+	                            
+	                            	<div class="EmptyBox10"></div>
+		                        	<p:separator styleClass="Wid100"></p:separator>
+		                        	<div class="EmptyBox10"></div>
+		                        
+	                                <div class="ContainerIndent TexAlRight Fs12">
 										<p:selectOneMenu value="#{dashboardMBean.topActivitySelected}">
 											<p:ajax listener="#{dashboardMBean.handleChangeTopActivity}" update="topActivity" />
 								            <f:selectItem itemLabel="5KM Masculino" itemValue="5M" />
@@ -239,7 +242,7 @@
 	                                </div>                      
 	                                	                                
 	                                	                                
-									<p:dataTable var="top" value="#{dashboardMBean.topList}" rows="5" styleClass="Container100"
+									<p:dataTable var="top" value="#{dashboardMBean.topList}" rows="5" styleClass="ContainerIndent"
 										paginator="false" emptyMessage="Nenhuma atividade cadastrada" reflow="true">
 																
 										<p:column headerText="Pos" styleClass="TexAlCenter">
@@ -279,13 +282,17 @@
 	                    </div>
 	                </div>
 	                
-	                <div class="Container25 Responsive">
+	                <div class="Container25 Responsive50">
 	                    <div class="ContainerIndent">
-	                        <p:panel style="min-height: 400px;">
-	                            <div class="Container">
-	                                <i class=" icon-gift Fs50 Fleft Wid25 hardblue TexAlCenter"></i>
-	                                <div class="Fs24 Fright MarTop10 leaden Wid70">Aniversáriantes</div>
-	                                <p:separator styleClass="Wid100"></p:separator>	                                
+	                        <p:panel style="min-height: 300px;">
+	                            <div class="ContainerIndent">	                            	                                	                                
+	                                <div class="ContainerIndent Fs20">
+                                    	<i class=" icon-gift hardblue"/>Aniversáriantes 
+	                                </div>
+	                            
+	                            	<div class="EmptyBox10"></div>
+		                        	<p:separator styleClass="Wid100"></p:separator>
+		                        	<div class="EmptyBox10"></div>	                                                       
 	                               
 									<p:dataTable var="customer" value="#{dashboardMBean.birthdayList}" rows="8"  
 										paginator="true" paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}" 
