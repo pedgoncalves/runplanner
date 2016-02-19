@@ -12,7 +12,7 @@
   			}
 		</style>
 	
-		<div class="Container100 Responsive">
+		<div class="Container100">
             <div class="ContainerIndent">
                 <div class="EmptyBox20"></div>
           
@@ -26,23 +26,23 @@
 	                <p:messages id="messages" showDetail="false" />
 					<h:form>					
 						
-						<p:panelGrid columns="2" style="border:0px !important; background:none;" >
-							<h:outputLabel for="nome" value="#{msgs['equipment.name']}: " />
-							<p:inputText id="nome" value="#{equipmentMBean.equipment.name}" size="100" required="true"
+						<p:panelGrid columns="1" style="border:0px !important; background:none;" styleClass="Wid100">
+							<h:outputLabel for="nome" value="#{msgs['equipment.name']}: "/>							
+							<p:inputText id="nome" value="#{equipmentMBean.equipment.name}" required="true" styleClass="Wid100"
 								requiredMessage="#{msgs['equipment.name.mandatory']}"  maxlength="100"/>
 								
-							<h:outputLabel for="description" value="#{msgs['equipment.description']}: " />
-							<p:inputText id="description" value="#{equipmentMBean.equipment.description}" size="100" maxlength="200"/>
+							<h:outputLabel for="description" value="#{msgs['equipment.description']}: "/>
+							<p:inputText id="description" value="#{equipmentMBean.equipment.description}"  styleClass="Wid100" maxlength="200"/>
 							
-							<h:outputLabel for="date" value="#{msgs['equipment.date']}: " />
+							<h:outputLabel for="date" value="#{msgs['equipment.date']}: "/>
 							<p:inputMask id="date" value="#{equipmentMBean.equipment.date}" size="15" mask="99/99/9999"
-								validatorMessage="#{msgs['equipment.date.invalid']}"
+								validatorMessage="#{msgs['equipment.date.invalid']}" 
 								converterMessage="#{msgs['equipment.date.invalid']}">
 								<f:convertDateTime pattern="dd/MM/yyyy" />
 							</p:inputMask>
 							
 							<h:outputLabel for="distance" value="#{msgs['equipment.distance']}: " rendered="#{equipmentMBean.equipment.id == null}"/>
-							<p:inputText id="distance" value="#{equipmentMBean.equipment.kilometers}" size="100" maxlength="4"
+							<p:inputText id="distance" value="#{equipmentMBean.equipment.kilometers}" styleClass="Wid100" maxlength="4"
 								validatorMessage="#{msgs['equipment.distance.invalid']}"
 								converterMessage="#{msgs['equipment.distance.invalid']}"
 								rendered="#{equipmentMBean.equipment.id == null}"/>

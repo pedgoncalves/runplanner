@@ -6,8 +6,13 @@
 	template="#{loginBean.templateVersion}">
 
 	<ui:define name="content">
-		
-		<div class="Container100 Responsive">
+		<style type="text/css">
+			.ui-panelgrid .ui-panelgrid-cell {
+  				border:0px !important;
+  			}
+		</style>
+				
+		<div class="Container100">
 	            <div class="ContainerIndent">
 	                <div class="EmptyBox20"></div>
 	          
@@ -21,17 +26,13 @@
    	          		<h:form>
                      
                      	
-                     	<div class="Container40">
-	                     	<p:panelGrid columns="2" style="border:0px !important; background:none;" styleClass="ui-panelgrid-blank" layout="grid">                     	 	
-						    	
-						    	<p:column>
-						    		<p:outputLabel for="console" value="#{msgs['equipment.filter.active']}: " styleClass="Wid30"/>						    								    				    		 
-								    <p:selectOneMenu value="#{equipmentMBean.findActive}" styleClass="Wid70" id="console">
-								    	<f:selectItem itemLabel="#{msgs['equipment.active.true']}" itemValue="true" />
-								    	<f:selectItem itemLabel="#{msgs['equipment.active.false']}" itemValue="false" />                        	 
-								    </p:selectOneMenu>
-							    </p:column>							    		
-						    			    	
+                     	<div class="ContainerIndent">
+	                     	<p:panelGrid columns="3" style="border:0px !important; background:none;" styleClass="ui-panelgrid-blank">
+						    	<p:outputLabel for="console" value="#{msgs['equipment.filter.active']}: "/>	    		 
+								<p:selectOneMenu value="#{equipmentMBean.findActive}" id="console">
+							    	<f:selectItem itemLabel="#{msgs['equipment.active.true']}" itemValue="true" />
+							    	<f:selectItem itemLabel="#{msgs['equipment.active.false']}" itemValue="false" />                        	 
+							    </p:selectOneMenu>
 							    <p:commandButton action="#{equipmentMBean.find}" update="equipmentListTable"
 							    	icon="fa fa-search Fs16 white" 
 						        	title="#{msgs['template.button.find']}"
