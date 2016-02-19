@@ -18,4 +18,5 @@ public interface SpreadsheetService extends GenericService<Spreadsheet, Long>{
 	Long countByAdvice(Long adviceId);
 	Spreadsheet getByStudentDesc(Long studentId);
 	Schedule findByStudentActual(Long studentId);
+	List<Schedule> findByStudentActualList(Long studentId);
 }

@@ -128,6 +128,8 @@ public class DashboardMBean implements Serializable {
 	private RhythmTable rhythmTable;
 	
     private CartesianChartModel activityNumberGraph;
+    
+    private List<Schedule> listaProximosTreinos;
 	
 	//Wizard
 	private boolean wizard = false;
@@ -270,7 +272,12 @@ public class DashboardMBean implements Serializable {
 			}
 			
 			//Buscar proximo treino
-			proximoTreino = spreadsheetService.findByStudentActual(customer.getId());
+			listaProximosTreinos = spreadsheetService.findByStudentActualList(customer.getId());
+			proximoTreino = null;
+			if( listaProximosTreinos!=null && listaProximosTreinos.size()>0 ) {
+				proximoTreino = listaProximosTreinos.get(0);
+			}
+			//proximoTreino = spreadsheetService.findByStudentActual(customer.getId());
 			
 			//Notificacao de pagamento
 			if ( customer.getAdvice().getPaymentNotificationDialog() ) {
@@ -886,6 +893,14 @@ public class DashboardMBean implements Serializable {
 
 	public void setRhythmTable(RhythmTable rhythmTable) {
 		this.rhythmTable = rhythmTable;
+	}
+
+	public List<Schedule> getListaProximosTreinos() {
+		return listaProximosTreinos;
+	}
+
+	public void setListaProximosTreinos(List<Schedule> listaProximosTreinos) {
+		this.listaProximosTreinos = listaProximosTreinos;
 	}
 	
 }

@@ -1,95 +1,63 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:p="http://primefaces.org/ui"
-	xmlns:sec="http://www.springframework.org/security/facelets/tags">
-	
-	<f:view contentType="text/html">	
-	<h:head>
-		<title>RunPlanner - Keep Running</title>
-		<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
-		<meta http-equiv="Content-Style-Type" content="text/css" />
-		
-		<meta name="description" content="Sistema WEB voltado para treinadores e assessorias esportivas, que visa a organizacao da empresa, a elaboracao dos treinos e o acompanhamento do desempenho dos seus atletas"/>
-		<meta name="keywords" content="Planejamento de corridas, acompanhamento esportivo, analise de desempenho,  acompanhamento de atletas, analise esportiva, atividade esportiva, controle de turmas, assessoria esportiva, assessoria corrida, corridas, maratonas, meia-maratona, fitness, aplicativo, corrida online, planilhas, upload fitness data, exercicios, saide, emagrecer, caminhada, ritmo, pace, garmin, tcx, gpx, condicionamento, educacao fisica, saude"/>		
-	
+	xmlns:p="http://primefaces.org/ui">
 
-		<meta property="fb:app_id" content="163439590451695"/>
-		<meta property="fb:admins" content="163439590451695"/>
-		<meta property="og:image" content="http://www.runplanner.com.br/runplanner/images/rpicon.png" />
-		<meta property="og:site_name" content="RunPlanner" />
-		<meta property="og:type" content="article" />
-		<meta property="og:title" content="Nova atividade cadastrada no RunPlanner!" />    
-        <meta property="og:description" content="#{publicMBean.description}"  />		
-		
-		
-		<!--[if lte IE 8]><script src="css/ie/html5shiv.js"></script><![endif]-->
-		<script src="js/jquery.min.js"></script>
-		<script src="js/jquery.scrolly.min.js"></script>
-		<script src="js/skel.min.js"></script>
-		<script src="js/init.js"></script>
-		
-		<link href="images/icone.ico" rel="shortcut icon" type="image/x-icon" />
-		
-		<!--[if lte IE 8]><link rel="stylesheet" href="css/ie/v8.css" /><![endif]-->
-		<!--[if lte IE 9]><link rel="stylesheet" href="css/ie/v9.css" /><![endif]-->
-		<script type="text/javascript">
-		
-		  var _gaq = _gaq || [];
-		  _gaq.push(['_setAccount', 'UA-27218523-1']);
-		  _gaq.push(['_setDomainName', 'runplanner.com.br']);
-		  _gaq.push(['_trackPageview']);
+<h:head>
+	<title>RUNPLANNER | Keep Running</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+        
+    <h:outputScript name="js/login.js" library="sentinel-layout" />
+    <h:outputStylesheet name="css/font-icon-layout.css" library="sentinel-layout" />
+    <h:outputStylesheet name="css/sentinel-layout.css" library="sentinel-layout" />
+    <h:outputStylesheet name="css/core-layout.css" library="sentinel-layout" />
+</h:head>
 
-		  (function() {
-		    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-		    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-		    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-		  })();
-		
-		</script>	
+<h:body class="fontRegular login-back white-back">
+    
+    <div class="Container">
+        <div class="Container80 MaxWid500 Fnone MarAuto TexAlCenter PaddingTopPercent10">
+            <a href="" id="login-logo">
+                <h:graphicImage name="images/LOGO.svg" styleClass="Fleft" library="sentinel-layout"/>
+                <span class="Fs30 FontTitilliumSemiBoldItalic Fleft"><span class="softblue">RUN</span><span class="hardblue">PLANNER</span></span>
+            </a>
+            <div class="EmptyBox10"></div>
+        </div>
 
-		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" /> 		
-		<link rel="stylesheet" href="stylesheets/base.css"/>
-		<link rel="stylesheet" href="stylesheets/skeleton.css"/>
-		<link rel="stylesheet" href="stylesheets/layout.css"/>
-		<link rel="shortcut icon" href="images/favicon.ico"/>	
-		
-		<style type="text/css">
-			.ui-messages-fatal {
-				max-height: 40px;
-				margin-left: 5px;
-				margin-right: 5px;
-				margin-top: 5px;
-			}
-		</style>
-				
-	</h:head>
+        <!-- LOGIN BOX COVER START -->
+        <div class="Container80 MaxWid500 white-back Fnone MarAuto BordRad10" id="login-box">
+            <div class="Container">
+                <div class="Container100 TexAlCenter Animated05 BoxSizeBorder TabBtn left TabBtnActiveLeft" role="1">
+                    <div class="Container80 Fnone MarAuto FontBold"><i class="icon-lock"></i> Login</div>
+                </div>
 
-	<h:body>
-			
-		<p:messages id="messages" showDetail="false" /> 
+                <div class="Container90 Fnone MarAuto TexAlCenter TabContent OvHidden" id="TAB1">
+	                <p:messages id="messages" showDetail="false" />
+                
+                	<h:form prependId="false" >
+	                    <div class="EmptyBox50"></div>
+	                    <p:inputText placeholder="Email" name="j_username" id="j_username" styleClass="Container80 Fnone MarAuto Fs18"/>
+	                    <div class="EmptyBox10"></div>
+	                    <p:password placeholder="Senha" name="j_password" id="j_password" styleClass="Container80 Fnone MarAuto Fs18" feedback="false"/>
+	                    <div class="EmptyBox20"></div>
+	                    <div class="EmptyBox30"></div>
+	                    <p:commandButton id="btEntrar" action="#{loginBean.doLogin}" value="Entrar" styleClass="Fs16" ajax="false"/>
+	                    <div class="EmptyBox50"></div>
+					</h:form>
+                </div>
 
-	
-		<div class="container">
-		
-			<div class="form-bg">
-				<h:form prependId="false" >
-					<h2><img src="images/logo3.png" style="width:35%; vertical-align: middle; padding-top: 5px;" /></h2>
-					<p><input type="text" placeholder="Email" name="j_username" id="inUsuario"/></p>
-					<p><input type="password" placeholder="Senha" name="j_password" id="inSenha"/></p>
-					
-					<h:commandButton id="btEntrar" action="#{loginBean.doLogin}" value="Entrar" style="padding: 0.05em 1.35em !important; margin-right: 30px; float: right;"/>
-				</h:form>
-			</div>	
-			
-			<p class="forgot">Esqueceu sua senha? <a href="pages/recover.jsf">Click aqui.</a></p>
-			<p class="forgot">Possui uma assessoria esportiva e deseja conhecer o RunPlanner? <a href="about.jsf">Click aqui.</a></p>
-		</div>
-	
-	</h:body>
-	</f:view>
-	
-</ui:composition>
+            </div>
+        </div>
+    </div>
+    <!-- LOGIN BOX COVER END -->
+    
+    <div class="Container80 MaxWid500 white-back Fnone MarAuto BordRad10 TexAlCenter">
+		<p class="leaden Fs12">Esqueceu sua senha? <a href="pages/recover.jsf" class="hardblue">Click aqui.</a></p>
+		<p class="leaden Fs12">Possui uma assessoria esportiva e deseja conhecer o RunPlanner? <a href="about.jsf" class="hardblue">Click aqui.</a></p>
+	</div>
+    
+</h:body>
+
+</html>

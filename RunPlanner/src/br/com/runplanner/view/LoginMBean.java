@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -51,7 +52,8 @@ public class LoginMBean implements Serializable {
 	private EmailThreadProductor emailThreadProductor;
 	
 	//private String templateVersion = "/pages/template/templateV3Inner.xhtml";
-	private String templateVersion = "/pages/template/templateV2Inner.xhtml";
+	//private String templateVersion = "/pages/template/templateV2Inner.xhtml";
+	private String templateVersion = "/WEB-INF/template.xhtml";
 	private String templateBlank = "/pages/template/templateV2Blank.xhtml";
 	//private String templateVersion = "/pages/template/template.xhtml";
 	
@@ -60,6 +62,7 @@ public class LoginMBean implements Serializable {
 	private String email;
 	private String adviceName;
 	private String adviceBanner;
+	private String lastLogin;
 	
 	private byte[] photo;
 	private byte[] adviceLogo;
@@ -67,6 +70,8 @@ public class LoginMBean implements Serializable {
 	private String recoverMail;
 	
 	private List<String> images;  
+	
+	private SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy - hh:mm:ss");
 	
 	public void recover() {
 		Pessoa user = pessoaService.loadByEmailActive(recoverMail,true);
@@ -142,6 +147,7 @@ public class LoginMBean implements Serializable {
 				
 				this.name = user.getNome();
 				this.userId = user.getId();
+				this.lastLogin = sdf.format(user.getLastLoginDate());
 				
 				Advice advice = user.getAdvice();
 
@@ -260,7 +266,16 @@ public class LoginMBean implements Serializable {
 
 	public void setAdviceBanner(String adviceBanner) {
 		this.adviceBanner = adviceBanner;
+	}
+
+	public String getLastLogin() {
+		return lastLogin;
+	}
+
+	public String getName() {
+		return name;
 	} 
+
 	
 	 
 }

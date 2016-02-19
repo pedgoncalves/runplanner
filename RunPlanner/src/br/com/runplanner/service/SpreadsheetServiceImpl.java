@@ -142,6 +142,31 @@ public class SpreadsheetServiceImpl extends GenericServiceImpl<Spreadsheet, Long
 			return null;
 		}	
 	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Schedule> findByStudentActualList(Long studentId) {
+		Calendar calendar = GregorianCalendar.getInstance( TimeZone.getTimeZone("America/Sao_Paulo") );
+		calendar.set(Calendar.HOUR_OF_DAY, 10);
+		
+		String sql = "select sc.* from Spreadsheet sp, Spreadsheet_Schedule spc, Schedule sc " +
+				"where sp.id = spc.Spreadsheet_id and sc.id = spc.schedules_id " +
+				"and sp.student_id= :studentId " +
+				"and sc.date >= DATE(:date) " +
+				"order by sc.date asc";
+		
+		
+		Query query = entityManager.createNativeQuery(sql,Schedule.class);
+		query.setParameter("studentId", studentId);
+		query.setParameter("date", calendar.getTime());
+		query.setMaxResults(5);
+
+		try {
+			return (List<Schedule>) query.getResultList();
+		}
+		catch (NoResultException  e) {
+			return null;
+		}	
+	}
 		
 	public Long countByAdvice(Long adviceId) {
 		

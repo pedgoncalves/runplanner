@@ -1,0 +1,314 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="content">
+        <h:outputScript name="jquery/jquery.js" library="primefaces" target="head"/>
+		
+		<h:form>			
+				
+			#{dashboardMBean.data}
+				
+			<div class="Container100">
+	            <div class="ContainerIndent">
+	                <div class="EmptyBox20"></div>
+	
+	                <div class="Container25 Responsive">
+	                    <div class="ContainerIndent">
+	                        <p:panel style="min-height: 300px;">
+                            	<i class="icon-user-2 Fs50 Fleft Wid25 hardblue TexAlCenter"></i>
+	                            <!-- p:graphicImage value="#{photoMBean.streamedUserThumb}" width="70"
+									height="70" styleClass="Fleft Wid25 TexAlCenter">
+									<f:param name="client_id" value="#{loginBean.userId}" />
+								</p:graphicImage-->
+	                            <div class="Fs24 Fright MarTop10 leaden Wid70"><span class="hardblue">#{loginBean.name}</span>, Bem Vindo!</div>
+	                            <div class="Fs12 Fright leaden Wid70">Você tem <span class="red">#{dashboardMBean.newMessageNumber} novas mensagens</span>!</div>
+	                            <div class="EmptyBox10"></div>
+	                            <p:separator styleClass="Wid100"></p:separator>
+	                            <div class="EmptyBox10"></div>
+	                            <div class="Fs16 Fright">
+	                            	<a href="#" class="DispInlBlock Fleft Fs16 MarRight20"><i class="icon-bell-alt hardblue"> Mensagens (#{dashboardMBean.newMessageNumber})</i></a>
+	                                <a href="#" class="DispInlBlock Fleft Fs16 MarRight20"><i class="icon-table hardblue"> Planilhas </i></a>
+	                                <a href="#" class="DispInlBlock Fleft Fs16 MarRight20"><i class="icon-cog-alt hardblue"> Perfil</i></a>	                                
+	                            </div>
+	                            <div class="EmptyBox10"></div>
+	                            <p:separator styleClass="Wid100"></p:separator>
+	                            <div class="EmptyBox10"></div>
+	                            <i class="icon-key softgray MarRight10 Fs14 Fright"> Seu último login: #{loginBean.lastLogin}</i>
+	                            <div class="EmptyBox10"></div>
+	                            <p:separator styleClass="Wid100"></p:separator>	
+	                        </p:panel>
+	                    </div>
+	                </div>
+	
+	                <div class="Container25 Responsive">
+	                    <div class="ContainerIndent">
+	                        <p:panel style="min-height: 300px;">
+	                            <div class="Container">
+	                                <i class="  icon-pin-outline Fs50 Fleft Wid25 hardblue TexAlCenter"></i>
+	                                <div class="Fs24 Fright MarTop10 leaden Wid70">Próximo Treino</div>
+	                                <p:separator styleClass="Wid100"></p:separator>	                                
+	                                
+	                                <i class=" icon-calendar Fs18 Fleft Wid100 leaden">Data: 
+	                                	<span class="red">
+	                                		<h:outputText value="#{dashboardMBean.proximoTreino.date}"	rendered="#{dashboardMBean.proximoTreino!=null}">
+												<f:convertDateTime pattern="dd/MM/yyyy" />
+											</h:outputText>
+	                                	</span></i>
+	                				<div class="EmptyBox5"></div>
+	                                <p:separator styleClass="Wid100"></p:separator>	                    
+	                                
+	                                <i class=" icon-fire-1 Fs16 Fleft Wid100 leaden">Aquecimento: 
+	                                	<h:outputText
+											value="#{dashboardMBean.proximoTreino.warmUp}"
+											rendered="#{dashboardMBean.proximoTreino!=null}" /></i>
+	                				<div class="EmptyBox10"></div>
+	                                
+	                                <i class=" icon-flag-checkered Fs16 Fleft Wid100 leaden">Treino: 
+	                                	<h:outputText
+											value="#{dashboardMBean.proximoTreino.description}"
+											rendered="#{dashboardMBean.proximoTreino!=null}" />
+	                                </i>
+	                                <div class="EmptyBox10"></div>
+	                                
+	                                <i class=" icon-waves Fs16 Fleft Wid100 leaden">Desaquecimento:
+	                                	<h:outputText
+											value="#{dashboardMBean.proximoTreino.coolDown}"
+											rendered="#{dashboardMBean.proximoTreino!=null}" />
+	                                </i>
+										
+	                                <p:separator styleClass="Wid100"></p:separator>
+	                                <a href="#" class="DispInlBlock Fs14 Fright MarRight10"><i class="icon-doc-1 orange"> Ver Planilha Completa</i></a>
+	                            </div>
+	                        </p:panel>
+	                    </div>
+	                </div>
+	
+	                <div class="Container25 Responsive">
+	                    <div class="ContainerIndent">
+	                        <p:panel style="min-height: 300px;">
+	                            <div class="Container">
+	                                <i class=" icon-table Fs50 Fleft Wid25 hardblue TexAlCenter"></i>
+	                                <div class="Fs24 Fright MarTop10 leaden Wid70">Tabela de Ritmos</div>
+	                                <p:separator styleClass="Wid100"></p:separator>	                                
+	                               
+                           		    <h:panelGrid columns="4" cellpadding="10" width="100%">  
+								        <h:outputLabel value="Suave (Z0)" styleClass="Fs12 Fright leaden Wid50 TexAlCenter Responsive"/>  
+						       			<h:outputText value="#{dashboardMBean.rhythmTable.easyPace}" mask="99:99" styleClass="Fs20 orange"/>
+						       			
+						       			<h:outputLabel value="Normal (Z1)" styleClass="Fs12 Fright leaden Wid50 TexAlCenter Responsive"/>  
+						       			<h:outputText value="#{dashboardMBean.rhythmTable.normalPace}" mask="99:99" styleClass="Fs20 orange"/>
+						       			
+						       			<h:outputLabel value="Moderado (Z2)" styleClass="Fs12 Fright leaden Wid50 TexAlCenter Responsive"/>  
+						       			<h:outputText value="#{dashboardMBean.rhythmTable.moderatePace}" mask="99:99" styleClass="Fs20 orange"/>
+						       			
+						       			<h:outputLabel value="Médio (Z3)" styleClass="Fs12 Fright leaden Wid50 TexAlCenter Responsive"/>  
+						       			<h:outputText value="#{dashboardMBean.rhythmTable.mediumPace}" mask="99:99" styleClass="Fs20 orange"/>
+						       			
+						       			<h:outputLabel value="Forte (Z4)" styleClass="Fs12 Fright leaden Wid50 TexAlCenter Responsive"/>  
+						       			<h:outputText value="#{dashboardMBean.rhythmTable.strongPace}" mask="99:99" styleClass="Fs20 orange"/>
+						       			
+						       			<h:outputLabel value="Tiro (Z5)" styleClass="Fs12 Fright leaden Wid50 TexAlCenter Responsive"/>  
+						       			<h:outputText value="#{dashboardMBean.rhythmTable.shootingPace}" mask="99:99" styleClass="Fs20 orange"/>
+								    </h:panelGrid> 
+	                               
+	                            </div>
+	                        </p:panel>
+	                    </div>
+	                </div>
+	
+	                <div class="Container25 Responsive">
+	                    <div class="ContainerIndent">
+	                        <p:panel style="min-height: 300px;">
+	                            <div class="Container">
+	                                <i class=" icon-award Fs50 Fleft Wid25 hardblue TexAlCenter"></i>
+	                                <div class="Fs24 Fright MarTop10 leaden Wid70">Seus Recordes</div>
+	                                <p:separator styleClass="Wid100"></p:separator>	                                
+	                               
+	                                <div class="Wid100 TexAlCenter">
+		                               	<h:panelGrid columns="2" styleClass="Wid100">  
+									        <h:outputLabel value="Maior Distância" styleClass="icon-road Fs14 leaden Responsive"/>  
+									        <h:commandLink action="#{activityMBean.goToView}" styleClass="Fs20 hardblue">
+												<f:setPropertyActionListener target="#{activityMBean.activity.id}" value="#{dashboardMBean.longestActivityKmId}" />
+										
+												<h:outputText value="#{dashboardMBean.longestActivityKm}" styleClass="Fs26 hardblue Wid100 TexAlCenter Responsive FontBold">
+													<f:convertNumber pattern="#0.00" />
+												</h:outputText>
+												<h:outputText value="KM" styleClass="Fs12 leaden Responsive"/><br/>
+												<h:outputText value="#{dashboardMBean.longestActivityKmDate}" styleClass="Fs12 leaden Wid100 TexAlCenter Responsive">
+													<f:convertDateTime pattern="dd/MM/yyyy" />
+												</h:outputText>
+											</h:commandLink>
+							       			
+							       			<h:outputLabel value="Maior Duração" styleClass="icon-clock Fs14 leaden Responsive"/>  
+							       			<h:commandLink action="#{activityMBean.goToView}" styleClass="Fs20 hardblue">
+												<f:setPropertyActionListener target="#{activityMBean.activity.id}" value="#{dashboardMBean.longestActivityTimeId}" />
+										
+												<h:outputText value="#{dashboardMBean.longestActivityTime}" styleClass="Fs26 hardblue Wid100 TexAlCenter Responsive FontBold"/><br/>										
+												<h:outputText value="#{dashboardMBean.longestActivityTimeDate}" styleClass="Fs12 leaden">
+													<f:convertDateTime pattern="dd/MM/yyyy" />
+												</h:outputText>
+											</h:commandLink>
+							       			
+							       			<h:outputLabel value="Menor Pace" styleClass="icon-fast-fw-outline Fs14 leaden Responsive"/>  
+											<h:commandLink action="#{activityMBean.goToView}" styleClass="Fs20 hardblue">
+												<f:setPropertyActionListener target="#{activityMBean.activity.id}" value="#{dashboardMBean.longestActivityPaceId}" />
+										
+												<h:outputText value="#{dashboardMBean.longestActivityPace}" styleClass="Fs26 hardblue Wid100 TexAlCenter Responsive FontBold"/><br/>									
+												<h:outputText value="#{dashboardMBean.longestActivityPaceDate}" styleClass="Fs12 leaden">
+													<f:convertDateTime pattern="dd/MM/yyyy" />
+												</h:outputText>
+											</h:commandLink>
+										</h:panelGrid>
+									</div>
+	                            </div>
+	                        </p:panel>
+	                    </div>
+	                </div>
+	
+	            </div>
+	        </div>
+	        
+	        
+	        
+	        <div class="Container100 BorBotLeaden ui-fluid">
+	            <div class="ContainerIndent">
+	                <div class="EmptyBox10"></div>
+	
+	                <div class="Container50 Responsive50">
+	                    <div class="ContainerIndent">
+	                        <p:panel style="min-height:400px;">
+	                            <div class="Container100 Responsive Fs20 Wid25">
+	                                <i class="icon-calendar hardblue "></i> Agenda de Treinos
+	                            </div>
+	                            
+	                            <div class="EmptyBox10"></div>
+		                        <p:separator styleClass="Wid100"></p:separator>
+		                        <div class="EmptyBox10"></div>
+		                        	                     
+	                            <div class="Container100">
+									<p:dataTable var="schedule" value="#{dashboardMBean.listaProximosTreinos}" rows="3"  
+										paginator="false" paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}" 
+										emptyMessage="Sem treinos cadastrados" reflow="true" paginatorPosition="bottom">															
+										
+										<p:column headerText="Dia" styleClass="TexAlCenter Wid10">
+											<h:outputText value="#{schedule.date}"  styleClass="Fs14">							
+							                	<f:convertDateTime pattern="dd/MM/yy" />
+							                </h:outputText>
+										</p:column>		
+										<p:column headerText="Treino">
+											<i class=" icon-fire-1 Fs14 Fleft Wid100 leaden">Aquecimento: <h:outputText value="#{schedule.warmUp}"/></i>
+			                                
+			                                <i class=" icon-flag-checkered Fs14 Fleft Wid100 leaden">Treino: <h:outputText	value="#{schedule.description}" /></i>
+			                                
+			                                <i class=" icon-waves Fs14 Fleft Wid100 leaden">Desaquecimento: <h:outputText value="#{schedule.coolDown}" /></i>
+										</p:column>									
+									</p:dataTable>	   
+									
+									<p:separator styleClass="Wid100"></p:separator>
+		                            <a href="#" class="DispInlBlock Fs14 Fright MarRight10"><i class="icon-doc-1 orange"> Ver Planilha Completa</i></a>                              
+	                            </div>
+	                        </p:panel>
+	                    </div>
+	                </div>
+	
+	                <div class="Container25 Responsive">
+	                    <div class="ContainerIndent">
+	                        <p:panel style="min-height: 400px;" id="topActivity">
+	                            <div class="Container100">	                                
+	                                <div class="Container100 Responsive Fs24">
+                                    	<i class="icon-flash Fs50 Fleft Wid25 hardblue TexAlCenter" />                                    	
+	                                	<div class="Fs24 Fright MarTop10 leaden Wid70">Top #{dashboardMBean.topActivityTitle}</div> 
+	                                </div>
+	                                <p:separator styleClass="Wid100"></p:separator>
+	                                <div class="Container100 TexAlRight Responsive Fs12">
+										<p:selectOneMenu value="#{dashboardMBean.topActivitySelected}">
+											<p:ajax listener="#{dashboardMBean.handleChangeTopActivity}" update="topActivity" />
+								            <f:selectItem itemLabel="5KM Masculino" itemValue="5M" />
+								            <f:selectItem itemLabel="5KM Feminino" itemValue="5F" />
+								            <f:selectItem itemLabel="10KM Masculino" itemValue="10M" />
+								            <f:selectItem itemLabel="10KM Feminino" itemValue="10F" />
+								            <f:selectItem itemLabel="21KM Masculino" itemValue="21M" />
+								            <f:selectItem itemLabel="21KM Feminino" itemValue="21F" />
+								            <f:selectItem itemLabel="42KM Masculino" itemValue="42M" />
+								            <f:selectItem itemLabel="42KM Feminino" itemValue="42F" />
+								        </p:selectOneMenu>
+	                                </div>                      
+	                                	                                
+	                                	                                
+									<p:dataTable var="top" value="#{dashboardMBean.topList}" rows="5" styleClass="Container100"
+										paginator="false" emptyMessage="Nenhuma atividade cadastrada" reflow="true">
+																
+										<p:column headerText="Pos" styleClass="TexAlCenter">
+											<h:commandLink action="#{activityMBean.goToView}">
+												<h:outputText value="#{top.position}. " styleClass="Fs14 leaden TexAlCenter"/>
+												<f:setPropertyActionListener target="#{activityMBean.activity.id}" value="#{top.activityId}" />
+											</h:commandLink>
+										</p:column>
+										
+										<p:column headerText="Aluno" styleClass="TexAlCenter">
+											<h:commandLink action="#{activityMBean.goToView}">
+												<h:outputText value="#{top.name}" styleClass="Fs14 leaden"/>
+												<f:setPropertyActionListener target="#{activityMBean.activity.id}" value="#{top.activityId}" />
+											</h:commandLink>
+										</p:column>	
+										
+										<p:column headerText="Data" styleClass="TexAlCenter">
+											<h:commandLink action="#{activityMBean.goToView}">
+												<h:outputText value="#{top.date}" styleClass="Fs14 leaden">							
+							                		<f:convertDateTime pattern="dd/MM/yy" />
+							                	</h:outputText>
+												<f:setPropertyActionListener target="#{activityMBean.activity.id}" value="#{top.activityId}" />
+											</h:commandLink>
+										</p:column>	
+										
+										<p:column headerText="Data" styleClass="TexAlCenter">
+											<h:commandLink action="#{activityMBean.goToView}">
+												<h:outputText value="#{top.totalTime}" styleClass="Fs14 leaden"/>
+												<f:setPropertyActionListener target="#{activityMBean.activity.id}" value="#{top.activityId}" />
+											</h:commandLink>
+										</p:column>	
+																							
+									</p:dataTable>		                        
+	                               
+	                            </div>
+	                        </p:panel>
+	                    </div>
+	                </div>
+	                
+	                <div class="Container25 Responsive">
+	                    <div class="ContainerIndent">
+	                        <p:panel style="min-height: 400px;">
+	                            <div class="Container">
+	                                <i class=" icon-gift Fs50 Fleft Wid25 hardblue TexAlCenter"></i>
+	                                <div class="Fs24 Fright MarTop10 leaden Wid70">Aniversáriantes</div>
+	                                <p:separator styleClass="Wid100"></p:separator>	                                
+	                               
+									<p:dataTable var="customer" value="#{dashboardMBean.birthdayList}" rows="8"  
+										paginator="true" paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}" 
+										emptyMessage="#{msgs['dashboard.birthday.empty']}" reflow="true" paginatorPosition="bottom">
+																
+										<p:column headerText="Aluno">
+											<h:outputText value="#{customer.shortName}" styleClass="Fs14"/>
+										</p:column>
+										<p:column headerText="Dia" styleClass="TexAlCenter">
+											<h:outputText value="#{customer.dtNascimento}"  styleClass="Fs14">							
+							                	<f:convertDateTime pattern="dd/MM" />
+							                </h:outputText>
+										</p:column>														
+									</p:dataTable>	                               
+								                 
+	                            </div>
+	                        </p:panel>
+	                    </div>
+	                </div>                
+	
+	                <div class="EmptyBox10"></div>
+	            </div>
+	        </div>
+		</h:form>
+    </ui:define>
+</ui:composition>

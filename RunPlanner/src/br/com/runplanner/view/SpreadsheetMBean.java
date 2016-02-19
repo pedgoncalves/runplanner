@@ -1215,6 +1215,10 @@ public class SpreadsheetMBean extends BasicMBean {
 		}
 	}
 	
+	public void setType(int type) {
+		selectedType = type;
+	}
+	
 	 @SuppressWarnings("deprecation")
 	private void verifyLeftHeader() {
 	    	leftHeaderTemplate = "";
@@ -1268,4 +1272,5 @@ public class SpreadsheetMBean extends BasicMBean {
 			}
 		}
 	}*/
+	
 }

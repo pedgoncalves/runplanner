@@ -64,7 +64,7 @@ public class UrlAuthenticationSuccessHandler implements AuthenticationSuccessHan
 
 		if (!isBlackPage) {
 			if (isUser) {
-				return "/pages/student/indexV2.jsf";
+				return "/pages/indexV3.jsf";
 			} else if (isAdmin) {
 				return "/pages/advice/index.jsf";
 			} else if (isTeacher) {
@@ -75,7 +75,7 @@ public class UrlAuthenticationSuccessHandler implements AuthenticationSuccessHan
 		}
 		else {
 			if (isUser) {
-				return "/pages/student/indexV2Blank.jsf";
+				return "/pages/indexV3.jsf";
 			} else if (isTeacher) {
 				return "/pages/teacher/indexV2Blank.jsf";
 			} else {

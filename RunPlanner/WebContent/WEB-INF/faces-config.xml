@@ -8,6 +8,11 @@
 		<phase-listener>br.com.runplanner.view.util.LoginErrorPhaseListener</phase-listener>
 	</lifecycle>
 
+    <component>
+		<component-type>org.primefaces.component.SentinelMenu</component-type>
+		<component-class>org.primefaces.sentinel.component.menu.SentinelMenu</component-class>
+	</component>
+
 	<application>
 		<el-resolver>org.springframework.web.jsf.el.SpringBeanFacesELResolver</el-resolver>
 		<locale-config>
@@ -30,5 +35,13 @@
     	<converter-id>doubleConverter</converter-id>
     	<converter-class>br.com.runplanner.view.util.DoubleConverter</converter-class>
     </converter>
+
+    <render-kit>
+        <renderer>
+			<component-family>org.primefaces.component</component-family>
+			<renderer-type>org.primefaces.component.SentinelMenuRenderer</renderer-type>
+			<renderer-class>org.primefaces.sentinel.component.menu.SentinelMenuRenderer</renderer-class>
+		</renderer>
+    </render-kit>
 
 </faces-config>
