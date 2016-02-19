@@ -6,7 +6,7 @@
     xmlns:ui="http://java.sun.com/jsf/facelets"
     xmlns:p="http://primefaces.org/ui">
 
-    <div id="layout-menubar" class="Unselectable fontRegular">
+    <div id="layout-menubar" class="Unselectable fontRegular Hei100">
         <div class="layout-menubarinner-box" id="buttonArea">
             <a href="#" id="layout-menubar-resize" class="BordRad3" title="Menu Resize"><i class="icon-th-list-2"></i></a>
             <a href="#" id="layout-menubar-resize2" class="BordRad3" title="Abrir Menu"><i class="icon-menu"></i></a>
@@ -18,50 +18,10 @@
                 <p:menuitem id="sm_dashboard" value="Início" icon="icon-home-outline"  containerStyleClass="layout-menubar-active" outcome="/pages/indexV3.jsf"/>
                 <p:menuitem id="sm_planilha" value="Planilhas" icon="icon-table" action="#{studentSpreadsheetMBean.goToList}"  containerStyleClass="#{dashboardMBean.selectedMenu == 'spread'?'layout-menubar-active':'layout-menubar'}"/>
                 <p:menuitem id="sm_equipamentos" value="Equipamentos" icon="icon-wristwatch" action="#{equipmentMBean.goToList}"  containerStyleClass="#{dashboardMBean.selectedMenu == 'equipment'?'layout-menubar-active':'layout-menubar'}"/>
-                
-                
-                
-                <p:submenu id="sm_sentineltheme" label="Sentinel Theme" icon="icon-gauge" >
-                    <p:menuitem id="sm_sample" value="Sample Page" icon="icon-columns"  />
-                    <p:menuitem id="sm_forms" value="Forms" icon="icon-doc-text-1" />
-                    <p:menuitem id="sm_datacomponents" value="Data Components" icon="icon-th" />
-                    <p:menuitem id="sm_datatable" value="DataTable" icon="icon-table" />
-                    <p:menuitem id="sm_panels" value="Panels" icon="icon-magic" />
-                    <p:menuitem id="sm_overlays" value="Overlays" icon="icon-newspaper" />
-                    <p:menuitem id="sm_menus" value="Menus" icon="icon-menu" />
-                    <p:menuitem id="sm_messages" value="Messages" icon="icon-bell" />
-                    <p:menuitem id="sm_charts" value="Charts" icon="icon-chart" />
-                    <p:menuitem id="sm_fu" value="FileUpload" icon="icon-docs" />
-                    <p:menuitem id="sm_misc" value="Misc" icon="icon-beaker" />
-                </p:submenu>
-                <p:submenu id="sm_dp" label="Default Pages" icon="icon-pin-outline">
-                    <p:menuitem id="sm_empty" value="Empty Page" icon="icon-plus-squared-alt" />
-                    <p:menuitem id="sm_login" value="Login Page" icon="icon-login" />
-                    <p:menuitem id="sm_error" value="Error Page" icon="icon-warning-empty"  />
-                    <p:menuitem id="sm_404" value="404 Page" icon="icon-warning-empty" />
-                    <p:menuitem id="sm_access" value="Access Denied Page" icon="icon-warning-empty" />
-                </p:submenu>
-                <p:submenu id="sm_menu" label="Menu Hierarchy" icon="icon-sitemap">
-                    <p:submenu id="sm_sub1" label="Submenu 1" icon="icon-folder-empty">
-                        <p:submenu id="sm_sub1_1" label="Submenu 1.1" icon="icon-folder-empty">
-                            <p:submenu id="sm_sub1_1_1" label="Submenu 1.1.1" icon="icon-folder-empty">
-                                <p:menuitem id="sm_lnk1" value="Link 1" icon="icon-link" />
-                                <p:menuitem id="sm_lnk2" value="Link 2" icon="icon-link"  />
-                                <p:menuitem id="sm_lnk3" value="Link 3" icon="icon-link"  />
-                            </p:submenu>
-                        </p:submenu>
-                    </p:submenu>
-                </p:submenu>
-                <p:menuitem id="sm_fonts" value="Font Icons" icon="icon-book" />
-                <p:submenu id="sm_orientation" label="Orientation" icon="icon-align-right">
-                    <p:menuitem id="sm_rtl" value="RTL" icon="icon-align-right" onclick="$('body').addClass('ui-sentinel-rtl');return false;" />
-                    <p:menuitem id="sm_ltr" value="LTR" icon="icon-align-left" onclick="$('body').removeClass('ui-sentinel-rtl');return false;" />
-                </p:submenu>
-                <p:menuitem id="sm_user" value="User Profile" icon="icon-vcard"  />
-                <p:menuitem id="sm_tasks" value="Tasks" icon="icon-tasks"  />
-                <p:menuitem id="sm_contact" value="Contact" icon="icon-phone"  />
-                <p:menuitem id="sm_doc" value="Documentation" icon="icon-graduation-cap"  />
-            </ps:menu>
+                <p:menuitem id="sm_eventos" value="Eventos" icon="icon-award" action="#{eventMBean.goToStudentList}"  containerStyleClass="#{dashboardMBean.selectedMenu == 'event'?'layout-menubar-active':'layout-menubar'}"/>
+                <p:menuitem id="sm_atividades" value="Atividades" icon="icon-flash" action="#{activityMBean.goToInit}"  containerStyleClass="#{dashboardMBean.selectedMenu == 'activity'?'layout-menubar-active':'layout-menubar'}"/>
+                <p:menuitem id="sm_graficos" value="Gráficos" icon="icon-chart-alt" action="#{graphMBean.goToActivity}"  containerStyleClass="#{dashboardMBean.selectedMenu == 'graphActivity'?'layout-menubar-active':'layout-menubar'}"/>
+         	</ps:menu>
         </h:form>
     </div>
 
