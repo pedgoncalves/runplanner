@@ -6,128 +6,124 @@
 	template="#{loginBean.templateVersion}">
 
 	<ui:define name="content">
-	
-		<h:form>
-			<h3><h:outputText value="#{eventMBean.event.name}"/></h3>
-			<h:outputText value="#{msgs['event.student.event.subtitle']}" styleClass="subtitle"/>
-			<br/><br/>
-				
-			<p:messages id="messages" showDetail="false" /> 
-				
-			<div class="filtro">
-				<table width="100%">
-					<tr>
-						<td colspan="2">
-							<b><h:outputText for="nome" value="#{msgs['event.name']}" sytle="width: 100px;"/>:</b><p:spacer width="20" />
-							<h:outputText id="nome" value="#{eventMBean.event.name}"/>
-						</td>
-					</tr>
-					
-					<tr>
-						<td colspan="2">
-							<b><h:outputText for="site" value="#{msgs['event.site']}"/>:</b> <p:spacer width="20" />
-							<h:outputText id="site" value="#{eventMBean.event.website}" />
-						</td>
-					</tr>	
-					
-					<tr>
-						<td width="40%">
-							<b><h:outputText for="location" value="#{msgs['event.location']}" />:</b> <p:spacer width="20" />
-							<h:outputText id="location" value="#{eventMBean.event.location}"/>
-						</td>
-						<td>
-							<b><h:outputText for="price" value="#{msgs['event.prices']}" />:</b><p:spacer width="20" />
-							<h:outputText id="price" value="#{eventMBean.event.value}" />
-						</td>
-					</tr>	
-								
-					
-					<tr>
-						<td width="40%">
-							<b><h:outputText for="date" value="#{msgs['event.date']}" />:</b> <p:spacer width="20" />
-							<h:outputText id="date" value="#{eventMBean.event.date}">
-								<f:convertDateTime pattern="dd/MM/yyyy" />
-							</h:outputText>
-						</td>
-						
-						<td>
-							<b><h:outputText for="hour" value="#{msgs['event.hour']}" />:</b><p:spacer width="20" />
-							<h:outputText id="hour" value="#{eventMBean.event.time}"/>
-						</td>
-					</tr>
-					
-					<tr>
-						<td width="40%">
-							<b><h:outputText for="distance" value="#{msgs['event.distance']}" />:</b> <p:spacer width="20" />
-							<h:outputText id="distance" value="#{eventMBean.event.distance}"/>
-						</td>
-						
-						<td>
-							<b><h:outputText for="inscription" value="#{msgs['event.limit']}" />:</b><p:spacer width="20" />
-							<h:outputText id="inscription" value="#{eventMBean.event.finalDate}">
-								<f:convertDateTime pattern="dd/MM/yyyy" />
-							</h:outputText>	
-						</td>
-					</tr>
-					
-					<tr>
-						<td colspan="2">
-							<b><h:outputText for="description" value="#{msgs['event.description']}" />:</b><p:spacer width="20" />
-						</td>
-					</tr>
-					<tr>
-						<td colspan="2">
-							<h:outputText id="description" value="#{eventMBean.event.description}" scape="false" />
-						</td>
-					</tr>
-					
-				</table>
-				
-			</div>
-			
-			<div class="buttons">		
-				<p:commandButton value="#{msgs['template.button.participar']}" rendered="#{eventMBean.canParticipate}"
-					action="#{eventMBean.addParticipant}" ajax="false" immediate="true"/>
-					
-      			<p:commandButton  oncomplete="deleteConfirmation.show()" value="#{msgs['template.button.cancelar.participar']}" 
-      				rendered="#{eventMBean.isParticipate}" />
-         				
-									
-			</div>
-			
-			<h3><h:outputText value="#{msgs['event.title.interested']}"/></h3>
-			<h:outputText value="#{msgs['event.student.event.inscription.subtitle']}" styleClass="subtitle"/>
-			<br/><br/>
-			
-			<div class="tabela">
-				<p:dataTable var="epa" value="#{eventMBean.eventPessoaList}"
-					emptyMessage="#{msgs['template.msg.emptyMessage']}">
-	
-						<p:column>
-							<f:facet name="header">
-								<h:outputText value="#{msgs['alunos.nome']}" />
-							</f:facet>
-							<h:outputText value="#{epa.customer.nome}" />	           			 
-						</p:column>
-						
-						<p:column   style="text-align:center;">
-							<f:facet name="header">
-								<h:outputText value="#{msgs['event.time']}" />
-							</f:facet>
-							<h:outputText value="#{epa.activity.totalTime}" />	           			 
-						</p:column>	
+		<div class="Container100">
+            <div class="ContainerIndent">
+                <div class="EmptyBox20"></div>
+          
+          		<i class="icon-trophy Fs50 Fleft hardblue"></i>
+                <div class="Fs28 Fleft Wid70 hardblue">#{msgs['event.maintitle']}</div>
+                <div class="Fs12 Fleft Wid70 leaden">#{msgs['eventStudent.subtitle']}</div>
+                <p:separator styleClass="Wid100"></p:separator>	          		
+                <div class="EmptyBox10"></div>
+				<h:form>		
+					<p:panel header="Evento">
+		                <p:messages id="messages" showDetail="false" />
+							<h:outputText class="orange" value="#{msgs['event.student.event.subtitle']}" />
+							<div class="filtro">
+								<table width="100%">
+									<tr>
+										<td colspan="2">
+											<b><h:outputText for="nome" value="#{msgs['event.name']}" sytle="width: 100px;"/>:</b><p:spacer width="20" />
+											<h:outputText id="nome" value="#{eventMBean.event.name}"/>
+										</td>
+									</tr>
+									<tr>
+										<td colspan="2">
+											<b><h:outputText for="site" value="#{msgs['event.site']}"/>:</b> <p:spacer width="20" />
+											<h:outputText id="site" value="#{eventMBean.event.website}" />
+										</td>
+									</tr>	
+									<tr>
+										<td width="40%">
+											<b><h:outputText for="location" value="#{msgs['event.location']}" />:</b> <p:spacer width="20" />
+											<h:outputText id="location" value="#{eventMBean.event.location}"/>
+										</td>
+										<td>
+											<b><h:outputText for="price" value="#{msgs['event.prices']}" />:</b><p:spacer width="20" />
+											<h:outputText id="price" value="#{eventMBean.event.value}" />
+										</td>
+									</tr>	
+									<tr>
+										<td width="40%">
+											<b><h:outputText for="date" value="#{msgs['event.date']}" />:</b> <p:spacer width="20" />
+											<h:outputText id="date" value="#{eventMBean.event.date}">
+												<f:convertDateTime pattern="dd/MM/yyyy" />
+											</h:outputText>
+										</td>
+										<td>
+											<b><h:outputText for="hour" value="#{msgs['event.hour']}" />:</b><p:spacer width="20" />
+											<h:outputText id="hour" value="#{eventMBean.event.time}"/>
+										</td>
+									</tr>
+									<tr>
+										<td width="40%">
+											<b><h:outputText for="distance" value="#{msgs['event.distance']}" />:</b> <p:spacer width="20" />
+											<h:outputText id="distance" value="#{eventMBean.event.distance}"/>
+										</td>
+										<td>
+											<b><h:outputText for="inscription" value="#{msgs['event.limit']}" />:</b><p:spacer width="20" />
+											<h:outputText id="inscription" value="#{eventMBean.event.finalDate}">
+												<f:convertDateTime pattern="dd/MM/yyyy" />
+											</h:outputText>	
+										</td>
+									</tr>
+									<tr>
+										<td colspan="2">
+											<b><h:outputText for="description" value="#{msgs['event.description']}" />:</b><p:spacer width="20" />
+										</td>
+									</tr>
+									<tr>
+										<td colspan="2">
+											<h:outputText id="description" value="#{eventMBean.event.description}" scape="false" />
+										</td>
+									</tr>
+								</table>
+							</div>
 							
-				</p:dataTable>
-			</div>	
-
-	     	<p:confirmDialog message="#{msgs['template.msg.cancel.participation']}"  
-	           	severity="alert" widgetVar="deleteConfirmation">
-	   			<p:commandButton value="#{msgs['template.button.yes']}" oncomplete="deleteConfirmation.hide()" 
-	   				action="#{eventMBean.removeParticipant}" ajax="false" immediate="true"/>
-	   			<p:commandButton value="#{msgs['template.button.no']}" onclick="deleteConfirmation.hide()" />
-			</p:confirmDialog> 	
+							<div class="EmptyBox10"></div>
+							<p:separator styleClass="Wid100"></p:separator>
+							<div class="EmptyBox10"></div>
+							
+							<div class="buttons TexAlCenter">		
+								<p:commandButton value="#{msgs['template.button.participar']}" rendered="#{eventMBean.canParticipate}"
+									action="#{eventMBean.addParticipant}" ajax="false" immediate="true"/>
+									
+				      			<p:commandButton  oncomplete="PF('deleteConfirmation').show()" value="#{msgs['template.button.cancelar.participar']}" 
+				      				rendered="#{eventMBean.isParticipate}" />
+							</div>
+					</p:panel>
+					
+					<div class="EmptyBox20"></div>
+					
+					<p:panel header="Alunos Interessados">
+						<h:outputText class="orange" value="#{msgs['event.student.event.inscription.subtitle']}"/>
+						<div class="tabela">
+							<p:dataTable var="epa" value="#{eventMBean.eventPessoaList}"
+								emptyMessage="#{msgs['template.msg.emptyMessage']}">
+									<p:column>
+										<f:facet name="header">
+											<h:outputText value="#{msgs['alunos.nome']}" />
+										</f:facet>
+										<h:outputText value="#{epa.customer.nome}" />	           			 
+									</p:column>
+									<p:column   style="text-align:center;">
+										<f:facet name="header">
+											<h:outputText value="#{msgs['event.time']}" />
+										</f:facet>
+										<h:outputText value="#{epa.activity.totalTime}" />	           			 
+									</p:column>	
+							</p:dataTable>
+						</div>	
 			
-
-		</h:form>
+				     	<p:confirmDialog message="#{msgs['template.msg.cancel.participation']}"  
+				           	severity="alert" widgetVar="deleteConfirmation">
+				   			<p:commandButton value="#{msgs['template.button.yes']}" oncomplete="deleteConfirmation.hide()" 
+				   				action="#{eventMBean.removeParticipant}" ajax="false" immediate="true"/>
+				   			<p:commandButton value="#{msgs['template.button.no']}" onclick="deleteConfirmation.hide()" />
+						</p:confirmDialog> 	
+					</p:panel>
+				</h:form>	
+			</div>	
+		</div>
 	</ui:define>
 </ui:composition>

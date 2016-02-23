@@ -6,124 +6,126 @@
 	template="#{loginBean.templateVersion}">
 
 	<ui:define name="content">
-		<h:form>
-		
-		<p:messages id="messages" showDetail="false" />
-		<div class="pageTitleBox">#{msgs['event.maintitle']}</div>
-		<div class="subtitle">#{msgs['eventStudent.subtitle']}</div>
-		
-		<h3><h:outputText value="#{msgs['event.student.title']}"/></h3>
-		
-		<div id="painel">
-			<p:dataTable var="event" value="#{eventMBean.eventList}"
-				emptyMessage="#{msgs['event.msg.emptyMessage']}"
-					paginator="true" rows="10" paginatorPosition="bottom" paginatorAlwaysVisible="false"
-					paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}">
+		<div class="Container100">
+            <div class="ContainerIndent">
+                <div class="EmptyBox20"></div>
+          
+          		<i class="icon-trophy Fs50 Fleft hardblue"></i>
+                <div class="Fs28 Fleft Wid70 hardblue">#{msgs['event.maintitle']}</div>
+                <div class="Fs12 Fleft Wid70 leaden">#{msgs['eventStudent.subtitle']}</div>
+                <p:separator styleClass="Wid100"></p:separator>	          		
+                <div class="EmptyBox10"></div>
 
-				<p:column style="max-width:200px;">
-					<f:facet name="header">
-						<h:outputText value="#{msgs['event.name']}" />
-					</f:facet>
-					
-					<h:commandLink action="#{eventMBean.goToView}">          				
-           				<h:outputText value="#{event.name}" />
-           				<f:setPropertyActionListener target="#{eventMBean.event.id}" value="#{event.id}" />
-           			</h:commandLink> 
-					
-				</p:column>
-				
-				<p:column style="max-width:200px;">
-					<f:facet name="header">
-						<h:outputText value="#{msgs['event.distance']}" />
-					</f:facet>
-					<h:outputText value="#{event.distance}" />
-				</p:column>	
-				
-				<p:column style="max-width:200px;">
-					<f:facet name="header">
-						<h:outputText value="#{msgs['event.location']}" />
-					</f:facet>
-					<h:outputText value="#{event.location}" />
-				</p:column>
-				
-				<p:column style="text-align:center;">
-					<f:facet name="header">
-						<h:outputText value="#{msgs['event.date']}" />
-					</f:facet>
-					<h:outputText value="#{event.date}">										
-	                	<f:convertDateTime pattern="dd/MM/yyyy" />
-					</h:outputText>
-					<h:outputText value=" #{event.time}" />
-				</p:column>
-				
-				<p:column style="text-align:center;">
-					<f:facet name="header">
-						<h:outputText value="#{msgs['event.customers']}" />
-					</f:facet>
-					<h:outputText value="#{event.customersSize}" />
-				</p:column>
-				
-			</p:dataTable>
-		</div>
-		
-		
-		<br/><br/>
-		<h3><h:outputText value="#{msgs['event.old.student.title']}"/></h3>
+        		<h:form>
+        	        <p:panel header="Próximos Eventos Agendados">
+	                	<p:dataTable class="TexAlCenter" var="event" id="eventOldListTable" value="#{eventMBean.eventList}"
+								emptyMessage="#{msgs['event.msg.emptyMessage']}"
+								paginator="true" rows="10" paginatorPosition="bottom" paginatorAlwaysVisible="false"
+								paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}">
+	
+							<p:column class="TexAlLeft" style="max-width:200px;">
+								<f:facet name="header">
+									<h:outputText value="#{msgs['event.name']}" />
+								</f:facet>
+								
+								<h:commandLink action="#{eventMBean.goToView}">          				
+			           				<h:outputText value="#{event.name}" styleClass="Fs14 leaden"/>
+			           				<f:setPropertyActionListener target="#{eventMBean.event.id}" value="#{event.id}" />
+			           			</h:commandLink> 
+								
+							</p:column>
+							
+							<p:column style="max-width:200px;">
+								<f:facet name="header">
+									<h:outputText value="#{msgs['event.distance']}" />
+								</f:facet>
+								<h:outputText value="#{event.distance}" />
+							</p:column>	
+							
+							<p:column style="max-width:200px;">
+								<f:facet name="header">
+									<h:outputText value="#{msgs['event.location']}" />
+								</f:facet>
+								<h:outputText value="#{event.location}" />
+							</p:column>
+							
+							<p:column style="text-align:center;">
+								<f:facet name="header">
+									<h:outputText value="#{msgs['event.date']}" />
+								</f:facet>
+								<h:outputText value="#{event.date}">										
+				                	<f:convertDateTime pattern="dd/MM/yyyy" />
+								</h:outputText>
+								<h:outputText value=" #{event.time}" />
+							</p:column>
+							
+							<p:column style="text-align:center;">
+								<f:facet name="header">
+									<h:outputText value="#{msgs['event.customers']}" />
+								</f:facet>
+								<h:outputText value="#{event.customersSize}" />
+							</p:column>
+						</p:dataTable>
+					</p:panel>
+
+					<div class="EmptyBox20"></div>
+
+					<p:panel header="Eventos Anteriores">
+						<p:dataTable class="TexAlCenter" var="event" id="eventFutureListTable"  value="#{eventMBean.userEvents}"
+							emptyMessage="#{msgs['event.old.msg.emptyMessage']}"
+							paginator="true" rows="10" paginatorPosition="bottom" paginatorAlwaysVisible="false"
+							paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}">
 			
-		<div id="painel" class="tabela">
-			<p:dataTable var="event" value="#{eventMBean.userEvents}"
-				emptyMessage="#{msgs['event.old.msg.emptyMessage']}"
-					paginator="true" rows="10" paginatorPosition="bottom" paginatorAlwaysVisible="false"
-					paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}">
-
-				<p:column>
-					<f:facet name="header">
-						<h:outputText value="#{msgs['event.name']}" />
-					</f:facet>
-					
-					<h:commandLink action="#{eventMBean.goToView}">          				
-           				<h:outputText value="#{event.name}" />
-           				<f:setPropertyActionListener target="#{eventMBean.event.id}" value="#{event.id}" />
-           			</h:commandLink> 
-					
-				</p:column>
-				
-				<p:column>
-					<f:facet name="header">
-						<h:outputText value="#{msgs['event.distance']}" />
-					</f:facet>
-					<h:outputText value="#{event.distance}" />
-				</p:column>	
-				
-				<p:column>
-					<f:facet name="header">
-						<h:outputText value="#{msgs['event.location']}" />
-					</f:facet>
-					<h:outputText value="#{event.location}" />
-				</p:column>
-				
-				<p:column style="text-align:center;">
-					<f:facet name="header">
-						<h:outputText value="#{msgs['event.date']}" />
-					</f:facet>
-					<h:outputText value="#{event.date}">										
-	                	<f:convertDateTime pattern="dd/MM/yyyy" />
-					</h:outputText>
-				</p:column>
-				
-				<p:column  style="text-align:center;">
-					<f:facet name="header">
-						<h:outputText value="#{msgs['event.time']}" />
-					</f:facet>
-					
-					<h:commandLink  action="#{activityMBean.goToView}" redered="#{event.activity!=null}">          				
-						<h:outputText value="#{event.totalTime}" />
-						<f:setPropertyActionListener target="#{activityMBean.activity.id}" value="#{event.activity.id}" />
-					</h:commandLink>
-					
-				</p:column>				
-			</p:dataTable>
+							<p:column class="TexAlLeft" >
+								<f:facet name="header">
+									<h:outputText value="#{msgs['event.name']}" />
+								</f:facet>
+								
+								<h:commandLink action="#{eventMBean.goToView}">          				
+			           				<h:outputText value="#{event.name}" styleClass="Fs14 leaden" />
+			           				<f:setPropertyActionListener target="#{eventMBean.event.id}" value="#{event.id}" />
+			           			</h:commandLink> 
+								
+							</p:column>
+							
+							<p:column>
+								<f:facet name="header">
+									<h:outputText value="#{msgs['event.distance']}" />
+								</f:facet>
+								<h:outputText value="#{event.distance}" />
+							</p:column>	
+							
+							<p:column>
+								<f:facet name="header">
+									<h:outputText value="#{msgs['event.location']}" />
+								</f:facet>
+								<h:outputText value="#{event.location}" />
+							</p:column>
+							
+							<p:column style="text-align:center;">
+								<f:facet name="header">
+									<h:outputText value="#{msgs['event.date']}" />
+								</f:facet>
+								<h:outputText value="#{event.date}">										
+				                	<f:convertDateTime pattern="dd/MM/yyyy" />
+								</h:outputText>
+							</p:column>
+							
+							<p:column  style="text-align:center;">
+								<f:facet name="header">
+									<h:outputText value="#{msgs['event.time']}" />
+								</f:facet>
+								
+								<h:commandLink  action="#{activityMBean.goToView}" redered="#{event.activity!=null}">          				
+									<h:outputText value="#{event.totalTime}" />
+									<f:setPropertyActionListener target="#{activityMBean.activity.id}" value="#{event.activity.id}" />
+								</h:commandLink>
+							</p:column>
+											
+						</p:dataTable>
+					</p:panel>		
+				</h:form>
+			</div>
 		</div>		
-		</h:form>
 	</ui:define>
 </ui:composition>
