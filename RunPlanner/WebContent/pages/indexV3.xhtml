@@ -24,7 +24,7 @@
 									height="70" styleClass="Fleft Wid25 TexAlCenter">
 									<f:param name="client_id" value="#{loginBean.userId}" />
 								</p:graphicImage-->
-	                            <div class="Fs24 Fright MarTop10 leaden Wid70"><span class="hardblue">#{loginBean.name}</span>, Bem Vindo!</div>
+	                            <div class="Fs24 Fright MarTop10 leaden Wid70"><span class="hardblue">#{loginBean.name}</span>, Bem Vindo!!</div>
 	                            <div class="Fs12 Fright leaden Wid70">Você tem <span class="red">#{dashboardMBean.newMessageNumber} novas mensagens</span>!</div>
 	                            <div class="EmptyBox10"></div>
 	                            <p:separator styleClass="Wid100"></p:separator>
@@ -171,16 +171,14 @@
 	
 	            </div>
 	        </div>
+	        	        
 	        
-	        
-	        
-	        <div class="Container100 BorBotLeaden ui-fluid">
+	        <div class="Container100  ui-fluid">
 	            <div class="ContainerIndent">
-	                <div class="EmptyBox10"></div>
 	
 	                <div class="Container50 Responsive100">
 	                    <div class="ContainerIndent">
-	                        <p:panel style="min-height:300px;">
+	                        <p:panel style="min-height:450px;">
 	                            <div class="ContainerIndent Fs20 Wid25">
 	                                <i class="icon-calendar hardblue "></i> Agenda de Treinos
 	                            </div>
@@ -217,7 +215,7 @@
 	
 	                <div class="Container25 Responsive50">
 	                    <div class="ContainerIndent">
-	                        <p:panel style="min-height: 300px;" id="topActivity">
+	                        <p:panel style="min-height: 450px;" id="topActivity">
 	                            <div class="ContainerIndent">	                                
 	                                <div class="ContainerIndent Fs20">
                                     	<i class="icon-flash hardblue" /> Top #{dashboardMBean.topActivityTitle} 
@@ -284,7 +282,7 @@
 	                
 	                <div class="Container25 Responsive50">
 	                    <div class="ContainerIndent">
-	                        <p:panel style="min-height: 300px;">
+	                        <p:panel style="min-height: 450px;">
 	                            <div class="ContainerIndent">	                            	                                	                                
 	                                <div class="ContainerIndent Fs20">
                                     	<i class=" icon-gift hardblue"/>Aniversáriantes 
@@ -316,6 +314,191 @@
 	                <div class="EmptyBox10"></div>
 	            </div>
 	        </div>
-		</h:form>
+	        	        
+
+	        <div class="Container100  ui-fluid">
+	            <div class="ContainerIndent">
+	            
+	                <div class="Container50 Responsive100">	                
+	                    <div class="ContainerIndent">
+	                	                					
+						<p:panel style="min-height: 300px;">                    		
+                        	<div class="ContainerIndent">	                            	                                	                                
+                            	<div class="ContainerIndent Fs20">
+                                	<i class=" icon-gift hardblue"/>#{msgs['dashboard.title.feed']} 
+	                            </div>	
+	                                
+                            	<div class="EmptyBox10"></div>
+	                        	<p:separator styleClass="Wid100"></p:separator>
+	                        	<div class="EmptyBox10"></div>
+	                                
+                                <p:dataList value="#{dashboardMBean.notifications}" var="notification" itemType="none" id="notification">
+
+									<p:column rendered="#{notification.type.id==0}">
+										<div  class="ContainerIndent">
+											<table class="Wid100">
+												<tr>
+													<td align="center" width="55">
+														<img src="${facesContext.externalContext.requestContextPath}/images/v2/newEventIco.png"  />
+													</td>
+													<td align="left">
+														<h:commandLink action="#{eventMBean.goToView}">
+															<h:outputText value="#{msgs['feed.msg.new.event']}"  styleClass="Fs14 leaden FontBold"/><br/>
+															<h:outputText value="#{msgs['feed.msg.new.event2']} "  styleClass="Fs14 leaden"/> 
+															
+															<h:outputText value="#{notification.title}" styleClass="Fs14 leaden FontBold"/><br/>
+															
+														 	<h:outputText value="#{notification.date}"  styleClass="Fs10 leaden">
+																<f:convertDateTime pattern="dd/MM/yyyy" />
+															</h:outputText>
+															
+															<f:setPropertyActionListener target="#{eventMBean.event.id}" value="#{notification.objectId}" />
+														</h:commandLink>
+													</td>
+												</tr>
+											</table>
+										</div>
+									</p:column>
+		
+									<p:column rendered="#{notification.type.id==1}">
+										<div  class="ContainerIndent">
+											<table class="Wid100">
+												<tr>
+													<td align="center" width="55">
+														<p:graphicImage	id="photo" value="#{photoMBean.streamedUserPhoto}" width="55" height="55" 
+															redended="#{notification.customer.photo!=null}" style="padding-right: 5px;">
+															<f:param name="client_id" value="#{notification.customer.id}" />
+														</p:graphicImage>
+													</td>
+													<td align="left">
+														<h:commandLink action="#{profileMBean.goToView}">
+															<h:outputText value="#{notification.customer.shortName}"  styleClass="Fs14 leaden FontBold"/>
+															<f:setPropertyActionListener target="#{profileMBean.customer.id}" value="#{notification.customer.id}" />
+														</h:commandLink> 
+														
+														<h:outputText value="#{msgs['feed.msg.confirm.event']}"  styleClass="Fs14 leaden"/>
+	
+														<h:commandLink action="#{eventMBean.goToView}">
+															<h:outputText value="#{notification.title}"  styleClass="Fs14 leaden FontBold"/>
+															<f:setPropertyActionListener target="#{eventMBean.event.id}" value="#{notification.objectId}" />
+														</h:commandLink> 
+															
+														<h:outputText value="#{notification.date}"  styleClass="Fs10 leaden">
+															<f:convertDateTime pattern="dd/MM/yyyy" />
+														</h:outputText>
+													</td>
+												</tr>
+											</table>
+										</div>
+									</p:column>
+		
+									<p:column rendered="#{notification.type.id==2}" style="margin:0 !important;">
+										<div  class="ContainerIndent">
+											<table class="Wid100">
+												<tr>
+													<td align="center" width="55" valign="middle">
+														<p:graphicImage id="photoAct" value="#{photoMBean.streamedUserPhoto}" width="55" height="55"
+															redended="#{notification.customer.photo!=null}" style="padding-right: 5px;">
+															<f:param name="client_id" value="#{notification.customer.id}" />
+														</p:graphicImage>
+													</td>
+													<td align="left" valign="middle">
+														<h:commandLink action="#{profileMBean.goToView}">
+															<h:outputText value="#{notification.customer.shortName}" styleClass="Fs14 leaden FontBold"/>
+															<f:setPropertyActionListener target="#{profileMBean.customer.id}" value="#{notification.customer.id}" />
+														</h:commandLink><br/>
+	
+														<h:commandLink action="#{activityMBean.goToView}">
+															<h:outputText value="#{msgs['feed.msg.new.activity']}"  styleClass="Fs14 leaden"/>
+															<h:outputText value="#{notification.activity.totalDistance}"  styleClass="Fs14 leaden FontBold">
+																	<f:convertNumber pattern="#0.00" />
+															</h:outputText>
+															<h:outputText value=" Km em "  styleClass="Fs14 leaden"/>
+															<h:outputText value="#{notification.activity.time}."  styleClass="Fs14 leaden FontBold"/>
+												
+															<h:outputText value=" (#{notification.event.name})" rendered="#{notification.event!=null}"  styleClass="Fs14 leaden"/>
+	
+															<f:setPropertyActionListener target="#{activityMBean.activity.id}" value="#{notification.objectId}" />
+														</h:commandLink><br/> 
+														
+														<h:outputText value="#{notification.date}"  styleClass="Fs10 leaden">
+															<f:convertDateTime pattern="dd/MM/yyyy" />
+														</h:outputText> 
+														
+														<h:outputText value=" | #{notification.commentNumber} #{msgs['dashboard.comments.number']}"  styleClass="Fs10 leaden" />
+													</td>
+												</tr>
+											</table>
+										</div>
+									</p:column>
+								</p:dataList>		
+							</div>
+						</p:panel>
+						</div>
+					</div>	
+					
+					<div class="Container25 Responsive50">
+	                    <div class="ContainerIndent">
+	                        <p:panel style="min-height: 400px;">
+	                            <div class="Container">
+	                            	                            	                            	                                	                                
+	                            	<div class="ContainerIndent Fs20">
+	                                	<i class=" icon-flag-1 hardblue"/>Próximo Evento
+		                            </div>	
+                                   	<div class="EmptyBox10"></div>
+	                        		<p:separator styleClass="Wid100"></p:separator>
+	                        		<div class="EmptyBox10"></div>                            
+		                               
+		                            <p:outputPanel  rendered="#{dashboardMBean.nextEvent!=null}"> 
+			                            <h:commandLink  action="#{eventMBean.goToView}" >
+				         					<f:setPropertyActionListener target="#{eventMBean.event.id}" value="#{dashboardMBean.nextEvent.id}" />
+											 <i class="Fs20 Fleft Wid100 leaden FontBold"><h:outputText value="#{dashboardMBean.nextEvent.name}"  /></i>
+										</h:commandLink>
+	                        			<div class="EmptyBox30"></div> 
+			                                
+			                            <i class=" icon-calendar Fs18 Fleft Wid100 leaden">
+			                            	<h:outputText value="Data: " styleClass="Fs14 leaden FontBold"/>
+											<h:outputText value="#{dashboardMBean.nextEvent.date}" styleClass="Fs14 leaden ">
+												<f:convertDateTime pattern="dd/MM/yyyy" />
+											</h:outputText>
+										</i>
+	                        			<div class="EmptyBox20"></div>                    
+										
+										<i class=" icon-clock-1 Fs18 Fleft Wid100 leaden">
+			                            	<h:outputText value="Horário: "	styleClass="Fs14 leaden FontBold"/>
+											<h:outputText value="#{dashboardMBean.nextEvent.time}" styleClass="Fs14 leaden">
+												<f:convertDateTime pattern="hh:mm" />
+											</h:outputText>
+										</i>
+	                        			<div class="EmptyBox20"></div> 
+					
+										<i class=" icon-location-outline Fs18 Fleft Wid100 leaden">
+											<h:outputText value="Local: "  styleClass="Fs14 leaden FontBold"/>
+											<h:outputText value="#{dashboardMBean.nextEvent.location}" styleClass="Fs14 leaden"/>				
+										</i>											
+										<div class="EmptyBox20"></div> 
+					
+										<i class=" icon-road Fs18 Fleft Wid100 leaden">
+											<h:outputText value="Distâncias: "  styleClass="Fs14 leaden FontBold"/>
+											<h:outputText value="#{dashboardMBean.nextEvent.distance}" styleClass="Fs14 leaden"/>				
+										</i>		
+									</p:outputPanel>
+									
+									<h:outputText value="Nenhum Evento previsto." rendered="#{dashboardMBean.nextEvent==null}" />
+                        			<div class="EmptyBox20"></div> 	
+	
+		                            <p:separator styleClass="Wid100"></p:separator>
+	                                <a href="#" class="DispInlBlock Fs14 Fright MarRight10"><i class="icon-doc-1 orange"> Ver Todos Eventos</i></a>
+	                            </div>
+	                        </p:panel>
+	                    </div>
+	                </div>
+					
+								        
+				</div>
+			</div>			
+						
+		</h:form>		
+		
     </ui:define>
 </ui:composition>

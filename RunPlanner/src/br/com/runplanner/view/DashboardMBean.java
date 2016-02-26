@@ -141,7 +141,7 @@ public class DashboardMBean implements Serializable {
 	private boolean paymentNotification = false;
 	
 	private int page = 1;
-	private final int PAGE_SIZE = 10;
+	private final int PAGE_SIZE = 5;
 	
 	private Hashtable<Long,Object> photoCache = new Hashtable<Long,Object>();
 	
@@ -216,34 +216,7 @@ public class DashboardMBean implements Serializable {
 			
 			//Notificacoes	    	
 			notifications = notificationService.getByAdvice(customer.getAdvice().getId(), 0, PAGE_SIZE);		
-			
-			//Lista de atividades
-			/*activityList = activityService.findByUserId(customer.getId());	
-			
-			for( Activity act:activityList ) {
-				
-				if (act.getTotalDistance()>longestActivityKm) {
-					longestActivityKm = act.getTotalDistance();
-					longestActivityKmDate = act.getDate();
-					longestActivityKmId = act.getId();
-				}
-				
-				if (act.getTotalTimeInSeconds()>longestActivityTimeSecond) {
-					longestActivityTimeSecond = act.getTotalTimeInSeconds();
-					longestActivityTime = act.getTotalTime();
-					longestActivityTimeDate = act.getDate();
-					longestActivityTimeId = act.getId();
-				}
-				
-				if (act.getAveragePaceMinutes()<longestActivityPaceMin) {
-					longestActivityPaceMin = act.getAveragePaceMinutes();
-					longestActivityPace = act.getAveragePace();
-					longestActivityPaceDate = act.getDate();
-					longestActivityPaceId = act.getId();
-				}
-				
-			}*/
-			
+						
 			//Atividade de maior distancia
 			Activity act = activityService.getLongestActivityKm(customer.getId());
 			if ( act!=null ) {
